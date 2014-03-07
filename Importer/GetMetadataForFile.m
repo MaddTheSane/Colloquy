@@ -24,7 +24,7 @@
 </log>
 */
 
-@interface JVChatTranscriptMetadataExtractor : NSObject <NSXMLParserDelegate> {
+__attribute__((visibility("hidden"))) @interface JVChatTranscriptMetadataExtractor : NSObject <NSXMLParserDelegate> {
 	BOOL inEnvelope;
 	BOOL inMessage;
 	NSString *lastElement;
@@ -129,26 +129,30 @@
 		if( [string length] ) [participants addObject:string];
 	}
 }
+
 @end
 
-Boolean GetMetadataForFile( void *thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFStringRef pathToFile ) {
+static Boolean GetMetadataForNSURL(void* thisInterface, NSMutableDictionary *attributes, NSString *contentTypeUTI, NSURL *urlForFile)
+{
 	@autoreleasepool {
-		NSFileManager *fm = [NSFileManager defaultManager];
-		NSURL *file;
 		NSXMLParser *parser;
 		JVChatTranscriptMetadataExtractor *extractor;
+		NSNumber *fileSizeClass;
 		unsigned long long fileSize = 0;
 		unsigned long long capacity = 0;
 		
-		NSString *NSPathToFile = (__bridge NSString *)pathToFile;
+		if (![urlForFile checkResourceIsReachableAndReturnError:NULL]) {
+			goto badend;
+		}
 		
-		if( ! [fm fileExistsAtPath:NSPathToFile] ) goto badend;
-		if( ! [fm isReadableFileAtPath:NSPathToFile] ) goto badend;
+		parser = [[NSXMLParser alloc] initWithContentsOfURL:urlForFile];
 		
-		file = [NSURL fileURLWithPath:NSPathToFile];
-		parser = [[NSXMLParser alloc] initWithContentsOfURL:file];
+		if (![urlForFile getResourceValue:&fileSizeClass forKey:NSURLFileSizeKey error:NULL]) {
+			goto badend;
+		}
 		
-		fileSize = [[fm attributesOfItemAtPath:NSPathToFile error:nil][NSFileSize] unsignedLongLongValue];
+		fileSize = [fileSizeClass unsignedLongLongValue];
+		fileSizeClass = nil;
 		capacity = ( fileSize ? fileSize / 3 : 5000 ); // the message content takes up about a third of the XML file's size
 		
 		extractor = [[JVChatTranscriptMetadataExtractor alloc] initWithCapacity:capacity];
@@ -156,13 +160,27 @@ Boolean GetMetadataForFile( void *thisInterface, CFMutableDictionaryRef attribut
 		[parser setDelegate:extractor];
 		[parser parse];
 		
-		[(__bridge NSMutableDictionary *)attributes addEntriesFromDictionary:[extractor metadataAttributes]];
+		[attributes addEntriesFromDictionary:[extractor metadataAttributes]];
 		
 		xmlSetStructuredErrorFunc( NULL, NULL );
-		
 		return TRUE;
 		
 	badend:
 		return FALSE;
+	}
+}
+
+
+Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFURLRef urlForFile)
+{
+	@autoreleasepool {
+		return GetMetadataForNSURL(thisInterface, (__bridge NSMutableDictionary*)attributes, (__bridge NSString*)contentTypeUTI, (__bridge NSURL*)urlForFile);
+	}
+}
+
+Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFStringRef pathToFile)
+{
+	@autoreleasepool {
+		return GetMetadataForNSURL(thisInterface, (__bridge NSMutableDictionary*)attributes, (__bridge NSString*)contentTypeUTI, [NSURL fileURLWithPath:(__bridge NSString*)pathToFile]);
 	}
 }
