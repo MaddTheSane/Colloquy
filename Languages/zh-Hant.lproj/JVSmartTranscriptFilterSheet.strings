@@ -1,0 +1,30 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "239"; */
+"239.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "全部"; ObjectID = "240"; */
+"240.title" = "全部";
+
+/* Class = "NSMenuItem"; title = "任何"; ObjectID = "241"; */
+"241.title" = "任何";
+
+/* Class = "NSButton"; ibShadowedToolTip = "忽略大小寫"; ObjectID = "253"; */
+"253.ibShadowedToolTip" = "忽略大小寫";
+
+/* Class = "NSTextFieldCell"; title = "包含符合以下"; ObjectID = "416"; */
+"416.title" = "包含符合以下";
+
+/* Class = "NSTextFieldCell"; title = "狀況的項目:"; ObjectID = "418"; */
+"418.title" = "狀況的項目:";
+
+/* Class = "NSButtonCell"; title = "好"; ObjectID = "419"; */
+"419.title" = "好";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "420"; */
+"420.title" = "取消";
+
+/* Class = "NSButtonCell"; title = "忽略大小寫"; ObjectID = "421"; */
+"421.title" = "忽略大小寫";
+
+/* Class = "NSTextFieldCell"; title = "智慧型聊天紀錄設定名稱:"; ObjectID = "423"; */
+"423.title" = "智慧型聊天紀錄設定名稱:";

@@ -1,0 +1,30 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "239"; */
+"239.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "allen"; ObjectID = "240"; */
+"240.title" = "allen";
+
+/* Class = "NSMenuItem"; title = "einer"; ObjectID = "241"; */
+"241.title" = "einer";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Groß-/Kleinschreibung ignorieren"; ObjectID = "253"; */
+"253.ibShadowedToolTip" = "Groß-/Kleinschreibung ignorieren";
+
+/* Class = "NSTextFieldCell"; title = "Nachrichten anfügen, die"; ObjectID = "416"; */
+"416.title" = "Nachrichten anfügen, die";
+
+/* Class = "NSTextFieldCell"; title = "der folgenden Eigenschaften:"; ObjectID = "418"; */
+"418.title" = "der folgenden Eigenschaften:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "419"; */
+"419.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Abbrechen"; ObjectID = "420"; */
+"420.title" = "Abbrechen";
+
+/* Class = "NSButtonCell"; title = "Groß-/Kleinschreibung ignorieren"; ObjectID = "421"; */
+"421.title" = "Groß-/Kleinschreibung ignorieren";
+
+/* Class = "NSTextFieldCell"; title = "Name des intelligenten Protokolls:"; ObjectID = "423"; */
+"423.title" = "Name des intelligenten Protokolls:";

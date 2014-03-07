@@ -1,0 +1,30 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "239"; */
+"239.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "all"; ObjectID = "240"; */
+"240.title" = "all";
+
+/* Class = "NSMenuItem"; title = "any"; ObjectID = "241"; */
+"241.title" = "any";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Ignore UPPPERCASE and lowercase"; ObjectID = "253"; */
+"253.ibShadowedToolTip" = "Ignore UPPPERCASE and lowercase";
+
+/* Class = "NSTextFieldCell"; title = "Include items that meet"; ObjectID = "416"; */
+"416.title" = "Include items that meet";
+
+/* Class = "NSTextFieldCell"; title = "of the following conditions:"; ObjectID = "418"; */
+"418.title" = "of the following conditions:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "419"; */
+"419.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "420"; */
+"420.title" = "Cancel";
+
+/* Class = "NSButtonCell"; title = "Ignore Case"; ObjectID = "421"; */
+"421.title" = "Ignore Case";
+
+/* Class = "NSTextFieldCell"; title = "Smart Transcript Name:"; ObjectID = "423"; */
+"423.title" = "Smart Transcript Name:";

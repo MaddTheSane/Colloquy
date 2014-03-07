@@ -1,0 +1,30 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "239"; */
+"239.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "すべての"; ObjectID = "240"; */
+"240.title" = "すべての";
+
+/* Class = "NSMenuItem"; title = "いずれかの"; ObjectID = "241"; */
+"241.title" = "いずれかの";
+
+/* Class = "NSButton"; ibShadowedToolTip = "大／小文字の違いを無視します"; ObjectID = "253"; */
+"253.ibShadowedToolTip" = "大／小文字の違いを無視します";
+
+/* Class = "NSTextFieldCell"; title = "以下の"; ObjectID = "416"; */
+"416.title" = "以下の";
+
+/* Class = "NSTextFieldCell"; title = "条件に一致する項目をまとめる："; ObjectID = "418"; */
+"418.title" = "条件に一致する項目をまとめる：";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "419"; */
+"419.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "キャンセル"; ObjectID = "420"; */
+"420.title" = "キャンセル";
+
+/* Class = "NSButtonCell"; title = "大／小文字を無視"; ObjectID = "421"; */
+"421.title" = "大／小文字を無視";
+
+/* Class = "NSTextFieldCell"; title = "スマートチャット記録名："; ObjectID = "423"; */
+"423.title" = "スマートチャット記録名：";

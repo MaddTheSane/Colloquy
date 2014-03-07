@@ -1,0 +1,30 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "239"; */
+"239.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "alle"; ObjectID = "240"; */
+"240.title" = "alle";
+
+/* Class = "NSMenuItem"; title = "een of meerdere"; ObjectID = "241"; */
+"241.title" = "een of meerdere";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Negeer HOOFDLETTERS en kleine letters"; ObjectID = "253"; */
+"253.ibShadowedToolTip" = "Negeer HOOFDLETTERS en kleine letters";
+
+/* Class = "NSTextFieldCell"; title = "Zoek items die voldoen aan"; ObjectID = "416"; */
+"416.title" = "Zoek items die voldoen aan";
+
+/* Class = "NSTextFieldCell"; title = "van de volgende voorwaarden:"; ObjectID = "418"; */
+"418.title" = "van de volgende voorwaarden:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "419"; */
+"419.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Annuleer"; ObjectID = "420"; */
+"420.title" = "Annuleer";
+
+/* Class = "NSButtonCell"; title = "Negeer Hoofdletters"; ObjectID = "421"; */
+"421.title" = "Negeer Hoofdletters";
+
+/* Class = "NSTextFieldCell"; title = "Naam Slim Transcript:"; ObjectID = "423"; */
+"423.title" = "Naam Slim Transcript:";
