@@ -228,9 +228,7 @@
 		922C767616D9C0E900AEFCB4 /* CQInstapaperController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922C767016D9C0E900AEFCB4 /* CQInstapaperController.m */; };
 		922C767716D9C0E900AEFCB4 /* CQPinboardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922C767216D9C0E900AEFCB4 /* CQPinboardController.m */; };
 		922C767816D9C0E900AEFCB4 /* CQPocketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 922C767416D9C0E900AEFCB4 /* CQPocketController.m */; };
-		922C845F174206DC008061B6 /* clear.png in Resources */ = {isa = PBXBuildFile; fileRef = 922C845D174206DC008061B6 /* clear.png */; };
 		922C8460174206DC008061B6 /* clearPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 922C845E174206DC008061B6 /* clearPressed.png */; };
-		922C8463174206E5008061B6 /* clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 922C8461174206E5008061B6 /* clear@2x.png */; };
 		922C8464174206E5008061B6 /* clearPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 922C8462174206E5008061B6 /* clearPressed@2x.png */; };
 		92312EB016B8D82100E3CA60 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 92312EAF16B8D82100E3CA60 /* settings.png */; };
 		92312EB316B8D82F00E3CA60 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92312EB216B8D82F00E3CA60 /* settings@2x.png */; };
@@ -613,9 +611,7 @@
 		922C767216D9C0E900AEFCB4 /* CQPinboardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CQPinboardController.m; path = Shared/Controllers/CQPinboardController.m; sourceTree = "<group>"; };
 		922C767316D9C0E900AEFCB4 /* CQPocketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CQPocketController.h; path = Shared/Controllers/CQPocketController.h; sourceTree = "<group>"; };
 		922C767416D9C0E900AEFCB4 /* CQPocketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CQPocketController.m; path = Shared/Controllers/CQPocketController.m; sourceTree = "<group>"; };
-		922C845D174206DC008061B6 /* clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clear.png; sourceTree = "<group>"; };
 		922C845E174206DC008061B6 /* clearPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clearPressed.png; sourceTree = "<group>"; };
-		922C8461174206E5008061B6 /* clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clear@2x.png"; sourceTree = "<group>"; };
 		922C8462174206E5008061B6 /* clearPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clearPressed@2x.png"; sourceTree = "<group>"; };
 		92312EAF16B8D82100E3CA60 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		92312EB216B8D82F00E3CA60 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
@@ -1096,7 +1092,6 @@
 				1C0F69060F1497BF002BB855 /* bubbleRight.png */,
 				1CD468C0102A98AB00A7A49E /* chatBubble.png */,
 				1CD468C1102A98AB00A7A49E /* chatBubbleSelected.png */,
-				922C845D174206DC008061B6 /* clear.png */,
 				922C845E174206DC008061B6 /* clearPressed.png */,
 				1CB33C990D882BB000EC4E38 /* colloquies.png */,
 				1CB318DE0D8644E4006A7513 /* connectedBadgeDim.png */,
@@ -1156,7 +1151,6 @@
 				1CA264D111C33A8000AB4E44 /* bouncer@2x.png */,
 				1CA265F911C4AEF300AB4E44 /* chatBubble@2x.png */,
 				1CA265FA11C4AEF300AB4E44 /* chatBubbleSelected@2x.png */,
-				922C8461174206E5008061B6 /* clear@2x.png */,
 				922C8462174206E5008061B6 /* clearPressed@2x.png */,
 				1CA2653D11C4459800AB4E44 /* colloquies@2x.png */,
 				1CA264E811C3494000AB4E44 /* connectedBadgeDim@2x.png */,
@@ -1607,9 +1601,7 @@
 				920B6D5C17196E3F00879D86 /* roomTopicBanner.js in Resources */,
 				92A55443173F68AA0046C359 /* topicToggleDown.png in Resources */,
 				92A55444173F68AA0046C359 /* topicToggleUp.png in Resources */,
-				922C845F174206DC008061B6 /* clear.png in Resources */,
 				922C8460174206DC008061B6 /* clearPressed.png in Resources */,
-				922C8463174206E5008061B6 /* clear@2x.png in Resources */,
 				922C8464174206E5008061B6 /* clearPressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
