@@ -438,7 +438,7 @@ static NSUInteger levenshteinDistanceBetweenStrings(char *string, char *otherStr
 	NSUInteger r = 0; // remainder
 
 	NSMutableString *uniqueId = [[NSMutableString alloc] initWithCapacity:10];
-	[uniqueId appendFormat:@"%c", (char)('A' + ( random() % 26 ))]; // always have a random letter first (more ambiguity)
+	[uniqueId appendFormat:@"%c", (char)('A' + ( arc4random() % 26 ))]; // always have a random letter first (more ambiguity)
 
 	#define baseConvert	do { \
 		r = q % m; \
@@ -460,7 +460,7 @@ static NSUInteger levenshteinDistanceBetweenStrings(char *string, char *otherStr
 }
 
 #if ENABLE(SCRIPTING)
-+ (unsigned long) scriptTypedEncodingFromStringEncoding:(NSStringEncoding) encoding {
++ (OSType) scriptTypedEncodingFromStringEncoding:(NSStringEncoding) encoding {
 	switch( encoding ) {
 		default:
 		case NSUTF8StringEncoding: return 'utF8';
@@ -509,7 +509,7 @@ static NSUInteger levenshteinDistanceBetweenStrings(char *string, char *otherStr
 	return 'utF8'; // default encoding
 }
 
-+ (NSStringEncoding) stringEncodingFromScriptTypedEncoding:(unsigned long) encoding {
++ (NSStringEncoding) stringEncodingFromScriptTypedEncoding:(OSType) encoding {
 	switch( encoding ) {
 		default:
 		case 'utF8': return NSUTF8StringEncoding;
@@ -596,8 +596,8 @@ static NSUInteger levenshteinDistanceBetweenStrings(char *string, char *otherStr
 
 	const char *bytes = [data bytes];
 	NSUInteger length = data.length;
-	NSUInteger i = 0, j = 0, start = 0, end = 0;
-	for( i = 0, start = 0; i < length; i++ ) {
+	NSUInteger j = 0, start = 0, end = 0;
+	for( NSUInteger i = 0; i < length; i++ ) {
 		if( bytes[i] == '\006' ) {
 			end = i;
 			j = ++i;
@@ -1062,7 +1062,7 @@ static NSUInteger levenshteinDistanceBetweenStrings(char *string, char *otherStr
 		NSArray *parts = [self componentsSeparatedByString:@"."];
 		NSUInteger count = parts.count;
 		if( count > 2 )
-			ret = [NSString stringWithFormat:@"%@.%@", [parts objectAtIndex:(count - 2)], [parts objectAtIndex:(count - 1)]];
+			ret = [NSString stringWithFormat:@"%@.%@", parts[(count - 2)], parts[(count - 1)]];
 	}
 
 	return ret;
@@ -1094,21 +1094,21 @@ static NSUInteger levenshteinDistanceBetweenStrings(char *string, char *otherStr
 }
 
 - (NSString *) IRCNickname {
-	return [self._IRCComponents objectAtIndex:0];
+	return (self._IRCComponents)[0];
 }
 
 - (NSString *) IRCUsername {
-	return [self._IRCComponents objectAtIndex:1];
+	return (self._IRCComponents)[1];
 }
 
 - (NSString *) IRCHostname {
-	return [self._IRCComponents objectAtIndex:2];
+	return (self._IRCComponents)[2];
 }
 
 - (NSString *) IRCRealname {
 	NSArray *components = self._IRCComponents;
 	if (components.count == 4)
-		return [components objectAtIndex:3];
+		return components[3];
 	return nil;
 }
 
@@ -1166,12 +1166,12 @@ static NSCharacterSet *typicalEmoticonCharacters;
 }
 
 - (NSRange) rangeOfRegex:(NSString *) regex inRange:(NSRange) range {
-	return [self rangeOfRegex:regex options:NSMatchingReportCompletion inRange:range capture:0 error:nil];
+	return [self rangeOfRegex:regex options:0 inRange:range capture:0 error:nil];
 }
 
 - (NSRange) rangeOfRegex:(NSString *) regex options:(NSRegularExpressionOptions) options inRange:(NSRange) range capture:(NSInteger) capture error:(NSError **) error {
 	NSRegularExpression *regularExpression = [NSRegularExpression cachedRegularExpressionWithPattern:regex options:options error:error];	
-	NSTextCheckingResult *result = [regularExpression firstMatchInString:self options:NSMatchingCompleted range:range];
+	NSTextCheckingResult *result = [regularExpression firstMatchInString:self options:NSMatchingReportCompletion range:range];
 
 	NSRange foundRange = [result rangeAtIndex:capture];
 	if (!(foundRange.location + foundRange.length))
@@ -1185,7 +1185,7 @@ static NSCharacterSet *typicalEmoticonCharacters;
 
 - (NSString *) stringByMatching:(NSString *) regex options:(NSRegularExpressionOptions) options inRange:(NSRange) range capture:(NSInteger) capture error:(NSError **) error {
 	NSRegularExpression *regularExpression = [NSRegularExpression cachedRegularExpressionWithPattern:regex options:options error:error];
-	NSTextCheckingResult *result = [regularExpression firstMatchInString:self options:options range:range];
+	NSTextCheckingResult *result = [regularExpression firstMatchInString:self options:NSMatchingReportCompletion range:range];
 
 	NSRange resultRange = [result rangeAtIndex:capture];
 
@@ -1197,7 +1197,7 @@ static NSCharacterSet *typicalEmoticonCharacters;
 
 - (NSArray *) captureComponentsMatchedByRegex:(NSString *) regex options:(NSRegularExpressionOptions) options range:(NSRange) range error:(NSError **) error {
 	NSRegularExpression *regularExpression = [NSRegularExpression cachedRegularExpressionWithPattern:regex options:options error:error];
-	NSTextCheckingResult *result = [regularExpression firstMatchInString:self options:options range:range];
+	NSTextCheckingResult *result = [regularExpression firstMatchInString:self options:NSMatchingReportCompletion range:range];
 
 	if (!result)
 		return nil;

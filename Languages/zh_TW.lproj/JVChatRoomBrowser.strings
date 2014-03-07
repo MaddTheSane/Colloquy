@@ -1,0 +1,51 @@
+
+/* Class = "NSPanel"; title = "加入聊天室"; ObjectID = "12"; */
+"12.title" = "加入聊天室";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "19"; */
+"19.title" = "Box";
+
+/* Class = "NSTabViewItem"; label = "瀏覽器"; ObjectID = "28"; */
+"28.label" = "瀏覽器";
+
+/* Class = "NSTabViewItem"; label = "隱藏"; ObjectID = "29"; */
+"29.label" = "隱藏";
+
+/* Class = "NSTableColumn"; headerCell.title = "聊天室"; ObjectID = "34"; */
+"34.headerCell.title" = "聊天室";
+
+/* Class = "NSTableColumn"; headerCell.title = "聊天主題"; ObjectID = "36"; */
+"36.headerCell.title" = "聊天主題";
+
+/* Class = "NSTabViewItem"; label = "統計"; ObjectID = "48"; */
+"48.label" = "統計";
+
+/* Class = "NSTabViewItem"; label = "搜尋"; ObjectID = "49"; */
+"49.label" = "搜尋";
+
+/* Class = "NSTabViewItem"; label = "隱藏"; ObjectID = "65"; */
+"65.label" = "隱藏";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "90"; */
+"90.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "94"; */
+"94.title" = "OtherViews";
+
+/* Class = "NSButtonCell"; title = "加入"; ObjectID = "134"; */
+"134.title" = "加入";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "135"; */
+"135.title" = "取消";
+
+/* Class = "NSButtonCell"; title = "Button"; ObjectID = "137"; */
+"137.title" = "Button";
+
+/* Class = "NSTextFieldCell"; title = "聊天室:"; ObjectID = "138"; */
+"138.title" = "聊天室:";
+
+/* Class = "NSTextFieldCell"; title = "連線:"; ObjectID = "140"; */
+"140.title" = "連線:";
+
+/* Class = "NSSearchFieldCell"; placeholderString = "過濾聊天室"; ObjectID = "143"; */
+"143.placeholderString" = "過濾聊天室";

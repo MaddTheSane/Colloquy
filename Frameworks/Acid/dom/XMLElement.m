@@ -40,9 +40,11 @@
 
 -(id) initWithArray:(NSArray*)elems
 {
-	if (!(self = [self init])) return nil;
+    if (self =[self init])
+	{
     _elements = [elems retain];
     _index = 0;
+	}
     return self;
 }
 
@@ -61,7 +63,7 @@
 {
     while (_index < [_elements count])
     {
-        id curr = [_elements objectAtIndex:_index++];
+        id curr = _elements[_index++];
         if ([curr isKindOfClass:[XMLElement class]])
             return curr;
     }
@@ -75,9 +77,11 @@
 // Basic initializers
 -(id) init
 {
-	if (!(self = [super init])) return nil;
+    if (self = [super init])
+	{
     _attribs  = [[NSMutableDictionary alloc] init];
     _children = [[NSMutableArray alloc] init];
+	}
     return self;
 }
 
@@ -95,13 +99,13 @@
      withAttributes:(NSMutableDictionary*)atts
      withDefaultURI:(NSString*)uri
 {
-	if (!(self = [self init])) return nil;
-
-    _name  = [qname retain];
-    _defaultURI = [uri retain];
-    [_attribs release];
-    _attribs = [atts retain];
-
+    if (self = [self init])
+	{
+		_name  = [qname retain];
+		_defaultURI = [uri retain];
+		[_attribs release];
+		_attribs = [atts retain];
+	}
     return self;
 }
 
@@ -112,10 +116,11 @@
 
 -(id) initWithQName:(XMLQName*)qname withDefaultURI:(NSString*)uri
 {
-	if (!(self = [self init])) return nil;
-    _name  = [qname retain];
-    _defaultURI = [uri retain];
-
+    if (self = [self init])
+	{
+		_name  = [qname retain];
+		_defaultURI = [uri retain];
+	}
     return self;
 }
 
@@ -220,13 +225,13 @@
 -(void)      putAttribute:(NSString*)name withValue:(NSString*)value
 {
     XMLQName* qn = [XMLQName construct:name withURI:_defaultURI];
-    [_attribs setObject:value forKey:qn];
+    _attribs[qn] = value;
 }
 
 -(NSString*) getAttribute:(NSString*)name
 {
     XMLQName* qn = [XMLQName construct:name withURI:_defaultURI];
-    return [_attribs objectForKey:qn];
+    return _attribs[qn];
 }
 
 -(void) delAttribute:(NSString*)name
@@ -238,22 +243,22 @@
 -(BOOL)  cmpAttribute:(NSString*)name withValue:(NSString*)value
 {
     XMLQName* qn = [XMLQName construct:name withURI:_defaultURI];
-    return [[_attribs objectForKey:qn] isEqual:value];
+    return [_attribs[qn] isEqual:value];
 }
 
 -(void) putQualifiedAttribute:(XMLQName*)name withValue:(NSString*)value
 {
-    [_attribs setObject:value forKey:name];
+    _attribs[name] = value;
 }
 
 -(NSString*) getQualifiedAttribute:(XMLQName*)qname
 {
-    return [_attribs objectForKey:qname];
+    return _attribs[qname];
 }
 
 -(BOOL)  cmpQualifiedAttribute:(XMLQName*)qname withValue:(NSString*)value
 {
-    return [[_attribs objectForKey:qname] isEqual:value];
+    return [_attribs[qname] isEqual:value];
 }
 
 
@@ -293,7 +298,7 @@
 
     while ((it = [attrib_keys nextObject]))
     {
-        [acc addAttribute:it withValue:[_attribs objectForKey:it] ofElement:self];
+        [acc addAttribute:it withValue:_attribs[it] ofElement:self];
     }
 
 	if ([_children count]) {
@@ -306,7 +311,7 @@
 
 -(id<XMLNode>) firstChild
 {
-    return [_children objectAtIndex:0];
+    return _children[0];
 }
 
 -(NSEnumerator*) childElementsEnumerator
@@ -322,7 +327,7 @@
     unsigned int i;
     for (i = 0; i < [_children count]; ++i)
     {
-        id curr = [_children objectAtIndex:i];
+        id curr = _children[i];
         if ([curr isKindOfClass:[XMLCData class]])
             return [curr text];
     }

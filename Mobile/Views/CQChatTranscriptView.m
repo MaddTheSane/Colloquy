@@ -9,16 +9,9 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 
 #pragma mark -
 
-@interface CQChatTranscriptView (Internal)
-- (void) _addComponentsToTranscript:(NSArray *) components fromPreviousSession:(BOOL) previous animated:(BOOL) animated;
-- (NSString *) _contentHTML;
-- (void) _commonInitialization;
-- (UIScrollView *) scrollView;
-@end
-
-#pragma mark -
-
 @implementation CQChatTranscriptView
+@synthesize transcriptDelegate = _transcriptDelegate;
+
 - (id) initWithFrame:(CGRect) frame {
 	if (!(self = [super initWithFrame:frame]))
 		return nil;
@@ -44,29 +37,13 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:CQSettingsDidChangeNotification object:nil];
 
 	super.delegate = nil;
-
-	[_blockerView release];
-	[_fontFamily release];
-	[_styleIdentifier release];
-	[_pendingComponents release];
-	[_pendingPreviousSessionComponents release];
-	[_roomTopic release];
-	[_roomTopicSetter release];
-
-	[super dealloc];
 }
 
 #pragma mark -
 
-@synthesize transcriptDelegate;
-
 - (void) setDelegate:(id <UIWebViewDelegate>) delegate {
-	NSAssert(NO, @"Should not be called. Use transcriptDelegate instead.");
+	NSAssert(NO, @"Should not be called. Use _transcriptDelegate instead.");
 }
-
-@synthesize allowsStyleChanges = _allowsStyleChanges;
-
-@synthesize allowSingleSwipeGesture = _allowSingleSwipeGesture;
 
 - (void) setAllowSingleSwipeGesture:(BOOL) allowSingleSwipeGesture {
 	if (allowSingleSwipeGesture == _allowSingleSwipeGesture)
@@ -78,8 +55,6 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 		swipeGestureRecognizer.enabled = _allowSingleSwipeGesture;
 }
 
-@synthesize styleIdentifier = _styleIdentifier;
-
 - (void) setStyleIdentifier:(NSString *) styleIdentifier {
 	NSParameterAssert(styleIdentifier);
 	NSParameterAssert(styleIdentifier.length);
@@ -87,9 +62,7 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 	if (!_allowsStyleChanges || [_styleIdentifier isEqualToString:styleIdentifier])
 		return;
 
-	id old = _styleIdentifier;
 	_styleIdentifier = [styleIdentifier copy];
-	[old release];
 
 	if ([styleIdentifier hasSuffix:@"-dark"])
 		self.backgroundColor = [UIColor blackColor];
@@ -106,21 +79,15 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 	[self resetSoon];
 }
 
-@synthesize fontFamily = _fontFamily;
-
 - (void) setFontFamily:(NSString *) fontFamily {
 	// Since _fontFamily or fontFamily can be nil we also need to check pointer equality.
 	if (!_allowsStyleChanges || _fontFamily == fontFamily || [_fontFamily isEqualToString:fontFamily])
 		return;
 
-	id old = _fontFamily;
 	_fontFamily = [fontFamily copy];
-	[old release];
 
 	[self _reloadVariantStyle];
 }
-
-@synthesize fontSize = _fontSize;
 
 - (void) setFontSize:(NSUInteger) fontSize {
 	if (_fontSize == fontSize)
@@ -131,15 +98,14 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 	[self _reloadVariantStyle];
 }
 
-@synthesize timestampOnLeft = _timestampOnLeft;
+- (void) setTimestampPosition:(CQTimestampPosition) timestampPosition {
+	_timestampPosition = timestampPosition;
 
-- (void) setTimestampOnLeft:(BOOL) timestampOnLeft {
-	if (_timestampOnLeft == timestampOnLeft)
-		return;
-
-	_timestampOnLeft = timestampOnLeft;
-
-	[self _reloadVariantStyle];
+	if (_timestampPosition == CQTimestampPositionLeft)
+		[super stringByEvaluatingJavaScriptFromString:@"setTimestampPosition(\"left\");"];
+	else if (_timestampPosition == CQTimestampPositionRight)
+		[super stringByEvaluatingJavaScriptFromString:@"setTimestampPosition(\"right\");"];
+	else [super stringByEvaluatingJavaScriptFromString:@"setTimestampPosition(null);"];
 }
 
 #pragma mark -
@@ -157,10 +123,6 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 }
 
 - (void) didFinishScrolling {
-	CGPoint offset = self.scrollView.contentOffset;
-	NSString *command = [NSString stringWithFormat:@"updateScrollPosition(%f)", offset.y];
-	[super stringByEvaluatingJavaScriptFromString:command];
-
 	[super stringByEvaluatingJavaScriptFromString:@"resumeAutoscroll()"];
 
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(didFinishScrollingRecently) object:nil];
@@ -199,30 +161,38 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 
 #pragma mark -
 
-
 - (void) longPressGestureRecognizerRecognized:(UILongPressGestureRecognizer *) longPressGestureRecognizer {
 	if (longPressGestureRecognizer.state != UIGestureRecognizerStateBegan)
 		return;
 
-	CGPoint point = [longPressGestureRecognizer locationInView:self];
-	NSString *tappedURL = nil;
+	BOOL shouldBecomeFirstResponder = YES;
+	if ([_transcriptDelegate respondsToSelector:@selector(transcriptViewShouldBecomeFirstResponder:)])
+		shouldBecomeFirstResponder = [_transcriptDelegate transcriptViewShouldBecomeFirstResponder:self];
 
-#define TappedPointOffset 15
+	if (shouldBecomeFirstResponder)
+		[self performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.];
+
+	CGPoint point = [longPressGestureRecognizer locationInView:self];
+	point = [self convertPoint:point toView:self.scrollView];
+
+	NSString *tappedURL = nil;
+#define TappedPointOffset 20
 	for (int x = point.x - TappedPointOffset, i = 0; i < 3 && !tappedURL.length; x += TappedPointOffset, i++)
-		for (int y = point.y - TappedPointOffset, j = 0; j < 3 && !tappedURL.length; y += TappedPointOffset, j++)
+		for (int y = point.y - TappedPointOffset, j = 0; j < 3 && !tappedURL.length; y += TappedPointOffset, j++) {
 			tappedURL = [super stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"urlUnderTapAtPoint(%d, %d)", x, y]];
+		}
 #undef TappedPointOffset
 
 	if (!tappedURL.length)
 		return;
 
-	if (transcriptDelegate && [transcriptDelegate respondsToSelector:@selector(transcriptView:handleLongPressURL:atLocation:)])
-		[transcriptDelegate transcriptView:self handleLongPressURL:[NSURL URLWithString:tappedURL] atLocation:_lastTouchLocation];
+	if (_transcriptDelegate && [_transcriptDelegate respondsToSelector:@selector(transcriptView:handleLongPressURL:atLocation:)])
+		[_transcriptDelegate transcriptView:self handleLongPressURL:[NSURL URLWithString:tappedURL] atLocation:_lastTouchLocation];
 }
 
 - (void) swipeGestureRecognized:(UISwipeGestureRecognizer *) swipeGestureRecognizer {
-	if (transcriptDelegate && [transcriptDelegate respondsToSelector:@selector(transcriptView:receivedSwipeWithTouchCount:leftward:)])
-		[transcriptDelegate transcriptView:self receivedSwipeWithTouchCount:swipeGestureRecognizer.numberOfTouches leftward:(swipeGestureRecognizer.direction & UISwipeGestureRecognizerDirectionLeft)];
+	if (_transcriptDelegate && [_transcriptDelegate respondsToSelector:@selector(transcriptView:receivedSwipeWithTouchCount:leftward:)])
+		[_transcriptDelegate transcriptView:self receivedSwipeWithTouchCount:swipeGestureRecognizer.numberOfTouches leftward:(swipeGestureRecognizer.direction & UISwipeGestureRecognizerDirectionLeft)];
 }
 
 #pragma mark -
@@ -243,20 +213,20 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 		return NO;
 
 	if ([request.URL.scheme isCaseInsensitiveEqualToString:@"colloquy"]) {
-		if ([transcriptDelegate respondsToSelector:@selector(transcriptView:handleNicknameTap:atLocation:)]) {
+		if ([_transcriptDelegate respondsToSelector:@selector(transcriptView:handleNicknameTap:atLocation:)]) {
 			NSRange endOfSchemeRange = [request.URL.absoluteString rangeOfString:@"://"];
 			if (endOfSchemeRange.location == NSNotFound)
 				return NO;
 
 			NSString *nickname = [[request.URL.absoluteString substringFromIndex:(endOfSchemeRange.location + endOfSchemeRange.length)] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-			[transcriptDelegate transcriptView:self handleNicknameTap:nickname atLocation:_lastTouchLocation];
+			[_transcriptDelegate transcriptView:self handleNicknameTap:nickname atLocation:_lastTouchLocation];
 		}
 
 		return NO;
 	}
 
-	if ([transcriptDelegate respondsToSelector:@selector(transcriptView:handleOpenURL:)])
-		if ([transcriptDelegate transcriptView:self handleOpenURL:request.URL])
+	if ([_transcriptDelegate respondsToSelector:@selector(transcriptView:handleOpenURL:)])
+		if ([_transcriptDelegate transcriptView:self handleOpenURL:request.URL])
 			return NO;
 
 	[[UIApplication sharedApplication] openURL:request.URL];
@@ -306,7 +276,7 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 		return;
 	}
 
-	[self _addComponentsToTranscript:[NSArray arrayWithObject:component] fromPreviousSession:NO animated:animated];
+	[self _addComponentsToTranscript:@[component] fromPreviousSession:NO animated:animated];
 }
 
 - (void) noteNicknameChangedFrom:(NSString *) oldNickname to:(NSString *) newNickname {
@@ -316,13 +286,8 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 - (void) noteTopicChangeTo:(NSString *) newTopic by:(NSString *) username {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_hideRoomTopic) object:nil];
 
-	id old = _roomTopic;
 	_roomTopic = [newTopic copy];
-	[old release];
-
-	old = _roomTopicSetter;
 	_roomTopicSetter = [username copy];
-	[old release];
 
 	if (_loading || _resetPending) {
 		return;
@@ -339,14 +304,18 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 	}
 
 	if (shouldHideTopic) {
-		_topicIsHidden = YES;
-
-		[super stringByEvaluatingJavaScriptFromString:@"hideTopic()"];
+		[self _hideRoomTopic];
 	} else if (_topicIsHidden && !shouldHideTopic) {
 		_topicIsHidden = NO;
 
 		[super stringByEvaluatingJavaScriptFromString:@"showTopic()"];
+		[super stringByEvaluatingJavaScriptFromString:@"addOffsetForTopicToFirstElement()"];
 	}
+}
+
+- (void) insertImage:(NSString *) image forElementWithIdentifier:(NSString *) elementIdentifier {
+	NSString *command = [NSString stringWithFormat:@"var imageElement = document.getElementById('%@'); imageElement.src = '%@';", elementIdentifier, image];
+	[super stringByEvaluatingJavaScriptFromString:command];
 }
 
 - (void) scrollToBottomAnimated:(BOOL) animated {
@@ -380,8 +349,8 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 	_loading = YES;
 	[self loadHTMLString:[self _contentHTML] baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] resourcePath]]];
 
-	if ([transcriptDelegate respondsToSelector:@selector(transcriptViewWasReset:)])
-		[transcriptDelegate transcriptViewWasReset:self];
+	if ([_transcriptDelegate respondsToSelector:@selector(transcriptViewWasReset:)])
+		[_transcriptDelegate transcriptViewWasReset:self];
 }
 
 #pragma mark -
@@ -402,31 +371,31 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 	NSCharacterSet *escapedCharacters = [NSCharacterSet characterSetWithCharactersInString:@"\\'\""];
 
 	for (NSDictionary *component in components) {
-		NSString *type = [component objectForKey:@"type"];
-		NSString *messageString = [component objectForKey:@"message"];
+		NSString *type = component[@"type"];
+		NSString *messageString = component[@"message"];
 		if (!messageString)
 			continue;
 
 		NSString *escapedMessage = [messageString stringByEscapingCharactersInSet:escapedCharacters];
 		BOOL isMessage = [type isEqualToString:@"message"];
-		BOOL isNotice = [[component objectForKey:@"notice"] boolValue];
+		BOOL isNotice = [component[@"notice"] boolValue];
 
 		if (isMessage || isNotice) {
-			MVChatUser *user = [component objectForKey:@"user"];
+			MVChatUser *user = component[@"user"];
 			if (!user)
 				continue;
 
-			BOOL action = [[component objectForKey:@"action"] boolValue];
-			BOOL highlighted = [[component objectForKey:@"highlighted"] boolValue];
+			BOOL action = [component[@"action"] boolValue];
+			BOOL highlighted = [component[@"highlighted"] boolValue];
 
 			NSString *escapedNickname = [user.nickname stringByEscapingCharactersInSet:escapedCharacters];
-			NSString *timestamp = [component objectForKey:@"timestamp"];
+			NSString *timestamp = component[@"timestamp"];
 
 			if (isNotice)
 				[command appendFormat:@"{type:'notice',sender:'%@',message:'%@',highlighted:%@,action:%@,self:%@,timestamp:'%@'},", escapedNickname, escapedMessage, (highlighted ? @"true" : @"false"), (action ? @"true" : @"false"), (user.localUser ? @"true" : @"false"), timestamp ? timestamp : @""];
 			else [command appendFormat:@"{type:'message',sender:'%@',message:'%@',highlighted:%@,action:%@,self:%@,timestamp:'%@'},", escapedNickname, escapedMessage, (highlighted ? @"true" : @"false"), (action ? @"true" : @"false"), (user.localUser ? @"true" : @"false"), timestamp ? timestamp : @""];
 		} else if ([type isEqualToString:@"event"]) {
-			NSString *identifier = [component objectForKey:@"identifier"];
+			NSString *identifier = component[@"identifier"];
 			if (!identifier)
 				continue;
 
@@ -434,15 +403,15 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 
 			[command appendFormat:@"{type:'event',message:'%@',identifier:'%@'},", escapedMessage, escapedIdentifer];
 		} else if ([type isEqualToString:@"console"]) {
-			[command appendFormat:@"{type:'console',message:'%@',outbound:%@},", escapedMessage, ([[component objectForKey:@"outbound"] boolValue] ? @"true" : @"false")];
+			[command appendFormat:@"{type:'console',message:'%@',outbound:%@},", escapedMessage, ([component[@"outbound"] boolValue] ? @"true" : @"false")];
 		}
 	}
 
 	[command appendFormat:@"],%@,false,%@)", (previousSession ? @"true" : @"false"), (animated ? @"false" : @"true")];
 
 	[super stringByEvaluatingJavaScriptFromString:command];
-
-	[command release];
+	if (_showRoomTopic)
+		[super stringByEvaluatingJavaScriptFromString:@"addOffsetForTopicToFirstElement()"];
 }
 
 - (void) _commonInitialization {
@@ -475,8 +444,6 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 		if ([UIDevice currentDevice].isPadModel)
 			[_singleSwipeGestureRecognizers addObject:swipeGestureRecognizer];
 
-		[swipeGestureRecognizer release];
-
 		swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGestureRecognized:)];
 		swipeGestureRecognizer.numberOfTouchesRequired = i;
 		swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -486,23 +453,20 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 
 		if ([UIDevice currentDevice].isPadModel)
 			[_singleSwipeGestureRecognizers addObject:swipeGestureRecognizer];
-
-		[swipeGestureRecognizer release];
 	}
 
 	UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognizerRecognized:)];
 	longPressGestureRecognizer.delegate = self;
 
 	[self addGestureRecognizer:longPressGestureRecognizer];
-	[longPressGestureRecognizer release];
 
-	_showRoomTopic = [[CQSettingsController settingsController] integerForKey:@"CQShowRoomTopic"];
+	_showRoomTopic = (CQShowRoomTopic)[[CQSettingsController settingsController] integerForKey:@"CQShowRoomTopic"];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_userDefaultsChanged:) name:CQSettingsDidChangeNotification object:nil];
 }
 
 - (void) _userDefaultsChanged:(NSNotification *) notification {
-	CQShowRoomTopic shouldShowRoomTopic = [[CQSettingsController settingsController] integerForKey:@"CQShowRoomTopic"];
+	CQShowRoomTopic shouldShowRoomTopic = (CQShowRoomTopic)[[CQSettingsController settingsController] integerForKey:@"CQShowRoomTopic"];
 	if (_showRoomTopic == shouldShowRoomTopic)
 		return;
 
@@ -517,7 +481,7 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 	if (_fontFamily.length)
 		[styleString appendFormat:@"font-family: %@; ", _fontFamily];
 	if (_fontSize && _fontSize != DefaultFontSize)
-		[styleString appendFormat:@"font-size: %dpx; ", _fontSize];
+		[styleString appendFormat:@"font-size: %zdpx; ", _fontSize];
 
 	if (styleString.length) {
 		[styleString insertString:@"body { " atIndex:0];
@@ -527,7 +491,7 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 	if ([[CQSettingsController settingsController] boolForKey:@"CQTimestampOnLeft"])
 		[styleString appendFormat:@".timestamp { float: none; }"];
 
-	return [styleString autorelease];
+	return styleString;
 }
 
 - (void) _reloadVariantStyle {
@@ -538,7 +502,7 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 
 - (NSString *) _contentHTML {
 	NSString *templateString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"base" ofType:@"html"] encoding:NSUTF8StringEncoding error:NULL];
-	return [NSString stringWithFormat:templateString, _styleIdentifier, [self _variantStyleString]];
+	return [NSString stringWithFormat:templateString, _styleIdentifier, [self _variantStyleString], [UIDevice currentDevice].isSystemSeven ? @"topicSeven" : @"topicSix"];
 }
 
 - (void) _checkIfLoadingFinished {
@@ -552,21 +516,24 @@ static NSString *const CQRoomTopicChangedNotification = @"CQRoomTopicChangedNoti
 
 	[self _addComponentsToTranscript:_pendingPreviousSessionComponents fromPreviousSession:YES animated:NO];
 
-	[_pendingPreviousSessionComponents release];
 	_pendingPreviousSessionComponents = nil;
 
 	[self _addComponentsToTranscript:_pendingComponents fromPreviousSession:NO animated:NO];
 
-	[_pendingComponents release];
 	_pendingComponents = nil;
 
 	[self performSelector:@selector(_unhideBlockerView) withObject:nil afterDelay:0.05];
 
 	[self noteTopicChangeTo:_roomTopic by:_roomTopicSetter];
+
+	// initialize this here as well because if first we set it before the document finishes loading, it won't take.
+	self.timestampPosition = _timestampPosition;
 }
 
 - (void) _hideRoomTopic {
 	[super stringByEvaluatingJavaScriptFromString:@"hideTopic()"];
+	[super stringByEvaluatingJavaScriptFromString:@"removeOffsetForTopicFromFirstElement()"];
+	_topicIsHidden = YES;
 }
 
 - (void) _unhideBlockerView {

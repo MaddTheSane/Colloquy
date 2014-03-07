@@ -1,0 +1,222 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "34"; */
+"34.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "37"; */
+"37.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "38"; */
+"38.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "entspricht"; ObjectID = "39"; */
+"39.title" = "entspricht";
+
+/* Class = "NSMenuItem"; title = "entspricht nicht"; ObjectID = "41"; */
+"41.title" = "entspricht nicht";
+
+/* Class = "NSMenuItem"; title = "enthält"; ObjectID = "42"; */
+"42.title" = "enthält";
+
+/* Class = "NSMenuItem"; title = "enthält nicht"; ObjectID = "43"; */
+"43.title" = "enthält nicht";
+
+/* Class = "NSMenuItem"; title = "beginnt mit"; ObjectID = "44"; */
+"44.title" = "beginnt mit";
+
+/* Class = "NSMenuItem"; title = "endet mit"; ObjectID = "45"; */
+"45.title" = "endet mit";
+
+/* Class = "NSMenuItem"; title = "ist"; ObjectID = "46"; */
+"46.title" = "ist";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "48"; */
+"48.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "50"; */
+"50.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "52"; */
+"52.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "is less than"; ObjectID = "53"; */
+"53.title" = "is less than";
+
+/* Class = "NSMenuItem"; title = "is greater than"; ObjectID = "54"; */
+"54.title" = "is greater than";
+
+/* Class = "NSMenuItem"; title = "seconds"; ObjectID = "56"; */
+"56.title" = "seconds";
+
+/* Class = "NSMenuItem"; title = "days"; ObjectID = "57"; */
+"57.title" = "days";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "58"; */
+"58.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "minutes"; ObjectID = "60"; */
+"60.title" = "minutes";
+
+/* Class = "NSMenuItem"; title = "hours"; ObjectID = "61"; */
+"61.title" = "hours";
+
+/* Class = "NSMenuItem"; title = "weeks"; ObjectID = "62"; */
+"62.title" = "weeks";
+
+/* Class = "NSMenuItem"; title = "months"; ObjectID = "63"; */
+"63.title" = "months";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "67"; */
+"67.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "68"; */
+"68.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "71"; */
+"71.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "is"; ObjectID = "72"; */
+"72.title" = "is";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "74"; */
+"74.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "75"; */
+"75.title" = " ";
+
+/* Class = "NSMenuItem"; title = "is not"; ObjectID = "76"; */
+"76.title" = "is not";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "79"; */
+"79.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "80"; */
+"80.title" = " ";
+
+/* Class = "NSMenuItem"; title = "Name des Absenders"; ObjectID = "81"; */
+"81.title" = "Name des Absenders";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "82"; */
+"82.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Nachricht"; ObjectID = "83"; */
+"83.title" = "Nachricht";
+
+/* Class = "NSMenuItem"; title = "Empfangsdatum"; ObjectID = "85"; */
+"85.title" = "Empfangsdatum";
+
+/* Class = "NSMenuItem"; title = "Absender ist in meiner Kontaktliste"; ObjectID = "87"; */
+"87.title" = "Absender ist in meiner Kontaktliste";
+
+/* Class = "NSMenuItem"; title = "Absender ist nicht in meiner Kontaktliste"; ObjectID = "88"; */
+"88.title" = "Absender ist nicht in meiner Kontaktliste";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist keine Aktion"; ObjectID = "91"; */
+"91.title" = "Nachricht ist keine Aktion";
+
+/* Class = "NSMenuItem"; title = "Absender wurde nicht ignoriert"; ObjectID = "92"; */
+"92.title" = "Absender wurde nicht ignoriert";
+
+/* Class = "NSMenuItem"; title = "Absender wurde ignoriert"; ObjectID = "93"; */
+"93.title" = "Absender wurde ignoriert";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist nicht an mich gerichtet"; ObjectID = "95"; */
+"95.title" = "Nachricht ist nicht an mich gerichtet";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist an mich gerichtet"; ObjectID = "96"; */
+"96.title" = "Nachricht ist an mich gerichtet";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist nicht hervorgehoben"; ObjectID = "98"; */
+"98.title" = "Nachricht ist nicht hervorgehoben";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist hervorgehoben"; ObjectID = "99"; */
+"99.title" = "Nachricht ist hervorgehoben";
+
+/* Class = "NSMenuItem"; title = "Nachricht wurde nicht ignoriert"; ObjectID = "101"; */
+"101.title" = "Nachricht wurde nicht ignoriert";
+
+/* Class = "NSMenuItem"; title = "Nachricht wurde ignoriert"; ObjectID = "103"; */
+"103.title" = "Nachricht wurde ignoriert";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist eine Aktion"; ObjectID = "133"; */
+"133.title" = "Nachricht ist eine Aktion";
+
+/* Class = "NSMenuItem"; title = "Nachricht stammt von mir"; ObjectID = "157"; */
+"157.title" = "Nachricht stammt von mir";
+
+/* Class = "NSMenuItem"; title = "Nachricht stammt nicht von mir"; ObjectID = "158"; */
+"158.title" = "Nachricht stammt nicht von mir";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist an mich gerichtet"; ObjectID = "175"; */
+"175.title" = "Nachricht ist an mich gerichtet";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "176"; */
+"176.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist eine Aktion"; ObjectID = "177"; */
+"177.title" = "Nachricht ist eine Aktion";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist nicht hervorgehoben"; ObjectID = "178"; */
+"178.title" = "Nachricht ist nicht hervorgehoben";
+
+/* Class = "NSMenuItem"; title = "Nachricht wurde nicht ignoriert"; ObjectID = "180"; */
+"180.title" = "Nachricht wurde nicht ignoriert";
+
+/* Class = "NSMenuItem"; title = "Nachricht stammt von mir"; ObjectID = "181"; */
+"181.title" = "Nachricht stammt von mir";
+
+/* Class = "NSMenuItem"; title = "Absender ist in meiner Kontaktliste"; ObjectID = "182"; */
+"182.title" = "Absender ist in meiner Kontaktliste";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist hervorgehoben"; ObjectID = "183"; */
+"183.title" = "Nachricht ist hervorgehoben";
+
+/* Class = "NSMenuItem"; title = "Absender wurde nicht ignoriert"; ObjectID = "184"; */
+"184.title" = "Absender wurde nicht ignoriert";
+
+/* Class = "NSMenuItem"; title = "Nachricht"; ObjectID = "188"; */
+"188.title" = "Nachricht";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist nicht an mich gerichtet"; ObjectID = "189"; */
+"189.title" = "Nachricht ist nicht an mich gerichtet";
+
+/* Class = "NSMenuItem"; title = "Name des Absenders"; ObjectID = "191"; */
+"191.title" = "Name des Absenders";
+
+/* Class = "NSMenuItem"; title = "Absender wurde ignoriert"; ObjectID = "193"; */
+"193.title" = "Absender wurde ignoriert";
+
+/* Class = "NSMenuItem"; title = "Absender ist nicht in meiner Kontaktliste"; ObjectID = "194"; */
+"194.title" = "Absender ist nicht in meiner Kontaktliste";
+
+/* Class = "NSMenuItem"; title = "Nachricht stammt nicht von mi"; ObjectID = "195"; */
+"195.title" = "Nachricht stammt nicht von mi";
+
+/* Class = "NSMenuItem"; title = "Nachricht wurde ignoriert"; ObjectID = "197"; */
+"197.title" = "Nachricht wurde ignoriert";
+
+/* Class = "NSMenuItem"; title = "Nachricht ist keine Aktion"; ObjectID = "198"; */
+"198.title" = "Nachricht ist keine Aktion";
+
+/* Class = "NSMenuItem"; title = "Name der Quelle"; ObjectID = "200"; */
+"200.title" = "Name der Quelle";
+
+/* Class = "NSMenuItem"; title = "Server der Quelle"; ObjectID = "201"; */
+"201.title" = "Server der Quelle";
+
+/* Class = "NSMenuItem"; title = "Quelle ist ein Gesprächsraum"; ObjectID = "203"; */
+"203.title" = "Quelle ist ein Gesprächsraum";
+
+/* Class = "NSMenuItem"; title = "Quelle ist kein Gesprächsraum"; ObjectID = "204"; */
+"204.title" = "Quelle ist kein Gesprächsraum";
+
+/* Class = "NSMenuItem"; title = "Quelle ist ein direktes Gespräch"; ObjectID = "206"; */
+"206.title" = "Quelle ist ein direktes Gespräch";
+
+/* Class = "NSMenuItem"; title = "Quelle ist kein direktes Gespräch"; ObjectID = "207"; */
+"207.title" = "Quelle ist kein direktes Gespräch";
+
+/* Class = "NSMenuItem"; title = "Jede Nachricht"; ObjectID = "210"; */
+"210.title" = "Jede Nachricht";
+
+/* Class = "NSTextFieldCell"; title = "ago"; ObjectID = "221"; */
+"221.title" = "ago";

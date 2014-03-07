@@ -102,7 +102,7 @@ NSString *JVColorWellCellColorDidChangeNotification = @"JVColorWellCellColorDidC
 	if( _showsWebValue ) {
 		NSString *webValue = [_color HTMLAttributeValue];
 		BOOL highlighted = ( [self isHighlighted] && [[controlView window] firstResponder] == controlView && [[controlView window] isKeyWindow] && [[NSApplication sharedApplication] isActive] );
-		NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[self font], NSFontAttributeName, ( [self isEnabled] ? ( highlighted ? [NSColor alternateSelectedControlTextColor] : [NSColor controlTextColor] ) : ( highlighted ? [NSColor alternateSelectedControlTextColor] : [[NSColor controlTextColor] colorWithAlphaComponent:0.50] ) ), NSForegroundColorAttributeName, nil];
+		NSDictionary *attributes = @{NSFontAttributeName: [self font], NSForegroundColorAttributeName: ( [self isEnabled] ? ( highlighted ? [NSColor alternateSelectedControlTextColor] : [NSColor controlTextColor] ) : ( highlighted ? [NSColor alternateSelectedControlTextColor] : [[NSColor controlTextColor] colorWithAlphaComponent:0.50] ) )};
 		NSSize stringSize = [webValue sizeWithAttributes:attributes];
 		float y = NSMinY( cellFrame ) + ( NSHeight( cellFrame ) / 2. ) - ( stringSize.height / 2. );
 		[webValue drawInRect:NSMakeRect( NSMinX( cellFrame ) + ( NSHeight( cellFrame ) * 1.5 ) + 8., y, NSMaxX( cellFrame ) - ( NSHeight( cellFrame ) * 1.5 ) - 8., stringSize.height ) withAttributes:attributes];

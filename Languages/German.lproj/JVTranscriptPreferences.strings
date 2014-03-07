@@ -1,0 +1,60 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenuItem"; title = "Eine Datei pro Sitzung"; ObjectID = "9"; */
+"9.title" = "Eine Datei pro Sitzung";
+
+/* Class = "NSMenuItem"; title = "Mehrere Sitzungen in einer Datei"; ObjectID = "10"; */
+"10.title" = "Mehrere Sitzungen in einer Datei";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "11"; */
+"11.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "16"; */
+"16.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Einen Ordner pro Server"; ObjectID = "17"; */
+"17.title" = "Einen Ordner pro Server";
+
+/* Class = "NSMenuItem"; title = "Alle im gleichen Ordner"; ObjectID = "18"; */
+"18.title" = "Alle im gleichen Ordner";
+
+/* Class = "NSMenuItem"; title = "Einen Ordner pro Gespräch und Server"; ObjectID = "23"; */
+"23.title" = "Einen Ordner pro Gespräch und Server";
+
+/* Class = "NSMenuItem"; title = "Eine Datei pro Sitzungstag"; ObjectID = "24"; */
+"24.title" = "Eine Datei pro Sitzungstag";
+
+/* Class = "NSMenuItem"; title = "Einen Unterordner pro Gespräch im Server-Ordner"; ObjectID = "25"; */
+"25.title" = "Einen Unterordner pro Gespräch im Server-Ordner";
+
+/* Class = "NSMenuItem"; title = "Auswählen…"; ObjectID = "28"; */
+"28.title" = "Auswählen…";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "31"; */
+"31.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "33"; */
+"33.title" = " ";
+
+/* Class = "NSButtonCell"; title = "Protokolle für Gesprächsräume sichern"; ObjectID = "106"; */
+"106.title" = "Protokolle für Gesprächsräume sichern";
+
+/* Class = "NSButtonCell"; title = "Protokolle für direkte Gespräche sichern"; ObjectID = "107"; */
+"107.title" = "Protokolle für direkte Gespräche sichern";
+
+/* Class = "NSTextFieldCell"; title = "Handhabung von Sitzungen:"; ObjectID = "109"; */
+"109.title" = "Handhabung von Sitzungen:";
+
+/* Class = "NSTextFieldCell"; title = "Ordnerstruktur:"; ObjectID = "110"; */
+"110.title" = "Ordnerstruktur:";
+
+/* Class = "NSButtonCell"; title = "Für Menschen lesbare Dateiformatierung"; ObjectID = "111"; */
+"111.title" = "Für Menschen lesbare Dateiformatierung";
+
+/* Class = "NSTextFieldCell"; title = "Ordner für Protokolle:"; ObjectID = "112"; */
+"112.title" = "Ordner für Protokolle:";
+
+/* Class = "NSTextFieldCell"; title = "Automatisch:"; ObjectID = "114"; */
+"114.title" = "Automatisch:";

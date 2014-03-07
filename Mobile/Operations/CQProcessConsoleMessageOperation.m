@@ -5,20 +5,14 @@
 static NSRegularExpression *numericRegularExpression;
 
 @implementation CQProcessConsoleMessageOperation
+@synthesize processedMessageInfo = _processedMessage;
+
 + (void) initialize {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		numericRegularExpression = [[NSRegularExpression alloc] initWithPattern:@"\\d{3}|CAP|AUTHENTICATE" options:NSRegularExpressionCaseInsensitive error:nil];
 	});
 }
-@synthesize processedMessageInfo = _processedMessage;
-@synthesize encoding = _encoding;
-@synthesize fallbackEncoding = _fallbackEncoding;
-@synthesize target = _target;
-@synthesize action = _action;
-@synthesize userInfo = _userInfo;
-@synthesize messageType = _messageType;
-@synthesize verbose = _verbose;
 
 - (id) initWithMessage:(NSString *) message outbound:(BOOL) outbound {
 	NSParameterAssert(message != nil);
@@ -34,24 +28,14 @@ static NSRegularExpression *numericRegularExpression;
 	return self;
 }
 
-- (void) dealloc {
-	[_message release];
-	[_processedMessage release];
-	[_highlightNickname release];
-	[_target release];
-	[_userInfo release];
-
-	[super dealloc];
-}
-
 #pragma mark -
 
 - (NSString *) processedMessageAsHTML {
-	return [_processedMessage objectForKey:@"message"];
+	return _processedMessage[@"message"];
 }
 
 - (NSString *) processedMessageAsPlainText {
-	return [_processedMessage objectForKey:@"messagePlain"];
+	return _processedMessage[@"messagePlain"];
 }
 
 #pragma mark -
@@ -110,20 +94,19 @@ static NSRegularExpression *numericRegularExpression;
 	[self _determineMessageType:strippedMessage];
 
 	_processedMessage = [[NSMutableDictionary alloc] init];
-	[_processedMessage setObject:@"console" forKey:@"type"];
-	[_processedMessage setObject:@(_outbound) forKey:@"outbound"];
+	_processedMessage[@"type"] = @"console";
+	_processedMessage[@"outbound"] = @(_outbound);
 
 	if (_verbose) {
-		[_processedMessage setObject:verboseMessage forKey:@"message"];
-		[_processedMessage setObject:verboseMessage forKey:@"messagePlain"];
+		_processedMessage[@"message"] = verboseMessage;
+		_processedMessage[@"messagePlain"] = verboseMessage;
 	} else {
-		[_processedMessage setObject:strippedMessage forKey:@"message"];
-		[_processedMessage setObject:strippedMessage forKey:@"messagePlain"];
+		_processedMessage[@"message"] = strippedMessage;
+		_processedMessage[@"messagePlain"] = strippedMessage;
 	}
 
 	if (_target && _action)
 		[_target performSelectorOnMainThread:_action withObject:self waitUntilDone:NO];
 
-	[verboseMessage release];
 }
 @end

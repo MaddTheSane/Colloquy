@@ -29,7 +29,7 @@ NSString *JVEmoticonSetsScannedNotification = @"JVEmoticonSetsScannedNotificatio
 		for( NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] ) {
 			NSString *fullPath = [path stringByAppendingPathComponent:file];
 			NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:fullPath error:nil];
-			if( /* [[NSWorkspace sharedWorkspace] isFilePackageAtPath:fullPath] && */ ( [[file pathExtension] caseInsensitiveCompare:@"colloquyEmoticons"] == NSOrderedSame || ( [[attributes objectForKey:NSFileHFSTypeCode] unsignedLongValue] == 'coEm' && [[attributes objectForKey:NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
+			if( /* [[NSWorkspace sharedWorkspace] isFilePackageAtPath:fullPath] && */ ( [[file pathExtension] caseInsensitiveCompare:@"colloquyEmoticons"] == NSOrderedSame || ( [attributes[NSFileHFSTypeCode] unsignedLongValue] == 'coEm' && [attributes[NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
 				NSBundle *bundle = nil;
 				JVEmoticonSet *emoticon = nil;
 				if( ( bundle = [NSBundle bundleWithPath:[path stringByAppendingPathComponent:file]] ) ) {
@@ -137,7 +137,7 @@ NSString *JVEmoticonSetsScannedNotification = @"JVEmoticonSetsScannedNotificatio
 	NSCharacterSet *escapeSet = [NSCharacterSet characterSetWithCharactersInString:@"^[]{}()\\.$*+?|"];
 
 	for( NSString *key in [self emoticonMappings] ) {
-		NSArray *obj = [[self emoticonMappings] objectForKey:key];
+		NSArray *obj = [self emoticonMappings][key];
 
 		for( NSString *str in obj ) {
 			NSMutableString *search = [str mutableCopy];
@@ -198,11 +198,11 @@ NSString *JVEmoticonSetsScannedNotification = @"JVEmoticonSetsScannedNotificatio
 	NSDictionary *info = nil;
 
 	for( info in _emoticonMenu ) {
-		if( ! [(NSString *)[info objectForKey:@"name"] length] ) continue;
-		menuItem = [[NSMenuItem alloc] initWithTitle:[info objectForKey:@"name"] action:NULL keyEquivalent:@""];
-		if( [(NSString *)[info objectForKey:@"image"] length] )
-			[menuItem setImage:[[NSImage alloc] initWithContentsOfFile:[[self bundle] pathForResource:[info objectForKey:@"image"] ofType:nil]]];
-		[menuItem setRepresentedObject:[info objectForKey:@"insert"]];
+		if( ! [(NSString *)info[@"name"] length] ) continue;
+		menuItem = [[NSMenuItem alloc] initWithTitle:info[@"name"] action:NULL keyEquivalent:@""];
+		if( [(NSString *)info[@"image"] length] )
+			[menuItem setImage:[[NSImage alloc] initWithContentsOfFile:[[self bundle] pathForResource:info[@"image"] ofType:nil]]];
+		[menuItem setRepresentedObject:info[@"insert"]];
 		[ret addObject:menuItem];
 	}
 

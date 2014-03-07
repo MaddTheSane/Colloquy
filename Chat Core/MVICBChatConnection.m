@@ -71,6 +71,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 #pragma mark -
 
 @interface MVICBChatConnection (MVICBChatConnectionPrivate)
+- (oneway void) _runloop;
 - (void) _connect;
 - (void) _startSendQueue;
 - (void) _stopSendQueue;
@@ -96,8 +97,8 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 #pragma mark Class accessors
 
 + (NSArray *) defaultServerPorts {
-	id defaultPort = [NSNumber numberWithUnsignedShort:7326];
-	return [NSArray arrayWithObjects:defaultPort, nil];
+	id defaultPort = [NSNumber numberWithUnsignedShort:(unsigned short)7326];
+	return @[defaultPort];
 }
 
 #pragma mark Constructors and finalizers
@@ -108,8 +109,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 		_nickname = [_username retain];
 		_password = @"";
 		_server = @"localhost";
-		_serverPort = [[[MVICBChatConnection defaultServerPorts]
-		                objectAtIndex:0] shortValue];
+		_serverPort = [[MVICBChatConnection defaultServerPorts][0] shortValue];
 		_initialChannel = @"1";
 		_room = nil;
 		_threadWaitLock = [[NSConditionLock alloc] initWithCondition:0];
@@ -202,8 +202,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	if( port != 0 )
 		_serverPort = port;
 	else
-		_serverPort = [[[MVICBChatConnection defaultServerPorts]
-		                objectAtIndex:0] shortValue];
+		_serverPort = [[MVICBChatConnection defaultServerPorts][0] shortValue];
 }
 
 - (void) setUsername:(NSString *) newUsername {
@@ -454,7 +453,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 
 	NSData *data = nil;
 	@synchronized( _sendQueue ) {
-		data = [[_sendQueue objectAtIndex:0] retain];
+		data = [_sendQueue[0] retain];
 		[_sendQueue removeObjectAtIndex:0];
 
 		if( _sendQueue.count )
@@ -482,9 +481,8 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatConnectionGotRawMessageNotification
 	 object:self
-	 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-               [packet description],            @"message",
-               [NSNumber numberWithBool:YES],   @"outbound", nil]];
+	 userInfo:@{@"message": [packet description],
+               @"outbound": @YES}];
 }
 
 - (void) _writeDataToServer:(id) raw {
@@ -545,7 +543,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 
 - (void) _postProtocolError:(NSString *) reason {
 	NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-	[userInfo setObject:reason forKey:@"reason"];
+	userInfo[@"reason"] = reason;
 	NSError *error = [NSError errorWithDomain:MVChatConnectionErrorDomain
 	                          code:MVChatConnectionProtocolError
 							  userInfo:userInfo];
@@ -601,7 +599,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 		[_knownUsers removeObjectForKey:[user uniqueIdentifier]];
 		[user _setUniqueIdentifier:[newNickname lowercaseString]];
 		[user _setNickname:newNickname];
-		[_knownUsers setObject:user forKey:[user uniqueIdentifier]];
+		_knownUsers[[user uniqueIdentifier]] = user;
 		[user release];
 	}
 }
@@ -743,9 +741,8 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatConnectionGotRawMessageNotification
 	 object:self
-	 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-               [packet description],            @"message",
-               [NSNumber numberWithBool:NO],    @"outbound", nil]];
+	 userInfo:@{@"message": [packet description],
+               @"outbound": @NO}];
 
 	const struct info *i = &info[0];
 	while( i->type != '\0' ) {
@@ -777,12 +774,10 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	NSParameterAssert( fields );
 	NSParameterAssert( fields.count == 1 );
 
-	NSString *who = [fields objectAtIndex:0];
+	NSString *who = fields[0];
 
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-	                          [self chatUserWithUniqueIdentifier:who], @"user",
-							  [NSString locallyUniqueString], @"identifier",
-							  nil];
+	NSDictionary *userInfo = @{@"user": [self chatUserWithUniqueIdentifier:who],
+							  @"identifier": [NSString locallyUniqueString]};
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatConnectionGotBeepNotification
 	 object:self userInfo:userInfo];
@@ -792,7 +787,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	NSParameterAssert( fields );
 	NSParameterAssert( fields.count >= 1 );
 
-	NSString *type = [fields objectAtIndex:0];
+	NSString *type = fields[0];
 	NSString *selname = [NSString stringWithFormat:@"stcCommandOutputPacket%@:",
 	                                               [type uppercaseString]];
 	SEL selector = NSSelectorFromString(selname);
@@ -804,7 +799,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 }
 
 - (void) stcCommandOutputPacketCO:(NSArray *) fields {
-	NSString *message = [fields objectAtIndex:1];
+	NSString *message = fields[1];
 	if( [message hasPrefix:@"The topic is: "] ) {
 		[_room _setTopic:[[message substringFromIndex:14]
 		                  dataUsingEncoding:[self encoding]]];
@@ -815,7 +810,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 		[[NSNotificationCenter defaultCenter]
 		 postNotificationOnMainThreadWithName:MVChatConnectionGotInformationalMessageNotification
 		 object:self
-		 userInfo:[NSDictionary dictionaryWithObject:message forKey:@"message"]];
+		 userInfo:@{@"message": message}];
 	}
 }
 
@@ -823,12 +818,12 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 }
 
 - (void) stcCommandOutputPacketWL:(NSArray *) fields {
-	MVChatUser *who = [self chatUserWithUniqueIdentifier:[fields objectAtIndex:2]];
+	MVChatUser *who = [self chatUserWithUniqueIdentifier:fields[2]];
 	[_room _addMemberUser:who];
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatRoomMemberUsersSyncedNotification
 	 object:_room
-	 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObject:who], @"added", nil]];
+	 userInfo:@{@"added": @[who]}];
 }
 
 - (void) stcExitPacket:(NSArray *) fields {
@@ -843,13 +838,13 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	NSParameterAssert( fields );
 	NSParameterAssert( fields.count == 1 );
 
-	NSString *message = [fields objectAtIndex:0];
+	NSString *message = fields[0];
 	NSRange r;
 
 	if( [message compare:@"Open messages not permitted in quiet groups."] == 0 ) {
 		NSError *error = [NSError errorWithDomain:MVChatConnectionErrorDomain
 					 			  code:MVChatConnectionCantSendToRoomError
-								  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:_room, @"room", nil]];
+								  userInfo:@{@"room": _room}];
 		[self performSelectorOnMainThread:@selector( _postError: )
 			  withObject:error waitUntilDone:NO];
 	} else if( [message compare:@"Nickname already in use."] == 0 ) {
@@ -858,7 +853,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 		} else {
 			NSError *error = [NSError errorWithDomain:MVChatConnectionErrorDomain
 									  code:MVChatConnectionErroneusNicknameError
-									  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:_nickname, @"nickname", nil]];
+									  userInfo:@{@"nickname": _nickname}];
 			[self performSelectorOnMainThread:@selector( _postError: )
 				  withObject:error waitUntilDone:NO];
 
@@ -879,22 +874,22 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 		// XXX
 	} else
 		[self _postProtocolError:[NSString stringWithFormat:@"Received an "
-		      "unhandled error packet: %@", [fields objectAtIndex:0]]];
+		      "unhandled error packet: %@", fields[0]]];
 }
 
 - (void) stcImportantPacket:(NSArray *) fields {
 	NSParameterAssert( fields );
 	NSParameterAssert( fields.count == 2 );
 
-	NSString *category = [fields objectAtIndex:0];
-	NSString *text = [fields objectAtIndex:1];
+	NSString *category = fields[0];
+	NSString *text = fields[1];
 	NSString *message = [NSString stringWithFormat:@"%@, %@",
 						 category, text];
 
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatConnectionGotImportantMessageNotification
 	 object:self
-	 userInfo:[NSDictionary dictionaryWithObject:message forKey:@"message"]];
+	 userInfo:@{@"message": message}];
 }
 
 - (void) stcLoginPacket:(NSArray *) fields {
@@ -928,17 +923,15 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	NSParameterAssert( fields );
 	NSParameterAssert( fields.count == 2 );
 
-	NSString *who = [fields objectAtIndex:0];
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *who = fields[0];
+	NSString *msg = fields[1];
 
 	MVChatUser *user = [self chatUserWithUniqueIdentifier:who];
 	[user _setIdleTime:0.];
 
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-	                          user, @"user",
-							  [msg dataUsingEncoding:[self encoding]], @"message",
-							  [NSString locallyUniqueString], @"identifier",
-							  nil];
+	NSDictionary *userInfo = @{@"user": user,
+							  @"message": [msg dataUsingEncoding:[self encoding]],
+							  @"identifier": [NSString locallyUniqueString]};
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatRoomGotMessageNotification
 	 object:_room userInfo:userInfo];
@@ -948,15 +941,13 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	NSParameterAssert( fields );
 	NSParameterAssert( fields.count == 2 );
 
-	NSString *who = [fields objectAtIndex:0];
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *who = fields[0];
+	NSString *msg = fields[1];
 
 	MVChatUser *user = [self chatUserWithUniqueIdentifier:who];
 
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-	                          [msg dataUsingEncoding:[self encoding]], @"message",
-							  [NSString locallyUniqueString], @"identifier",
-							  nil];
+	NSDictionary *userInfo = @{@"message": [msg dataUsingEncoding:[self encoding]],
+							  @"identifier": [NSString locallyUniqueString]};
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatConnectionGotPrivateMessageNotification
 	 object:user userInfo:userInfo];
@@ -967,7 +958,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	NSParameterAssert( fields.count <= 1 );
 
 	if( fields.count == 1 ) {
-		NSString *ident = [fields objectAtIndex:0];
+		NSString *ident = fields[0];
 		[self ctsPongPacketWithId:ident];
 	} else
 		[self ctsPongPacket];
@@ -987,7 +978,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	NSParameterAssert( fields );
 	NSParameterAssert( fields.count == 2 );
 
-	NSString *category = [fields objectAtIndex:0];
+	NSString *category = fields[0];
 
 	NSMutableString *tmp = [NSMutableString stringWithCapacity:category.length];
 	[tmp setString:category];
@@ -1005,20 +996,20 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 }
 
 - (void) stcStatusPacketArrive:(NSArray *) fields {
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *msg = fields[1];
 
 	NSArray *words = [msg componentsSeparatedByString:@" "];
-	MVChatUser *sender = [self chatUserWithUniqueIdentifier:[words objectAtIndex:0]];
+	MVChatUser *sender = [self chatUserWithUniqueIdentifier:words[0]];
 	[sender _setIdleTime:0.];
 	[_room _addMemberUser:sender];
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatRoomUserJoinedNotification
 	 object:_room
-	 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:sender, @"user", nil]];
+	 userInfo:@{@"user": sender}];
 }
 
 - (void) stcStatusPacketBoot:(NSArray *) fields {
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *msg = fields[1];
 
 	NSRange r;
 
@@ -1034,34 +1025,34 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 			[[NSNotificationCenter defaultCenter]
 			 postNotificationOnMainThreadWithName:MVChatRoomKickedNotification
 			 object:_room
-			 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:reason, @"reason",
-			                                                     server, @"byUser", nil]];
+			 userInfo:@{@"reason": reason,
+			                                                     @"byUser": server}];
 		} else {
 			[_room _removeMemberUser:who];
 			[[NSNotificationCenter defaultCenter]
 			 postNotificationOnMainThreadWithName:MVChatRoomUserKickedNotification
 			 object:_room
-			 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:reason, @"reason",
-				                                                 server, @"byUser",
-																 who, @"user", nil]];
+			 userInfo:@{@"reason": reason,
+				                                                 @"byUser": server,
+																 @"user": who}];
 		}
 	}
 }
 
 - (void) stcStatusPacketDepart:(NSArray *) fields {
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *msg = fields[1];
 
 	NSArray *words = [msg componentsSeparatedByString:@" "];
-	MVChatUser *sender = [self chatUserWithUniqueIdentifier:[words objectAtIndex:0]];
+	MVChatUser *sender = [self chatUserWithUniqueIdentifier:words[0]];
 	[_room _removeMemberUser:sender];
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatRoomUserPartedNotification
 	 object:_room
-	 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:sender, @"user", nil]];
+	 userInfo:@{@"user": sender}];
 }
 
 - (void) stcStatusPacketFYI:(NSArray *) fields {
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *msg = fields[1];
 
 	NSRange r;
 
@@ -1076,16 +1067,14 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 		[[NSNotificationCenter defaultCenter]
 		 postNotificationOnMainThreadWithName:MVChatRoomUserBrickedNotification
 		 object:_room
-		 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:who, @"user", nil]];
+		 userInfo:@{@"user": who}];
 	} else {
 		MVChatUser *user = [self chatUserWithUniqueIdentifier:@"server"];
 		NSData *msgdata = [msg dataUsingEncoding:[self encoding]];
 
-		NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-								  msgdata, @"message",
-								  [NSString locallyUniqueString], @"identifier",
-								  @"yes", @"notice",
-								  nil];
+		NSDictionary *userInfo = @{@"message": msgdata,
+								  @"identifier": [NSString locallyUniqueString],
+								  @"notice": @"yes"};
 		[[NSNotificationCenter defaultCenter]
 		 postNotificationOnMainThreadWithName:MVChatConnectionGotPrivateMessageNotification
 		 object:user userInfo:userInfo];
@@ -1093,7 +1082,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 }
 
 - (void) stcStatusPacketMessage:(NSArray *) fields {
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *msg = fields[1];
 
 	/*
 	 * Known message notifications.  Maybe they should be handled in some
@@ -1106,18 +1095,16 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 
 	MVChatUser *user = [self chatUserWithUniqueIdentifier:@"server"];
 
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-	                          [msg dataUsingEncoding:[self encoding]], @"message",
-							  [NSString locallyUniqueString], @"identifier",
-							  @"yes", @"notice",
-							  nil];
+	NSDictionary *userInfo = @{@"message": [msg dataUsingEncoding:[self encoding]],
+							  @"identifier": [NSString locallyUniqueString],
+							  @"notice": @"yes"};
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatConnectionGotPrivateMessageNotification
 	 object:user userInfo:userInfo];
 }
 
 - (void) stcStatusPacketName:(NSArray *) fields {
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *msg = fields[1];
 
 	NSRange r;
 
@@ -1140,7 +1127,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 			[[NSNotificationCenter defaultCenter]
 			 postNotificationOnMainThreadWithName:MVChatUserNicknameChangedNotification
 			 object:who
-			 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:oldnick, @"oldNickname", nil]];
+			 userInfo:@{@"oldNickname": oldnick}];
 		}
 	}
 }
@@ -1149,32 +1136,32 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 }
 
 - (void) stcStatusPacketSignoff:(NSArray *) fields {
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *msg = fields[1];
 
 	NSArray *words = [msg componentsSeparatedByString:@" "];
-	MVChatUser *sender = [self chatUserWithUniqueIdentifier:[words objectAtIndex:0]];
+	MVChatUser *sender = [self chatUserWithUniqueIdentifier:words[0]];
 	[_room _removeMemberUser:sender];
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatRoomUserPartedNotification
 	 object:_room
-	 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:sender, @"user", nil]];
+	 userInfo:@{@"user": sender}];
 }
 
 - (void) stcStatusPacketSignon:(NSArray *) fields {
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *msg = fields[1];
 
 	NSArray *words = [msg componentsSeparatedByString:@" "];
-	MVChatUser *sender = [self chatUserWithUniqueIdentifier:[words objectAtIndex:0]];
+	MVChatUser *sender = [self chatUserWithUniqueIdentifier:words[0]];
 	[sender _setIdleTime:0.];
 	[_room _addMemberUser:sender];
 	[[NSNotificationCenter defaultCenter]
 	 postNotificationOnMainThreadWithName:MVChatRoomUserJoinedNotification
 	 object:_room
-	 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:sender, @"user", nil]];
+	 userInfo:@{@"user": sender}];
 }
 
 - (void) stcStatusPacketStatus:(NSArray *) fields {
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *msg = fields[1];
 
 	NSRange r;
 
@@ -1195,7 +1182,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 }
 
 - (void) stcStatusPacketTopic:(NSArray *) fields {
-	NSString *msg = [fields objectAtIndex:1];
+	NSString *msg = fields[1];
 
 	NSRange r;
 

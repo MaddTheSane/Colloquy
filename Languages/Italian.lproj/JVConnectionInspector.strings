@@ -1,0 +1,159 @@
+
+/* Class = "NSTabViewItem"; label = "Proxy"; ObjectID = "138"; */
+"138.label" = "Proxy";
+
+/* Class = "NSTabViewItem"; label = "Generale"; ObjectID = "139"; */
+"139.label" = "Generale";
+
+/* Class = "NSTabViewItem"; label = "Automatico"; ObjectID = "154"; */
+"154.label" = "Automatico";
+
+/* Class = "NSMenuItem"; title = "Firewall SOCKS"; ObjectID = "156"; */
+"156.title" = "Firewall SOCKS";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "157"; */
+"157.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Nessuno"; ObjectID = "158"; */
+"158.title" = "Nessuno";
+
+/* Class = "NSMenuItem"; title = "Web sicuro"; ObjectID = "162"; */
+"162.title" = "Web sicuro";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "230"; */
+"230.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "232"; */
+"232.title" = "OtherViews";
+
+/* Class = "NSTabViewItem"; label = "Ignora"; ObjectID = "241"; */
+"241.label" = "Ignora";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "321"; */
+"321.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Riscontra nel messaggio"; ObjectID = "324"; */
+"324.title" = "Riscontra nel messaggio";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "328"; */
+"328.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Riscontra il mittente"; ObjectID = "335"; */
+"335.title" = "Riscontra il mittente";
+
+/* Class = "NSMenuItem"; title = "Il nome del mittente e'"; ObjectID = "336"; */
+"336.title" = "Il nome del mittente e'";
+
+/* Class = "NSMenuItem"; title = "Il messaggio contiene"; ObjectID = "338"; */
+"338.title" = "Il messaggio contiene";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Aggiungi ignore"; ObjectID = "403"; */
+"403.ibShadowedToolTip" = "Aggiungi ignore";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Modifica ignore"; ObjectID = "404"; */
+"404.ibShadowedToolTip" = "Modifica ignore";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Rimuovi ignore"; ObjectID = "405"; */
+"405.ibShadowedToolTip" = "Rimuovi ignore";
+
+/* Class = "NSTextFieldCell"; title = "Tipo:"; ObjectID = "416"; */
+"416.title" = "Tipo:";
+
+/* Class = "NSTextFieldCell"; title = "Account:"; ObjectID = "418"; */
+"418.title" = "Account:";
+
+/* Class = "NSTextFieldCell"; title = "Password:"; ObjectID = "421"; */
+"421.title" = "Password:";
+
+/* Class = "NSButtonCell"; title = "Usa impostazioni di sistema"; ObjectID = "422"; */
+"422.title" = "Usa impostazioni di sistema";
+
+/* Class = "NSTextFieldCell"; title = "Indirizzo:"; ObjectID = "423"; */
+"423.title" = "Indirizzo:";
+
+/* Class = "NSTextFieldCell"; title = "Porta:"; ObjectID = "425"; */
+"425.title" = "Porta:";
+
+/* Class = "NSTextFieldCell"; title = "Password:"; ObjectID = "427"; */
+"427.title" = "Password:";
+
+/* Class = "NSTextFieldCell"; title = "Soprannome:"; ObjectID = "429"; */
+"429.title" = "Soprannome:";
+
+/* Class = "NSTextFieldCell"; title = "Server:"; ObjectID = "431"; */
+"431.title" = "Server:";
+
+/* Class = "NSTextFieldCell"; title = "Password del server:"; ObjectID = "434"; */
+"434.title" = "Password del server:";
+
+/* Class = "NSTextFieldCell"; title = "Nome utente:"; ObjectID = "435"; */
+"435.title" = "Nome utente:";
+
+/* Class = "NSTextFieldCell"; title = "Nome reale:"; ObjectID = "438"; */
+"438.title" = "Nome reale:";
+
+/* Class = "NSTextFieldCell"; title = "Soprannomi alternativi:"; ObjectID = "439"; */
+"439.title" = "Soprannomi alternativi:";
+
+/* Class = "NSComboBoxCell"; title = "6667"; ObjectID = "441"; */
+"441.title" = "6667";
+
+/* Class = "NSComboBoxCell"; 441.ibShadowedObjectValues[0] = "6667"; ObjectID = "441"; */
+"441.ibShadowedObjectValues[0]" = "6667";
+
+/* Class = "NSComboBoxCell"; 441.ibShadowedObjectValues[1] = "6668"; ObjectID = "441"; */
+"441.ibShadowedObjectValues[1]" = "6668";
+
+/* Class = "NSComboBoxCell"; 441.ibShadowedObjectValues[2] = "6669"; ObjectID = "441"; */
+"441.ibShadowedObjectValues[2]" = "6669";
+
+/* Class = "NSComboBoxCell"; 441.ibShadowedObjectValues[3] = "7000"; ObjectID = "441"; */
+"441.ibShadowedObjectValues[3]" = "7000";
+
+/* Class = "NSComboBoxCell"; 441.ibShadowedObjectValues[4] = "9999"; ObjectID = "441"; */
+"441.ibShadowedObjectValues[4]" = "9999";
+
+/* Class = "NSTextFieldCell"; title = "Porta del server:"; ObjectID = "442"; */
+"442.title" = "Porta del server:";
+
+/* Class = "NSTextFieldCell"; title = "Codifica:"; ObjectID = "444"; */
+"444.title" = "Codifica:";
+
+/* Class = "NSButtonCell"; title = "SSL"; ObjectID = "445"; */
+"445.title" = "SSL";
+
+/* Class = "NSButtonCell"; title = "Connettiti all'avvio"; ObjectID = "446"; */
+"446.title" = "Connettiti all'avvio";
+
+/* Class = "NSTextFieldCell"; title = "Accedi alle stanze:"; ObjectID = "447"; */
+"447.title" = "Accedi alle stanze:";
+
+/* Class = "NSTextFieldCell"; title = "Comandi:"; ObjectID = "450"; */
+"450.title" = "Comandi:";
+
+/* Class = "NSButtonCell"; title = "Apri console alla connessione"; ObjectID = "451"; */
+"451.title" = "Apri console alla connessione";
+
+/* Class = "NSButtonCell"; title = "Il messaggio verrà inviato ad ognuna di queste stanze:"; ObjectID = "457"; */
+"457.title" = "Il messaggio verrà inviato ad ognuna di queste stanze:";
+
+/* Class = "NSTextFieldCell"; title = "Ignora i messaggi se tutte le condizioni selezionate\nsono riscontrate:"; ObjectID = "460"; */
+"460.title" = "Ignora i messaggi se tutte le condizioni selezionate\nsono riscontrate:";
+
+/* Class = "NSTextFieldCell"; title = "Descrizione:"; ObjectID = "466"; */
+"466.title" = "Descrizione:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "467"; */
+"467.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Annulla"; ObjectID = "468"; */
+"468.title" = "Annulla";
+
+/* Class = "NSButtonCell"; title = "Questa regola di ignore è permanente."; ObjectID = "469"; */
+"469.title" = "Questa regola di ignore è permanente.";
+
+/* Class = "NSButtonCell"; title = "SASL"; ObjectID = "483"; */
+"483.title" = "SASL";
+
+/* Class = "NSButtonCell"; title = "Rooms wait for Identification"; ObjectID = "487"; */
+"487.title" = "Rooms wait for Identification";

@@ -32,7 +32,7 @@
 		xmlFree( prop );
 
 		prop = xmlGetProp( (xmlNode *) _node, (xmlChar *) "occurred" );
-		_date = ( prop ? [[NSDate allocWithZone:nil] initWithString:[NSString stringWithUTF8String:(char *) prop]] : nil );
+		_date = ( prop ? [[NSDate allocWithZone:nil] initWithString:@((char *) prop)] : nil );
 		xmlFree( prop );
 	}
 
@@ -70,7 +70,7 @@
 				for( prop = subNode -> properties; prop; prop = prop -> next ) {
 					xmlChar *value = xmlGetProp( subNode, prop -> name );
 					if( value ) {
-						[properties setObject:[NSString stringWithUTF8String:(char *) value] forKey:[NSString stringWithUTF8String:(char *) prop -> name]];
+						properties[@((char *) prop -> name)] = @((char *) value);
 						xmlFree( value );
 					}
 				}
@@ -87,15 +87,15 @@
 					value = [NSTextStorage attributedStringWithXHTMLTree:subNode baseURL:nil defaultAttributes:nil];
 				} else {
 					xmlChar *content = xmlNodeGetContent( subNode );
-					value = [NSString stringWithUTF8String:(char *) content];
+					value = @((char *) content);
 					xmlFree( content );
 				}
 
 				if( [properties count] ) {
-					[properties setObject:value forKey:@"value"];
-					[attributes setObject:properties forKey:[NSString stringWithUTF8String:(char *) subNode -> name]];
+					properties[@"value"] = value;
+					attributes[@((char *) subNode -> name)] = properties;
 				} else {
-					[attributes setObject:value forKey:[NSString stringWithUTF8String:(char *) subNode -> name]];
+					attributes[@((char *) subNode -> name)] = value;
 				}
 			}
 		} while( ( subNode = subNode -> next ) );
@@ -122,7 +122,7 @@
 		const char *msgStr = NULL;
 
 		if( [self message] ) {
-			NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"IgnoreFonts", [NSNumber numberWithBool:YES], @"IgnoreFontSizes", nil];
+			NSDictionary *options = @{@"IgnoreFonts": @YES, @"IgnoreFontSizes": @YES};
 			NSString *msgValue = [[self message] HTMLFormatWithOptions:options];
 			msgValue = [msgValue stringByStrippingIllegalXMLCharacters];
 
@@ -135,12 +135,12 @@
 		}
 
 		for( NSString *key in [self attributes] ) {
-			id value = [[self attributes] objectForKey:key];
+			id value = [self attributes][key];
 
 			if( [value respondsToSelector:@selector( xmlDescriptionWithTagName: )] ) {
 				msgStr = [(NSString *)[value performSelector:@selector( xmlDescriptionWithTagName: ) withObject:key] UTF8String];
 			} else if( [value isKindOfClass:[NSAttributedString class]] ) {
-				NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"IgnoreFonts", [NSNumber numberWithBool:YES], @"IgnoreFontSizes", nil];
+				NSDictionary *options = @{@"IgnoreFonts": @YES, @"IgnoreFontSizes": @YES};
 				value = [value HTMLFormatWithOptions:options];
 				value = [value stringByStrippingIllegalXMLCharacters];
 				if( [(NSString *)value length] )
@@ -213,7 +213,7 @@
 }
 
 - (NSString *) messageAsHTML {
-	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"IgnoreFonts", [NSNumber numberWithBool:YES], @"IgnoreFontSizes", nil];
+	NSDictionary *options = @{@"IgnoreFonts": @YES, @"IgnoreFontSizes": @YES};
 	return [[self message] HTMLFormatWithOptions:options];
 }
 

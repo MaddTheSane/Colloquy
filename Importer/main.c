@@ -3,15 +3,10 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreFoundation/CFPlugInCOM.h>
 #include <CoreServices/CoreServices.h>
+#include "GetMetadataForFile.h"
 
 #define PLUGIN_ID "BEB8A52D-7759-4331-9C3D-088295CF7E97"
 //#define PLUGIN_ID "04A856E0-880E-41BA-ABFA-35F147710AFC"
-
-// The import function to be implemented in GetMetadataForFile.c
-Boolean GetMetadataForFile(void *thisInterface,
-			   CFMutableDictionaryRef attributes,
-			   CFStringRef contentTypeUTI,
-			   CFStringRef pathToFile);
 
 // The layout for an instance of MetaDataImporterPlugIn
 typedef struct __MetadataImporterPluginType
@@ -22,12 +17,12 @@ typedef struct __MetadataImporterPluginType
 } MetadataImporterPluginType;
 
 
-MetadataImporterPluginType  *AllocMetadataImporterPluginType(CFUUIDRef inFactoryID);
-void                      DeallocMetadataImporterPluginType(MetadataImporterPluginType *thisInstance);
-HRESULT                   MetadataImporterQueryInterface(void *thisInstance,REFIID iid,LPVOID *ppv);
-void                     *MetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID);
-ULONG                     MetadataImporterPluginAddRef(void *thisInstance);
-ULONG                     MetadataImporterPluginRelease(void *thisInstance);
+static MetadataImporterPluginType	*AllocMetadataImporterPluginType(CFUUIDRef inFactoryID);
+static void							 DeallocMetadataImporterPluginType(MetadataImporterPluginType *thisInstance);
+static HRESULT						 MetadataImporterQueryInterface(void *thisInstance,REFIID iid,LPVOID *ppv);
+void								*MetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID);
+static ULONG						 MetadataImporterPluginAddRef(void *thisInstance);
+static ULONG						 MetadataImporterPluginRelease(void *thisInstance);
 
 static MDImporterInterfaceStruct testInterfaceFtbl = {
 	NULL,
@@ -41,8 +36,7 @@ MetadataImporterPluginType *AllocMetadataImporterPluginType(CFUUIDRef inFactoryI
 {
 	MetadataImporterPluginType *theNewInstance;
 
-	theNewInstance = (MetadataImporterPluginType *)malloc(sizeof(MetadataImporterPluginType));
-	memset(theNewInstance,0,sizeof(MetadataImporterPluginType));
+	theNewInstance = (MetadataImporterPluginType *)calloc(sizeof(MetadataImporterPluginType), 1);
 
 		/* Point to the function table */
 	theNewInstance->conduitInterface = &testInterfaceFtbl;
@@ -116,7 +110,7 @@ ULONG MetadataImporterPluginRelease(void *thisInstance)
 	}
 }
 
-void *MetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
+extern void *MetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
 {
 	MetadataImporterPluginType *result;
 	CFUUIDRef                 uuid;

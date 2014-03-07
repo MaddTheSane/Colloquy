@@ -173,7 +173,7 @@ enum {
     if ((self=[super init])) {
         _systemConfigNotificationManager = [IXSCNotificationManager new];
         // since we are only interested in this specific key, let us configure it so.
-        [_systemConfigNotificationManager setObservedKeys:[NSArray arrayWithObject:@"State:/Network/Global/IPv4"] regExes:nil];
+        [_systemConfigNotificationManager setObservedKeys:@[@"State:/Network/Global/IPv4"] regExes:nil];
         _isRunning = NO;
         _ignoreNetworkChanges = NO;
         _refreshIsScheduled = NO;
@@ -252,7 +252,7 @@ enum {
     SCDynamicStoreRef dynRef = SCDynamicStoreCreate(kCFAllocatorSystemDefault, (CFStringRef)@"TCMPortMapper", NULL, NULL); 
     NSDictionary *scobjects = (NSDictionary *)SCDynamicStoreCopyValue(dynRef,(CFStringRef)@"State:/Network/Global/IPv4" ); 
     
-    NSString *ipv4Key = [NSString stringWithFormat:@"State:/Network/Interface/%@/IPv4", [scobjects objectForKey:(NSString *)kSCDynamicStorePropNetPrimaryInterface]];
+    NSString *ipv4Key = [NSString stringWithFormat:@"State:/Network/Interface/%@/IPv4", scobjects[(NSString *)kSCDynamicStorePropNetPrimaryInterface]];
     
     CFRelease(dynRef);
     [scobjects release];
@@ -261,15 +261,15 @@ enum {
     scobjects = (NSDictionary *)SCDynamicStoreCopyValue(dynRef,(CFStringRef)ipv4Key); 
     
 //        NSLog(@"%s scobjects:%@",__FUNCTION__,scobjects);
-    NSArray *IPAddresses = (NSArray *)[scobjects objectForKey:(NSString *)kSCPropNetIPv4Addresses];
-    NSArray *subNetMasks = (NSArray *)[scobjects objectForKey:(NSString *)kSCPropNetIPv4SubnetMasks];
+    NSArray *IPAddresses = (NSArray *)scobjects[(NSString *)kSCPropNetIPv4Addresses];
+    NSArray *subNetMasks = (NSArray *)scobjects[(NSString *)kSCPropNetIPv4SubnetMasks];
 //    NSLog(@"%s addresses:%@ masks:%@",__FUNCTION__,IPAddresses, subNetMasks);
     if (routerAddress) {
         NSString *ipAddress = nil;
         NSUInteger i;
         for (i=0;i<[IPAddresses count];i++) {
-            ipAddress = (NSString *) [IPAddresses objectAtIndex:i];
-            NSString *subNetMask = (NSString *) [subNetMasks objectAtIndex:i];
+            ipAddress = (NSString *) IPAddresses[i];
+            NSString *subNetMask = (NSString *) subNetMasks[i];
  //           NSLog(@"%s ipAddress:%@ subNetMask:%@",__FUNCTION__, ipAddress, subNetMask);
             // Check if local to Host
             if (ipAddress && subNetMask) {
@@ -314,11 +314,11 @@ enum {
     char hashstring[16*2+1];
     int i;
     NSData *dataToHash = [inString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
-	CC_MD5([dataToHash bytes],[dataToHash length],digest);
+	CC_MD5([dataToHash bytes],(CC_LONG)[dataToHash length],digest);
     for(i=0;i<16;i++) sprintf(hashstring+i*2,"%02x",digest[i]);
     hashstring[i*2]=0;
     
-    return [NSString stringWithUTF8String:hashstring];
+    return @(hashstring);
 }
 
 - (void)hashUserID:(NSString *)aUserIDToHash {
@@ -515,6 +515,7 @@ enum {
           return nil;
         }
     }
+	free(buf);
     return nil;
 }
 
@@ -529,7 +530,7 @@ enum {
         }
     }
     if ([aMACAddress length]<8) return nil;
-	NSString *result = [hardwareManufacturerDictionary objectForKey:[[aMACAddress substringToIndex:8] uppercaseString]];
+	NSString *result = hardwareManufacturerDictionary[[[aMACAddress substringToIndex:8] uppercaseString]];
     return result;
 }
 
@@ -583,7 +584,7 @@ enum {
         [self setMappingProtocol:TCMNATPMPPortMapProtocol];
         shouldNotify = YES;
     }
-    [self setExternalIPAddress:[[aNotification userInfo] objectForKey:@"externalIPAddress"]];
+    [self setExternalIPAddress:[aNotification userInfo][@"externalIPAddress"]];
     if (shouldNotify) {
         [[NSNotificationCenter defaultCenter] postNotificationName:TCMPortMapperDidFinishSearchForRouterNotification object:self];
     }
@@ -612,11 +613,11 @@ enum {
             _NATPMPStatus =TCMPortMapProtocolFailed;
         }
     }
-    NSString *routerName = [[aNotification userInfo] objectForKey:@"routerName"];
+    NSString *routerName = [aNotification userInfo][@"routerName"];
     if (routerName) {
         [self setRouterName:routerName];
     }
-    [self setExternalIPAddress:[[aNotification userInfo] objectForKey:@"externalIPAddress"]];
+    [self setExternalIPAddress:[aNotification userInfo][@"externalIPAddress"]];
     if (shouldNotify) {
         [[NSNotificationCenter defaultCenter] postNotificationName:TCMPortMapperDidFinishSearchForRouterNotification object:self];
     }
@@ -738,7 +739,7 @@ enum {
     SCDynamicStoreRef dynRef = SCDynamicStoreCreate(kCFAllocatorSystemDefault, (CFStringRef)@"TCMPortMapper", NULL, NULL); 
     NSDictionary *scobjects = (NSDictionary *)SCDynamicStoreCopyValue(dynRef,(CFStringRef)@"State:/Network/Global/IPv4" );
     
-    NSString *routerIPAddress = (NSString *)[scobjects objectForKey:(NSString *)kSCPropNetIPv4Router];
+    NSString *routerIPAddress = (NSString *)scobjects[(NSString *)kSCPropNetIPv4Router];
     routerIPAddress = [[routerIPAddress copy] autorelease];
     
     CFRelease(dynRef);
@@ -773,7 +774,7 @@ enum {
     _workCount--;
     if (_workCount == 0) {
         if (_UPNPStatus == TCMPortMapProtocolWorks && _sendUPNPMappingTableNotification) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:TCMPortMapperDidReceiveUPNPMappingTableNotification object:self userInfo:[NSDictionary dictionaryWithObject:[_UPNPPortMapper latestUPNPPortMappingsList] forKey:@"mappingTable"]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:TCMPortMapperDidReceiveUPNPMappingTableNotification object:self userInfo:@{@"mappingTable": [_UPNPPortMapper latestUPNPPortMappingsList]}];
             _sendUPNPMappingTableNotification = NO;
         }
     
@@ -814,10 +815,10 @@ enum {
     if (_isRunning) {
         NSDictionary *userInfo = [aNotification userInfo];
         // senderAddress is of the format <ipv4address>:<port>
-        NSString *senderIPAddress = [userInfo objectForKey:@"senderAddress"];
+        NSString *senderIPAddress = userInfo[@"senderAddress"];
         // we have to check if the sender is actually our router - if not disregard
         if ([senderIPAddress isEqualToString:[self routerIPAddress]]) {
-            if (![[self externalIPAddress] isEqualToString:[userInfo objectForKey:@"externalIPAddress"]]) {
+            if (![[self externalIPAddress] isEqualToString:userInfo[@"externalIPAddress"]]) {
 //                NSLog(@"Refreshing because of  NAT-PMP-Device external IP broadcast:%@",userInfo);
                 [self refresh];
             }

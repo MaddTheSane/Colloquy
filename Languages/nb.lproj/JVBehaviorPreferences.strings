@@ -1,0 +1,69 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "212"; */
+"212.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "423"; */
+"423.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Send hadlingsbeskjed"; ObjectID = "424"; */
+"424.title" = "Send hadlingsbeskjed";
+
+/* Class = "NSMenuItem"; title = "Sett inn en ny linje"; ObjectID = "425"; */
+"425.title" = "Sett inn en ny linje";
+
+/* Class = "NSMenuItem"; title = "Send en samtalebeskjed"; ObjectID = "426"; */
+"426.title" = "Send en samtalebeskjed";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "430"; */
+"430.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Send en samtalebeskjed"; ObjectID = "431"; */
+"431.title" = "Send en samtalebeskjed";
+
+/* Class = "NSMenuItem"; title = "Sett inn en ny linje"; ObjectID = "432"; */
+"432.title" = "Sett inn en ny linje";
+
+/* Class = "NSMenuItem"; title = "Send hadlingsbeskjed"; ObjectID = "433"; */
+"433.title" = "Send hadlingsbeskjed";
+
+/* Class = "NSButtonCell"; title = "Oppdag naturlige språkhandlinger"; ObjectID = "579"; */
+"579.title" = "Oppdag naturlige språkhandlinger";
+
+/* Class = "NSButtonCell"; title = "Tab fullfører ord"; ObjectID = "580"; */
+"580.title" = "Tab fullfører ord";
+
+/* Class = "NSTextFieldCell"; title = "Press Return for å:"; ObjectID = "581"; */
+"581.title" = "Press Return for å:";
+
+/* Class = "NSTextFieldCell"; title = "Press Enter for å:"; ObjectID = "582"; */
+"582.title" = "Press Enter for å:";
+
+/* Class = "NSTextFieldCell"; title = "Sender automatisk beskjeder som begynner med vanlige handlingsverb som handling"; ObjectID = "583"; */
+"583.title" = "Sender automatisk beskjeder som begynner med vanlige handlingsverb som handling";
+
+/* Class = "NSTextFieldCell"; title = "Også tilgjengelig ved å trykke F5 mens du skriver.\nFullføring av kallenavn med Tab er også støttet uten denne preferansen."; ObjectID = "585"; */
+"585.title" = "Også tilgjengelig ved å trykke F5 mens du skriver.\nFullføring av kallenavn med Tab er også støttet uten denne preferansen.";
+
+/* Class = "NSButtonCell"; title = "Sjekk staving mens du skriver"; ObjectID = "586"; */
+"586.title" = "Sjekk staving mens du skriver";
+
+/* Class = "NSTextFieldCell"; title = "Bruk ⌥↑ & ⌥↓ knapper for å bla igjennom sendte beskjeder"; ObjectID = "588"; */
+"588.title" = "Bruk ⌥↑ & ⌥↓ knapper for å bla igjennom sendte beskjeder";
+
+/* Class = "NSTextFieldCell"; title = "Sendt-historikk:"; ObjectID = "589"; */
+"589.title" = "Sendt-historikk:";
+
+/* Class = "NSTextFieldCell"; title = "Scrollback av beskjeder:"; ObjectID = "594"; */
+"594.title" = "Scrollback av beskjeder:";
+
+/* Class = "NSButtonCell"; title = "Koble til igjen hvis du blir sparket fra et rom"; ObjectID = "595"; */
+"595.title" = "Koble til igjen hvis du blir sparket fra et rom";
+
+/* Class = "NSTextFieldCell"; title = "Etter:"; ObjectID = "598"; */
+"598.title" = "Etter:";
+
+/* Class = "NSTextFieldCell"; title = "sekunder"; ObjectID = "599"; */
+"599.title" = "sekunder";
+
+/* Class = "NSButtonCell"; title = "Auto join chat rooms on invite"; ObjectID = "600"; */
+"600.title" = "Auto join chat rooms on invite";

@@ -2,22 +2,22 @@
 
 #import "CQChatController.h"
 
+#import "CQNavigationToolbar.h"
+
+#import "UIDeviceAdditions.h"
+
+@interface CQChatPresentationController ()
+@end
+
 @implementation CQChatPresentationController
 - (id) init {
 	if (!(self = [super init]))
 		return nil;
 
-	_standardToolbarItems = [[NSArray alloc] init];
+	_standardToolbarItems = @[];
 
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applyiOS7NavigationBarSizing) name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
 	return self;
-}
-
-- (void) dealloc {
-	[_toolbar release];
-	[_standardToolbarItems release];
-	[_topChatViewController release];
-
-    [super dealloc];
 }
 
 #pragma mark -
@@ -29,25 +29,21 @@
 	view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
 	view.clipsToBounds = YES;
 
-	_toolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-	_toolbar.layer.shadowOpacity = 1.;
-	_toolbar.layer.shadowRadius = 3.;
-	_toolbar.layer.shadowOffset = CGSizeMake(0., 0.);
+	if ([UIDevice currentDevice].isSystemSeven) {
+		_toolbar = [[CQNavigationToolbar alloc] initWithFrame:CGRectZero];
+		_toolbar.layer.shadowOpacity = 0.;
+	} else {
+		_toolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
+		_toolbar.layer.shadowOpacity = 1.;
+		_toolbar.layer.shadowRadius = 3.;
+		_toolbar.layer.shadowOffset = CGSizeMake(0., 0.);
+	}
 	_toolbar.items = _standardToolbarItems;
 	_toolbar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
 
 	[_toolbar sizeToFit];
 
 	[view addSubview:_toolbar];
-
-	[view release];
-}
-
-- (void) viewDidUnload {
-	[super viewDidUnload];
-
-	[_toolbar release];
-	_toolbar = nil;
 }
 
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation) interfaceOrientation duration:(NSTimeInterval) duration {
@@ -71,11 +67,17 @@
 	if (title.length) {
 		UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		titleLabel.backgroundColor = [UIColor clearColor];
-		titleLabel.textColor = [UIColor colorWithRed:(113. / 255.) green:(120. / 255.) blue:(128. / 255.) alpha:1.];
-		titleLabel.font = [UIFont boldSystemFontOfSize:20.];
+		titleLabel.tag = 1000;
+		if ([UIDevice currentDevice].isSystemSeven) {
+			titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+			titleLabel.textColor = [UIColor blackColor];
+		} else {
+			titleLabel.font = [UIFont boldSystemFontOfSize:20.];
+			titleLabel.textColor = [UIColor colorWithRed:(113. / 255.) green:(120. / 255.) blue:(128. / 255.) alpha:1.];
+			titleLabel.shadowColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+			titleLabel.shadowOffset = CGSizeMake(0., 1.);
+		}
 		titleLabel.text = title;
-		titleLabel.shadowColor = [UIColor colorWithWhite:1.0 alpha:0.5];
-		titleLabel.shadowOffset = CGSizeMake(0., 1.);
 
 		[titleLabel sizeToFit];
 
@@ -98,10 +100,6 @@
 		[allItems addObject:titleItem];
 		[allItems addObject:rightSpaceItem];
 
-		[leftSpaceItem release];
-		[titleItem release];
-		[rightSpaceItem release];
-		[titleLabel release];
 	}
 
 	[allItems addObjectsFromArray:_topChatViewController.toolbarItems];
@@ -112,12 +110,10 @@
 
 	[_toolbar setItems:allItems animated:animated];
 
-	[allItems release];
+	[self _applyiOS7NavigationBarSizing];
 }
 
 #pragma mark -
-
-@synthesize standardToolbarItems = _standardToolbarItems;
 
 - (void) setStandardToolbarItems:(NSArray *) items {
 	[self setStandardToolbarItems:items animated:YES];
@@ -126,16 +122,12 @@
 - (void) setStandardToolbarItems:(NSArray *) items animated:(BOOL) animated {
 	NSParameterAssert(items);
 
-	id old = _standardToolbarItems;
 	_standardToolbarItems = [items copy];
-	[old release];
 
 	[self updateToolbarAnimated:animated];
 }
 
 #pragma mark -
-
-@synthesize topChatViewController = _topChatViewController;
 
 - (void) setTopChatViewController:(UIViewController <CQChatViewController> *) chatViewController {
 	if (chatViewController == _topChatViewController)
@@ -145,19 +137,19 @@
 
 	[oldViewController viewWillDisappear:NO];
 
-	_topChatViewController = [chatViewController retain];
+	_topChatViewController = chatViewController;
 
 	UIView *view = _topChatViewController.view;
 
 	if (_topChatViewController) {
 		CGRect frame = self.view.bounds;
-		frame.origin.y += _toolbar.frame.size.height;
-		frame.size.height -= _toolbar.frame.size.height;
+		if (![UIDevice currentDevice].isSystemSeven) {
+			frame.origin.y += _toolbar.frame.size.height;
+			frame.size.height -= _toolbar.frame.size.height;
+		}
 		view.frame = frame;
 
-		frame = _toolbar.frame;
-		frame.size.width = view.frame.size.width;
-		_toolbar.frame = frame;
+		[self _applyiOS7NavigationBarSizing];
 
 		[_topChatViewController viewWillAppear:NO];
 	}
@@ -167,14 +159,36 @@
 	[oldViewController.view removeFromSuperview];
 	[oldViewController viewDidDisappear:NO];
 
-	[oldViewController release];
 
 	[self updateToolbarAnimated:NO];
 
 	if (!_topChatViewController)
 		return;
 
-	[self.view insertSubview:view aboveSubview:_toolbar];
+	[self.view insertSubview:view belowSubview:_toolbar];
 	[_topChatViewController viewDidAppear:NO];
+}
+
+#pragma mark -
+
+- (void) _applyiOS7NavigationBarSizing {
+	[_toolbar sizeToFit];
+
+	CGRect frame = _toolbar.frame;
+	frame.size.width = self.view.frame.size.width;
+
+	// If we are on iOS 7 or up, the statusbar is now part of the navigation bar, so, we need to fake its height
+	if ([UIDevice currentDevice].isSystemSeven) {
+		CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+		// We can't do the following:
+		// CGFloat height = [[UIApplication sharedApplication].delegate.window convertRect:statusBarFrame toView:nil];
+		// because when the app first loads, it fails to convert the rect, and we are given {{0, 0}, {20, 1024}} as the
+		// statusBarFrame, even after self.view is added to its superview, is loaded, and self.view.window is set.
+		CGFloat statusBarHeight = fmin(statusBarFrame.size.height, statusBarFrame.size.width);
+		frame.size.height += statusBarHeight;
+	}
+	_toolbar.frame = frame;
+
+	_topChatViewController.scrollView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(_toolbar.frame), 0., 0., 0.);
 }
 @end

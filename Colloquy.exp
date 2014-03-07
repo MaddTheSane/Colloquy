@@ -1,5 +1,6 @@
 .objc_class_name_JVToolbarItem
 .objc_class_name_JVChatController
+.objc_class_name_JVChatWindowController
 .objc_class_name_JVNotificationController
 .objc_class_name_MVConnectionsController
 .objc_class_name_MVBuddyListController

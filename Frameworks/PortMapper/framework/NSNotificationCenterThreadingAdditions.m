@@ -8,8 +8,8 @@
 }
 
 + (void)_postNotificationViaDictionary:(NSDictionary *)anInfoDictionary {
-    NSString *name   = [anInfoDictionary objectForKey:@"name"];
-    id        object = [anInfoDictionary objectForKey:@"object"];
+    NSString *name   = anInfoDictionary[@"name"];
+    id        object = anInfoDictionary[@"object"];
     [[self defaultCenter] postNotificationName:name 
                                         object:object 
                                       userInfo:nil];
@@ -25,10 +25,10 @@
     if( pthread_main_np() ) return [self postNotificationName:aName object:anObject userInfo:nil];
     NSMutableDictionary *info = [[NSMutableDictionary alloc] initWithCapacity:2];
     if (aName) {
-        [info setObject:aName forKey:@"name"];
+        info[@"name"] = aName;
     }
     if (anObject) {
-        [info setObject:anObject forKey:@"object"];
+        info[@"object"] = anObject;
     }
     [[self class] performSelectorOnMainThread:@selector(_postNotificationViaDictionary:)
                                    withObject:info 

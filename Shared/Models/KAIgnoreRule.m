@@ -11,14 +11,9 @@
 #import "JVDirectChatPanel.h"
 #endif
 
-#define then {
-
 @implementation KAIgnoreRule
-@synthesize rooms = _rooms;
-@synthesize permanent = _permanent;
 @synthesize mask = _ignoreMask;
 @synthesize message = _ignoredMessage;
-@synthesize friendlyName = _friendlyName;
 @synthesize user = _ignoredUser;
 
 + (id) ruleForUser:(NSString *) user mask:(NSString *) mask message:(NSString *) message inRooms:(NSArray *) rooms isPermanent:(BOOL) permanent friendlyName:(NSString *) friendlyName {
@@ -72,19 +67,6 @@
 	[coder encodeBool:_permanent forKey:@"KAIgnorePermanent"];
 	[coder encodeObject:_friendlyName forKey:@"KAIgnoreFriendlyName"];
 }
-
-#if SYSTEM(IOS)
-- (void) dealloc {
-	[_rooms release];
-	[_ignoredMessage release];
-	[_friendlyName release];
-	[_ignoredUser release];
-	[_userRegex release];
-	[_messageRegex release];
-
-	[super dealloc];
-}
-#endif
 
 #pragma mark -
 

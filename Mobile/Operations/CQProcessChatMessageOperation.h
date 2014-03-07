@@ -1,5 +1,7 @@
 @class CQIgnoreRulesController;
 
+extern NSString *const CQInlineGIFImageKey;
+
 @interface CQProcessChatMessageOperation : NSOperation {
 	NSDictionary *_message;
 	NSMutableDictionary *_processedMessage;
@@ -7,7 +9,7 @@
 	CQIgnoreRulesController *_ignoreController;
 	NSStringEncoding _encoding;
 	NSStringEncoding _fallbackEncoding;
-	id _target;
+	id __weak _target;
 	SEL _action;
 	id _userInfo;
 }
@@ -15,16 +17,16 @@
 - (id) initWithMessageInfo:(NSDictionary *) messageInfo;
 
 @property (copy) NSString *highlightNickname;
-@property (retain) CQIgnoreRulesController *ignoreController;
+@property (strong) CQIgnoreRulesController *ignoreController;
 
 @property NSStringEncoding encoding;
 @property NSStringEncoding fallbackEncoding;
 
 @property (readonly) NSMutableDictionary *processedMessageInfo;
-@property (readonly) NSString *processedMessageAsHTML;
-@property (readonly) NSString *processedMessageAsPlainText;
+@property (nonatomic, readonly) NSString *processedMessageAsHTML;
+@property (nonatomic, readonly) NSString *processedMessageAsPlainText;
 
-@property (retain) id target;
+@property (weak) id target;
 @property SEL action;
-@property (retain) id userInfo;
+@property (strong) id userInfo;
 @end

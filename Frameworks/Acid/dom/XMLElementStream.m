@@ -45,8 +45,10 @@
 @implementation BufferParser
 -(id) init
 {
-	if (!(self = [super init])) return nil;
-    _stream = [[XMLElementStream alloc] initWithListener:self];
+    if (self = [super init])
+	{
+		_stream = [[XMLElementStream alloc] initWithListener:self];
+	}
     return self;
 }
 
@@ -169,7 +171,7 @@ static NSMutableArray* G_FACTORY;
 {
     if (prefix == NULL)
     {
-        NSString* uristr = [NSString stringWithUTF8String:uri];
+        NSString* uristr = @(uri);
         [_default_uri_stack addObject:uristr];
     }
 }
@@ -217,7 +219,7 @@ static NSMutableArray* G_FACTORY;
     {
         XMLQName* key = [XMLQName construct:atts[i] withDefaultURI:default_uri];
         NSString* value = [[NSString alloc] initWithUTF8String:atts[i+1]];
-        [new_element_attribs setObject:value forKey:key];
+        new_element_attribs[key] = value;
         [value release];
         i += 2;
     }

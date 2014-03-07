@@ -1,0 +1,69 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "212"; */
+"212.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "423"; */
+"423.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Envoyer l'action"; ObjectID = "424"; */
+"424.title" = "Envoyer l'action";
+
+/* Class = "NSMenuItem"; title = "Insérer une nouvelle ligne"; ObjectID = "425"; */
+"425.title" = "Insérer une nouvelle ligne";
+
+/* Class = "NSMenuItem"; title = "Envoyer le message"; ObjectID = "426"; */
+"426.title" = "Envoyer le message";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "430"; */
+"430.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Envoyer le message"; ObjectID = "431"; */
+"431.title" = "Envoyer le message";
+
+/* Class = "NSMenuItem"; title = "Insérer une nouvelle ligne"; ObjectID = "432"; */
+"432.title" = "Insérer une nouvelle ligne";
+
+/* Class = "NSMenuItem"; title = "Envoyer l'action"; ObjectID = "433"; */
+"433.title" = "Envoyer l'action";
+
+/* Class = "NSButtonCell"; title = "Détecter les actions"; ObjectID = "578"; */
+"578.title" = "Détecter les actions";
+
+/* Class = "NSButtonCell"; title = "Tab key triggers word completion"; ObjectID = "579"; */
+"579.title" = "Tab key triggers word completion";
+
+/* Class = "NSTextFieldCell"; title = "Appuyer sur Retour pour:"; ObjectID = "580"; */
+"580.title" = "Appuyer sur Retour pour:";
+
+/* Class = "NSTextFieldCell"; title = "Appuyer sur Entrée pour:"; ObjectID = "581"; */
+"581.title" = "Appuyer sur Entrée pour:";
+
+/* Class = "NSTextFieldCell"; title = "Envoyer automatiquement les messages qui commençent par un verbe d'action communs comme étant une action"; ObjectID = "582"; */
+"582.title" = "Envoyer automatiquement les messages qui commençent par un verbe d'action communs comme étant une action";
+
+/* Class = "NSTextFieldCell"; title = "Aussi disponible en appuyant sur la touche F5 lors de la frappe.\nNickname tab completion is supported without this preference."; ObjectID = "584"; */
+"584.title" = "Aussi disponible en appuyant sur la touche F5 lors de la frappe.\nNickname tab completion is supported without this preference.";
+
+/* Class = "NSButtonCell"; title = "Vérifier automatiquement l'orthographe"; ObjectID = "585"; */
+"585.title" = "Vérifier automatiquement l'orthographe";
+
+/* Class = "NSTextFieldCell"; title = "Use the ⌥↑ & ⌥↓ keys to cycle through sent messages"; ObjectID = "587"; */
+"587.title" = "Use the ⌥↑ & ⌥↓ keys to cycle through sent messages";
+
+/* Class = "NSTextFieldCell"; title = "Historique des messages envoyés:"; ObjectID = "588"; */
+"588.title" = "Historique des messages envoyés:";
+
+/* Class = "NSTextFieldCell"; title = "Historique des messages:"; ObjectID = "593"; */
+"593.title" = "Historique des messages:";
+
+/* Class = "NSButtonCell"; title = "Auto rejoin when kicked from room"; ObjectID = "594"; */
+"594.title" = "Auto rejoin when kicked from room";
+
+/* Class = "NSTextFieldCell"; title = "After:"; ObjectID = "597"; */
+"597.title" = "After:";
+
+/* Class = "NSTextFieldCell"; title = "seconds"; ObjectID = "598"; */
+"598.title" = "seconds";
+
+/* Class = "NSButtonCell"; title = "Auto join chat rooms on invite"; ObjectID = "599"; */
+"599.title" = "Auto join chat rooms on invite";

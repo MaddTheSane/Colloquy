@@ -1,15 +1,20 @@
 @import url(common.css);
 
 body {
-	font-family: Helvetica, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
 	font-size: 14px;
 	padding: 4px 0;
+}
+
+a {
+	pointer-events: auto;
 }
 
 .notice-wrapper, .message-wrapper {
 	text-align: left;
 	margin-top: 6px;
 	padding-bottom: 6px;
+	pointer-events: none;
 }
 
 .notice-wrapper:before {

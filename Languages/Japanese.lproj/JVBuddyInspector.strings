@@ -1,0 +1,78 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "157"; */
+"157.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "なし"; ObjectID = "160"; */
+"160.title" = "なし";
+
+/* Class = "NSButton"; ibShadowedToolTip = "識別名を追加します"; ObjectID = "208"; */
+"208.ibShadowedToolTip" = "識別名を追加します";
+
+/* Class = "NSButton"; ibShadowedToolTip = "識別名を編集します"; ObjectID = "209"; */
+"209.ibShadowedToolTip" = "識別名を編集します";
+
+/* Class = "NSButton"; ibShadowedToolTip = "識別名を削除します"; ObjectID = "210"; */
+"210.ibShadowedToolTip" = "識別名を削除します";
+
+/* Class = "NSButtonCell"; title = "以下のドメインのみ："; ObjectID = "281"; */
+"281.title" = "以下のドメインのみ：";
+
+/* Class = "NSButtonCell"; title = "接続先を問わない"; ObjectID = "282"; */
+"282.title" = "接続先を問わない";
+
+/* Class = "NSButton"; ibShadowedToolTip = "ドメインを追加します"; ObjectID = "287"; */
+"287.ibShadowedToolTip" = "ドメインを追加します";
+
+/* Class = "NSButton"; ibShadowedToolTip = "ドメインを削除します"; ObjectID = "289"; */
+"289.ibShadowedToolTip" = "ドメインを削除します";
+
+/* Class = "NSTextFieldCell"; title = "識別名："; ObjectID = "333"; */
+"333.title" = "識別名：";
+
+/* Class = "NSTextFieldCell"; title = "名："; ObjectID = "334"; */
+"334.title" = "名：";
+
+/* Class = "NSTextFieldCell"; title = "ピクチャ："; ObjectID = "337"; */
+"337.title" = "ピクチャ：";
+
+/* Class = "NSTextFieldCell"; title = "姓："; ObjectID = "338"; */
+"338.title" = "姓：";
+
+/* Class = "NSTextFieldCell"; title = "メール："; ObjectID = "339"; */
+"339.title" = "メール：";
+
+/* Class = "NSTextFieldCell"; title = "ニックネーム："; ObjectID = "343"; */
+"343.title" = "ニックネーム：";
+
+/* Class = "NSTextFieldCell"; title = "声の種類："; ObjectID = "345"; */
+"345.title" = "声の種類：";
+
+/* Class = "NSTextFieldCell"; title = "アドレスブック："; ObjectID = "349"; */
+"349.title" = "アドレスブック：";
+
+/* Class = "NSButtonCell"; title = "変更…"; ObjectID = "350"; */
+"350.title" = "変更…";
+
+/* Class = "NSTextFieldCell"; title = "ニックネーム："; ObjectID = "352"; */
+"352.title" = "ニックネーム：";
+
+/* Class = "NSTextFieldCell"; title = "本名："; ObjectID = "354"; */
+"354.title" = "本名：";
+
+/* Class = "NSTextFieldCell"; title = "ユーザ名："; ObjectID = "356"; */
+"356.title" = "ユーザ名：";
+
+/* Class = "NSTextFieldCell"; title = "ホストアドレス："; ObjectID = "358"; */
+"358.title" = "ホストアドレス：";
+
+/* Class = "NSTextFieldCell"; title = "接続先："; ObjectID = "360"; */
+"360.title" = "接続先：";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "363"; */
+"363.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "キャンセル"; ObjectID = "364"; */
+"364.title" = "キャンセル";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "365"; */
+"365.title" = "Radio";

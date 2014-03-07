@@ -1,0 +1,87 @@
+
+/* Class = "NSButton"; ibShadowedToolTip = "Aggiungi amico"; ObjectID = "39"; */
+"39.ibShadowedToolTip" = "Aggiungi amico";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Invia messaggio"; ObjectID = "40"; */
+"40.ibShadowedToolTip" = "Invia messaggio";
+
+/* Class = "NSPanel"; title = "Lista degli amici"; ObjectID = "41"; */
+"41.title" = "Lista degli amici";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Mostra informazioni"; ObjectID = "42"; */
+"42.ibShadowedToolTip" = "Mostra informazioni";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Opzioni della lista degli amici"; ObjectID = "44"; */
+"44.ibShadowedToolTip" = "Opzioni della lista degli amici";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Action"; ObjectID = "105"; */
+"105.ibShadowedToolTip" = "Action";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "148"; */
+"148.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Mostra amici non collegati"; ObjectID = "149"; */
+"149.title" = "Mostra amici non collegati";
+
+/* Class = "NSMenuItem"; title = "Mostra le icone degli amici"; ObjectID = "150"; */
+"150.title" = "Mostra le icone degli amici";
+
+/* Class = "NSMenuItem"; title = "Mostra nomi per esteso"; ObjectID = "151"; */
+"151.title" = "Mostra nomi per esteso";
+
+/* Class = "NSMenuItem"; title = "Ordina per disponibilita'"; ObjectID = "153"; */
+"153.title" = "Ordina per disponibilita'";
+
+/* Class = "NSMenuItem"; title = "Ordina per nome"; ObjectID = "154"; */
+"154.title" = "Ordina per nome";
+
+/* Class = "NSMenuItem"; title = "Ordina per cognome"; ObjectID = "155"; */
+"155.title" = "Ordina per cognome";
+
+/* Class = "NSMenuItem"; title = "Mostra informazioni sul soprannome e sul server"; ObjectID = "160"; */
+"160.title" = "Mostra informazioni sul soprannome e sul server";
+
+/* Class = "NSMenuItem"; title = "Ordina per server"; ObjectID = "183"; */
+"183.title" = "Ordina per server";
+
+/* Class = "NSTextFieldCell"; title = "Select an entry from your Address Book,\nor add a new buddy."; ObjectID = "209"; */
+"209.title" = "Select an entry from your Address Book,\nor add a new buddy.";
+
+/* Class = "NSButtonCell"; title = "Annulla"; ObjectID = "210"; */
+"210.title" = "Annulla";
+
+/* Class = "NSButtonCell"; title = "Select Person"; ObjectID = "211"; */
+"211.title" = "Select Person";
+
+/* Class = "NSButtonCell"; title = "New Buddy"; ObjectID = "212"; */
+"212.title" = "New Buddy";
+
+/* Class = "NSTextFieldCell"; title = "Enter the buddy's nickname and the servers they use:"; ObjectID = "213"; */
+"213.title" = "Enter the buddy's nickname and the servers they use:";
+
+/* Class = "NSTextFieldCell"; title = "Soprannome:"; ObjectID = "214"; */
+"214.title" = "Soprannome:";
+
+/* Class = "NSTextFieldCell"; title = "Chat Servers:"; ObjectID = "216"; */
+"216.title" = "Chat Servers:";
+
+/* Class = "NSTextFieldCell"; title = "Optional Information:"; ObjectID = "217"; */
+"217.title" = "Optional Information:";
+
+/* Class = "NSTextFieldCell"; title = "Icona amico"; ObjectID = "219"; */
+"219.title" = "Icona amico";
+
+/* Class = "NSTextFieldCell"; title = "Nome:"; ObjectID = "220"; */
+"220.title" = "Nome:";
+
+/* Class = "NSTextFieldCell"; title = "Cognome:"; ObjectID = "223"; */
+"223.title" = "Cognome:";
+
+/* Class = "NSTextFieldCell"; title = "Email:"; ObjectID = "225"; */
+"225.title" = "Email:";
+
+/* Class = "NSButtonCell"; title = "Aggiungi amico"; ObjectID = "226"; */
+"226.title" = "Aggiungi amico";
+
+/* Class = "NSButtonCell"; title = "Annulla"; ObjectID = "227"; */
+"227.title" = "Annulla";

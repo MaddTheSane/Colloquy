@@ -1,0 +1,24 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "52"; */
+"52.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "54"; */
+"54.title" = " ";
+
+/* Class = "NSTextFieldCell"; title = "デフォルトエンコーディング："; ObjectID = "137"; */
+"137.title" = "デフォルトエンコーディング：";
+
+/* Class = "NSButtonCell"; title = "新バージョンを自動チェック"; ObjectID = "139"; */
+"139.title" = "新バージョンを自動チェック";
+
+/* Class = "NSTextFieldCell"; title = "アプリケーションを起動した時に新バージョンをオンラインで確認します"; ObjectID = "140"; */
+"140.title" = "アプリケーションを起動した時に新バージョンをオンラインで確認します";
+
+/* Class = "NSTextFieldCell"; title = "終了メッセージ："; ObjectID = "141"; */
+"141.title" = "終了メッセージ：";
+
+/* Class = "NSButtonCell"; title = "Send anonymous system profile"; ObjectID = "146"; */
+"146.title" = "Send anonymous system profile";

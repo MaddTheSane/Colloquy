@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -78,7 +78,6 @@
 		431261C3072EE37A00720AD1 /* MVSILCFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 431261C1072EE37A00720AD1 /* MVSILCFileTransfer.m */; };
 		899F4EFE12617870003B9D9A /* NSFileManagerAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 899F4EFC12617870003B9D9A /* NSFileManagerAdditions.h */; };
 		899F4EFF12617870003B9D9A /* NSFileManagerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 899F4EFD12617870003B9D9A /* NSFileManagerAdditions.m */; };
-		89FB4F2612FAAC6800668905 /* Less Common Settings.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 89FB4F2512FAAC6800668905 /* Less Common Settings.xcconfig */; };
 		922453BB1689057200BFF3FF /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 922453B91689057200BFF3FF /* GCDAsyncSocket.h */; };
 		922453BC1689057200BFF3FF /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 922453B91689057200BFF3FF /* GCDAsyncSocket.h */; };
 		922453BD1689057200BFF3FF /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 922453BA1689057200BFF3FF /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -220,9 +219,9 @@
 		1C51B48A052DE0CB00BB459B /* Info-ChatCore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "Info-ChatCore.plist"; path = "Resources/Info-ChatCore.plist"; sourceTree = SOURCE_ROOT; };
 		1C51B48B052DE0CB00BB459B /* ChatCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ChatCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C5A1A2206F8F4A000A51F10 /* MVIRCChatConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVIRCChatConnection.h; path = "Chat Core/MVIRCChatConnection.h"; sourceTree = "<group>"; };
-		1C5A1A2306F8F4A000A51F10 /* MVIRCChatConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MVIRCChatConnection.m; path = "Chat Core/MVIRCChatConnection.m"; sourceTree = "<group>"; };
+		1C5A1A2306F8F4A000A51F10 /* MVIRCChatConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MVIRCChatConnection.m; path = "Chat Core/MVIRCChatConnection.m"; sourceTree = "<group>"; wrapsLines = 1; };
 		1C5A230706FA4F2700A51F10 /* MVSILCChatConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVSILCChatConnection.h; path = "Chat Core/MVSILCChatConnection.h"; sourceTree = "<group>"; };
-		1C5A230806FA4F2700A51F10 /* MVSILCChatConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MVSILCChatConnection.m; path = "Chat Core/MVSILCChatConnection.m"; sourceTree = "<group>"; };
+		1C5A230806FA4F2700A51F10 /* MVSILCChatConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MVSILCChatConnection.m; path = "Chat Core/MVSILCChatConnection.m"; sourceTree = "<group>"; wrapsLines = 1; };
 		1C5A233D06FA4FEE00A51F10 /* libsilc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libsilc.framework; path = Frameworks/libsilc.framework; sourceTree = SOURCE_ROOT; };
 		1C5A233E06FA4FEE00A51F10 /* libsilcclient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libsilcclient.framework; path = Frameworks/libsilcclient.framework; sourceTree = SOURCE_ROOT; };
 		1C5CBF3306FF986E0006C5B1 /* MVChatUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVChatUser.h; path = "Chat Core/MVChatUser.h"; sourceTree = "<group>"; };
@@ -754,9 +753,10 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = 1C041DDE08553AD200A5A5BA /* Build configuration list for PBXProject "Chat Core" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -821,7 +821,6 @@
 				1CCA51800598AFBA00F0A4CD /* ChatCore.scriptSuite in Resources */,
 				1CCA51810598AFBA00F0A4CD /* ChatCore.scriptTerminology in Resources */,
 				1C11B7A109C27AC800789814 /* BSD License.txt in Resources */,
-				89FB4F2612FAAC6800668905 /* Less Common Settings.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -948,8 +947,8 @@
 /* Begin XCBuildConfiguration section */
 		1C041DDC08553AD200A5A5BA /* Development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89FB4F2512FAAC6800668905 /* Less Common Settings.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 2;
 				EXPORTED_SYMBOLS_FILE = "Chat Core.exp";
@@ -976,8 +975,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89FB4F2512FAAC6800668905 /* Less Common Settings.xcconfig */;
 			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
 				INSTALL_PATH = "@executable_path/../Frameworks/";
 				ONLY_ACTIVE_ARCH = YES;
 				SYMROOT = build;
@@ -986,8 +999,8 @@
 		};
 		1C7F2DB408553C1900D41FB0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89FB4F2512FAAC6800668905 /* Less Common Settings.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 2;
 				EXPORTED_SYMBOLS_FILE = "Chat Core.exp";
@@ -998,6 +1011,9 @@
 					RKL_FAST_MUTABLE_CHECK,
 					"RKL_CACHE_SIZE=47",
 				);
+				INFOPLIST_FILE = "Resources/Info-ChatCore.plist";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				LLVM_LTO = YES;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
 					0xa10000,
@@ -1012,7 +1028,21 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89FB4F2512FAAC6800668905 /* Less Common Settings.xcconfig */;
 			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = NS_BLOCK_ASSERTIONS;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
 				INSTALL_PATH = "@executable_path/../Frameworks/";
 				SYMROOT = build;
 			};
@@ -1020,12 +1050,7 @@
 		};
 		92417D94149C019A0009B06E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89FB4F2512FAAC6800668905 /* Less Common Settings.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
-				);
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 2;
 				EXPORTED_SYMBOLS_FILE = "Chat Core.exp";
@@ -1046,6 +1071,7 @@
 					"RKL_CACHE_SIZE=47",
 					"RKL_BLOCKS=0",
 				);
+				GCC_THUMB_SUPPORT = NO;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
 					0xa10000,
@@ -1075,12 +1101,7 @@
 		};
 		92417D95149C019A0009B06E /* Development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89FB4F2512FAAC6800668905 /* Less Common Settings.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
-				);
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 2;
 				EXPORTED_SYMBOLS_FILE = "Chat Core.exp";
@@ -1101,6 +1122,7 @@
 					"RKL_CACHE_SIZE=47",
 					"RKL_BLOCKS=0",
 				);
+				GCC_THUMB_SUPPORT = NO;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
 					0xa10000,

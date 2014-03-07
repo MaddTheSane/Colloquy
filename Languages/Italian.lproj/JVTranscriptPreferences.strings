@@ -1,0 +1,60 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenuItem"; title = "Un file per sessione"; ObjectID = "9"; */
+"9.title" = "Un file per sessione";
+
+/* Class = "NSMenuItem"; title = "Sessioni multiple in un file"; ObjectID = "10"; */
+"10.title" = "Sessioni multiple in un file";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "11"; */
+"11.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "16"; */
+"16.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Cartella per ciascun server"; ObjectID = "17"; */
+"17.title" = "Cartella per ciascun server";
+
+/* Class = "NSMenuItem"; title = "Stessa cartella"; ObjectID = "18"; */
+"18.title" = "Stessa cartella";
+
+/* Class = "NSMenuItem"; title = "Cartella per ciascuna chat e server"; ObjectID = "23"; */
+"23.title" = "Cartella per ciascuna chat e server";
+
+/* Class = "NSMenuItem"; title = "Un file per giorno di sessione"; ObjectID = "24"; */
+"24.title" = "Un file per giorno di sessione";
+
+/* Class = "NSMenuItem"; title = "Cartella per ciascuna chat del server"; ObjectID = "25"; */
+"25.title" = "Cartella per ciascuna chat del server";
+
+/* Class = "NSMenuItem"; title = "Altro…"; ObjectID = "28"; */
+"28.title" = "Altro…";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "31"; */
+"31.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "33"; */
+"33.title" = " ";
+
+/* Class = "NSButtonCell"; title = "Registra le sessioni delle stanze"; ObjectID = "106"; */
+"106.title" = "Registra le sessioni delle stanze";
+
+/* Class = "NSButtonCell"; title = "Registra le sessioni delle chat private"; ObjectID = "107"; */
+"107.title" = "Registra le sessioni delle chat private";
+
+/* Class = "NSTextFieldCell"; title = "Gestione delle sessioni:"; ObjectID = "109"; */
+"109.title" = "Gestione delle sessioni:";
+
+/* Class = "NSTextFieldCell"; title = "Organizzazione delle cartelle:"; ObjectID = "110"; */
+"110.title" = "Organizzazione delle cartelle:";
+
+/* Class = "NSButtonCell"; title = "Formattazione dei file in formato leggibile"; ObjectID = "111"; */
+"111.title" = "Formattazione dei file in formato leggibile";
+
+/* Class = "NSTextFieldCell"; title = "Cartella delle sessioni:"; ObjectID = "112"; */
+"112.title" = "Cartella delle sessioni:";
+
+/* Class = "NSTextFieldCell"; title = "Automaticamente:"; ObjectID = "114"; */
+"114.title" = "Automaticamente:";

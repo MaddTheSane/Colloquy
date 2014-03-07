@@ -1,0 +1,159 @@
+
+/* Class = "NSTabViewItem"; label = "Proxy"; ObjectID = "138"; */
+"138.label" = "Proxy";
+
+/* Class = "NSTabViewItem"; label = "Général"; ObjectID = "139"; */
+"139.label" = "Général";
+
+/* Class = "NSTabViewItem"; label = "Automatique"; ObjectID = "154"; */
+"154.label" = "Automatique";
+
+/* Class = "NSMenuItem"; title = "SOCKS Firewall"; ObjectID = "156"; */
+"156.title" = "SOCKS Firewall";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "157"; */
+"157.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Sans"; ObjectID = "158"; */
+"158.title" = "Sans";
+
+/* Class = "NSMenuItem"; title = "Secure Web"; ObjectID = "162"; */
+"162.title" = "Secure Web";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "230"; */
+"230.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "232"; */
+"232.title" = "OtherViews";
+
+/* Class = "NSTabViewItem"; label = "Personnes ignorées"; ObjectID = "241"; */
+"241.label" = "Personnes ignorées";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "321"; */
+"321.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Scores de messages"; ObjectID = "324"; */
+"324.title" = "Scores de messages";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "328"; */
+"328.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Scores d'envoyeur"; ObjectID = "335"; */
+"335.title" = "Scores d'envoyeur";
+
+/* Class = "NSMenuItem"; title = "Le nom de l'envoyeur est"; ObjectID = "336"; */
+"336.title" = "Le nom de l'envoyeur est";
+
+/* Class = "NSMenuItem"; title = "Message contient"; ObjectID = "338"; */
+"338.title" = "Message contient";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Add ignore"; ObjectID = "404"; */
+"404.ibShadowedToolTip" = "Add ignore";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Edit ignore"; ObjectID = "405"; */
+"405.ibShadowedToolTip" = "Edit ignore";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Delete ignore"; ObjectID = "406"; */
+"406.ibShadowedToolTip" = "Delete ignore";
+
+/* Class = "NSTextFieldCell"; title = "Type:"; ObjectID = "417"; */
+"417.title" = "Type:";
+
+/* Class = "NSTextFieldCell"; title = "Compte:"; ObjectID = "419"; */
+"419.title" = "Compte:";
+
+/* Class = "NSTextFieldCell"; title = "Mot de pass:"; ObjectID = "422"; */
+"422.title" = "Mot de pass:";
+
+/* Class = "NSButtonCell"; title = "Utiliser les réglages du système"; ObjectID = "423"; */
+"423.title" = "Utiliser les réglages du système";
+
+/* Class = "NSTextFieldCell"; title = "Adresse:"; ObjectID = "424"; */
+"424.title" = "Adresse:";
+
+/* Class = "NSTextFieldCell"; title = "Port:"; ObjectID = "426"; */
+"426.title" = "Port:";
+
+/* Class = "NSTextFieldCell"; title = "Mot de pass:"; ObjectID = "428"; */
+"428.title" = "Mot de pass:";
+
+/* Class = "NSTextFieldCell"; title = "Pseudonyme:"; ObjectID = "430"; */
+"430.title" = "Pseudonyme:";
+
+/* Class = "NSTextFieldCell"; title = "Serveur:"; ObjectID = "432"; */
+"432.title" = "Serveur:";
+
+/* Class = "NSTextFieldCell"; title = "Mot de passe serveur:"; ObjectID = "435"; */
+"435.title" = "Mot de passe serveur:";
+
+/* Class = "NSTextFieldCell"; title = "Nom d'utilisateur:"; ObjectID = "436"; */
+"436.title" = "Nom d'utilisateur:";
+
+/* Class = "NSTextFieldCell"; title = "Nom réel:"; ObjectID = "439"; */
+"439.title" = "Nom réel:";
+
+/* Class = "NSTextFieldCell"; title = "Pseudonymes alternatifs:"; ObjectID = "440"; */
+"440.title" = "Pseudonymes alternatifs:";
+
+/* Class = "NSComboBoxCell"; title = "6667"; ObjectID = "442"; */
+"442.title" = "6667";
+
+/* Class = "NSComboBoxCell"; 442.ibShadowedObjectValues[0] = "6667"; ObjectID = "442"; */
+"442.ibShadowedObjectValues[0]" = "6667";
+
+/* Class = "NSComboBoxCell"; 442.ibShadowedObjectValues[1] = "6668"; ObjectID = "442"; */
+"442.ibShadowedObjectValues[1]" = "6668";
+
+/* Class = "NSComboBoxCell"; 442.ibShadowedObjectValues[2] = "6669"; ObjectID = "442"; */
+"442.ibShadowedObjectValues[2]" = "6669";
+
+/* Class = "NSComboBoxCell"; 442.ibShadowedObjectValues[3] = "7000"; ObjectID = "442"; */
+"442.ibShadowedObjectValues[3]" = "7000";
+
+/* Class = "NSComboBoxCell"; 442.ibShadowedObjectValues[4] = "9999"; ObjectID = "442"; */
+"442.ibShadowedObjectValues[4]" = "9999";
+
+/* Class = "NSTextFieldCell"; title = "Port de serveur:"; ObjectID = "443"; */
+"443.title" = "Port de serveur:";
+
+/* Class = "NSTextFieldCell"; title = "Encodage:"; ObjectID = "445"; */
+"445.title" = "Encodage:";
+
+/* Class = "NSButtonCell"; title = "SSL"; ObjectID = "446"; */
+"446.title" = "SSL";
+
+/* Class = "NSButtonCell"; title = "Se connecter au démarrage"; ObjectID = "447"; */
+"447.title" = "Se connecter au démarrage";
+
+/* Class = "NSTextFieldCell"; title = "Aller aux canaux:"; ObjectID = "448"; */
+"448.title" = "Aller aux canaux:";
+
+/* Class = "NSTextFieldCell"; title = "Commandes:"; ObjectID = "451"; */
+"451.title" = "Commandes:";
+
+/* Class = "NSButtonCell"; title = "Open console on connect"; ObjectID = "452"; */
+"452.title" = "Open console on connect";
+
+/* Class = "NSButtonCell"; title = "Message est envoyé par n'importe qui dans ces canaux:"; ObjectID = "458"; */
+"458.title" = "Message est envoyé par n'importe qui dans ces canaux:";
+
+/* Class = "NSTextFieldCell"; title = "Ignorer les messages si toutes les conditions sont OK:"; ObjectID = "461"; */
+"461.title" = "Ignorer les messages si toutes les conditions sont OK:";
+
+/* Class = "NSTextFieldCell"; title = "Description:"; ObjectID = "467"; */
+"467.title" = "Description:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "468"; */
+"468.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Annuler"; ObjectID = "469"; */
+"469.title" = "Annuler";
+
+/* Class = "NSButtonCell"; title = "Cette ignorement de règle est permanent."; ObjectID = "470"; */
+"470.title" = "Cette ignorement de règle est permanent.";
+
+/* Class = "NSButtonCell"; title = "SASL"; ObjectID = "484"; */
+"484.title" = "SASL";
+
+/* Class = "NSButtonCell"; title = "Rooms wait for Identification"; ObjectID = "488"; */
+"488.title" = "Rooms wait for Identification";

@@ -1,0 +1,33 @@
+
+/* Class = "NSWindow"; title = "Navegador de transcrições"; ObjectID = "5"; */
+"5.title" = "Navegador de transcrições";
+
+/* Class = "NSTableColumn"; headerCell.title = "Sala de conversa ou amigo"; ObjectID = "9"; */
+"9.headerCell.title" = "Sala de conversa ou amigo";
+
+/* Class = "NSTableColumn"; headerCell.title = "Servidor"; ObjectID = "10"; */
+"10.headerCell.title" = "Servidor";
+
+/* Class = "NSTableColumn"; headerCell.title = "Data e/ou sessão"; ObjectID = "11"; */
+"11.headerCell.title" = "Data e/ou sessão";
+
+/* Class = "NSTableColumn"; headerCell.title = "Relevância"; ObjectID = "12"; */
+"12.headerCell.title" = "Relevância";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "14"; */
+"14.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Servidor"; ObjectID = "15"; */
+"15.title" = "Servidor";
+
+/* Class = "NSMenuItem"; title = "Sala de conversa ou amigo"; ObjectID = "16"; */
+"16.title" = "Sala de conversa ou amigo";
+
+/* Class = "NSMenuItem"; title = "Data"; ObjectID = "17"; */
+"17.title" = "Data";
+
+/* Class = "NSMenuItem"; title = "Texto completo"; ObjectID = "18"; */
+"18.title" = "Texto completo";
+
+/* Class = "NSTextFieldCell"; title = "As transcrições ainda não foram indexadas.\n"; ObjectID = "49"; */
+"49.title" = "As transcrições ainda não foram indexadas.\n";

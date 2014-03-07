@@ -124,15 +124,15 @@
 #pragma mark Accessors
 
 - (NSString *) description {
-	NSString *s = [NSString stringWithFormat:@"Length: %d, type: %c, ",
-	                                         self.length, _type];
+	NSString *s = [NSString stringWithFormat:@"Length: %lu, type: %c, ",
+	                                         (unsigned long)self.length, _type];
 
 	if( _fields.count == 0 )
 		s = [s stringByAppendingString:@"no fields"];
 	else {
 		s = [s stringByAppendingString:@"fields: "];
 		for( NSUInteger i = 0; i < _fields.count; i++ ) {
-			const NSString *f = [_fields objectAtIndex:i];
+			const NSString *f = _fields[i];
 			if (i < _fields.count - 1)
 				s = [s stringByAppendingFormat:@"%@, ", f];
 			else
@@ -173,7 +173,7 @@
 	// Fill the packet data.
 	data[0] = '\0';
 	for( NSUInteger i = 0; i < _fields.count; i++) {
-		const NSString *f = [_fields objectAtIndex:i];
+		const NSString *f = _fields[i];
 
 		length = strlcat(data, [f UTF8String], maxDataLength);
 		if (i < _fields.count - 1)

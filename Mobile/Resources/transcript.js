@@ -6,6 +6,8 @@ var targetScrollTop = 0;
 var animationComplete = 0;
 var autoscrollSuspended = false;
 var scrollbackLimit = 300;
+var timestampPosition = null;
+var firstNonTopicElement = null;
 
 function animateScroll(target, duration, callback) {
 	function cubicInOut(t, b, c, d) {
@@ -106,12 +108,17 @@ function appendMessage(container, senderNickname, messageHTML, highlighted, acti
 	var messageWrapperElement = document.createElement("div");
 	messageWrapperElement.className = className;
 
+	if (firstNonTopicElement === null) {
+		firstNonTopicElement = messageWrapperElement;
+	}
+
 	className = "sender";
 	if (self) className += " self";
 
+	var timestampClassName = timestampPosition === null ? "timestamp" : "timestamp " + timestampPosition;
 	if (!previousSession && timestamp !== null) {
-		var timestampElement = document.createElement("div");
-		timestampElement.className = "timestamp";
+		var timestampElement = document.createElement("span");
+		timestampElement.className = timestampClassName;
 		timestampElement.innerHTML = timestamp;
 		messageWrapperElement.appendChild(timestampElement);
 	}
@@ -120,7 +127,7 @@ function appendMessage(container, senderNickname, messageHTML, highlighted, acti
 	aElement.className = "nickname " + senderNickname;
 	aElement.setAttribute("href", "colloquy://" + senderNickname);
 
-	var senderElement = document.createElement("div");
+	var senderElement = document.createElement("span");
 	senderElement.className = className;
 	senderElement.appendChild(aElement);
 	senderElement.textContent = senderText(senderNickname, highlighted, action, type === "notice", self);
@@ -128,7 +135,7 @@ function appendMessage(container, senderNickname, messageHTML, highlighted, acti
 	aElement.appendChild(senderElement);
 	messageWrapperElement.appendChild(aElement);
 
-	var messageElement = document.createElement("div");
+	var messageElement = document.createElement("span");
 	messageElement.className = type;
 	messageElement.innerHTML = messageHTML;
 	messageWrapperElement.appendChild(messageElement);
@@ -144,6 +151,10 @@ function appendConsoleMessage(container, messageHTML, outbound) {
 	consoleElement.className = className;
 	consoleElement.innerHTML = messageHTML;
 
+	if (firstNonTopicElement === null) {
+		firstNonTopicElement = consoleElement;
+	}
+
 	container.appendChild(consoleElement);
 }
 
@@ -155,6 +166,10 @@ function appendEventMessage(container, messageHTML, identifier, previousSession)
 	var eventElement = document.createElement("div");
 	eventElement.className = className;
 	eventElement.innerHTML = messageHTML;
+
+	if (firstNonTopicElement === null) {
+		firstNonTopicElement = eventElement;
+	}
 
 	container.appendChild(eventElement);
 }
@@ -168,6 +183,15 @@ function markScrollback() {
 	markElement.className = "mark";
 
 	container.appendChild(markElement);
+}
+
+function setTimestampPosition(position) {
+	timestampPosition = position;
+
+	var className = timestampPosition === null ? "event" : "timestamp " + timestampPosition;
+	var elements = document.getElementsByClassName("timestamp");
+	for (var i = 0; i < elements.length; i++)
+		elements[i].className = className;
 }
 
 function setScrollbackLimit(limit) {
@@ -192,12 +216,8 @@ function resumeAutoscroll() {
 	autoscrollSuspended = false;
 }
 
-function updateScrollPosition(position) {
-	currentScrollTop = position;
-}
-
 function nearBottom() {
-	return (animatingScroll || currentScrollTop >= (document.body.scrollHeight - window.innerHeight - 30));
+	return (animatingScroll || (window.innerHeight + window.scrollY) + 45 >= document.body.offsetHeight);
 }
 
 function scrollToBottomIfNeeded(animated) {
@@ -237,15 +257,35 @@ function isDocumentReady() {
 
 function urlUnderTapAtPoint(x, y) {
 	var url = null;
-	var e = document.elementFromPoint(x,y);
-
+	var e = document.elementFromPoint(x, y);
 	while (e) {
-		if (e.href.length) {
-			url = e.href;
-			break;
+		if (typeof e.href !== "undefined" && e.href.length) {
+			if (e.href.indexOf("colloquy") != 0){
+				url = e.href;
+				break;
+			}
 		}
 		e = e.parentNode;
 	}
+	return url;
+}
 
-    return url;
+function addOffsetForTopicToFirstElement() {
+	if (firstNonTopicElement === null) {
+		return;
+	}
+
+	firstNonTopicElement.style.marginTop = '23px';
+	firstNonTopicElement.style.top = 0;
+	firstNonTopicElement.style.zIndex = 1;
+}
+
+function removeOffsetForTopicFromFirstElement() {
+	if (firstNonTopicElement === null) {
+		return;
+	}
+
+	firstNonTopicElement.style.marginTop = null;
+	firstNonTopicElement.style.top = null;
+	firstNonTopicElement.style.zIndex = null;
 }

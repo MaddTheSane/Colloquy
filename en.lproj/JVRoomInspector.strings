@@ -1,0 +1,96 @@
+
+/* Class = "NSTabViewItem"; label = "Bans"; ObjectID = "316"; */
+"316.label" = "Bans";
+
+/* Class = "NSTabViewItem"; label = "Modes"; ObjectID = "318"; */
+"318.label" = "Modes";
+
+/* Class = "NSTabViewItem"; label = "Preferences"; ObjectID = "320"; */
+"320.label" = "Preferences";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "326"; */
+"326.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "327"; */
+"327.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "329"; */
+"329.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "330"; */
+"330.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "332"; */
+"332.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "333"; */
+"333.title" = " ";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Add ban"; ObjectID = "338"; */
+"338.ibShadowedToolTip" = "Add ban";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Edit ban"; ObjectID = "339"; */
+"339.ibShadowedToolTip" = "Edit ban";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Delete ban"; ObjectID = "340"; */
+"340.ibShadowedToolTip" = "Delete ban";
+
+/* Class = "NSButtonCell"; title = "Moderated chat room"; ObjectID = "351"; */
+"351.title" = "Moderated chat room";
+
+/* Class = "NSButtonCell"; title = "Secret chat room"; ObjectID = "352"; */
+"352.title" = "Secret chat room";
+
+/* Class = "NSButtonCell"; title = "Invite-only chat room"; ObjectID = "353"; */
+"353.title" = "Invite-only chat room";
+
+/* Class = "NSButtonCell"; title = "No outside messages"; ObjectID = "354"; */
+"354.title" = "No outside messages";
+
+/* Class = "NSButtonCell"; title = "Private chat room"; ObjectID = "355"; */
+"355.title" = "Private chat room";
+
+/* Class = "NSButtonCell"; title = "Topic set only by operators"; ObjectID = "356"; */
+"356.title" = "Topic set only by operators";
+
+/* Class = "NSTabViewItem"; label = "Topic"; ObjectID = "385"; */
+"385.label" = "Topic";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "401"; */
+"401.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Address"; ObjectID = "402"; */
+"402.title" = "Address";
+
+/* Class = "NSMenuItem"; title = "Nickname"; ObjectID = "403"; */
+"403.title" = "Nickname";
+
+/* Class = "NSMenuItem"; title = "Username"; ObjectID = "404"; */
+"404.title" = "Username";
+
+/* Class = "NSTextFieldCell"; title = "Sort by:"; ObjectID = "435"; */
+"435.title" = "Sort by:";
+
+/* Class = "NSButtonCell"; title = "Limit the number of members"; ObjectID = "436"; */
+"436.title" = "Limit the number of members";
+
+/* Class = "NSButtonCell"; title = "Require password to join"; ObjectID = "439"; */
+"439.title" = "Require password to join";
+
+/* Class = "NSTextFieldCell"; title = "Emoticons:"; ObjectID = "440"; */
+"440.title" = "Emoticons:";
+
+/* Class = "NSTextFieldCell"; title = "Style:"; ObjectID = "441"; */
+"441.title" = "Style:";
+
+/* Class = "NSTextFieldCell"; title = "Encoding:"; ObjectID = "442"; */
+"442.title" = "Encoding:";
+
+/* Class = "NSButtonCell"; title = "Save"; ObjectID = "446"; */
+"446.title" = "Save";
+
+/* Class = "NSButtonCell"; title = "Reset"; ObjectID = "447"; */
+"447.title" = "Reset";
+
+/* Class = "NSButtonCell"; title = "Switch"; ObjectID = "451"; */
+"451.title" = "Switch";

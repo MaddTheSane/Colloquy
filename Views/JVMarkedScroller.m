@@ -351,11 +351,11 @@
 		if( stop ) {
 			unsigned long long shiftedStop = [stop unsignedLongLongValue];
 			if( ! ( negative && shiftedStart < unsignedDisplacement ) && ! ( negative && shiftedStop < unsignedDisplacement ) ) {
-				[shiftedShades addObject:[NSNumber numberWithUnsignedLongLong:( shiftedStart + unsignedDisplacement )]];
-				[shiftedShades addObject:[NSNumber numberWithUnsignedLongLong:( shiftedStop + unsignedDisplacement )]];
+				[shiftedShades addObject:@( shiftedStart + unsignedDisplacement )];
+				[shiftedShades addObject:@( shiftedStop + unsignedDisplacement )];
 			}
 		} else if( ! ( negative && shiftedStart < unsignedDisplacement ) ) {
-			[shiftedShades addObject:[NSNumber numberWithUnsignedLongLong:( shiftedStart + unsignedDisplacement )]];
+			[shiftedShades addObject:@( shiftedStart + unsignedDisplacement )];
 		}
 	}
 
@@ -462,14 +462,14 @@
 
 - (void) startShadedAreaAt:(unsigned long long) location {
 	if( ! [_shades count] || ! ( [_shades count] % 2 ) ) {
-		[_shades addObject:[NSNumber numberWithUnsignedLongLong:location]];
+		[_shades addObject:@(location)];
 		[self setNeedsDisplayInRect:[self rectForPart:NSScrollerKnobSlot]];
 	}
 }
 
 - (void) stopShadedAreaAt:(unsigned long long) location {
 	if( [_shades count] && ( [_shades count] % 2 ) == 1 ) {
-		[_shades addObject:[NSNumber numberWithUnsignedLongLong:location]];
+		[_shades addObject:@(location)];
 		[self setNeedsDisplayInRect:[self rectForPart:NSScrollerKnobSlot]];
 	}
 }

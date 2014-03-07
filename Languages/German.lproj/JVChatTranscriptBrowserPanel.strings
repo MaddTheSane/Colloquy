@@ -1,0 +1,33 @@
+
+/* Class = "NSWindow"; title = "Protokolle"; ObjectID = "5"; */
+"5.title" = "Protokolle";
+
+/* Class = "NSTableColumn"; headerCell.title = "Gesprächsraum oder Kontakt"; ObjectID = "9"; */
+"9.headerCell.title" = "Gesprächsraum oder Kontakt";
+
+/* Class = "NSTableColumn"; headerCell.title = "Server"; ObjectID = "10"; */
+"10.headerCell.title" = "Server";
+
+/* Class = "NSTableColumn"; headerCell.title = "Datum und/oder Sitzung"; ObjectID = "11"; */
+"11.headerCell.title" = "Datum und/oder Sitzung";
+
+/* Class = "NSTableColumn"; headerCell.title = "Relevanz"; ObjectID = "12"; */
+"12.headerCell.title" = "Relevanz";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "14"; */
+"14.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Server"; ObjectID = "15"; */
+"15.title" = "Server";
+
+/* Class = "NSMenuItem"; title = "Gesprächsraum oder Kontakt"; ObjectID = "16"; */
+"16.title" = "Gesprächsraum oder Kontakt";
+
+/* Class = "NSMenuItem"; title = "Datum"; ObjectID = "17"; */
+"17.title" = "Datum";
+
+/* Class = "NSMenuItem"; title = "Gesamter Text"; ObjectID = "18"; */
+"18.title" = "Gesamter Text";
+
+/* Class = "NSTextFieldCell"; title = "Die Protokolle wurden noch nicht indiziert."; ObjectID = "49"; */
+"49.title" = "Die Protokolle wurden noch nicht indiziert.";

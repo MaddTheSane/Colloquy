@@ -1,14 +1,15 @@
+#import "CQBookmarkingController.h"
+
 NSString *const CQBookmarkingDidSaveLinkNotification = @"CQBookmarkingDidSaveLinkNotification";
 NSString *const CQBookmarkingDidNotSaveLinkNotification = @"CQBookmarkingDidNotSaveLinkNotification";
 
-NSString *const CQBookmarkingErrorDomain = @"CQBookmarkingErrorDomain";;
-
-#import "CQBookmarkingController.h"
+NSString *const CQBookmarkingErrorDomain = @"CQBookmarkingErrorDomain";
 
 #import "CQDeliciousController.h"
 #import "CQInstapaperController.h"
 #import "CQPinboardController.h"
 #import "CQPocketController.h"
+#import "CQSafariReadingListController.h"
 
 #import "CQKeychain.h"
 
@@ -16,9 +17,7 @@ static NSString *bookmarkingService;
 
 @implementation CQBookmarkingController
 + (void) userDefaultsChanged {
-	id old = bookmarkingService;
 	bookmarkingService = [[[NSUserDefaults standardUserDefaults] objectForKey:@"CQBookmarkingService"] copy];
-	[old release];
 }
 
 + (void) initialize {
@@ -46,7 +45,25 @@ static NSString *bookmarkingService;
 		return [CQPinboardController class];
 	if ([bookmarkingService isEqualToString:CQBookmarkingServicePocket])
 		return [CQPocketController class];
+	if ([bookmarkingService isEqualToString:CQBookmarkingServiceSafariReadingList])
+		return [CQSafariReadingListController class];
 	return nil;
+}
+
++ (void) handleBookmarkingOfLink:(NSString *) link {
+	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:link] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:10.];
+	if (![NSURLConnection canHandleRequest:request]) {
+		NSError *error = [NSError errorWithDomain:CQBookmarkingErrorDomain code:CQBookmarkingErrorGeneric userInfo:nil];
+		[[NSNotificationCenter defaultCenter] postNotificationName:CQBookmarkingDidNotSaveLinkNotification object:nil userInfo:@{
+			@"error": error, @"service": [[self class] serviceName]
+		}];
+
+		return;
+	}
+
+	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+		[self handleBookmarkingResponse:response withData:data forLink:link];
+	}];
 }
 
 + (void) handleBookmarkingResponse:(NSURLResponse *) response withData:(NSData *) data forLink:(NSString *) link {
@@ -56,7 +73,6 @@ static NSString *bookmarkingService;
 		NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 		NSScanner *scanner = [NSScanner scannerWithString:responseString];
 		[scanner scanInteger:&statusCode];
-		[responseString release];
 	}
 
 	if ((statusCode / 100) == 2) { // 200 (OK), 201 (Created) and 204 (No Content) are all used to indicate success
@@ -76,7 +92,9 @@ static NSString *bookmarkingService;
 			error = [NSError errorWithDomain:CQBookmarkingErrorDomain code:CQBookmarkingErrorAuthorization userInfo:nil];
 		} else error = [NSError errorWithDomain:CQBookmarkingErrorDomain code:CQBookmarkingErrorGeneric userInfo:nil];
 
-		[[NSNotificationCenter defaultCenter] postNotificationName:CQBookmarkingDidNotSaveLinkNotification object:link userInfo:@{ @"error": error, @"service": [class serviceName] }];
+		[[NSNotificationCenter defaultCenter] postNotificationName:CQBookmarkingDidNotSaveLinkNotification object:link userInfo:@{
+			@"error": error, @"service": [class serviceName]
+		}];
 	}
 }
 @end

@@ -1,0 +1,12 @@
+
+/* Class = "NSTextFieldCell"; title = "Under kan du se endringene gjort etter din versjon av programmet."; ObjectID = "54"; */
+"54.title" = "Under kan du se endringene gjort etter din versjon av programmet.";
+
+/* Class = "NSButtonCell"; title = "Avbryt"; ObjectID = "55"; */
+"55.title" = "Avbryt";
+
+/* Class = "NSButtonCell"; title = "Hent oppdatering"; ObjectID = "56"; */
+"56.title" = "Hent oppdatering";
+
+/* Class = "NSTextFieldCell"; title = "1.0 (v1E19)"; ObjectID = "57"; */
+"57.title" = "1.0 (v1E19)";

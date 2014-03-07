@@ -1,0 +1,87 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "71"; */
+"71.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "73"; */
+"73.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "75"; */
+"75.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "77"; */
+"77.title" = " ";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "195"; */
+"195.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "196"; */
+"196.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "337"; */
+"337.title" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Estilo por defeito:"; ObjectID = "373"; */
+"373.title" = "Estilo por defeito:";
+
+/* Class = "NSTextFieldCell"; title = "Ícones de expressão:"; ObjectID = "374"; */
+"374.title" = "Ícones de expressão:";
+
+/* Class = "NSTextFieldCell"; title = "Família do tipo de letra:"; ObjectID = "376"; */
+"376.title" = "Família do tipo de letra:";
+
+/* Class = "NSButtonCell"; title = "Escolher tipo de letra…"; ObjectID = "377"; */
+"377.title" = "Escolher tipo de letra…";
+
+/* Class = "NSTextFieldCell"; title = "Tamanho do tipo de letra base:"; ObjectID = "378"; */
+"378.title" = "Tamanho do tipo de letra base:";
+
+/* Class = "NSTextFieldCell"; title = "9"; ObjectID = "379"; */
+"379.title" = "9";
+
+/* Class = "NSTextFieldCell"; title = "Tamanho mínimo do tipo de letra:"; ObjectID = "382"; */
+"382.title" = "Tamanho mínimo do tipo de letra:";
+
+/* Class = "NSTextFieldCell"; title = "9"; ObjectID = "383"; */
+"383.title" = "9";
+
+/* Class = "NSTextFieldCell"; title = "Alguns estilos não honram estas definições\ne usam os valores incluídos no estilo."; ObjectID = "385"; */
+"385.title" = "Alguns estilos não honram estas definições\ne usam os valores incluídos no estilo.";
+
+/* Class = "NSButtonCell"; title = "Personalizar variante…"; ObjectID = "386"; */
+"386.title" = "Personalizar variante…";
+
+/* Class = "NSButtonCell"; title = "As caixas de inserção usam o mesmo tipo de letra"; ObjectID = "387"; */
+"387.title" = "As caixas de inserção usam o mesmo tipo de letra";
+
+/* Class = "NSButtonCell"; title = "Tirar as cores da mensagem"; ObjectID = "389"; */
+"389.title" = "Tirar as cores da mensagem";
+
+/* Class = "NSButtonCell"; title = "Tirar a formatação do texto da mensagem"; ObjectID = "390"; */
+"390.title" = "Tirar a formatação do texto da mensagem";
+
+/* Class = "NSButtonCell"; title = "Manter cores e formatação depois do envio"; ObjectID = "391"; */
+"391.title" = "Manter cores e formatação depois do envio";
+
+/* Class = "NSTextFieldCell"; title = "Caixas de escrita de conversa:"; ObjectID = "392"; */
+"392.title" = "Caixas de escrita de conversa:";
+
+/* Class = "NSTextFieldCell"; title = "Mensagens recebidas:"; ObjectID = "393"; */
+"393.title" = "Mensagens recebidas:";
+
+/* Class = "NSTextFieldCell"; title = "Está a tentar modificar um estilo ou variante bloqueada. Quer fazer uma nova variante baseada nas definições actuais do estilo?"; ObjectID = "394"; */
+"394.title" = "Está a tentar modificar um estilo ou variante bloqueada. Quer fazer uma nova variante baseada nas definições actuais do estilo?";
+
+/* Class = "NSButtonCell"; title = "Cancelar"; ObjectID = "395"; */
+"395.title" = "Cancelar";
+
+/* Class = "NSButtonCell"; title = "Criar"; ObjectID = "396"; */
+"396.title" = "Criar";
+
+/* Class = "NSTextFieldCell"; title = "Esta é uma variante de estilo bloqueada."; ObjectID = "397"; */
+"397.title" = "Esta é uma variante de estilo bloqueada.";
+
+/* Class = "NSTextFieldCell"; title = "Nome da variante:"; ObjectID = "398"; */
+"398.title" = "Nome da variante:";

@@ -293,11 +293,9 @@ static NSSize		rightCapSize;
 
 		//Update the attributed string
 		attributedLabel = [[NSAttributedString alloc] initWithString:[tabViewItem label] attributes:
-			[NSDictionary dictionaryWithObjectsAndKeys:
-				( wasEnabled ? [NSColor controlTextColor] : [[NSColor controlTextColor] colorWithAlphaComponent:0.5] ), NSForegroundColorAttributeName,
-				[NSFont systemFontOfSize:11], NSFontAttributeName,
-				paragraphStyle, NSParagraphStyleAttributeName,
-				nil]];
+			@{NSForegroundColorAttributeName: ( wasEnabled ? [NSColor controlTextColor] : [[NSColor controlTextColor] colorWithAlphaComponent:0.5] ),
+				NSFontAttributeName: [NSFont systemFontOfSize:11],
+				NSParagraphStyleAttributeName: paragraphStyle}];
 	}
 
 	return(attributedLabel);

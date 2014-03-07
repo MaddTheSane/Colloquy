@@ -3,13 +3,11 @@
 #import "CQColloquyApplication.h"
 
 @implementation CQModalNavigationController
-@synthesize closeButtonItem = _closeButtonItem;
-
 - (id) initWithRootViewController:(UIViewController *) rootViewController {
 	if (!(self = [self init]))
 		return nil;
 
-	_rootViewController = [rootViewController retain];
+	_rootViewController = rootViewController;
 
 	return self;
 }
@@ -29,10 +27,6 @@
 
 - (void) dealloc {
 	self.delegate = nil;
-
-	[_rootViewController release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -42,7 +36,6 @@
 
 	UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:_closeButtonItem target:self action:@selector(close:)];
 	_rootViewController.navigationItem.leftBarButtonItem = cancelItem;
-	[cancelItem release];
 
 	[self pushViewController:_rootViewController animated:NO];
 }

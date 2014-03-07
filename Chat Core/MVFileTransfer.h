@@ -1,3 +1,5 @@
+#ifndef __MVFILETRANSFER__
+#define __MVFILETRANSFER__
 @class MVChatConnection;
 @class MVChatUser;
 
@@ -109,3 +111,5 @@ static inline NSString *NSStringFromMVFileTransferStatus(MVFileTransferStatus st
 - (void) accept;
 - (void) acceptByResumingIfPossible:(BOOL) resume;
 @end
+
+#endif

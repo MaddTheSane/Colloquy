@@ -10,7 +10,7 @@
 	va_start( strings, retType );
 
 	while( ( type = va_arg( strings, char * ) ) )
-		[types appendString:[NSString stringWithUTF8String:type]];
+		[types appendString:@(type)];
 
 	va_end( strings );
 

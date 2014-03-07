@@ -21,6 +21,11 @@ static NSMutableSet *inspectors = nil;
 	[[self sharedInspector] show:sender];
 }
 
+- (IBAction) showInspector:(id) sender {
+	[[[self class] sharedInspector] show:sender];
+}
+
+
 + (JVInspectorController *) inspectorOfObject:(id <JVInspection>) object {
 	for( JVInspectorController *inspector in inspectors )
 		if( [inspector inspectedObject] == object )

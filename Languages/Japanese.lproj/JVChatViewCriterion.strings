@@ -1,0 +1,114 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "34"; */
+"34.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "37"; */
+"37.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "38"; */
+"38.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "と一致する項目"; ObjectID = "39"; */
+"39.title" = "と一致する項目";
+
+/* Class = "NSMenuItem"; title = "と一致しない項目"; ObjectID = "41"; */
+"41.title" = "と一致しない項目";
+
+/* Class = "NSMenuItem"; title = "を含む項目"; ObjectID = "42"; */
+"42.title" = "を含む項目";
+
+/* Class = "NSMenuItem"; title = "を含まない項目"; ObjectID = "43"; */
+"43.title" = "を含まない項目";
+
+/* Class = "NSMenuItem"; title = "で始まる項目"; ObjectID = "44"; */
+"44.title" = "で始まる項目";
+
+/* Class = "NSMenuItem"; title = "で終わる項目"; ObjectID = "45"; */
+"45.title" = "で終わる項目";
+
+/* Class = "NSMenuItem"; title = "と等しい項目"; ObjectID = "46"; */
+"46.title" = "と等しい項目";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "67"; */
+"67.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "68"; */
+"68.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "71"; */
+"71.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "の項目"; ObjectID = "72"; */
+"72.title" = "の項目";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "74"; */
+"74.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "75"; */
+"75.title" = " ";
+
+/* Class = "NSMenuItem"; title = "ではない項目"; ObjectID = "76"; */
+"76.title" = "ではない項目";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "79"; */
+"79.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "80"; */
+"80.title" = " ";
+
+/* Class = "NSMenu"; title = "メニュー"; ObjectID = "82"; */
+"82.title" = "メニュー";
+
+/* Class = "NSMenuItem"; title = "パネル名"; ObjectID = "215"; */
+"215.title" = "パネル名";
+
+/* Class = "NSMenuItem"; title = "パネルのサーバ"; ObjectID = "216"; */
+"216.title" = "パネルのサーバ";
+
+/* Class = "NSMenuItem"; title = "パネルの種類"; ObjectID = "218"; */
+"218.title" = "パネルの種類";
+
+/* Class = "NSMenuItem"; title = "サーバの種類"; ObjectID = "219"; */
+"219.title" = "サーバの種類";
+
+/* Class = "NSMenuItem"; title = "開き方"; ObjectID = "221"; */
+"221.title" = "開き方";
+
+/* Class = "NSMenuItem"; title = "すべてのパネル"; ObjectID = "223"; */
+"223.title" = "すべてのパネル";
+
+/* Class = "NSMenu"; title = "メニュー"; ObjectID = "224"; */
+"224.title" = "メニュー";
+
+/* Class = "NSMenuItem"; title = "チャットルーム"; ObjectID = "226"; */
+"226.title" = "チャットルーム";
+
+/* Class = "NSMenuItem"; title = "プライベートチャット"; ObjectID = "227"; */
+"227.title" = "プライベートチャット";
+
+/* Class = "NSMenuItem"; title = "チャットの記録"; ObjectID = "229"; */
+"229.title" = "チャットの記録";
+
+/* Class = "NSMenuItem"; title = "スマートチャット記録"; ObjectID = "230"; */
+"230.title" = "スマートチャット記録";
+
+/* Class = "NSMenuItem"; title = "接続コンソール"; ObjectID = "233"; */
+"233.title" = "接続コンソール";
+
+/* Class = "NSMenu"; title = "メニュー"; ObjectID = "234"; */
+"234.title" = "メニュー";
+
+/* Class = "NSMenuItem"; title = "SILC (Secure Internet Live Conferencing)"; ObjectID = "237"; */
+"237.title" = "SILC (Secure Internet Live Conferencing)";
+
+/* Class = "NSMenuItem"; title = "IRC (Internet Relay Chat)"; ObjectID = "240"; */
+"240.title" = "IRC (Internet Relay Chat)";
+
+/* Class = "NSMenu"; title = "メニュー"; ObjectID = "242"; */
+"242.title" = "メニュー";
+
+/* Class = "NSMenuItem"; title = "自動"; ObjectID = "243"; */
+"243.title" = "自動";
+
+/* Class = "NSMenuItem"; title = "ユーザ主体"; ObjectID = "244"; */
+"244.title" = "ユーザ主体";

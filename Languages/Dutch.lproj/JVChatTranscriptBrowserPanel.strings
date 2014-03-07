@@ -1,0 +1,33 @@
+
+/* Class = "NSWindow"; title = "Transcriptenbrowser"; ObjectID = "5"; */
+"5.title" = "Transcriptenbrowser";
+
+/* Class = "NSTableColumn"; headerCell.title = "Kanaal of Vriend"; ObjectID = "9"; */
+"9.headerCell.title" = "Kanaal of Vriend";
+
+/* Class = "NSTableColumn"; headerCell.title = "Server"; ObjectID = "10"; */
+"10.headerCell.title" = "Server";
+
+/* Class = "NSTableColumn"; headerCell.title = "Datum en/of Sessie"; ObjectID = "11"; */
+"11.headerCell.title" = "Datum en/of Sessie";
+
+/* Class = "NSTableColumn"; headerCell.title = "Relevantie"; ObjectID = "12"; */
+"12.headerCell.title" = "Relevantie";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "14"; */
+"14.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Server"; ObjectID = "15"; */
+"15.title" = "Server";
+
+/* Class = "NSMenuItem"; title = "Kanaal of Vriend"; ObjectID = "16"; */
+"16.title" = "Kanaal of Vriend";
+
+/* Class = "NSMenuItem"; title = "Datum"; ObjectID = "17"; */
+"17.title" = "Datum";
+
+/* Class = "NSMenuItem"; title = "Volledige Tekst"; ObjectID = "18"; */
+"18.title" = "Volledige Tekst";
+
+/* Class = "NSTextFieldCell"; title = "De transcripten moeten nog geïndexeerd worden."; ObjectID = "49"; */
+"49.title" = "De transcripten moeten nog geïndexeerd worden.";

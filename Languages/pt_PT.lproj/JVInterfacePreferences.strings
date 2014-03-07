@@ -1,0 +1,120 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "29"; */
+"29.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Lista da barra lateral"; ObjectID = "30"; */
+"30.title" = "Lista da barra lateral";
+
+/* Class = "NSMenuItem"; title = "Janela com telhas"; ObjectID = "31"; */
+"31.title" = "Janela com telhas";
+
+/* Class = "NSBox"; title = "Title"; ObjectID = "38"; */
+"38.title" = "Title";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Adicionar janela"; ObjectID = "49"; */
+"49.ibShadowedToolTip" = "Adicionar janela";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Adicionar regra"; ObjectID = "54"; */
+"54.ibShadowedToolTip" = "Adicionar regra";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Editar regra"; ObjectID = "55"; */
+"55.ibShadowedToolTip" = "Editar regra";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Editar janela"; ObjectID = "69"; */
+"69.ibShadowedToolTip" = "Editar janela";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "100"; */
+"100.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "todos"; ObjectID = "101"; */
+"101.title" = "todos";
+
+/* Class = "NSMenuItem"; title = "qualquer"; ObjectID = "102"; */
+"102.title" = "qualquer";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Ignorar MAIÚSCULAS e minúsculas"; ObjectID = "106"; */
+"106.ibShadowedToolTip" = "Ignorar MAIÚSCULAS e minúsculas";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "128"; */
+"128.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Direita"; ObjectID = "129"; */
+"129.title" = "Direita";
+
+/* Class = "NSMenuItem"; title = "Automático"; ObjectID = "130"; */
+"130.title" = "Automático";
+
+/* Class = "NSMenuItem"; title = "Esquerda"; ObjectID = "131"; */
+"131.title" = "Esquerda";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Apagar janela"; ObjectID = "207"; */
+"207.ibShadowedToolTip" = "Apagar janela";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Apagar regra"; ObjectID = "209"; */
+"209.ibShadowedToolTip" = "Apagar regra";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "266"; */
+"266.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "All"; ObjectID = "267"; */
+"267.title" = "All";
+
+/* Class = "NSMenuItem"; title = "Auto"; ObjectID = "268"; */
+"268.title" = "Auto";
+
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "269"; */
+"269.title" = "None";
+
+/* Class = "NSTextFieldCell"; title = "Interface da janela:"; ObjectID = "320"; */
+"320.title" = "Interface da janela:";
+
+/* Class = "NSButtonCell"; title = "Mostrar sempre a barra de telhas"; ObjectID = "321"; */
+"321.title" = "Mostrar sempre a barra de telhas";
+
+/* Class = "NSButtonCell"; title = "Arrumar membros da sala de conversas por estatuto"; ObjectID = "323"; */
+"323.title" = "Arrumar membros da sala de conversas por estatuto";
+
+/* Class = "NSTextFieldCell"; title = "Os painéis serão agrupados em janelas segundo os conjuntos de regras abaixo descritas.\nSe nenhuma regra se aplicar abrir-se-á uma nova janela."; ObjectID = "324"; */
+"324.title" = "Os painéis serão agrupados em janelas segundo os conjuntos de regras abaixo descritas.\nSe nenhuma regra se aplicar abrir-se-á uma nova janela.";
+
+/* Class = "NSButtonCell"; title = "Mostrar os nomes completos das salas de conversa"; ObjectID = "329"; */
+"329.title" = "Mostrar os nomes completos das salas de conversa";
+
+/* Class = "NSTextFieldCell"; title = "Lado da gaveta:"; ObjectID = "330"; */
+"330.title" = "Lado da gaveta:";
+
+/* Class = "NSTextFieldCell"; title = "Show Notices as Private Chat:"; ObjectID = "334"; */
+"334.title" = "Show Notices as Private Chat:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "336"; */
+"336.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancelar"; ObjectID = "337"; */
+"337.title" = "Cancelar";
+
+/* Class = "NSTextFieldCell"; title = "Nome da janela:"; ObjectID = "338"; */
+"338.title" = "Nome da janela:";
+
+/* Class = "NSButtonCell"; title = "Recordar painéis anexados manualmente"; ObjectID = "340"; */
+"340.title" = "Recordar painéis anexados manualmente";
+
+/* Class = "NSTextFieldCell"; title = "Incluir paineis que cumpram"; ObjectID = "341"; */
+"341.title" = "Incluir paineis que cumpram";
+
+/* Class = "NSTextFieldCell"; title = "das seguintes condições:"; ObjectID = "343"; */
+"343.title" = "das seguintes condições:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "344"; */
+"344.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancelar"; ObjectID = "345"; */
+"345.title" = "Cancelar";
+
+/* Class = "NSButtonCell"; title = "Ignorar capitalização"; ObjectID = "346"; */
+"346.title" = "Ignorar capitalização";
+
+/* Class = "NSTextFieldCell"; title = "The badge will reflect the number of unread highlights and private messages."; ObjectID = "358"; */
+"358.title" = "The badge will reflect the number of unread highlights and private messages.";
+
+/* Class = "NSButtonCell"; title = "Show Badge on Dock Icon"; ObjectID = "359"; */
+"359.title" = "Show Badge on Dock Icon";

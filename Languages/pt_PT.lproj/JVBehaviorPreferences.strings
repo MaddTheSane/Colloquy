@@ -1,0 +1,69 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "212"; */
+"212.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "423"; */
+"423.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Enviar uma mensagem de acção"; ObjectID = "424"; */
+"424.title" = "Enviar uma mensagem de acção";
+
+/* Class = "NSMenuItem"; title = "Inserir uma nova linha"; ObjectID = "425"; */
+"425.title" = "Inserir uma nova linha";
+
+/* Class = "NSMenuItem"; title = "Enviar uma mensagem de conversa"; ObjectID = "426"; */
+"426.title" = "Enviar uma mensagem de conversa";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "430"; */
+"430.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Enviar uma mensagem de conversa"; ObjectID = "431"; */
+"431.title" = "Enviar uma mensagem de conversa";
+
+/* Class = "NSMenuItem"; title = "Inserir uma nova linha"; ObjectID = "432"; */
+"432.title" = "Inserir uma nova linha";
+
+/* Class = "NSMenuItem"; title = "Enviar uma mensagem de acção"; ObjectID = "433"; */
+"433.title" = "Enviar uma mensagem de acção";
+
+/* Class = "NSButtonCell"; title = "Detectar acções da linguagem natural"; ObjectID = "582"; */
+"582.title" = "Detectar acções da linguagem natural";
+
+/* Class = "NSButtonCell"; title = "A tecla Tab activa a finalização de palavras"; ObjectID = "583"; */
+"583.title" = "A tecla Tab activa a finalização de palavras";
+
+/* Class = "NSTextFieldCell"; title = "Carrega-se na tecla return para:"; ObjectID = "584"; */
+"584.title" = "Carrega-se na tecla return para:";
+
+/* Class = "NSTextFieldCell"; title = "Carrega-se na tecla enter para:"; ObjectID = "585"; */
+"585.title" = "Carrega-se na tecla enter para:";
+
+/* Class = "NSTextFieldCell"; title = "Envia automaticamente mensagens que comecem com verbos de acção comuns como uma acção"; ObjectID = "586"; */
+"586.title" = "Envia automaticamente mensagens que comecem com verbos de acção comuns como uma acção";
+
+/* Class = "NSTextFieldCell"; title = "Também disponível carregando em F5 enquanto escreve. Esta preferência suporta completar alcunhas carregando na tecla Tab."; ObjectID = "588"; */
+"588.title" = "Também disponível carregando em F5 enquanto escreve. Esta preferência suporta completar alcunhas carregando na tecla Tab.";
+
+/* Class = "NSButtonCell"; title = "Verificar ortografia enquanto escreve"; ObjectID = "589"; */
+"589.title" = "Verificar ortografia enquanto escreve";
+
+/* Class = "NSTextFieldCell"; title = "Usar as teclas ⌥↑ & ⌥↓ para percorrer as mensagens enviadas"; ObjectID = "591"; */
+"591.title" = "Usar as teclas ⌥↑ & ⌥↓ para percorrer as mensagens enviadas";
+
+/* Class = "NSTextFieldCell"; title = "História de envios:"; ObjectID = "592"; */
+"592.title" = "História de envios:";
+
+/* Class = "NSTextFieldCell"; title = "Mensagens passadas:"; ObjectID = "597"; */
+"597.title" = "Mensagens passadas:";
+
+/* Class = "NSButtonCell"; title = "Voltar a entrar na sala depois de ser expulso a pontapé"; ObjectID = "598"; */
+"598.title" = "Voltar a entrar na sala depois de ser expulso a pontapé";
+
+/* Class = "NSTextFieldCell"; title = "Depois de:"; ObjectID = "601"; */
+"601.title" = "Depois de:";
+
+/* Class = "NSTextFieldCell"; title = "segundos"; ObjectID = "602"; */
+"602.title" = "segundos";
+
+/* Class = "NSButtonCell"; title = "Auto join chat rooms on invite"; ObjectID = "603"; */
+"603.title" = "Auto join chat rooms on invite";

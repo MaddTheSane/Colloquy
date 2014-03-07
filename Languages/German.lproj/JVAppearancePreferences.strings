@@ -1,0 +1,87 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "71"; */
+"71.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "73"; */
+"73.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "75"; */
+"75.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "77"; */
+"77.title" = " ";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "195"; */
+"195.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "196"; */
+"196.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "337"; */
+"337.title" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Standard-Stil:"; ObjectID = "373"; */
+"373.title" = "Standard-Stil:";
+
+/* Class = "NSTextFieldCell"; title = "Emoticons:"; ObjectID = "374"; */
+"374.title" = "Emoticons:";
+
+/* Class = "NSTextFieldCell"; title = "Schriftfamilie:"; ObjectID = "376"; */
+"376.title" = "Schriftfamilie:";
+
+/* Class = "NSButtonCell"; title = "Schrift wählen…"; ObjectID = "377"; */
+"377.title" = "Schrift wählen…";
+
+/* Class = "NSTextFieldCell"; title = "Normale Schriftgröße:"; ObjectID = "378"; */
+"378.title" = "Normale Schriftgröße:";
+
+/* Class = "NSTextFieldCell"; title = "9"; ObjectID = "379"; */
+"379.title" = "9";
+
+/* Class = "NSTextFieldCell"; title = "Mindestschriftgröße:"; ObjectID = "382"; */
+"382.title" = "Mindestschriftgröße:";
+
+/* Class = "NSTextFieldCell"; title = "9"; ObjectID = "383"; */
+"383.title" = "9";
+
+/* Class = "NSTextFieldCell"; title = "Einige Stile ignorieren diese Einstellungen und benutzen eigene Werte."; ObjectID = "385"; */
+"385.title" = "Einige Stile ignorieren diese Einstellungen und benutzen eigene Werte.";
+
+/* Class = "NSButtonCell"; title = "Stil anpassen…"; ObjectID = "386"; */
+"386.title" = "Stil anpassen…";
+
+/* Class = "NSButtonCell"; title = "Standardschrift des aktiven Stils verwenden"; ObjectID = "387"; */
+"387.title" = "Standardschrift des aktiven Stils verwenden";
+
+/* Class = "NSButtonCell"; title = "Farben entfernen"; ObjectID = "389"; */
+"389.title" = "Farben entfernen";
+
+/* Class = "NSButtonCell"; title = "Formatierungen entfernen"; ObjectID = "390"; */
+"390.title" = "Formatierungen entfernen";
+
+/* Class = "NSButtonCell"; title = "Farben & Formatierungen nach dem Senden beibehalten"; ObjectID = "391"; */
+"391.title" = "Farben & Formatierungen nach dem Senden beibehalten";
+
+/* Class = "NSTextFieldCell"; title = "Gesprächs-Eingabefelder:"; ObjectID = "392"; */
+"392.title" = "Gesprächs-Eingabefelder:";
+
+/* Class = "NSTextFieldCell"; title = "Eingehende Nachrichten:"; ObjectID = "393"; */
+"393.title" = "Eingehende Nachrichten:";
+
+/* Class = "NSTextFieldCell"; title = "Sie versuchen eine(n) schreibgeschützte(n) Stil oder Variante zu ändern. Möchten Sie eine neue Variante erstellen, die auf den gegenwärtigen Einstellungen basiert?"; ObjectID = "394"; */
+"394.title" = "Sie versuchen eine(n) schreibgeschützte(n) Stil oder Variante zu ändern. Möchten Sie eine neue Variante erstellen, die auf den gegenwärtigen Einstellungen basiert?";
+
+/* Class = "NSButtonCell"; title = "Abbrechen"; ObjectID = "395"; */
+"395.title" = "Abbrechen";
+
+/* Class = "NSButtonCell"; title = "Erstellen"; ObjectID = "396"; */
+"396.title" = "Erstellen";
+
+/* Class = "NSTextFieldCell"; title = "Diese Stilvariante ist schreibgeschützt."; ObjectID = "397"; */
+"397.title" = "Diese Stilvariante ist schreibgeschützt.";
+
+/* Class = "NSTextFieldCell"; title = "Variantenname:"; ObjectID = "398"; */
+"398.title" = "Variantenname:";

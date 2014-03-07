@@ -63,7 +63,7 @@
 
 - (NSView *) view {
 	if( ! _nibLoaded ) {
-		_nibLoaded = [[NSBundle bundleForClass:[self class]] loadNibFile:@"F-ScriptConsole" externalNameTable:[NSDictionary dictionaryWithObject:self forKey:@"NSOwner"] withZone:[self zone]];
+		_nibLoaded = [[NSBundle bundleForClass:[self class]] loadNibFile:@"F-ScriptConsole" externalNameTable:@{@"NSOwner": self} withZone:[self zone]];
 	}
 
 	return contents;
@@ -100,13 +100,13 @@
 }
 
 - (NSArray *) toolbarDefaultItemIdentifiers:(NSToolbar *) toolbar {
-	return [NSArray arrayWithObject:@"JVFScriptBrowseToolbarItem"];
+	return @[@"JVFScriptBrowseToolbarItem"];
 }
 
 - (NSArray *) toolbarAllowedItemIdentifiers:(NSToolbar *) toolbar {
-	return [NSArray arrayWithObjects:@"JVFScriptBrowseToolbarItem",
+	return @[@"JVFScriptBrowseToolbarItem",
 		NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier, 
-		NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier, nil];
+		NSToolbarSpaceItemIdentifier, NSToolbarSeparatorItemIdentifier];
 }
 
 - (NSString *) title {

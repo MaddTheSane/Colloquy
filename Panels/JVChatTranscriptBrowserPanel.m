@@ -294,35 +294,35 @@ NSString *criteria[4] = { @"server", @"target", @"session", nil };
 }
 
 - (void) indexingThread {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSString *path = nil;
-
-	[NSThread setThreadPriority:0.25];
-
-	while( _shouldIndex ) {
-		@synchronized( _dirtyLogs ) {
-			path = [[_dirtyLogs anyObject] retain];
-			if( path ) [_dirtyLogs removeObject:path];
+	@autoreleasepool {
+		NSString *path = nil;
+		
+		[NSThread setThreadPriority:0.25];
+		
+		while( _shouldIndex ) {
+			@synchronized( _dirtyLogs ) {
+				path = [[_dirtyLogs anyObject] retain];
+				if( path ) [_dirtyLogs removeObject:path];
+			}
+			
+			if( ! path ) break;
+			
+			SKDocumentRef document = SKDocumentCreateWithURL( (CFURLRef) [NSURL fileURLWithPath:path] );
+			NSString *toIndex = [[NSString alloc] initWithContentsOfFile:path]; // FIXME strip xml (w/o NSXMLDocument...) ?
+			SKIndexAddDocumentWithText( _logsIndex, document, (CFStringRef) toIndex, YES );
+			CFRelease( document );
+			
+			[toIndex release];
+			[path release];
+			
+			[self performSelectorOnMainThread:@selector( updateStatus ) withObject:nil waitUntilDone:NO];
 		}
-
-		if( ! path ) break;
-
-		SKDocumentRef document = SKDocumentCreateWithURL( (CFURLRef) [NSURL fileURLWithPath:path] );
-		NSString *toIndex = [[NSString alloc] initWithContentsOfFile:path]; // FIXME strip xml (w/o NSXMLDocument...) ?
-		SKIndexAddDocumentWithText( _logsIndex, document, (CFStringRef) toIndex, YES );
-		CFRelease( document );
-
-		[toIndex release];
-		[path release];
-
-		[self performSelectorOnMainThread:@selector( updateStatus ) withObject:nil waitUntilDone:NO];
+		
+		[self performSelectorOnMainThread:@selector( syncDirtyLogsList ) withObject:nil waitUntilDone:NO];
+		
+		SKIndexFlush( _logsIndex );
+		
 	}
-
-	[self performSelectorOnMainThread:@selector( syncDirtyLogsList ) withObject:nil waitUntilDone:NO];
-
-	SKIndexFlush( _logsIndex );
-
-	[pool release];
 }
 
 - (void) stopIndexing:(NSNotification *) notification {

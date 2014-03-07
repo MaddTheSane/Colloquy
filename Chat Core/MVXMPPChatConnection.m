@@ -11,7 +11,7 @@
 
 @implementation MVXMPPChatConnection
 + (NSArray *) defaultServerPorts {
-	return [NSArray arrayWithObjects:[NSNumber numberWithUnsignedShort:5222], [NSNumber numberWithUnsignedShort:5223], nil];
+	return @[[NSNumber numberWithUnsignedShort:5222], [NSNumber numberWithUnsignedShort:5223]];
 }
 
 #pragma mark -
@@ -200,7 +200,7 @@
 
 	MVChatUser *user = nil;
 	@synchronized( _knownUsers ) {
-		user = [_knownUsers objectForKey:[identifier completeID]];
+		user = _knownUsers[[identifier completeID]];
 		if( user ) return [[user retain] autorelease];
 
 		user = [[MVXMPPChatUser allocWithZone:nil] initWithJabberID:identifier andConnection:self];
@@ -292,13 +292,13 @@
 
 - (void) outgoingPacket:(NSNotification *) notification {
 	NSString *string = [[NSString alloc] initWithData:[notification object] encoding:NSUTF8StringEncoding];
-	[[NSNotificationCenter defaultCenter] postNotificationName:MVChatConnectionGotRawMessageNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:string, @"message", [NSNumber numberWithBool:YES], @"outbound", nil]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MVChatConnectionGotRawMessageNotification object:self userInfo:@{@"message": string, @"outbound": @YES}];
 	[string release];
 }
 
 - (void) incomingPacket:(NSNotification *) notification {
 	NSString *string = [[NSString alloc] initWithData:[notification object] encoding:NSUTF8StringEncoding];
-	[[NSNotificationCenter defaultCenter] postNotificationName:MVChatConnectionGotRawMessageNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:string, @"message", [NSNumber numberWithBool:NO], @"outbound", nil]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MVChatConnectionGotRawMessageNotification object:self userInfo:@{@"message": string, @"outbound": @NO}];
 	[string release];
 }
 
@@ -329,8 +329,8 @@
 		NSMutableData *msgData = [[[message body] dataUsingEncoding:NSUTF8StringEncoding] mutableCopyWithZone:nil];
 
 		NSMutableDictionary *msgAttributes = [[NSMutableDictionary allocWithZone:nil] init];
-		[msgAttributes setObject:sender forKey:@"user"];
-		[msgAttributes setObject:msgData forKey:@"message"];
+		msgAttributes[@"user"] = sender;
+		msgAttributes[@"message"] = msgData;
 
 		NSMethodSignature *signature = [NSMethodSignature methodSignatureWithReturnAndArgumentTypes:@encode( void ), @encode( NSMutableData * ), @encode( MVChatUser * ), @encode( id ), @encode( NSMutableDictionary * ), nil];
 		NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
@@ -381,7 +381,7 @@
 
 	if ([[presence getAttribute:@"type"] isCaseInsensitiveEqualToString:@"unavailable"]) {
 		[room _removeMemberUser:user];
-		[[NSNotificationCenter defaultCenter] postNotificationName:MVChatRoomUserPartedNotification object:room userInfo:[NSDictionary dictionaryWithObjectsAndKeys:user, @"user", nil]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:MVChatRoomUserPartedNotification object:room userInfo:@{@"user": user}];
 		return;
 	}
 
@@ -398,7 +398,7 @@
 		[room _addMemberUser:user];
 		[self _markUserAsOnline:user];
 
-		NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSArray arrayWithObject:user] forKey:@"added"];
+		NSDictionary *userInfo = @{@"added": @[user]};
 		[[NSNotificationCenter defaultCenter] postNotificationName:MVChatRoomMemberUsersSyncedNotification object:room userInfo:userInfo];
 	}
 

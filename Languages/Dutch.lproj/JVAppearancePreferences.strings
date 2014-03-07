@@ -1,0 +1,87 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "71"; */
+"71.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "73"; */
+"73.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "75"; */
+"75.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "77"; */
+"77.title" = " ";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "195"; */
+"195.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "196"; */
+"196.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "337"; */
+"337.title" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Standaard Stijl:"; ObjectID = "373"; */
+"373.title" = "Standaard Stijl:";
+
+/* Class = "NSTextFieldCell"; title = "Emoticons:"; ObjectID = "374"; */
+"374.title" = "Emoticons:";
+
+/* Class = "NSTextFieldCell"; title = "Lettertype:"; ObjectID = "376"; */
+"376.title" = "Lettertype:";
+
+/* Class = "NSButtonCell"; title = "Selecteer Lettertype…"; ObjectID = "377"; */
+"377.title" = "Selecteer Lettertype…";
+
+/* Class = "NSTextFieldCell"; title = "Standaard Lettergrootte:"; ObjectID = "378"; */
+"378.title" = "Standaard Lettergrootte:";
+
+/* Class = "NSTextFieldCell"; title = "9"; ObjectID = "379"; */
+"379.title" = "9";
+
+/* Class = "NSTextFieldCell"; title = "Minimale Lettergrootte:"; ObjectID = "382"; */
+"382.title" = "Minimale Lettergrootte:";
+
+/* Class = "NSTextFieldCell"; title = "9"; ObjectID = "383"; */
+"383.title" = "9";
+
+/* Class = "NSTextFieldCell"; title = "Sommige stijlen negeren deze instellingen, en gebruiken ingebouwde waarden."; ObjectID = "385"; */
+"385.title" = "Sommige stijlen negeren deze instellingen, en gebruiken ingebouwde waarden.";
+
+/* Class = "NSButtonCell"; title = "Pas Stijl Aan…"; ObjectID = "386"; */
+"386.title" = "Pas Stijl Aan…";
+
+/* Class = "NSButtonCell"; title = "Gebruik het lettertype van de actieve Stijl"; ObjectID = "387"; */
+"387.title" = "Gebruik het lettertype van de actieve Stijl";
+
+/* Class = "NSButtonCell"; title = "Verwijder kleur uit berichten"; ObjectID = "389"; */
+"389.title" = "Verwijder kleur uit berichten";
+
+/* Class = "NSButtonCell"; title = "Verwijder tekstopmaak uit berichten"; ObjectID = "390"; */
+"390.title" = "Verwijder tekstopmaak uit berichten";
+
+/* Class = "NSButtonCell"; title = "Behoud kleuren en opmaak na het zenden"; ObjectID = "391"; */
+"391.title" = "Behoud kleuren en opmaak na het zenden";
+
+/* Class = "NSTextFieldCell"; title = "Chat Invoergebieden:"; ObjectID = "392"; */
+"392.title" = "Chat Invoergebieden:";
+
+/* Class = "NSTextFieldCell"; title = "Inkomende berichten:"; ObjectID = "393"; */
+"393.title" = "Inkomende berichten:";
+
+/* Class = "NSTextFieldCell"; title = "U probeert een gesloten stijl of variant aan te passen.  Wenst u een nieuwe variant te creëren, uitgaande van de huidige stijlinstellingen?"; ObjectID = "394"; */
+"394.title" = "U probeert een gesloten stijl of variant aan te passen.  Wenst u een nieuwe variant te creëren, uitgaande van de huidige stijlinstellingen?";
+
+/* Class = "NSButtonCell"; title = "Annuleer"; ObjectID = "395"; */
+"395.title" = "Annuleer";
+
+/* Class = "NSButtonCell"; title = "Maak Aan"; ObjectID = "396"; */
+"396.title" = "Maak Aan";
+
+/* Class = "NSTextFieldCell"; title = "Dit is een gesloten stijlvariant."; ObjectID = "397"; */
+"397.title" = "Dit is een gesloten stijlvariant.";
+
+/* Class = "NSTextFieldCell"; title = "Variantnaam:"; ObjectID = "398"; */
+"398.title" = "Variantnaam:";

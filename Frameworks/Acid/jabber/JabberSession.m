@@ -118,7 +118,7 @@ NSString* STREAM_ROOT = @"<stream:stream xmlns='jabber:client' xmlns:stream='htt
               xpath:(NSString*)path
 {
     NSString* eventName = [NSString stringWithFormat:@"%lu/packet/%@", _curr_id, path];
-    XPathQuery* query         = [_expressions objectForKey:path];
+    XPathQuery* query         = _expressions[path];
     NSMutableArray* queryList = [self getQueriesForObserver:observer];
 
     assert(queryList != nil);
@@ -127,7 +127,7 @@ NSString* STREAM_ROOT = @"<stream:stream xmlns='jabber:client' xmlns:stream='htt
     if (query == nil)
     {
         query = [[XPathQuery alloc] initWithPath:path];
-        [_expressions setObject:query forKey:path];
+        _expressions[path] = query;
         [query release];
     }
 
@@ -187,7 +187,7 @@ NSString* STREAM_ROOT = @"<stream:stream xmlns='jabber:client' xmlns:stream='htt
 -(void) removeObserver:(id)observer xpath:(NSString*)path
 {
     NSString* eventName = [NSString stringWithFormat:@"/packet/%@", path];
-    XPathQuery* query = [_expressions objectForKey:path];
+    XPathQuery* query = _expressions[path];
     NSMutableArray* queryList = (NSMutableArray*)CFDictionaryGetValue(_observerMap, observer);
 
     if ((query == nil) || (queryList == nil))

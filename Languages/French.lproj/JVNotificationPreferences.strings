@@ -1,0 +1,54 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "92"; */
+"92.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "95"; */
+"95.title" = " ";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "99"; */
+"99.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "100"; */
+"100.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "104"; */
+"104.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "105"; */
+"105.title" = " ";
+
+/* Class = "NSButtonCell"; title = "Faire rebondir l'icône de Colloquy dans le Dock"; ObjectID = "155"; */
+"155.title" = "Faire rebondir l'icône de Colloquy dans le Dock";
+
+/* Class = "NSTextFieldCell"; title = "Les messages contenant n'importe lequel des mots ci-dessus seront highlightés (si le thème utilisé supporte le highlight)."; ObjectID = "156"; */
+"156.title" = "Les messages contenant n'importe lequel des mots ci-dessus seront highlightés (si le thème utilisé supporte le highlight).";
+
+/* Class = "NSButtonCell"; title = "répéter jusqu'à ce que Colloquy soit ramené au premier plan"; ObjectID = "157"; */
+"157.title" = "répéter jusqu'à ce que Colloquy soit ramené au premier plan";
+
+/* Class = "NSTextFieldCell"; title = "Mots de highlight:"; ObjectID = "159"; */
+"159.title" = "Mots de highlight:";
+
+/* Class = "NSTextFieldCell"; title = "Évènement:"; ObjectID = "161"; */
+"161.title" = "Évènement:";
+
+/* Class = "NSButtonCell"; title = "Jouer le son:"; ObjectID = "162"; */
+"162.title" = "Jouer le son:";
+
+/* Class = "NSButtonCell"; title = "Montrer la bulle d'évènement"; ObjectID = "164"; */
+"164.title" = "Montrer la bulle d'évènement";
+
+/* Class = "NSButtonCell"; title = "…seulement si Colloquy est en arrière-plan"; ObjectID = "165"; */
+"165.title" = "…seulement si Colloquy est en arrière-plan";
+
+/* Class = "NSButtonCell"; title = "…garder à l'écran jusqu'à l'activation"; ObjectID = "166"; */
+"166.title" = "…garder à l'écran jusqu'à l'activation";
+
+/* Class = "NSButtonCell"; title = "Ne pas jouer les sons de notification"; ObjectID = "167"; */
+"167.title" = "Ne pas jouer les sons de notification";
+
+/* Class = "NSButtonCell"; title = "…seulement si Colloquy est en arrière-plan"; ObjectID = "168"; */
+"168.title" = "…seulement si Colloquy est en arrière-plan";

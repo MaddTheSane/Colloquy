@@ -223,11 +223,11 @@
 	if( [self format] == JVTranscriptTextCriterionFormat ) {
 		[self setQuery:[textQuery stringValue]];
 	} else if( [self format] == JVTranscriptDateCriterionFormat ) {
-		[self setQuery:[NSNumber numberWithDouble:[dateQuery doubleValue]]];
+		[self setQuery:@([dateQuery doubleValue])];
 	} else if( [self format] == JVTranscriptListCriterionFormat ) {
 		NSMenuItem *mitem = [listQuery selectedItem];
 		if( [mitem representedObject] ) [self setQuery:[mitem representedObject]];
-		else [self setQuery:[NSNumber numberWithLong:[mitem tag]]];
+		else [self setQuery:@([mitem tag])];
 	}
 }
 

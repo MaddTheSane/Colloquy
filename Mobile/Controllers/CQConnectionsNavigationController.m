@@ -13,9 +13,6 @@
 
 	self.title = NSLocalizedString(@"Connections", @"Connections tab title");
 	self.tabBarItem.image = [UIImage imageNamed:@"connections.png"];
-	self.delegate = self;
-
-	self.navigationBar.tintColor = [CQColloquyApplication sharedApplication].tintColor;
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
 
@@ -26,10 +23,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	self.delegate = nil;
-
-	[_connectionsViewController release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -41,6 +34,11 @@
 		return;
 
 	_connectionsViewController = [[CQConnectionsViewController alloc] init];
+
+	self.delegate = self;
+
+	if (![UIDevice currentDevice].isSystemSeven)
+		self.navigationBar.tintColor = [CQColloquyApplication sharedApplication].tintColor;
 
 	[self pushViewController:_connectionsViewController animated:NO];
 }
@@ -77,8 +75,6 @@
 
 	_wasEditing = YES;
 	[self pushViewController:editViewController animated:YES];
-
-	[editViewController release];
 }
 
 - (void) editBouncer:(CQBouncerSettings *) settings {
@@ -87,8 +83,6 @@
 
 	_wasEditing = YES;
 	[self pushViewController:editViewController animated:YES];
-
-	[editViewController release];
 }
 
 #pragma mark -
@@ -97,6 +91,7 @@
 	if (![NSThread isMainThread])
 		return;
 
-	self.navigationBar.tintColor = [CQColloquyApplication sharedApplication].tintColor;
+	if (![UIDevice currentDevice].isSystemSeven)
+		self.navigationBar.tintColor = [CQColloquyApplication sharedApplication].tintColor;
 }
 @end

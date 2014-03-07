@@ -1,0 +1,36 @@
+
+/* Class = "NSPanel"; title = "Cerca"; ObjectID = "21"; */
+"21.title" = "Cerca";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "239"; */
+"239.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "tutte"; ObjectID = "240"; */
+"240.title" = "tutte";
+
+/* Class = "NSMenuItem"; title = "una qualsiasi fra"; ObjectID = "241"; */
+"241.title" = "una qualsiasi fra";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Continue search at the beginning of the document"; ObjectID = "252"; */
+"252.ibShadowedToolTip" = "Continue search at the beginning of the document";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Ignora casi estremi"; ObjectID = "253"; */
+"253.ibShadowedToolTip" = "Ignora casi estremi";
+
+/* Class = "NSTextFieldCell"; title = "Cerca elementi corrispondenti a"; ObjectID = "405"; */
+"405.title" = "Cerca elementi corrispondenti a";
+
+/* Class = "NSTextFieldCell"; title = "le seguenti condizioni:"; ObjectID = "407"; */
+"407.title" = "le seguenti condizioni:";
+
+/* Class = "NSButtonCell"; title = "Prossimo"; ObjectID = "408"; */
+"408.title" = "Prossimo";
+
+/* Class = "NSButtonCell"; title = "Precedente"; ObjectID = "409"; */
+"409.title" = "Precedente";
+
+/* Class = "NSButtonCell"; title = "Solo scrollback"; ObjectID = "410"; */
+"410.title" = "Solo scrollback";
+
+/* Class = "NSButtonCell"; title = "Ignora maiuscole/minuscole"; ObjectID = "411"; */
+"411.title" = "Ignora maiuscole/minuscole";

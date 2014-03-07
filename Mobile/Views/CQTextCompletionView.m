@@ -7,6 +7,8 @@
 #define CompletionBubbleInset 6.5
 
 @implementation CQTextCompletionView
+@synthesize delegate = _delegate;
+
 - (id) initWithFrame:(CGRect) frame {
 	if (!(self = [super initWithFrame:frame]))
 		return nil;
@@ -57,7 +59,7 @@
 	CGFloat offset = CompletionMargin;
 	UIFont *font = CompletionFont;
 
-	for (NSString *completion in _completions) {
+	for (__strong NSString *completion in _completions) {
 		BOOL selected = (_selectedCompletion == i);
 		CGSize textSize = _completionTextSizes[i++];
 
@@ -125,17 +127,8 @@
 	[@"\u00d7" drawAtPoint:textPoint withFont:font];
 }
 
-- (void) dealloc {
-	[_completions release];
-
-	[super dealloc];
-}
 
 #pragma mark -
-
-@synthesize delegate;
-
-@synthesize completions = _completions;
 
 - (void) setCompletions:(NSArray *) completions {
 	UIFont *font = CompletionFont;
@@ -156,9 +149,7 @@
 		if (++i >= MaximumCompletions) break;
 	}
 
-	id old = _completions;
 	_completions = [[NSArray alloc] initWithObjects:objects count:i];
-	[old release];
 
 	_selectedCompletion = NSNotFound;
 
@@ -261,19 +252,17 @@
 	if (_selectedCompletion == NSNotFound)
 		return;
 
-	[self retain];
 
 	if (_selectedCompletion >= MaximumCompletions || _selectedCompletion >= _completions.count) {
-		if ([delegate respondsToSelector:@selector(textCompletionViewDidClose:)])
-			[delegate textCompletionViewDidClose:self];
+		if ([_delegate respondsToSelector:@selector(textCompletionViewDidClose:)])
+			[_delegate textCompletionViewDidClose:self];
 	} else {
-		if ([delegate respondsToSelector:@selector(textCompletionView:didSelectCompletion:)])
-			[delegate textCompletionView:self didSelectCompletion:[_completions objectAtIndex:_selectedCompletion]];
+		if ([_delegate respondsToSelector:@selector(textCompletionView:didSelectCompletion:)])
+			[_delegate textCompletionView:self didSelectCompletion:_completions[_selectedCompletion]];
 	}
 
 	self.selectedCompletion = NSNotFound;
 
-	[self release];
 }
 
 - (void) touchesCancelled:(NSSet *) touches withEvent:(UIEvent *) event {

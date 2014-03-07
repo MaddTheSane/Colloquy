@@ -178,7 +178,7 @@ static  NSImage			*tabDivider = nil;
 }
 
 //Returns number of tab view items
-- (int)numberOfTabViewItems
+- (NSInteger)numberOfTabViewItems
 {
 	return([tabView numberOfTabViewItems]);
 }
@@ -702,7 +702,7 @@ static NSRect AIConstrainRectWidth(NSRect rect, float left, float right)
         types = [delegate customTabViewAcceptableDragTypes:self];
     }
 
-    return(types ? [types arrayByAddingObject:TAB_CELL_IDENTIFIER] : [NSArray arrayWithObject:TAB_CELL_IDENTIFIER]);
+    return(types ? [types arrayByAddingObject:TAB_CELL_IDENTIFIER] : @[TAB_CELL_IDENTIFIER]);
 }
 
 //Return YES to accept drags
@@ -716,7 +716,7 @@ static NSRect AIConstrainRectWidth(NSRect rect, float left, float right)
 {
     NSPoint			location = [self convertPoint:[sender draggingLocation] fromView:nil];
 	NSPasteboard	*pboard = [sender draggingPasteboard];
-    NSString        *type = [pboard availableTypeFromArray:[NSArray arrayWithObject:TAB_CELL_IDENTIFIER]];
+    NSString        *type = [pboard availableTypeFromArray:@[TAB_CELL_IDENTIFIER]];
     BOOL            success = NO;
 	NSInteger		dropIndex;
 	AICustomTabCell	*tabCell;
@@ -747,7 +747,7 @@ static NSRect AIConstrainRectWidth(NSRect rect, float left, float right)
 //Called when a drag enters this toolbar
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-	NSString 		*type = [[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObject:TAB_CELL_IDENTIFIER]];
+	NSString 		*type = [[sender draggingPasteboard] availableTypeFromArray:@[TAB_CELL_IDENTIFIER]];
 	NSDragOperation	operation = NSDragOperationNone;
 
 	[self stopCursorTracking];
@@ -771,7 +771,7 @@ static NSRect AIConstrainRectWidth(NSRect rect, float left, float right)
 {
     NSPoint			location = [self convertPoint:[sender draggingLocation] fromView:nil];
     NSPasteboard 	*pboard = [sender draggingPasteboard];
-    NSString 		*type = [pboard availableTypeFromArray:[NSArray arrayWithObject:TAB_CELL_IDENTIFIER]];
+    NSString 		*type = [pboard availableTypeFromArray:@[TAB_CELL_IDENTIFIER]];
     NSDragOperation	operation = NSDragOperationNone;
 
     if(type && [type isEqualToString:TAB_CELL_IDENTIFIER]){ //Dragging a tab
@@ -803,7 +803,7 @@ static NSRect AIConstrainRectWidth(NSRect rect, float left, float right)
 - (void)draggingExited:(id <NSDraggingInfo>)sender
 {
 	NSPasteboard 	*pboard = [sender draggingPasteboard];
-	NSString 		*type = [pboard availableTypeFromArray:[NSArray arrayWithObject:TAB_CELL_IDENTIFIER]];
+	NSString 		*type = [pboard availableTypeFromArray:@[TAB_CELL_IDENTIFIER]];
 
 	if(type && [type isEqualToString:TAB_CELL_IDENTIFIER]){ //Dragging a tab
 
@@ -859,7 +859,7 @@ static NSRect AIConstrainRectWidth(NSRect rect, float left, float right)
 		if(desiredIndex == 0){
 			hover = CUSTOM_TABS_INDENT;
 		}else{
-			hover = NSMaxX([[tabCellArray objectAtIndex:desiredIndex-1] frame]) + CUSTOM_TABS_GAP;
+			hover = NSMaxX([tabCellArray[desiredIndex-1] frame]) + CUSTOM_TABS_GAP;
 		}
 		return([[self window] convertBaseToScreen:[self convertPoint:NSMakePoint(hover,0) toView:nil]]);
 	}

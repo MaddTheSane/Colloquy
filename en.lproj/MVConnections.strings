@@ -1,0 +1,192 @@
+
+/* Class = "NSPanel"; title = "Connections"; ObjectID = "5"; */
+"5.title" = "Connections";
+
+/* Class = "NSTableColumn"; headerCell.title = "Server"; ObjectID = "115"; */
+"115.headerCell.title" = "Server";
+
+/* Class = "NSPanel"; title = "New Connection"; ObjectID = "267"; */
+"267.title" = "New Connection";
+
+/* Class = "NSTableColumn"; headerCell.title = "Port"; ObjectID = "328"; */
+"328.headerCell.title" = "Port";
+
+/* Class = "NSTableColumn"; headerCell.title = "Nickname"; ObjectID = "356"; */
+"356.headerCell.title" = "Nickname";
+
+/* Class = "NSMenuItem"; title = "Secure Web"; ObjectID = "659"; */
+"659.title" = "Secure Web";
+
+/* Class = "NSMenuItem"; title = "SOCKS Firewall"; ObjectID = "661"; */
+"661.title" = "SOCKS Firewall";
+
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "664"; */
+"664.title" = "None";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "671"; */
+"671.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "699"; */
+"699.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "IRC (Internet Relay Chat)"; ObjectID = "702"; */
+"702.title" = "IRC (Internet Relay Chat)";
+
+/* Class = "NSMenuItem"; title = "SILC (Secure Internet Live Conferencing)"; ObjectID = "703"; */
+"703.title" = "SILC (Secure Internet Live Conferencing)";
+
+/* Class = "NSPanel"; title = "Public Key Verification"; ObjectID = "733"; */
+"733.title" = "Public Key Verification";
+
+/* Class = "NSTableColumn"; headerCell.title = "Hostname"; ObjectID = "783"; */
+"783.headerCell.title" = "Hostname";
+
+/* Class = "NSTableColumn"; headerCell.title = "Fingerprint"; ObjectID = "784"; */
+"784.headerCell.title" = "Fingerprint";
+
+/* Class = "NSMenuItem"; title = "ICB (Internet Citizen's Band)"; ObjectID = "799"; */
+"799.title" = "ICB (Internet Citizen's Band)";
+
+/* Class = "NSMenuItem"; title = "XMPP (Jabber)"; ObjectID = "100795"; */
+"100795.title" = "XMPP (Jabber)";
+
+/* Class = "NSTextFieldCell"; title = "Chat Server:"; ObjectID = "100797"; */
+"100797.title" = "Chat Server:";
+
+/* Class = "NSTextFieldCell"; title = "Nickname:"; ObjectID = "100798"; */
+"100798.title" = "Nickname:";
+
+/* Class = "NSButtonCell"; title = "Remember this connection"; ObjectID = "100800"; */
+"100800.title" = "Remember this connection";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "100801"; */
+"100801.title" = "Cancel";
+
+/* Class = "NSButtonCell"; title = "Connect"; ObjectID = "100802"; */
+"100802.title" = "Connect";
+
+/* Class = "NSButtonCell"; title = "Button"; ObjectID = "100804"; */
+"100804.title" = "Button";
+
+/* Class = "NSTextFieldCell"; title = "Details"; ObjectID = "100805"; */
+"100805.title" = "Details";
+
+/* Class = "NSTextFieldCell"; title = "Join Rooms:"; ObjectID = "100807"; */
+"100807.title" = "Join Rooms:";
+
+/* Class = "NSTextFieldCell"; title = "Proxy:"; ObjectID = "100810"; */
+"100810.title" = "Proxy:";
+
+/* Class = "NSButtonCell"; title = "Edit…"; ObjectID = "100811"; */
+"100811.title" = "Edit…";
+
+/* Class = "NSTextFieldCell"; title = "Server Password:"; ObjectID = "100812"; */
+"100812.title" = "Server Password:";
+
+/* Class = "NSTextFieldCell"; title = "Username:"; ObjectID = "100815"; */
+"100815.title" = "Username:";
+
+/* Class = "NSTextFieldCell"; title = "Real Name:"; ObjectID = "100816"; */
+"100816.title" = "Real Name:";
+
+/* Class = "NSTextFieldCell"; title = "Chat Server Port:"; ObjectID = "100819"; */
+"100819.title" = "Chat Server Port:";
+
+/* Class = "NSButtonCell"; title = "SSL Connection"; ObjectID = "100820"; */
+"100820.title" = "SSL Connection";
+
+/* Class = "NSTextFieldCell"; title = "Server Protocol:"; ObjectID = "100821"; */
+"100821.title" = "Server Protocol:";
+
+/* Class = "NSButtonCell"; title = "Chat"; ObjectID = "100823"; */
+"100823.title" = "Chat";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "100824"; */
+"100824.title" = "Cancel";
+
+/* Class = "NSTextFieldCell"; title = "Nickname:"; ObjectID = "100825"; */
+"100825.title" = "Nickname:";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "100827"; */
+"100827.title" = "Cancel";
+
+/* Class = "NSTextFieldCell"; title = "Nickname authorization request"; ObjectID = "100828"; */
+"100828.title" = "Nickname authorization request";
+
+/* Class = "NSTextFieldCell"; title = "This nickname is registered and protected. If it is your registered nickname, type your password. Otherwise, please choose a different nickname."; ObjectID = "100829"; */
+"100829.title" = "This nickname is registered and protected. If it is your registered nickname, type your password. Otherwise, please choose a different nickname.";
+
+/* Class = "NSButtonCell"; title = "Identify"; ObjectID = "100831"; */
+"100831.title" = "Identify";
+
+/* Class = "NSTextFieldCell"; title = "Password:"; ObjectID = "100833"; */
+"100833.title" = "Password:";
+
+/* Class = "NSTextFieldCell"; title = "Nickname:"; ObjectID = "100834"; */
+"100834.title" = "Nickname:";
+
+/* Class = "NSTextFieldCell"; title = "Server:"; ObjectID = "100835"; */
+"100835.title" = "Server:";
+
+/* Class = "NSButtonCell"; title = "Add to keychain"; ObjectID = "100838"; */
+"100838.title" = "Add to keychain";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "100840"; */
+"100840.title" = "Cancel";
+
+/* Class = "NSButtonCell"; title = "Unlock"; ObjectID = "100841"; */
+"100841.title" = "Unlock";
+
+/* Class = "NSTextFieldCell"; title = "Certificate authorization request"; ObjectID = "100843"; */
+"100843.title" = "Certificate authorization request";
+
+/* Class = "NSButtonCell"; title = "Add to keychain"; ObjectID = "100845"; */
+"100845.title" = "Add to keychain";
+
+/* Class = "NSTextFieldCell"; title = "Passphrase:"; ObjectID = "100846"; */
+"100846.title" = "Passphrase:";
+
+/* Class = "NSTextFieldCell"; title = "Please verify Servers public key."; ObjectID = "100848"; */
+"100848.title" = "Please verify Servers public key.";
+
+/* Class = "NSTextFieldCell"; title = "Fingerprint:"; ObjectID = "100849"; */
+"100849.title" = "Fingerprint:";
+
+/* Class = "NSTextFieldCell"; title = "Babbleprint:"; ObjectID = "100850"; */
+"100850.title" = "Babbleprint:";
+
+/* Class = "NSTextFieldCell"; title = "Server Name:"; ObjectID = "100851"; */
+"100851.title" = "Server Name:";
+
+/* Class = "NSTextFieldCell"; title = "silc.icore.at"; ObjectID = "100852"; */
+"100852.title" = "silc.icore.at";
+
+/* Class = "NSTextFieldCell"; title = "972E C6E5 3DF3 2E97 BE13  723B 0125 B1C6 5CA5 528F\n"; ObjectID = "100853"; */
+"100853.title" = "972E C6E5 3DF3 2E97 BE13  723B 0125 B1C6 5CA5 528F\n";
+
+/* Class = "NSTextFieldCell"; title = "xohod-vecav-hozyz-ferun-lazec-fisof-rubyd-hases-kalip-hegem-zoxax"; ObjectID = "100854"; */
+"100854.title" = "xohod-vecav-hozyz-ferun-lazec-fisof-rubyd-hases-kalip-hegem-zoxax";
+
+/* Class = "NSButtonCell"; title = "Always accept key"; ObjectID = "100855"; */
+"100855.title" = "Always accept key";
+
+/* Class = "NSButtonCell"; title = "Accept"; ObjectID = "100856"; */
+"100856.title" = "Accept";
+
+/* Class = "NSButtonCell"; title = "Reject"; ObjectID = "100857"; */
+"100857.title" = "Reject";
+
+/* Class = "NSTextFieldCell"; title = "Multiple users have been found with the same nickname."; ObjectID = "100858"; */
+"100858.title" = "Multiple users have been found with the same nickname.";
+
+/* Class = "NSTextFieldCell"; title = "Please select the one you want to send the message to."; ObjectID = "100859"; */
+"100859.title" = "Please select the one you want to send the message to.";
+
+/* Class = "NSButtonCell"; title = "Select"; ObjectID = "100860"; */
+"100860.title" = "Select";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "100861"; */
+"100861.title" = "Cancel";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "100865"; */
+"100865.title" = "Text Cell";

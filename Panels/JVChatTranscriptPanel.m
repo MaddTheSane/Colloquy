@@ -338,7 +338,7 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 - (IBAction) saveDocumentTo:(id) sender {
 	NSSavePanel *savePanel = [NSSavePanel savePanel];
 	[savePanel setCanSelectHiddenExtension:YES];
-	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"colloquyTranscript"]];
+	[savePanel setAllowedFileTypes:@[@"colloquyTranscript"]];
 	[savePanel setDirectoryURL:[NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES]];
 	[savePanel setNameFieldStringValue:[self title]];
 	[savePanel beginWithCompletionHandler:^(NSInteger result) {
@@ -349,13 +349,13 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 - (void) savePanelDidEnd:(NSSavePanel *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo {
 	if( returnCode == NSOKButton ) {
 		[[self transcript] writeToURL:[sheet URL] atomically:YES];
-		[[NSFileManager defaultManager] setAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:[sheet isExtensionHidden]], NSFileExtensionHidden, nil] ofItemAtPath:[[sheet URL] absoluteString] error:nil];
+		[[NSFileManager defaultManager] setAttributes:@{NSFileExtensionHidden: @([sheet isExtensionHidden])} ofItemAtPath:[[sheet URL] absoluteString] error:nil];
 		[[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[sheet URL]];
 	}
 }
 
 - (void) downloadLinkToDisk:(id) sender {
-	NSURL *url = [[sender representedObject] objectForKey:@"WebElementLinkURL"];
+	NSURL *url = [sender representedObject][@"WebElementLinkURL"];
 	[[MVFileTransferController defaultController] downloadFileAtURL:url toLocalFile:nil];
 }
 
@@ -382,8 +382,8 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 #pragma mark -
 
 - (IBAction) changeStyleVariant:(id) sender {
-	JVStyle *style = [[sender representedObject] objectForKey:@"style"];
-	NSString *variant = [[sender representedObject] objectForKey:@"variant"];
+	JVStyle *style = [sender representedObject][@"style"];
+	NSString *variant = [sender representedObject][@"variant"];
 	[self setStyle:style withVariant:variant];
 }
 
@@ -551,11 +551,11 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 }
 
 - (NSArray *) toolbarDefaultItemIdentifiers:(NSToolbar *) toolbar {
-	return [NSArray arrayWithObjects:JVToolbarChooseStyleItemIdentifier, JVToolbarEmoticonsItemIdentifier, nil];
+	return @[JVToolbarChooseStyleItemIdentifier, JVToolbarEmoticonsItemIdentifier];
 }
 
 - (NSArray *) toolbarAllowedItemIdentifiers:(NSToolbar *) toolbar {
-	return [NSArray arrayWithObjects:JVToolbarChooseStyleItemIdentifier, JVToolbarEmoticonsItemIdentifier, JVToolbarFindItemIdentifier, JVToolbarQuickSearchItemIdentifier, nil];
+	return @[JVToolbarChooseStyleItemIdentifier, JVToolbarEmoticonsItemIdentifier, JVToolbarFindItemIdentifier, JVToolbarQuickSearchItemIdentifier];
 }
 
 - (BOOL) validateToolbarItem:(NSToolbarItem *) toolbarItem {
@@ -597,7 +597,7 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 	BOOL found = NO;
 
 	for( i = 0; i < [ret count]; i++ ) {
-		item = [ret objectAtIndex:i];
+		item = ret[i];
 
 		switch( [item tag] ) {
 		case WebMenuItemTagOpenLinkInNewWindow:
@@ -626,7 +626,7 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 		}
 	}
 
-	if( ! found && ! [ret count] && ! [[element objectForKey:WebElementIsSelectedKey] boolValue] ) {
+	if( ! found && ! [ret count] && ! [element[WebElementIsSelectedKey] boolValue] ) {
 		item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString( @"Style", "choose style contextual menu" ) action:NULL keyEquivalent:@""];
 		[item setSubmenu:_styleMenu];
 		[ret addObject:item];
@@ -640,10 +640,10 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 	NSMethodSignature *signature = [NSMethodSignature methodSignatureWithReturnAndArgumentTypes:@encode( NSArray * ), @encode( id ), @encode( id ), nil];
 	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
 
-	id object = [[element objectForKey:WebElementImageURLKey] description];
-	if( ! object ) object = [[element objectForKey:WebElementLinkURLKey] description];
+	id object = [element[WebElementImageURLKey] description];
+	if( ! object ) object = [element[WebElementLinkURLKey] description];
 	if( ! object ) {
-		WebFrame *frame = [element objectForKey:WebElementFrameKey];
+		WebFrame *frame = element[WebElementFrameKey];
 		object = [(id <WebDocumentText>)[[frame frameView] documentView] selectedString];
 	}
 
@@ -686,7 +686,7 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 }
 
 - (void) webView:(WebView *) sender decidePolicyForNavigationAction:(NSDictionary *) actionInformation request:(NSURLRequest *) request frame:(WebFrame *) frame decisionListener:(id <WebPolicyDecisionListener>) listener {
-	NSURL *url = [actionInformation objectForKey:WebActionOriginalURLKey];
+	NSURL *url = actionInformation[WebActionOriginalURLKey];
 
 	if( [[url scheme] isEqualToString:@"about"] ) {
 		if( [[[url standardizedURL] path] length] ) [listener ignore];
@@ -717,11 +717,11 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 		if( ! [[results lastObject] boolValue] ) {
 			if( [MVChatConnection supportsURLScheme:[url scheme]] ) {
 				[[MVConnectionsController defaultController] handleURL:url andConnectIfPossible:YES];
-			} else if( [[actionInformation objectForKey:WebActionModifierFlagsKey] unsignedIntValue] & NSAlternateKeyMask ) {
+			} else if( [actionInformation[WebActionModifierFlagsKey] unsignedIntValue] & NSAlternateKeyMask ) {
 				[[MVFileTransferController defaultController] downloadFileAtURL:url toLocalFile:nil];
 			} else {
-				NSWorkspaceLaunchOptions options = ( [[actionInformation objectForKey:WebActionModifierFlagsKey] unsignedIntValue] & NSCommandKeyMask ? NSWorkspaceLaunchWithoutActivation : 0 );
-				[[NSWorkspace sharedWorkspace] openURLs:[NSArray arrayWithObject:url] withAppBundleIdentifier:nil options:options additionalEventParamDescriptor:nil launchIdentifiers:nil];
+				NSWorkspaceLaunchOptions options = ( [actionInformation[WebActionModifierFlagsKey] unsignedIntValue] & NSCommandKeyMask ? NSWorkspaceLaunchWithoutActivation : 0 );
+				[[NSWorkspace sharedWorkspace] openURLs:@[url] withAppBundleIdentifier:nil options:options additionalEventParamDescriptor:nil launchIdentifiers:nil];
 			}
 		}
 
@@ -808,8 +808,8 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 		else [menuItem setState:NSOffState];
 
 		for( NSMenuItem *subMenuItem in [[menuItem submenu] itemArray] ) {
-			JVStyle *style = [[subMenuItem representedObject] objectForKey:@"style"];
-			NSString *variant = [[subMenuItem representedObject] objectForKey:@"variant"];
+			JVStyle *style = [subMenuItem representedObject][@"style"];
+			NSString *variant = [subMenuItem representedObject][@"variant"];
 			if( [subMenuItem action] == @selector( changeStyleVariant: ) && [[self style] isEqualTo:style] && ( [[self styleVariant] isEqualToString:variant] || ( ! [self styleVariant] && ! variant ) ) )
 				[subMenuItem setState:NSOnState];
 			else [subMenuItem setState:NSOffState];
@@ -855,13 +855,13 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 
 			subMenuItem = [[NSMenuItem alloc] initWithTitle:[style mainVariantDisplayName] action:@selector( changeStyleVariant: ) keyEquivalent:@""];
 			[subMenuItem setTarget:self];
-			[subMenuItem setRepresentedObject:[NSDictionary dictionaryWithObjectsAndKeys:style, @"style", nil]];
+			[subMenuItem setRepresentedObject:@{@"style": style}];
 			[subMenu addItem:subMenuItem];
 
 			for( id item in variants ) {
 				subMenuItem = [[NSMenuItem alloc] initWithTitle:item action:@selector( changeStyleVariant: ) keyEquivalent:@""];
 				[subMenuItem setTarget:self];
-				[subMenuItem setRepresentedObject:[NSDictionary dictionaryWithObjectsAndKeys:style, @"style", item, @"variant", nil]];
+				[subMenuItem setRepresentedObject:@{@"style": style, @"variant": item}];
 				[subMenu addItem:subMenuItem];
 			}
 
@@ -870,7 +870,7 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 			for( id item in userVariants ) {
 				subMenuItem = [[NSMenuItem alloc] initWithTitle:item action:@selector( changeStyleVariant: ) keyEquivalent:@""];
 				[subMenuItem setTarget:self];
-				[subMenuItem setRepresentedObject:[NSDictionary dictionaryWithObjectsAndKeys:style, @"style", item, @"variant", nil]];
+				[subMenuItem setRepresentedObject:@{@"style": style, @"variant": item}];
 				[subMenu addItem:subMenuItem];
 			}
 

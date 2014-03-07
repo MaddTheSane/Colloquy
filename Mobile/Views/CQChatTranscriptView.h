@@ -6,9 +6,14 @@ typedef enum {
 	CQShowRoomTopicAlways
 } CQShowRoomTopic;
 
+typedef enum {
+	CQTimestampPositionLeft,
+	CQTimestampPositionRight,
+	CQTimestampPositionCenter
+} CQTimestampPosition;
+
 @interface CQChatTranscriptView : UIWebView <UIGestureRecognizerDelegate, UIWebViewDelegate> {
 	@protected
-	IBOutlet id <CQChatTranscriptViewDelegate> transcriptDelegate;
 	UIView *_blockerView;
 	NSMutableArray *_pendingPreviousSessionComponents;
 	NSMutableArray *_pendingComponents;
@@ -20,7 +25,7 @@ typedef enum {
 	BOOL _resetPending;
 	CGPoint _lastTouchLocation;
 	BOOL _allowsStyleChanges;
-	BOOL _timestampOnLeft;
+	CQTimestampPosition _timestampPosition;
 	BOOL _allowSingleSwipeGesture;
 	NSMutableArray *_singleSwipeGestureRecognizers;
 	CQShowRoomTopic _showRoomTopic;
@@ -28,13 +33,13 @@ typedef enum {
 	NSString *_roomTopicSetter;
 	BOOL _topicIsHidden;
 }
-@property (nonatomic, assign) id <CQChatTranscriptViewDelegate> transcriptDelegate;
+@property (nonatomic, weak) IBOutlet id <CQChatTranscriptViewDelegate> transcriptDelegate;
 
 @property (nonatomic, assign) BOOL allowsStyleChanges;
 @property (nonatomic, copy) NSString *styleIdentifier;
 @property (nonatomic, copy) NSString *fontFamily;
 @property (nonatomic, assign) NSUInteger fontSize;
-@property (nonatomic, assign) BOOL timestampOnLeft;
+@property (nonatomic, assign) CQTimestampPosition timestampPosition;
 @property (nonatomic, assign) BOOL allowSingleSwipeGesture;
 
 - (void) addPreviousSessionComponents:(NSArray *) components;
@@ -43,6 +48,9 @@ typedef enum {
 
 - (void) noteNicknameChangedFrom:(NSString *) oldNickname to:(NSString *) newNickname;
 - (void) noteTopicChangeTo:(NSString *) newTopic by:(NSString *) username;
+
+// image must be either a URL, or, a base64-encoded image
+- (void) insertImage:(NSString *) image forElementWithIdentifier:(NSString *) elementIdentifier;
 
 - (void) scrollToBottomAnimated:(BOOL) animated;
 - (void) flashScrollIndicators;
@@ -59,5 +67,6 @@ typedef enum {
 - (BOOL) transcriptView:(CQChatTranscriptView *) transcriptView handleOpenURL:(NSURL *) url;
 - (void) transcriptView:(CQChatTranscriptView *) transcriptView handleNicknameTap:(NSString *) nickname atLocation:(CGPoint) location;
 - (void) transcriptView:(CQChatTranscriptView *) transcriptView handleLongPressURL:(NSURL *) url atLocation:(CGPoint) location;
+- (BOOL) transcriptViewShouldBecomeFirstResponder:(CQChatTranscriptView *) transcriptView;
 - (void) transcriptViewWasReset:(CQChatTranscriptView *) transcriptView;
 @end

@@ -1,0 +1,36 @@
+
+/* Class = "NSPanel"; title = "検索"; ObjectID = "21"; */
+"21.title" = "検索";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "239"; */
+"239.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "すべての"; ObjectID = "240"; */
+"240.title" = "すべての";
+
+/* Class = "NSMenuItem"; title = "いずれかの"; ObjectID = "241"; */
+"241.title" = "いずれかの";
+
+/* Class = "NSButton"; ibShadowedToolTip = "文章の最後にきたら先頭に折り返して検索します"; ObjectID = "252"; */
+"252.ibShadowedToolTip" = "文章の最後にきたら先頭に折り返して検索します";
+
+/* Class = "NSButton"; ibShadowedToolTip = "大／小文字の違いを無視します"; ObjectID = "253"; */
+"253.ibShadowedToolTip" = "大／小文字の違いを無視します";
+
+/* Class = "NSTextFieldCell"; title = "以下の"; ObjectID = "405"; */
+"405.title" = "以下の";
+
+/* Class = "NSTextFieldCell"; title = "条件に一致する項目を検索："; ObjectID = "407"; */
+"407.title" = "条件に一致する項目を検索：";
+
+/* Class = "NSButtonCell"; title = "次へ"; ObjectID = "408"; */
+"408.title" = "次へ";
+
+/* Class = "NSButtonCell"; title = "前へ"; ObjectID = "409"; */
+"409.title" = "前へ";
+
+/* Class = "NSButtonCell"; title = "スクロールのみ"; ObjectID = "410"; */
+"410.title" = "スクロールのみ";
+
+/* Class = "NSButtonCell"; title = "大／小文字を無視"; ObjectID = "411"; */
+"411.title" = "大／小文字を無視";

@@ -2,38 +2,36 @@
 
 @implementation NSDate (NSDateAdditions)
 + (NSString *) formattedStringWithDate:(NSDate *) date dateFormat:(NSString *) format {
-	NSDateFormatter *dateFormatter = [[NSThread currentThread].threadDictionary objectForKey:format];
+	NSDateFormatter *dateFormatter = ([NSThread currentThread].threadDictionary)[format];
 	if (!dateFormatter) {
 		dateFormatter = [[NSDateFormatter alloc] init];
 		dateFormatter.dateFormat = format;
 
-		[[NSThread currentThread].threadDictionary setObject:dateFormatter forKey:format];
-
-		[dateFormatter release];
+		([NSThread currentThread].threadDictionary)[format] = dateFormatter;
+		[dateFormatter autorelease];
 	}
 
 	return [dateFormatter stringFromDate:date];
 }
 
 + (NSString *) formattedStringWithDate:(NSDate *) date dateStyle:(int) dateStyle timeStyle:(int) timeStyle {
-	NSMutableDictionary *dateFormatters = [[NSThread currentThread].threadDictionary objectForKey:@"dateFormatters"];
+	NSMutableDictionary *dateFormatters = ([NSThread currentThread].threadDictionary)[@"dateFormatters"];
 	if (!dateFormatters) {
 		dateFormatters = [NSMutableDictionary dictionary];
 
-		[[NSThread currentThread].threadDictionary setObject:dateFormatters forKey:@"dateFormatters"];
+		([NSThread currentThread].threadDictionary)[@"dateFormatters"] = dateFormatters;
 	}
 
 	NSString *key = [NSString stringWithFormat:@"%d-%d", dateStyle, timeStyle];
-	NSDateFormatter *dateFormatter = [dateFormatters objectForKey:key];
+	NSDateFormatter *dateFormatter = dateFormatters[key];
 
 	if (!dateFormatter) {
 		dateFormatter = [[NSDateFormatter alloc] init];
 		dateFormatter.dateStyle = dateStyle;
 		dateFormatter.timeStyle = timeStyle;
 
-		[dateFormatters setObject:dateFormatter forKey:key];
-
-		[dateFormatter release];
+		dateFormatters[key] = dateFormatter;
+		[dateFormatter autorelease];
 	}
 
 	return [dateFormatter stringFromDate:date];

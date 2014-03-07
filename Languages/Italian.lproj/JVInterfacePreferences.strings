@@ -1,0 +1,120 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "29"; */
+"29.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Pannello laterale"; ObjectID = "30"; */
+"30.title" = "Pannello laterale";
+
+/* Class = "NSMenuItem"; title = "Finestra a schede"; ObjectID = "31"; */
+"31.title" = "Finestra a schede";
+
+/* Class = "NSBox"; title = "Title"; ObjectID = "38"; */
+"38.title" = "Title";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Aggiungi finestra"; ObjectID = "49"; */
+"49.ibShadowedToolTip" = "Aggiungi finestra";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Aggiungi azione"; ObjectID = "54"; */
+"54.ibShadowedToolTip" = "Aggiungi azione";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Modifica azione"; ObjectID = "55"; */
+"55.ibShadowedToolTip" = "Modifica azione";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Modifica finestra"; ObjectID = "69"; */
+"69.ibShadowedToolTip" = "Modifica finestra";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "100"; */
+"100.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "tutte"; ObjectID = "101"; */
+"101.title" = "tutte";
+
+/* Class = "NSMenuItem"; title = "almeno una fra"; ObjectID = "102"; */
+"102.title" = "almeno una fra";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Ignora casi estremi"; ObjectID = "106"; */
+"106.ibShadowedToolTip" = "Ignora casi estremi";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "128"; */
+"128.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Destra"; ObjectID = "129"; */
+"129.title" = "Destra";
+
+/* Class = "NSMenuItem"; title = "Automatico"; ObjectID = "130"; */
+"130.title" = "Automatico";
+
+/* Class = "NSMenuItem"; title = "Sinistra"; ObjectID = "131"; */
+"131.title" = "Sinistra";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Elimina finestra"; ObjectID = "207"; */
+"207.ibShadowedToolTip" = "Elimina finestra";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Elimina azione"; ObjectID = "209"; */
+"209.ibShadowedToolTip" = "Elimina azione";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "269"; */
+"269.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "All"; ObjectID = "270"; */
+"270.title" = "All";
+
+/* Class = "NSMenuItem"; title = "Auto"; ObjectID = "271"; */
+"271.title" = "Auto";
+
+/* Class = "NSMenuItem"; title = "None"; ObjectID = "272"; */
+"272.title" = "None";
+
+/* Class = "NSTextFieldCell"; title = "Interfaccia della finestra:"; ObjectID = "331"; */
+"331.title" = "Interfaccia della finestra:";
+
+/* Class = "NSButtonCell"; title = "Mostra sempre la barra delle schede"; ObjectID = "332"; */
+"332.title" = "Mostra sempre la barra delle schede";
+
+/* Class = "NSButtonCell"; title = "Ordina gli utenti per stato"; ObjectID = "334"; */
+"334.title" = "Ordina gli utenti per stato";
+
+/* Class = "NSTextFieldCell"; title = "I pannelli saranno raggruppati in finestre in base alle azioni qui impostate.\nSe non\\nsarà trovata corrispondenza con nessuna azione, sarà aperta una nuova finestra."; ObjectID = "335"; */
+"335.title" = "I pannelli saranno raggruppati in finestre in base alle azioni qui impostate.\nSe non\\nsarà trovata corrispondenza con nessuna azione, sarà aperta una nuova finestra.";
+
+/* Class = "NSButtonCell"; title = "Mostra per intero i nomi delle stanze"; ObjectID = "340"; */
+"340.title" = "Mostra per intero i nomi delle stanze";
+
+/* Class = "NSTextFieldCell"; title = "Lato del cassetto:"; ObjectID = "341"; */
+"341.title" = "Lato del cassetto:";
+
+/* Class = "NSTextFieldCell"; title = "Show Notices as Private Chat:"; ObjectID = "345"; */
+"345.title" = "Show Notices as Private Chat:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "347"; */
+"347.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Annulla"; ObjectID = "348"; */
+"348.title" = "Annulla";
+
+/* Class = "NSTextFieldCell"; title = "Nome della finestra:"; ObjectID = "349"; */
+"349.title" = "Nome della finestra:";
+
+/* Class = "NSButtonCell"; title = "Ricorda i pannelli aggiunti manualmente"; ObjectID = "351"; */
+"351.title" = "Ricorda i pannelli aggiunti manualmente";
+
+/* Class = "NSTextFieldCell"; title = "Includi i pannelli che corrispondono a"; ObjectID = "352"; */
+"352.title" = "Includi i pannelli che corrispondono a";
+
+/* Class = "NSTextFieldCell"; title = "le seguenti condizioni:"; ObjectID = "354"; */
+"354.title" = "le seguenti condizioni:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "355"; */
+"355.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Annulla"; ObjectID = "356"; */
+"356.title" = "Annulla";
+
+/* Class = "NSButtonCell"; title = "Ignora maiuscole/minuscole"; ObjectID = "357"; */
+"357.title" = "Ignora maiuscole/minuscole";
+
+/* Class = "NSTextFieldCell"; title = "The badge will reflect the number of unread highlights and private messages."; ObjectID = "373"; */
+"373.title" = "The badge will reflect the number of unread highlights and private messages.";
+
+/* Class = "NSButtonCell"; title = "Show Badge on Dock Icon"; ObjectID = "374"; */
+"374.title" = "Show Badge on Dock Icon";

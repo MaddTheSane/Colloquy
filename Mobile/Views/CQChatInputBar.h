@@ -10,9 +10,8 @@ typedef enum {
 
 @interface CQChatInputBar : UIView <UITextViewDelegate, CQTextCompletionViewDelegate> {
 	@protected
-	UIToolbar *_backgroundView;
+	UIView *_backgroundView;
 	UITextView *_inputView;
-	IBOutlet id <CQChatInputBarDelegate> delegate;
 	CQTextCompletionView *_completionView;
 	NSArray *_completions;
 	NSRange _completionRange;
@@ -26,16 +25,15 @@ typedef enum {
 	UIViewAnimationCurve _animationCurve;
 	NSTimeInterval _animationDuration;
 	UIButton *_accessoryButton;
-	CGFloat _previousContentHeight;
 	UIImageView *_overlayBackgroundView;
 	UIImageView *_overlayBackgroundViewPiece;
-	BOOL _shouldAnimateLayout;
+	UIView *_topLineView;
 	NSMutableDictionary *_accessoryImages;
 	CQChatInputBarResponderState _responderState;
 }
-@property (nonatomic, assign) id <CQChatInputBarDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id <CQChatInputBarDelegate> delegate;
 
-@property (nonatomic, retain) UIColor *tintColor;
+@property (nonatomic, strong) UIColor *tintColor;
 
 @property (nonatomic) BOOL autocomplete;
 @property (nonatomic) BOOL spaceCyclesCompletions;

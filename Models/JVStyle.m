@@ -46,7 +46,7 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 		for( NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] ) {
 			NSString *fullPath = [path stringByAppendingPathComponent:file];
 			NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:fullPath error:NO];
-			if( /* [[NSWorkspace sharedWorkspace] isFilePackageAtPath:fullPath] && */ ( [[file pathExtension] caseInsensitiveCompare:@"colloquyStyle"] == NSOrderedSame || [[file pathExtension] caseInsensitiveCompare:@"fireStyle"] == NSOrderedSame || ( [[attributes objectForKey:NSFileHFSTypeCode] unsignedLongValue] == 'coSt' && [[attributes objectForKey:NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
+			if( /* [[NSWorkspace sharedWorkspace] isFilePackageAtPath:fullPath] && */ ( [[file pathExtension] caseInsensitiveCompare:@"colloquyStyle"] == NSOrderedSame || [[file pathExtension] caseInsensitiveCompare:@"fireStyle"] == NSOrderedSame || ( [attributes[NSFileHFSTypeCode] unsignedLongValue] == 'coSt' && [attributes[NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
 				NSBundle *bundle = nil;
 				JVStyle *style = nil;
 				if( ( bundle = [NSBundle bundleWithPath:[path stringByAppendingPathComponent:file]] ) ) {
@@ -110,7 +110,7 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 	if( ! style ) [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"JVChatDefaultStyle"];
 	else [[NSUserDefaults standardUserDefaults] setObject:[style identifier] forKey:@"JVChatDefaultStyle"];
 
-	NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:[self defaultStyle], @"default", nil];
+	NSDictionary *info = @{@"default": [self defaultStyle]};
 	[[NSNotificationCenter defaultCenter] postNotificationName:JVStyleVariantChangedNotification object:oldDefault userInfo:info];
 }
 
@@ -283,7 +283,7 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 		}
 
 		if( result ) {
-			ret = [NSString stringWithUTF8String:(char *) result];
+			ret = @((char *) result);
 			free( result );
 		}
 
@@ -364,7 +364,7 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 		}
 	}
 
-	NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:[self defaultVariantName], @"variant", nil];
+	NSDictionary *info = @{@"variant": [self defaultVariantName]};
 	[[NSNotificationCenter defaultCenter] postNotificationName:JVDefaultStyleVariantChangedNotification object:self userInfo:info];
 }
 
@@ -514,7 +514,7 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 	ret = temp = malloc( ( ( [dictionary count] * 2 ) + 1 ) * sizeof( char * ) );
 
 	for( NSString *key in dictionary ) {
-		NSString *value = [dictionary objectForKey:key];
+		NSString *value = dictionary[key];
 
 		*(temp++) = (char *) strdup( [key UTF8String] );
 		*(temp++) = (char *) strdup( [value UTF8String] );

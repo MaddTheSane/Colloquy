@@ -117,7 +117,7 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 	if( [self respondsToSelector:selector] ) {
 		((void(*)(id, SEL, int))objc_msgSend)(self, selector, value);
 	} else {
-		NSNumber *number = [NSNumber numberWithLong:value];
+		NSNumber *number = @(value);
 		[self setValue:number forKey:property];
 	}
 }
@@ -272,11 +272,11 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 	_styleVariant = [variant copyWithZone:nil];
 
 	// add single-quotes so that these are not interpreted as XPath expressions
-	[_styleParameters setObject:@"'/tmp/'" forKey:@"buddyIconDirectory"];
-	[_styleParameters setObject:@"'.tif'" forKey:@"buddyIconExtension"];
+	_styleParameters[@"buddyIconDirectory"] = @"'/tmp/'";
+	_styleParameters[@"buddyIconExtension"] = @"'.tif'";
 
 	NSString *timeFormatParameter = [NSString stringWithFormat:@"'%@'", [NSDate formattedShortTimeStringForDate:[NSDate date]]];
-	[_styleParameters setObject:timeFormatParameter forKey:@"timeFormat"];
+	_styleParameters[@"timeFormat"] = timeFormatParameter;
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:JVStyleVariantChangedNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _styleVariantChanged: ) name:JVStyleVariantChangedNotification object:style];
@@ -471,11 +471,11 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 	NSString *result = nil;
 
 	if( _requiresFullMessage && consecutiveOffset > 0 ) {
-		NSArray *elements = [[NSArray allocWithZone:nil] initWithObjects:message, nil];
+		NSArray *elements = @[message];
 		result = [[self style] transformChatTranscriptElements:elements withParameters:_styleParameters];
 	} else {
 		if( ! _requiresFullMessage && consecutiveOffset > 0 )
-			[_styleParameters setObject:@"'yes'" forKey:@"consecutiveMessage"];
+			_styleParameters[@"consecutiveMessage"] = @"'yes'";
 		result = [[self style] transformChatMessage:message withParameters:_styleParameters];
 		[_styleParameters removeObjectForKey:@"consecutiveMessage"];
 	}
@@ -542,15 +542,15 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 #pragma mark -
 
 - (void) highlightString:(NSString *) string inMessage:(JVChatMessage *) message {
-	[[self windowScriptObject] callWebScriptMethod:@"searchHighlight" withArguments:[NSArray arrayWithObjects:[message messageIdentifier], string, nil]];
+	[[self windowScriptObject] callWebScriptMethod:@"searchHighlight" withArguments:@[[message messageIdentifier], string]];
 }
 
 - (void) clearStringHighlightsForMessage:(JVChatMessage *) message {
-	[[self windowScriptObject] callWebScriptMethod:@"resetSearchHighlight" withArguments:[NSArray arrayWithObject:[message messageIdentifier]]];
+	[[self windowScriptObject] callWebScriptMethod:@"resetSearchHighlight" withArguments:@[[message messageIdentifier]]];
 }
 
 - (void) clearAllStringHighlights {
-	[[self windowScriptObject] callWebScriptMethod:@"resetSearchHighlight" withArguments:[NSArray arrayWithObject:[NSNull null]]];
+	[[self windowScriptObject] callWebScriptMethod:@"resetSearchHighlight" withArguments:@[[NSNull null]]];
 }
 
 #pragma mark -
@@ -631,7 +631,7 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 
 	if( [selectedString length] ) {
 		NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSFindPboard];
-		[pboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+		[pboard declareTypes:@[NSStringPboardType] owner:nil];
 		[pboard setString:selectedString forType:NSStringPboardType];
 	}
 }
@@ -819,7 +819,7 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 		NSMutableDictionary *parameters = [[NSMutableDictionary allocWithZone:nil] initWithDictionary:_styleParameters copyItems:NO];
 		unsigned long elementCount = [transcript elementCount];
 
-		[parameters setObject:@"'yes'" forKey:@"bulkTransform"];
+		parameters[@"bulkTransform"] = @"'yes'";
 
 		for( unsigned long i = elementCount; i > ( elementCount - MIN( [self scrollbackLimit], elementCount ) ); i -= MIN( 25u, i ) ) {
 			NSArray *elements = [transcript elementsInRange:NSMakeRange( i - MIN( 25u, i ), MIN( 25u, i ) )];
@@ -947,7 +947,7 @@ quickEnd:
 }
 
 - (void) _styleVariantChanged:(NSNotification *) notification {
-	NSString *variant = [[notification userInfo] objectForKey:@"variant"];
+	NSString *variant = [notification userInfo][@"variant"];
 	if( [variant isEqualToString:[self styleVariant]] )
 		[self setStyleVariant:variant];
 }

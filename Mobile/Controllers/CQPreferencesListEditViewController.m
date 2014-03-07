@@ -4,16 +4,7 @@
 
 @implementation CQPreferencesListEditViewController
 - (id) init {
-	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
-		return nil;
-	return self;
-}
-
-- (void) dealloc {
-	[_listItem release];
-	[_listItemPlaceholder release];
-
-	[super dealloc];
+	return (self = [super initWithStyle:UITableViewStyleGrouped]);
 }
 
 #pragma mark -
@@ -38,22 +29,14 @@
 
 #pragma mark -
 
-@synthesize listItem = _listItem;
-
 - (void) setListItem:(id) listItem {
-	id old = _listItem;
-	_listItem = [listItem retain];
-	[old release];
+	_listItem = listItem;
 
 	[self.tableView reloadData];
 }
 
-@synthesize listItemPlaceholder = _listItemPlaceholder;
-
 - (void) setListItemPlaceholder:(NSString *) listItemPlaceholder {
-	id old = _listItemPlaceholder;
 	_listItemPlaceholder = [listItemPlaceholder copy];
-	[old release];
 
 	[self.tableView reloadData];
 }

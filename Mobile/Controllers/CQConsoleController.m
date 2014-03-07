@@ -62,7 +62,7 @@ static BOOL verbose;
 	if (!(self = [super initWithTarget:nil]))
 		return self;
 
-	_connection = [target retain];
+	_connection = target;
 
 	_delegateLogger = [[MVDelegateLogger alloc] initWithDelegate:self];
 
@@ -79,21 +79,22 @@ static BOOL verbose;
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionGotRawMessageNotification object:_connection];
 
-	[_delegateLogger release];
-	[_connection release];
 
-	[super dealloc];
 }
 
 #pragma mark -
+
+- (void) awakeFromNib {
+	[super awakeFromNib];
+
+	transcriptView.styleIdentifier = @"console";
+	transcriptView.allowsStyleChanges = NO;
+}
 
 - (void) viewDidLoad {
 	[super viewDidLoad];
 
 	self.navigationItem.title = NSLocalizedString(@"Console", @"Console view title");
-
-	transcriptView.styleIdentifier = @"console";
-	transcriptView.allowsStyleChanges = NO;
 
 	[transcriptView noteTopicChangeTo:@"" by:@""];
 }
@@ -147,8 +148,6 @@ static BOOL verbose;
 	operation.verbose = verbose;
 
 	[[CQDirectChatController chatMessageProcessingQueue] addOperation:operation];
-
-	[operation release];
 }
 
 #pragma mark -
@@ -177,11 +176,11 @@ static BOOL verbose;
 	[self addMessage:notification.userInfo[@"message"] outbound:[notification.userInfo[@"outbound"] boolValue]];
 }
 
-- (void) socketTrafficDidOccur:(NSString *) socketTraffic context:(void *) context {
+- (void) delegateLogger:(MVDelegateLogger *) delegateLogger socketTrafficDidOccur:(NSString *) socketTraffic context:(void *) context {
 	if (hideSocketInformation)
 		return;
 
-	if (context != _connection._chatConnection)
+	if (context != (__bridge void *)(_connection._chatConnection))
 		return;
 
 	[self addMessage:socketTraffic outbound:NO];
@@ -233,7 +232,6 @@ static BOOL verbose;
 
 	[self clearController];
 
-	[_recentMessages release];
 	_recentMessages = nil;
 }
 @end

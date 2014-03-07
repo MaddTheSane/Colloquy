@@ -11,34 +11,44 @@
 static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFormat) {
 	static NSDictionary *singularWords;
 	if (!singularWords)
-		singularWords = [[NSDictionary alloc] initWithObjectsAndKeys:NSLocalizedString(@"second", "Singular second"), [NSNumber numberWithUnsignedInt:1], NSLocalizedString(@"minute", "Singular minute"), [NSNumber numberWithUnsignedInt:60], NSLocalizedString(@"hour", "Singular hour"), [NSNumber numberWithUnsignedInt:3600], NSLocalizedString(@"day", "Singular day"), [NSNumber numberWithUnsignedInt:86400], NSLocalizedString(@"week", "Singular week"), [NSNumber numberWithUnsignedInt:604800], NSLocalizedString(@"month", "Singular month"), [NSNumber numberWithUnsignedInt:2628000], NSLocalizedString(@"year", "Singular year"), [NSNumber numberWithUnsignedInt:31536000], nil];
+		singularWords = @{
+			@(1U): NSLocalizedString(@"second", "Singular second"), @(60U): NSLocalizedString(@"minute", "Singular minute"),
+			@(3600U): NSLocalizedString(@"hour", "Singular hour"), @(86400U): NSLocalizedString(@"day", "Singular day"),
+			@(604800U): NSLocalizedString(@"week", "Singular week"), @(2628000U): NSLocalizedString(@"month", "Singular month"),
+			@(31536000U): NSLocalizedString(@"year", "Singular year")
+		};
 
 	static NSDictionary *pluralWords;
 	if (!pluralWords)
-		pluralWords = [[NSDictionary alloc] initWithObjectsAndKeys:NSLocalizedString(@"seconds", "Plural seconds"), [NSNumber numberWithUnsignedInt:1], NSLocalizedString(@"minutes", "Plural minutes"), [NSNumber numberWithUnsignedInt:60], NSLocalizedString(@"hours", "Plural hours"), [NSNumber numberWithUnsignedInt:3600], NSLocalizedString(@"days", "Plural days"), [NSNumber numberWithUnsignedInt:86400], NSLocalizedString(@"weeks", "Plural weeks"), [NSNumber numberWithUnsignedInt:604800], NSLocalizedString(@"months", "Plural months"), [NSNumber numberWithUnsignedInt:2628000], NSLocalizedString(@"years", "Plural years"), [NSNumber numberWithUnsignedInt:31536000], nil];
+		pluralWords = @{
+			@(1U): NSLocalizedString(@"seconds", "Plural seconds"), @(60U): NSLocalizedString(@"minutes", "Plural minutes"),
+			@(3600U): NSLocalizedString(@"hours", "Plural hours"), @(86400U): NSLocalizedString(@"days", "Plural days"),
+			@(604800U): NSLocalizedString(@"weeks", "Plural weeks"), @(2628000U): NSLocalizedString(@"months", "Plural months"),
+			@(31536000U): NSLocalizedString(@"years", "Plural years")
+		};
 
 	static NSArray *breaks;
 	if (!breaks)
-		breaks = [[NSArray alloc] initWithObjects:[NSNumber numberWithUnsignedInt:1], [NSNumber numberWithUnsignedInt:60], [NSNumber numberWithUnsignedInt:3600], [NSNumber numberWithUnsignedInt:86400], [NSNumber numberWithUnsignedInt:604800], [NSNumber numberWithUnsignedInt:2628000], [NSNumber numberWithUnsignedInt:31536000], nil];
+		breaks = @[@(1U), @(60U), @(3600U), @(86400U), @(604800U), @(2628000U), @(31536000U)];
 
 	NSTimeInterval seconds = ABS(interval);
 
 	NSUInteger i = 0;
-	while (i < [breaks count] && seconds >= [[breaks objectAtIndex:i] doubleValue]) ++i;
+	while (i < [breaks count] && seconds >= [breaks[i] doubleValue]) ++i;
 	if (i > 0) --i;
 
-	float stop = [[breaks objectAtIndex:i] floatValue];
+	float stop = [breaks[i] floatValue];
 	NSUInteger value = (seconds / stop);
 	NSDictionary *words = (value != 1 ? pluralWords : singularWords);
 
-	NSMutableString *result = [NSMutableString stringWithFormat:NSLocalizedString(@"%u %@", "Time with a unit word"), value, [words objectForKey:[NSNumber numberWithUnsignedInt:stop]]];
+	NSMutableString *result = [NSMutableString stringWithFormat:NSLocalizedString(@"%u %@", "Time with a unit word"), value, words[@(stop)]];
 	if (longFormat && i > 0) {
 		NSUInteger remainder = ((NSUInteger)seconds % (NSUInteger)stop);
-		stop = [[breaks objectAtIndex:--i] floatValue];
+		stop = [breaks[--i] floatValue];
 		remainder = (remainder / stop);
 		if (remainder) {
 			words = (remainder != 1 ? pluralWords : singularWords);
-			[result appendFormat:NSLocalizedString(@" %u %@", "Time with a unit word, appended to a previous larger unit of time"), remainder, [words objectForKey:[breaks objectAtIndex:i]]];
+			[result appendFormat:NSLocalizedString(@" %u %@", "Time with a unit word, appended to a previous larger unit of time"), remainder, words[breaks[i]]];
 		}
 	}
 
@@ -57,19 +67,13 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 
 	self.navigationItem.rightBarButtonItem = reloadItem;
 
-	[reloadItem release];
-
 	return self;
 }
 
 - (void) dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	[_user release];
-	[_updateInfoTimer release];
-	[_updateTimesTimer release];
 
-	[super dealloc];
 }
 
 #pragma mark -
@@ -77,19 +81,17 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 - (void) viewDidAppear:(BOOL) animated {
 	[super viewDidAppear:animated];
 
-	_updateTimesTimer = [[NSTimer scheduledTimerWithTimeInterval:1. target:self selector:@selector(_updateTimes) userInfo:nil repeats:YES] retain];
-	_updateInfoTimer = [[NSTimer scheduledTimerWithTimeInterval:20. target:self selector:@selector(_updateInfo) userInfo:nil repeats:YES] retain];
+	_updateTimesTimer = [NSTimer scheduledTimerWithTimeInterval:1. target:self selector:@selector(_updateTimes) userInfo:nil repeats:YES];
+	_updateInfoTimer = [NSTimer scheduledTimerWithTimeInterval:20. target:self selector:@selector(_updateInfo) userInfo:nil repeats:YES];
 }
 
 - (void) viewWillDisappear:(BOOL) animated {
 	[super viewWillDisappear:animated];
 
 	[_updateTimesTimer invalidate];
-	[_updateTimesTimer release];
 	_updateTimesTimer = nil;
 
 	[_updateInfoTimer invalidate];
-	[_updateInfoTimer release];
 	_updateInfoTimer = nil;
 }
 
@@ -140,8 +142,6 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 				cell.detailTextLabel.text = notAvailableString;
 				cell.accessibilityLabel = NSLocalizedString(@"Away information not available.", @"Voiceover away information not available");
 			}
-
-			[value release];
 		}
 	} else if (section == 1) {
 		 if (row == 0) { // Class
@@ -199,7 +199,8 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 			NSArray *rooms = [_user attributeForKey:MVChatUserKnownRoomsAttribute];
 			if (rooms) {
 				if (rooms.count) {
-					NSString *roomsString = [rooms componentsJoinedByString:NSLocalizedString(@", ", "User info rooms list separator")];
+					NSString *separator = [[NSLocale currentLocale] objectForKey:NSLocaleGroupingSeparator];
+					NSString *roomsString = [rooms componentsJoinedByString:[NSString stringWithFormat:@"%@ ", separator]];
 					cell.detailTextLabel.text = roomsString;
 					cell.accessibilityLabel = [NSString stringWithFormat:NSLocalizedString(@"Rooms: %@", @"Voiceover rooms label"), roomsString];
 				} else {
@@ -279,8 +280,6 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 	roomsController.connection = _user.connection;
 
 	[self.navigationController pushViewController:roomsController animated:YES];
-
-	[roomsController release];
 }
 
 - (IBAction) refreshInformation:(id) sender {
@@ -325,8 +324,6 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 
 #pragma mark -
 
-@synthesize user = _user;
-
 - (void) setUser:(MVChatUser *) user {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatUserAttributeUpdatedNotification object:_user];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatUserInformationUpdatedNotification object:_user];
@@ -335,9 +332,7 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatUserAwayStatusMessageChangedNotification object:_user];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatUserIdleTimeUpdatedNotification object:_user];
 
-	id old = _user;
-	_user = [user retain];
-	[old release];
+	_user = user;
 
 	_idleTimeStart = ([NSDate timeIntervalSinceReferenceDate] - _user.idleTime);
 

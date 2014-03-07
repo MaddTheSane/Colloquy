@@ -1,0 +1,114 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "34"; */
+"34.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "37"; */
+"37.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "38"; */
+"38.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "is gelijk aan"; ObjectID = "39"; */
+"39.title" = "is gelijk aan";
+
+/* Class = "NSMenuItem"; title = "is niet gelijk aan"; ObjectID = "41"; */
+"41.title" = "is niet gelijk aan";
+
+/* Class = "NSMenuItem"; title = "bevat"; ObjectID = "42"; */
+"42.title" = "bevat";
+
+/* Class = "NSMenuItem"; title = "bevat niet"; ObjectID = "43"; */
+"43.title" = "bevat niet";
+
+/* Class = "NSMenuItem"; title = "begint met"; ObjectID = "44"; */
+"44.title" = "begint met";
+
+/* Class = "NSMenuItem"; title = "eindigt op"; ObjectID = "45"; */
+"45.title" = "eindigt op";
+
+/* Class = "NSMenuItem"; title = "is gelijk aan"; ObjectID = "46"; */
+"46.title" = "is gelijk aan";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "67"; */
+"67.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "68"; */
+"68.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "71"; */
+"71.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "is"; ObjectID = "72"; */
+"72.title" = "is";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "74"; */
+"74.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "75"; */
+"75.title" = " ";
+
+/* Class = "NSMenuItem"; title = "is niet"; ObjectID = "76"; */
+"76.title" = "is niet";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "79"; */
+"79.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "80"; */
+"80.title" = " ";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "82"; */
+"82.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Paneelnaam"; ObjectID = "215"; */
+"215.title" = "Paneelnaam";
+
+/* Class = "NSMenuItem"; title = "Paneelserver"; ObjectID = "216"; */
+"216.title" = "Paneelserver";
+
+/* Class = "NSMenuItem"; title = "Paneelsoort"; ObjectID = "218"; */
+"218.title" = "Paneelsoort";
+
+/* Class = "NSMenuItem"; title = "Servertype"; ObjectID = "219"; */
+"219.title" = "Servertype";
+
+/* Class = "NSMenuItem"; title = "Openingswijze"; ObjectID = "221"; */
+"221.title" = "Openingswijze";
+
+/* Class = "NSMenuItem"; title = "Elk paneel"; ObjectID = "223"; */
+"223.title" = "Elk paneel";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "224"; */
+"224.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Kanaal"; ObjectID = "226"; */
+"226.title" = "Kanaal";
+
+/* Class = "NSMenuItem"; title = "Persoonlijke Chat"; ObjectID = "227"; */
+"227.title" = "Persoonlijke Chat";
+
+/* Class = "NSMenuItem"; title = "Chat Transcript"; ObjectID = "229"; */
+"229.title" = "Chat Transcript";
+
+/* Class = "NSMenuItem"; title = "Slim Transcript"; ObjectID = "230"; */
+"230.title" = "Slim Transcript";
+
+/* Class = "NSMenuItem"; title = "Console Verbinding"; ObjectID = "233"; */
+"233.title" = "Console Verbinding";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "234"; */
+"234.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "SILC (Secure Internet Live Conferencing)"; ObjectID = "237"; */
+"237.title" = "SILC (Secure Internet Live Conferencing)";
+
+/* Class = "NSMenuItem"; title = "IRC (Internet Relay Chat)"; ObjectID = "240"; */
+"240.title" = "IRC (Internet Relay Chat)";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "242"; */
+"242.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Automatisch"; ObjectID = "243"; */
+"243.title" = "Automatisch";
+
+/* Class = "NSMenuItem"; title = "Manueel"; ObjectID = "244"; */
+"244.title" = "Manueel";

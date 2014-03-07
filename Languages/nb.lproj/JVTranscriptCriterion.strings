@@ -1,0 +1,222 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "34"; */
+"34.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "37"; */
+"37.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "38"; */
+"38.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "smasvarer med"; ObjectID = "39"; */
+"39.title" = "smasvarer med";
+
+/* Class = "NSMenuItem"; title = "Samsvarer ikke"; ObjectID = "41"; */
+"41.title" = "Samsvarer ikke";
+
+/* Class = "NSMenuItem"; title = "inneholder"; ObjectID = "42"; */
+"42.title" = "inneholder";
+
+/* Class = "NSMenuItem"; title = "Inneholder ikke"; ObjectID = "43"; */
+"43.title" = "Inneholder ikke";
+
+/* Class = "NSMenuItem"; title = "begyner med"; ObjectID = "44"; */
+"44.title" = "begyner med";
+
+/* Class = "NSMenuItem"; title = "slutter på"; ObjectID = "45"; */
+"45.title" = "slutter på";
+
+/* Class = "NSMenuItem"; title = "er lik"; ObjectID = "46"; */
+"46.title" = "er lik";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "48"; */
+"48.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "50"; */
+"50.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "52"; */
+"52.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "er mindre enn"; ObjectID = "53"; */
+"53.title" = "er mindre enn";
+
+/* Class = "NSMenuItem"; title = "er større enn"; ObjectID = "54"; */
+"54.title" = "er større enn";
+
+/* Class = "NSMenuItem"; title = "sekunder"; ObjectID = "56"; */
+"56.title" = "sekunder";
+
+/* Class = "NSMenuItem"; title = "dager"; ObjectID = "57"; */
+"57.title" = "dager";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "58"; */
+"58.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "minutter"; ObjectID = "60"; */
+"60.title" = "minutter";
+
+/* Class = "NSMenuItem"; title = "timer"; ObjectID = "61"; */
+"61.title" = "timer";
+
+/* Class = "NSMenuItem"; title = "uker"; ObjectID = "62"; */
+"62.title" = "uker";
+
+/* Class = "NSMenuItem"; title = "måneder"; ObjectID = "63"; */
+"63.title" = "måneder";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "67"; */
+"67.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "68"; */
+"68.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "71"; */
+"71.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "er"; ObjectID = "72"; */
+"72.title" = "er";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "74"; */
+"74.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "75"; */
+"75.title" = " ";
+
+/* Class = "NSMenuItem"; title = "er ikke"; ObjectID = "76"; */
+"76.title" = "er ikke";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "79"; */
+"79.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "80"; */
+"80.title" = " ";
+
+/* Class = "NSMenuItem"; title = "Avsenders navn"; ObjectID = "81"; */
+"81.title" = "Avsenders navn";
+
+/* Class = "NSMenu"; title = "Meny"; ObjectID = "82"; */
+"82.title" = "Meny";
+
+/* Class = "NSMenuItem"; title = "Beskjedens innhold"; ObjectID = "83"; */
+"83.title" = "Beskjedens innhold";
+
+/* Class = "NSMenuItem"; title = "Data mottatt"; ObjectID = "85"; */
+"85.title" = "Data mottatt";
+
+/* Class = "NSMenuItem"; title = "Avsender er på kompislisten min"; ObjectID = "87"; */
+"87.title" = "Avsender er på kompislisten min";
+
+/* Class = "NSMenuItem"; title = "Avsender er ikke i min kompisliste"; ObjectID = "88"; */
+"88.title" = "Avsender er ikke i min kompisliste";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er ikke en handling"; ObjectID = "91"; */
+"91.title" = "Beskjeden er ikke en handling";
+
+/* Class = "NSMenuItem"; title = "Avsender ble ikke ignorert"; ObjectID = "92"; */
+"92.title" = "Avsender ble ikke ignorert";
+
+/* Class = "NSMenuItem"; title = "Avsender ble ignorert"; ObjectID = "93"; */
+"93.title" = "Avsender ble ignorert";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er ikke adressert til meg"; ObjectID = "95"; */
+"95.title" = "Beskjeden er ikke adressert til meg";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er adressert til meg"; ObjectID = "96"; */
+"96.title" = "Beskjeden er adressert til meg";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er ikke framhevet"; ObjectID = "98"; */
+"98.title" = "Beskjeden er ikke framhevet";
+
+/* Class = "NSMenuItem"; title = "Beskjed er framhevet"; ObjectID = "99"; */
+"99.title" = "Beskjed er framhevet";
+
+/* Class = "NSMenuItem"; title = "Beskjed ble ignorert"; ObjectID = "101"; */
+"101.title" = "Beskjed ble ignorert";
+
+/* Class = "NSMenuItem"; title = "Beskjed ble ignorert"; ObjectID = "103"; */
+"103.title" = "Beskjed ble ignorert";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er en handling"; ObjectID = "133"; */
+"133.title" = "Beskjeden er en handling";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er fra meg"; ObjectID = "157"; */
+"157.title" = "Beskjeden er fra meg";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er ikke fra meg"; ObjectID = "158"; */
+"158.title" = "Beskjeden er ikke fra meg";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er adressert til meg"; ObjectID = "175"; */
+"175.title" = "Beskjeden er adressert til meg";
+
+/* Class = "NSMenu"; title = "Meny"; ObjectID = "176"; */
+"176.title" = "Meny";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er en handling"; ObjectID = "177"; */
+"177.title" = "Beskjeden er en handling";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er ikke framhevet"; ObjectID = "178"; */
+"178.title" = "Beskjeden er ikke framhevet";
+
+/* Class = "NSMenuItem"; title = "Beskjed ble ignorert"; ObjectID = "180"; */
+"180.title" = "Beskjed ble ignorert";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er fra meg"; ObjectID = "181"; */
+"181.title" = "Beskjeden er fra meg";
+
+/* Class = "NSMenuItem"; title = "Avsender er på kompislisten min"; ObjectID = "182"; */
+"182.title" = "Avsender er på kompislisten min";
+
+/* Class = "NSMenuItem"; title = "Beskjed er framhevet"; ObjectID = "183"; */
+"183.title" = "Beskjed er framhevet";
+
+/* Class = "NSMenuItem"; title = "Avsender ble ikke ignorert"; ObjectID = "184"; */
+"184.title" = "Avsender ble ikke ignorert";
+
+/* Class = "NSMenuItem"; title = "Beskjedens innhold"; ObjectID = "188"; */
+"188.title" = "Beskjedens innhold";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er ikke adressert til meg"; ObjectID = "189"; */
+"189.title" = "Beskjeden er ikke adressert til meg";
+
+/* Class = "NSMenuItem"; title = "Avsenders navn"; ObjectID = "191"; */
+"191.title" = "Avsenders navn";
+
+/* Class = "NSMenuItem"; title = "Avsender ble ignorert"; ObjectID = "193"; */
+"193.title" = "Avsender ble ignorert";
+
+/* Class = "NSMenuItem"; title = "Avsender er ikke i min kompisliste"; ObjectID = "194"; */
+"194.title" = "Avsender er ikke i min kompisliste";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er ikke fra meg"; ObjectID = "195"; */
+"195.title" = "Beskjeden er ikke fra meg";
+
+/* Class = "NSMenuItem"; title = "Beskjed ble ignorert"; ObjectID = "197"; */
+"197.title" = "Beskjed ble ignorert";
+
+/* Class = "NSMenuItem"; title = "Beskjeden er ikke en handling"; ObjectID = "198"; */
+"198.title" = "Beskjeden er ikke en handling";
+
+/* Class = "NSMenuItem"; title = "Kildens navn"; ObjectID = "200"; */
+"200.title" = "Kildens navn";
+
+/* Class = "NSMenuItem"; title = "Kildens server"; ObjectID = "201"; */
+"201.title" = "Kildens server";
+
+/* Class = "NSMenuItem"; title = "Kilden er et samtalerom"; ObjectID = "203"; */
+"203.title" = "Kilden er et samtalerom";
+
+/* Class = "NSMenuItem"; title = "Kilden er ikke et samtalerom"; ObjectID = "204"; */
+"204.title" = "Kilden er ikke et samtalerom";
+
+/* Class = "NSMenuItem"; title = "Kilden er en direktesamtale"; ObjectID = "206"; */
+"206.title" = "Kilden er en direktesamtale";
+
+/* Class = "NSMenuItem"; title = "Kilden er ikke en direktesamtale"; ObjectID = "207"; */
+"207.title" = "Kilden er ikke en direktesamtale";
+
+/* Class = "NSMenuItem"; title = "Alle beskjeder"; ObjectID = "210"; */
+"210.title" = "Alle beskjeder";
+
+/* Class = "NSTextFieldCell"; title = "siden"; ObjectID = "221"; */
+"221.title" = "siden";

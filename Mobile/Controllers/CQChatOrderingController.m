@@ -73,12 +73,6 @@ static NSComparisonResult sortControllersAscending(id controller1, id controller
 	return self;
 }
 
-- (void) dealloc {
-	[_chatControllers release];
-
-	[super dealloc];
-}
-
 #pragma mark -
 
 - (void) _sortChatControllers {
@@ -89,13 +83,26 @@ static NSComparisonResult sortControllersAscending(id controller1, id controller
 	return [_chatControllers indexOfObjectIdenticalTo:controller];
 }
 
-- (void) addViewController:(id <CQChatViewController>) controller {
+- (void) _addViewController:(id <CQChatViewController>) controller resortingRightAway:(BOOL) resortingRightAway {
 	[_chatControllers addObject:controller];
 
-	[self _sortChatControllers];
+	if (resortingRightAway)
+		[self _sortChatControllers];
 
-	NSDictionary *notificationInfo = [NSDictionary dictionaryWithObject:controller forKey:@"controller"];
+	NSDictionary *notificationInfo = @{@"controller": controller};
 	[[NSNotificationCenter defaultCenter] postNotificationName:CQChatControllerAddedChatViewControllerNotification object:self userInfo:notificationInfo];
+}
+
+- (void) addViewController:(id <CQChatViewController>) controller {
+	[self _addViewController:controller resortingRightAway:YES];
+}
+
+- (void) addViewControllers:(NSArray *) controllers {
+	for (id <CQChatViewController> controller in controllers) {
+		NSAssert([controller conformsToProtocol:@protocol(CQChatViewController)], @"Cannot add chat view controller that does not conform to CQChatViewController");
+		[self _addViewController:controller resortingRightAway:NO];
+	}
+	[self _sortChatControllers];
 }
 
 - (void) removeViewController:(id <CQChatViewController>) controller {
@@ -126,7 +133,7 @@ static NSComparisonResult sortControllersAscending(id controller1, id controller
 	if (!exists) {
 		if ((controller = [[CQConsoleController alloc] initWithTarget:connection])) {
 			[[CQChatOrderingController defaultController] addViewController:controller];
-			return [controller autorelease];
+			return controller;
 		}
 	}
 
@@ -187,7 +194,7 @@ static NSComparisonResult sortControllersAscending(id controller1, id controller
 			if (room.connection == [CQChatController defaultController].nextRoomConnection)
 				[[CQChatController defaultController] showChatController:controller animated:YES];
 
-			return [controller autorelease];
+			return controller;
 		}
 	}
 
@@ -210,7 +217,7 @@ static NSComparisonResult sortControllersAscending(id controller1, id controller
 	if (!exists) {
 		if ((controller = [[CQDirectChatController alloc] initWithTarget:user])) {
 			[[CQChatOrderingController defaultController] addViewController:controller];
-			return [controller autorelease];
+			return controller;
 		}
 	}
 
@@ -229,7 +236,7 @@ static NSComparisonResult sortControllersAscending(id controller1, id controller
 	if (!exists) {
 		if ((controller = [[CQDirectChatController alloc] initWithTarget:connection])) {
 			[[CQChatOrderingController defaultController] addViewController:controller];
-			return [controller autorelease];
+			return controller;
 		}
 	}
 
@@ -342,7 +349,7 @@ static NSComparisonResult sortControllersAscending(id controller1, id controller
 		NSUInteger index = [_chatControllers indexOfObjectIdenticalTo:chatViewController];
 		if (!index)
 			return [_chatControllers lastObject];
-		return [_chatControllers objectAtIndex:(index - 1)];
+		return _chatControllers[(index - 1)];
 	}
 
 	return [self _enumerateChatViewControllersFromChatController:chatViewController withOption:NSEnumerationReverse requiringActivity:requiringActivity requiringHighlight:requiringHighlight];
@@ -352,8 +359,8 @@ static NSComparisonResult sortControllersAscending(id controller1, id controller
 	if (!requiringActivity && !requiringHighlight) {
 		NSUInteger index = [_chatControllers indexOfObjectIdenticalTo:chatViewController];
 		if (index == (_chatControllers.count - 1))
-			return [_chatControllers objectAtIndex:0];
-		return [_chatControllers objectAtIndex:(index + 1)];
+			return _chatControllers[0];
+		return _chatControllers[(index + 1)];
 	}
 
 	return [self _enumerateChatViewControllersFromChatController:chatViewController withOption:0 requiringActivity:requiringActivity requiringHighlight:requiringHighlight];

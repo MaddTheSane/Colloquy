@@ -1,0 +1,60 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenuItem"; title = "Un seul fichier par session"; ObjectID = "9"; */
+"9.title" = "Un seul fichier par session";
+
+/* Class = "NSMenuItem"; title = "Plusieurs sessions par seul fichier"; ObjectID = "10"; */
+"10.title" = "Plusieurs sessions par seul fichier";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "11"; */
+"11.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "16"; */
+"16.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Dossier pour chaque serveur"; ObjectID = "17"; */
+"17.title" = "Dossier pour chaque serveur";
+
+/* Class = "NSMenuItem"; title = "Même dossier"; ObjectID = "18"; */
+"18.title" = "Même dossier";
+
+/* Class = "NSMenuItem"; title = "Dossier pour chaque canal et chaque serveur"; ObjectID = "23"; */
+"23.title" = "Dossier pour chaque canal et chaque serveur";
+
+/* Class = "NSMenuItem"; title = "Un fichier par jour"; ObjectID = "24"; */
+"24.title" = "Un fichier par jour";
+
+/* Class = "NSMenuItem"; title = "Dossier pour chaque canal dans le serveur"; ObjectID = "25"; */
+"25.title" = "Dossier pour chaque canal dans le serveur";
+
+/* Class = "NSMenuItem"; title = "Autre…"; ObjectID = "28"; */
+"28.title" = "Autre…";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "31"; */
+"31.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "33"; */
+"33.title" = " ";
+
+/* Class = "NSButtonCell"; title = "Enregistrer les discussions sur les canau"; ObjectID = "106"; */
+"106.title" = "Enregistrer les discussions sur les canau";
+
+/* Class = "NSButtonCell"; title = "Enregistrer les discussions privées"; ObjectID = "107"; */
+"107.title" = "Enregistrer les discussions privées";
+
+/* Class = "NSTextFieldCell"; title = "Organisation des sessions:"; ObjectID = "109"; */
+"109.title" = "Organisation des sessions:";
+
+/* Class = "NSTextFieldCell"; title = "Organisation des dossiers:"; ObjectID = "110"; */
+"110.title" = "Organisation des dossiers:";
+
+/* Class = "NSButtonCell"; title = "Formattage des fichiers pour lecture humaine possible"; ObjectID = "111"; */
+"111.title" = "Formattage des fichiers pour lecture humaine possible";
+
+/* Class = "NSTextFieldCell"; title = "Dossier de l'historique:"; ObjectID = "112"; */
+"112.title" = "Dossier de l'historique:";
+
+/* Class = "NSTextFieldCell"; title = "Automatiquement:"; ObjectID = "114"; */
+"114.title" = "Automatiquement:";

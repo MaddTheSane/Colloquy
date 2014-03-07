@@ -1,0 +1,87 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "71"; */
+"71.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "73"; */
+"73.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "75"; */
+"75.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "77"; */
+"77.title" = " ";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "195"; */
+"195.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "196"; */
+"196.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "337"; */
+"337.title" = "Box";
+
+/* Class = "NSTextFieldCell"; title = "Default 樣式:"; ObjectID = "373"; */
+"373.title" = "Default 樣式:";
+
+/* Class = "NSTextFieldCell"; title = "心情圖示:"; ObjectID = "374"; */
+"374.title" = "心情圖示:";
+
+/* Class = "NSTextFieldCell"; title = "字體:"; ObjectID = "376"; */
+"376.title" = "字體:";
+
+/* Class = "NSButtonCell"; title = "選擇字體…"; ObjectID = "377"; */
+"377.title" = "選擇字體…";
+
+/* Class = "NSTextFieldCell"; title = "基本字體尺寸:"; ObjectID = "378"; */
+"378.title" = "基本字體尺寸:";
+
+/* Class = "NSTextFieldCell"; title = "9"; ObjectID = "379"; */
+"379.title" = "9";
+
+/* Class = "NSTextFieldCell"; title = "最小字體…"; ObjectID = "382"; */
+"382.title" = "最小字體…";
+
+/* Class = "NSTextFieldCell"; title = "9"; ObjectID = "383"; */
+"383.title" = "9";
+
+/* Class = "NSTextFieldCell"; title = "某些樣式不會使用這裡的設定，而是使用樣式的內建值。"; ObjectID = "385"; */
+"385.title" = "某些樣式不會使用這裡的設定，而是使用樣式的內建值。";
+
+/* Class = "NSButtonCell"; title = "自訂樣式…"; ObjectID = "386"; */
+"386.title" = "自訂樣式…";
+
+/* Class = "NSButtonCell"; title = "使用目前樣式的基本字體"; ObjectID = "387"; */
+"387.title" = "使用目前樣式的基本字體";
+
+/* Class = "NSButtonCell"; title = "過濾訊息中的顏色"; ObjectID = "389"; */
+"389.title" = "過濾訊息中的顏色";
+
+/* Class = "NSButtonCell"; title = "過濾訊息中的文字編碼"; ObjectID = "390"; */
+"390.title" = "過濾訊息中的文字編碼";
+
+/* Class = "NSButtonCell"; title = "在送出訊息後，繼續使用相同的顏色以及文字格式"; ObjectID = "391"; */
+"391.title" = "在送出訊息後，繼續使用相同的顏色以及文字格式";
+
+/* Class = "NSTextFieldCell"; title = "聊天輸入區:"; ObjectID = "392"; */
+"392.title" = "聊天輸入區:";
+
+/* Class = "NSTextFieldCell"; title = "傳入的訊息:"; ObjectID = "393"; */
+"393.title" = "傳入的訊息:";
+
+/* Class = "NSTextFieldCell"; title = "您正要修改一個已經鎖定的樣式。您是否打算用目前樣式設定為基礎，建立一個新的樣式呢？"; ObjectID = "394"; */
+"394.title" = "您正要修改一個已經鎖定的樣式。您是否打算用目前樣式設定為基礎，建立一個新的樣式呢？";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "395"; */
+"395.title" = "取消";
+
+/* Class = "NSButtonCell"; title = "建立"; ObjectID = "396"; */
+"396.title" = "建立";
+
+/* Class = "NSTextFieldCell"; title = "這是一個已經鎖定的樣式設定。"; ObjectID = "397"; */
+"397.title" = "這是一個已經鎖定的樣式設定。";
+
+/* Class = "NSTextFieldCell"; title = "樣式名稱:"; ObjectID = "398"; */
+"398.title" = "樣式名稱:";

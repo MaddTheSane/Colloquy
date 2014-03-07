@@ -159,7 +159,7 @@ NSString *MVDirectChatConnectionErrorDomain = @"MVDirectChatConnectionErrorDomai
 }
 
 - (void) sendMessage:(MVChatString *) message withEncoding:(NSStringEncoding) encoding asAction:(BOOL) action {
-	[self sendMessage:message withEncoding:encoding withAttributes:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:action] forKey:@"action"]];
+	[self sendMessage:message withEncoding:encoding withAttributes:@{@"action": @(action)}];
 }
 
 - (void) sendMessage:(MVChatString *) message withEncoding:(NSStringEncoding) encoding withAttributes:(NSDictionary *)attributes {
@@ -184,13 +184,13 @@ NSString *MVDirectChatConnectionErrorDomain = @"MVDirectChatConnectionErrorDomai
 		cformat = nil;
 	}
 
-	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInt:encoding], @"StringEncoding", cformat, @"FormatType", nil];
+	NSDictionary *options = @{@"StringEncoding": @(encoding), @"FormatType": cformat};
 	NSData *msg = [message chatFormatWithOptions:options];
 #elif USE(PLAIN_CHAT_STRING) || USE(HTML_CHAT_STRING)
 	NSData *msg = [message dataUsingEncoding:encoding allowLossyConversion:YES];
 #endif
 
-	if( [[attributes objectForKey:@"action"] boolValue] ) {
+	if( [attributes[@"action"] boolValue] ) {
 		NSMutableData *newMsg = [[NSMutableData alloc] initWithCapacity:msg.length + 11];
 		[newMsg appendBytes:"\001ACTION " length:8];
 		[newMsg appendData:msg];
@@ -268,14 +268,14 @@ NSString *MVDirectChatConnectionErrorDomain = @"MVDirectChatConnectionErrorDomai
 
 		if( [command isCaseInsensitiveEqualToString:@"ACTION"] && arguments ) {
 			// special case ACTION and send it out like a message with the action flag
-			[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVDirectChatConnectionGotMessageNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:arguments, @"message", [NSString locallyUniqueString], @"identifier", [NSNumber numberWithBool:YES], @"action", nil]];
+			[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVDirectChatConnectionGotMessageNotification object:self userInfo:@{@"message": arguments, @"identifier": [NSString locallyUniqueString], @"action": @YES}];
 		}
 
 		[command release];
 		[arguments release];
 	} else {
 		NSData *msg = [[NSData alloc] initWithBytes:bytes length:(end - bytes)];
-		[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVDirectChatConnectionGotMessageNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:msg, @"message", [NSString locallyUniqueString], @"identifier", nil]];
+		[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVDirectChatConnectionGotMessageNotification object:self userInfo:@{@"message": msg, @"identifier": [NSString locallyUniqueString]}];
 		[msg release];
 	}
 

@@ -25,12 +25,6 @@
 
 	self.title = NSLocalizedString(@"Connections", @"Connections view title");
 
-	UIBarButtonItem *settingsItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showPreferences:)];
-	self.navigationItem.leftBarButtonItem = settingsItem;
-	[settingsItem release];
-
-	self.navigationItem.leftBarButtonItem.accessibilityLabel = NSLocalizedString(@"Add connection.", @"Voiceover add connection label");
-
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_didChange:) name:MVChatConnectionNicknameAcceptedNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_didChange:) name:MVChatConnectionNicknameRejectedNotification object:nil];
 
@@ -52,10 +46,6 @@
 
 - (void) dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-	[_connectTimeUpdateTimer release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -81,12 +71,11 @@
 	NSAssert(_active, @"This should only be called when the view is active (visible).");
 
 	if (!_connectTimeUpdateTimer)
-		_connectTimeUpdateTimer = [[NSTimer scheduledTimerWithTimeInterval:1. target:self selector:@selector(_updateConnectTimes) userInfo:nil repeats:YES] retain];
+		_connectTimeUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:1. target:self selector:@selector(_updateConnectTimes) userInfo:nil repeats:YES];
 }
 
 - (void) _stopUpdatingConnectTimes {
 	[_connectTimeUpdateTimer invalidate];
-	[_connectTimeUpdateTimer release];
 	_connectTimeUpdateTimer = nil;
 }
 
@@ -94,6 +83,11 @@
 
 - (void) viewDidLoad {
 	[super viewDidLoad];
+
+	UIBarButtonItem *settingsItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showPreferences:)];
+	self.navigationItem.leftBarButtonItem = settingsItem;
+
+	self.navigationItem.leftBarButtonItem.accessibilityLabel = NSLocalizedString(@"Add connection.", @"Voiceover add connection label");
 
 	self.tableView.allowsSelectionDuringEditing = YES;
 
@@ -109,18 +103,21 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_didEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_willEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 
-	[self.tableView reloadData];
-
 	[self _startUpdatingConnectTimes];
 
-	if (![CQConnectionsController defaultController].directConnections.count && ![CQConnectionsController defaultController].bouncers.count) {
-		self.editing = YES;
+	@synchronized([CQConnectionsController defaultController]) {
+		if (![CQConnectionsController defaultController].directConnections.count && ![CQConnectionsController defaultController].bouncers.count) {
+			if (!self.editing)
+				self.editing = YES;
 
-		self.navigationItem.rightBarButtonItem = nil;
-	} else {
-		self.navigationItem.rightBarButtonItem = self.editButtonItem;
-		self.navigationItem.rightBarButtonItem.accessibilityLabel = NSLocalizedString(@"Edit connections.", @"Voiceover edit connections label");
+			self.navigationItem.rightBarButtonItem = nil;
+		} else {
+			self.navigationItem.rightBarButtonItem = self.editButtonItem;
+			self.navigationItem.rightBarButtonItem.accessibilityLabel = NSLocalizedString(@"Edit connections.", @"Voiceover edit connections label");
+		}
 	}
+
+	[self.tableView reloadData];
 }
 
 - (void) viewWillDisappear:(BOOL) animated {
@@ -164,25 +161,25 @@
 	if (!_active || _ignoreNotifications)
 		return;
 
-	[self connectionAdded:[notification.userInfo objectForKey:@"connection"]];
+	[self connectionAdded:notification.userInfo[@"connection"]];
 }
 
 - (void) _connectionChanged:(NSNotification *) notification {
 	if (!_active || _ignoreNotifications)
 		return;
 
-	[self _refreshConnection:[notification.userInfo objectForKey:@"connection"]];
+	[self _refreshConnection:notification.userInfo[@"connection"]];
 }
 
 - (void) _connectionRemoved:(NSNotification *) notification {
 	if (!_active || _ignoreNotifications)
 		return;
 
-	NSUInteger section = [self sectionForConnection:[notification.userInfo objectForKey:@"connection"]];
+	NSUInteger section = [self sectionForConnection:notification.userInfo[@"connection"]];
 	if (section == NSNotFound)
 		return;
 
-	NSUInteger index = [[notification.userInfo objectForKey:@"index"] unsignedIntegerValue];
+	NSUInteger index = [notification.userInfo[@"index"] unsignedIntegerValue];
 	[self connectionRemovedAtIndexPath:[NSIndexPath indexPathForRow:index inSection:section]];
 }
 
@@ -190,12 +187,12 @@
 	if (!_active || _ignoreNotifications)
 		return;
 
-	NSUInteger section = [self sectionForConnection:[notification.userInfo objectForKey:@"connection"]];
+	NSUInteger section = [self sectionForConnection:notification.userInfo[@"connection"]];
 	if (section == NSNotFound)
 		return;
 
-	NSUInteger index = [[notification.userInfo objectForKey:@"index"] unsignedIntegerValue];
-	NSUInteger oldIndex = [[notification.userInfo objectForKey:@"oldIndex"] unsignedIntegerValue];
+	NSUInteger index = [notification.userInfo[@"index"] unsignedIntegerValue];
+	NSUInteger oldIndex = [notification.userInfo[@"oldIndex"] unsignedIntegerValue];
 	[self connectionMovedFromIndexPath:[NSIndexPath indexPathForRow:oldIndex inSection:section] toIndexPath:[NSIndexPath indexPathForRow:index inSection:section]];
 }
 
@@ -203,14 +200,14 @@
 	if (!_active || _ignoreNotifications)
 		return;
 
-	[self bouncerSettingsAdded:[notification.userInfo objectForKey:@"bouncerSettings"]];
+	[self bouncerSettingsAdded:notification.userInfo[@"bouncerSettings"]];
 }
 
 - (void) _bouncerRemoved:(NSNotification *) notification {
 	if (!_active || _ignoreNotifications)
 		return;
 
-	NSUInteger index = [[notification.userInfo objectForKey:@"index"] unsignedIntegerValue];
+	NSUInteger index = [notification.userInfo[@"index"] unsignedIntegerValue];
 	[self bouncerSettingsRemovedAtIndex:index];
 }
 
@@ -231,7 +228,7 @@
 	if (!indexPath)
 		return;
 
-	[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+	[self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
 	if ([[UIDevice currentDevice] isPadModel])
 		[self resizeForViewInPopoverUsingTableView:self.tableView];
@@ -242,7 +239,7 @@
 	if (!indexPath)
 		return;
 
-	[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
+	[self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
 
 	if ([[UIDevice currentDevice] isPadModel])
 		[self resizeForViewInPopoverUsingTableView:self.tableView];
@@ -255,8 +252,8 @@
 		return;
 
 	[self.tableView beginUpdates];
-	[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:oldIndexPath] withRowAnimation:(newIndexPath.row > oldIndexPath.row ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop)];
-	[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:(newIndexPath.row > oldIndexPath.row ? UITableViewRowAnimationTop : UITableViewRowAnimationBottom)];
+	[self.tableView deleteRowsAtIndexPaths:@[oldIndexPath] withRowAnimation:(newIndexPath.row > oldIndexPath.row ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop)];
+	[self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:(newIndexPath.row > oldIndexPath.row ? UITableViewRowAnimationTop : UITableViewRowAnimationBottom)];
 	[self.tableView endUpdates];
 }
 
@@ -289,60 +286,68 @@
 #pragma mark -
 
 - (NSUInteger) sectionForBouncerSettings:(CQBouncerSettings *) bouncer {
-	NSUInteger bouncerSection = [[CQConnectionsController defaultController].bouncers indexOfObjectIdenticalTo:bouncer];
-	if (bouncerSection != NSNotFound) {
-		if (self.tableView.editing)
-			return bouncerSection + 2;
-		return bouncerSection + 1;
+	@synchronized([CQConnectionsController defaultController]) {
+		NSUInteger bouncerSection = [[CQConnectionsController defaultController].bouncers indexOfObjectIdenticalTo:bouncer];
+		if (bouncerSection != NSNotFound) {
+			if (self.tableView.editing)
+				return bouncerSection + 2;
+			return bouncerSection + 1;
+		}
+		return NSNotFound;
 	}
-	return NSNotFound;
 }
 
 - (NSUInteger) sectionForConnection:(MVChatConnection *) connection {
-	CQBouncerSettings *settings = [[CQConnectionsController defaultController] bouncerSettingsForIdentifier:connection.bouncerIdentifier];
-	return [self sectionForBouncerSettings:settings];
+	@synchronized([CQConnectionsController defaultController]) {
+		CQBouncerSettings *settings = [[CQConnectionsController defaultController] bouncerSettingsForIdentifier:connection.bouncerIdentifier];
+		return [self sectionForBouncerSettings:settings];
+	}
 }
 
 - (NSIndexPath *) indexPathForConnection:(MVChatConnection *) connection {
-	NSUInteger index = [[CQConnectionsController defaultController].directConnections indexOfObjectIdenticalTo:connection];
-	if (index != NSNotFound) {
-		if (self.tableView.editing)
-			return [NSIndexPath indexPathForRow:index inSection:1];
-		return [NSIndexPath indexPathForRow:index inSection:0];
-	}
+	@synchronized([CQConnectionsController defaultController]) {
+		NSUInteger index = [[CQConnectionsController defaultController].directConnections indexOfObjectIdenticalTo:connection];
+		if (index != NSNotFound) {
+			if (self.tableView.editing)
+				return [NSIndexPath indexPathForRow:index inSection:1];
+			return [NSIndexPath indexPathForRow:index inSection:0];
+		}
 
-	if (connection.bouncerIdentifier.length) {
-		CQBouncerSettings *settings = [[CQConnectionsController defaultController] bouncerSettingsForIdentifier:connection.bouncerIdentifier];
-		NSUInteger bouncerSection = [[CQConnectionsController defaultController].bouncers indexOfObjectIdenticalTo:settings];
-		if (bouncerSection != NSNotFound) {
-			NSArray *connections = [[CQConnectionsController defaultController] bouncerChatConnectionsForIdentifier:connection.bouncerIdentifier];
-			index = [connections indexOfObjectIdenticalTo:connection];
-			if (index != NSNotFound) {
-				if (self.tableView.editing)
-					return [NSIndexPath indexPathForRow:index inSection:(bouncerSection + 2)];
-				return [NSIndexPath indexPathForRow:index inSection:(bouncerSection + 1)];
+		if (connection.bouncerIdentifier.length) {
+			CQBouncerSettings *settings = [[CQConnectionsController defaultController] bouncerSettingsForIdentifier:connection.bouncerIdentifier];
+			NSUInteger bouncerSection = [[CQConnectionsController defaultController].bouncers indexOfObjectIdenticalTo:settings];
+			if (bouncerSection != NSNotFound) {
+				NSArray *connections = [[CQConnectionsController defaultController] bouncerChatConnectionsForIdentifier:connection.bouncerIdentifier];
+				index = [connections indexOfObjectIdenticalTo:connection];
+				if (index != NSNotFound) {
+					if (self.tableView.editing)
+						return [NSIndexPath indexPathForRow:index inSection:(bouncerSection + 2)];
+					return [NSIndexPath indexPathForRow:index inSection:(bouncerSection + 1)];
+				}
 			}
 		}
-	}
 
-	return nil;
+		return nil;
+	}
 }
 
 - (MVChatConnection *) connectionAtIndexPath:(NSIndexPath *) indexPath {
-	if (indexPath.section == 0 && self.tableView.editing)
-		return nil;
+	@synchronized([CQConnectionsController defaultController]) {
+		if (indexPath.section == 0 && self.tableView.editing)
+			return nil;
 
-	if ((indexPath.section == 0 && !self.tableView.editing) || (indexPath.section == 1 && self.tableView.editing))
-		return [[CQConnectionsController defaultController].directConnections objectAtIndex:indexPath.row];
+		if ((indexPath.section == 0 && !self.tableView.editing) || (indexPath.section == 1 && self.tableView.editing))
+			return [CQConnectionsController defaultController].directConnections[indexPath.row];
 
-	NSArray *bouncers = [CQConnectionsController defaultController].bouncers;
-	CQBouncerSettings *settings = nil;
-	if (self.tableView.editing)
-		settings = [bouncers objectAtIndex:(indexPath.section - 2)];
-	else settings = [bouncers objectAtIndex:(indexPath.section - 1)];
+		NSArray *bouncers = [CQConnectionsController defaultController].bouncers;
+		CQBouncerSettings *settings = nil;
+		if (self.tableView.editing)
+			settings = bouncers[(indexPath.section - 2)];
+		else settings = bouncers[(indexPath.section - 1)];
 
-	NSArray *connections = [[CQConnectionsController defaultController] bouncerChatConnectionsForIdentifier:settings.identifier];
-	return [connections objectAtIndex:indexPath.row];
+		NSArray *connections = [[CQConnectionsController defaultController] bouncerChatConnectionsForIdentifier:settings.identifier];
+		return connections[indexPath.row];
+	}
 }
 
 #pragma mark -
@@ -369,8 +374,6 @@
 	sheet.cancelButtonIndex = [sheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel button title")];
 
 	[[CQColloquyApplication sharedApplication] showActionSheet:sheet forSender:sender animated:YES];
-
-	[sheet release];
 }
 
 - (void) confirmDisconnect:(id) sender {
@@ -401,8 +404,6 @@
 	sheet.cancelButtonIndex = [sheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel button title")];
 
 	[[CQColloquyApplication sharedApplication] showActionSheet:sheet forSender:sender animated:YES];
-
-	[sheet release];
 }
 
 #pragma mark -
@@ -444,8 +445,6 @@
 				awayStatusController.connection = connection;
 
 				[[CQColloquyApplication sharedApplication] presentModalViewController:awayStatusController animated:YES];
-
-				[awayStatusController release];
 			}
 		}
 	}
@@ -456,13 +455,16 @@
 #pragma mark -
 
 - (void) tableSectionHeaderSelected:(CQTableViewSectionHeader *) header {
-	CQBouncerSettings *settings = nil;
-	if (self.tableView.editing)
-		settings = [[CQConnectionsController defaultController].bouncers objectAtIndex:(header.section - 2)];
-	else settings = [[CQConnectionsController defaultController].bouncers objectAtIndex:(header.section - 1)];
-	[self.navigationController editBouncer:settings];
+	@synchronized([CQConnectionsController defaultController]) {
+		CQBouncerSettings *settings = nil;
+		if (self.tableView.editing)
+			settings = [CQConnectionsController defaultController].bouncers[(header.section - 2)];
+		else settings = [CQConnectionsController defaultController].bouncers[(header.section - 1)];
 
-	header.selected = YES;
+		[self.navigationController editBouncer:settings];
+
+		header.selected = YES;
+	}
 }
 
 #pragma mark -
@@ -470,16 +472,15 @@
 - (void) setEditing:(BOOL) editing animated:(BOOL) animated {
 	[super setEditing:editing animated:animated];
 
-	NSUInteger count = ([CQConnectionsController defaultController].connections.count ? 1 : 0) + [CQConnectionsController defaultController].bouncers.count;
-	if (count) {
-		NSIndexSet *insertionIndexSet = [NSIndexSet indexSetWithIndex:0];
-		BOOL hasConnectionsToRefresh = ([CQConnectionsController defaultController].bouncers.count || [CQConnectionsController defaultController].connections.count);
+	NSUInteger numberOfSections = [self.tableView numberOfSections];
+	if (numberOfSections) {
+		NSIndexSet *updateSectionIndexSet = [NSIndexSet indexSetWithIndex:0];
 		if (editing) {
-			[self.tableView insertSections:insertionIndexSet withRowAnimation:UITableViewRowAnimationTop];
-			if (hasConnectionsToRefresh) [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, count)] withRowAnimation:UITableViewScrollPositionNone];
+			[self.tableView insertSections:updateSectionIndexSet withRowAnimation:UITableViewRowAnimationTop];
+			if (numberOfSections) [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, numberOfSections)] withRowAnimation:UITableViewRowAnimationNone];
 		} else {
-			[self.tableView deleteSections:insertionIndexSet withRowAnimation:UITableViewRowAnimationTop];
-			if (hasConnectionsToRefresh) [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, count)] withRowAnimation:UITableViewScrollPositionNone];
+			[self.tableView deleteSections:updateSectionIndexSet withRowAnimation:UITableViewRowAnimationTop];
+			if (numberOfSections - 1) [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, numberOfSections - 1)] withRowAnimation:UITableViewRowAnimationNone];
 		}
 	} else {
 		[self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.25];
@@ -490,39 +491,45 @@
 #pragma mark -
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView {
-	if (tableView.editing)
-		return [CQConnectionsController defaultController].bouncers.count + 2;
-	return [CQConnectionsController defaultController].bouncers.count + 1;
+	@synchronized([CQConnectionsController defaultController]) {
+		if (tableView.editing)
+			return [CQConnectionsController defaultController].bouncers.count + 2;
+		return [CQConnectionsController defaultController].bouncers.count + 1;
+	}
 }
 
 - (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
-	if (tableView.editing && section == 0)
-		return 1;
+	@synchronized([CQConnectionsController defaultController]) {
+		if (tableView.editing && section == 0)
+			return 1;
 
-	if (section == 0 || (tableView.editing && section == 1))
-		return [CQConnectionsController defaultController].directConnections.count;
+		if (section == 0 || (tableView.editing && section == 1))
+			return [CQConnectionsController defaultController].directConnections.count;
 
-	NSArray *bouncers = [CQConnectionsController defaultController].bouncers;
-	CQBouncerSettings *settings = nil;
-	if (tableView.editing)
-		settings = [bouncers objectAtIndex:(section - 2)];
-	else settings = [bouncers objectAtIndex:(section - 1)];
-	return [[CQConnectionsController defaultController] bouncerChatConnectionsForIdentifier:settings.identifier].count;
+		NSArray *bouncers = [CQConnectionsController defaultController].bouncers;
+		CQBouncerSettings *settings = nil;
+		if (tableView.editing)
+			settings = bouncers[(section - 2)];
+		else settings = bouncers[(section - 1)];
+		return [[CQConnectionsController defaultController] bouncerChatConnectionsForIdentifier:settings.identifier].count;
+	}
 }
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger) section {
-	if (section == 0 || (section == 1 && self.tableView.editing && ![CQConnectionsController defaultController].directConnections.count))
-		return nil;
+	@synchronized([CQConnectionsController defaultController]) {
+		if (section == 0 || (section == 1 && self.tableView.editing && ![CQConnectionsController defaultController].directConnections.count))
+			return nil;
 
-	if ((section == 1 && self.tableView.editing) || ((section == 0 && !self.tableView.editing) && [CQConnectionsController defaultController].directConnections.count && [CQConnectionsController defaultController].bouncers.count))
-		return NSLocalizedString(@"Direct Connections", @"Direct Connections section title");
+		if ((section == 1 && self.tableView.editing) || ((section == 0 && !self.tableView.editing) && [CQConnectionsController defaultController].directConnections.count && [CQConnectionsController defaultController].bouncers.count))
+			return NSLocalizedString(@"Direct Connections", @"Direct Connections section title");
 
-	NSArray *bouncers = [CQConnectionsController defaultController].bouncers;
-	CQBouncerSettings *settings = nil;
-	if (tableView.editing)
-		settings = [bouncers objectAtIndex:(section - 2)];
-	else settings = [bouncers objectAtIndex:(section - 1)];
-	return settings.displayName;
+		NSArray *bouncers = [CQConnectionsController defaultController].bouncers;
+		CQBouncerSettings *settings = nil;
+		if (tableView.editing)
+			settings = bouncers[(section - 2)];
+		else settings = bouncers[(section - 1)];
+		return settings.displayName;
+	}
 }
 
 - (UITableViewCell *) tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) indexPath {
@@ -552,6 +559,9 @@
 	UIView *headerView = [self tableView:tableView viewForHeaderInSection:section];
 	if (!headerView)
 		return 0.;
+	if ([UIDevice currentDevice].isSystemSeven)
+		if ([UIDevice currentDevice].isRetina)
+			return 22.5;
 	return 22.;
 }
 
@@ -567,23 +577,25 @@
 	view.textLabel.text = title;
 	view.section = section;
 
-	if (!(tableView.editing && section == 1))
+	if (!(tableView.editing && section > 0) || (tableView.editing && section > 1))
 		[view addTarget:self action:@selector(tableSectionHeaderSelected:) forControlEvents:UIControlEventTouchUpInside];
 	else view.showsDisclosureState = NO;
 
-	return [view autorelease];
+	return view;
 }
 
 - (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *) indexPath {
-	MVChatConnection *connection = [self connectionAtIndexPath:indexPath];
-	if (self.editing) {
-		if (indexPath.section == 0) {
-			[[CQConnectionsController defaultController] showNewConnectionPrompt:nil];
-			[tableView deselectRowAtIndexPath:indexPath animated:[UIView areAnimationsEnabled]];
-		} else [self.navigationController editConnection:connection];
-	} else if (connection.status == MVChatConnectionConnectingStatus || connection.status == MVChatConnectionConnectedStatus)
-		[self confirmDisconnect:[tableView cellForRowAtIndexPath:indexPath]];
-	else [self confirmConnect:[tableView cellForRowAtIndexPath:indexPath]];
+	@synchronized([CQConnectionsController defaultController]) {
+		MVChatConnection *connection = [self connectionAtIndexPath:indexPath];
+		if (self.editing) {
+			if (indexPath.section == 0) {
+				[[CQConnectionsController defaultController] showNewConnectionPrompt:nil];
+				[tableView deselectRowAtIndexPath:indexPath animated:[UIView areAnimationsEnabled]];
+			} else [self.navigationController editConnection:connection];
+		} else if (connection.status == MVChatConnectionConnectingStatus || connection.status == MVChatConnectionConnectedStatus)
+			[self confirmDisconnect:[tableView cellForRowAtIndexPath:indexPath]];
+		else [self confirmConnect:[tableView cellForRowAtIndexPath:indexPath]];
+	}
 }
 
 - (UITableViewCellEditingStyle) tableView:(UITableView *) tableView editingStyleForRowAtIndexPath:(NSIndexPath *) indexPath {
@@ -605,11 +617,13 @@
 	if (editingStyle != UITableViewCellEditingStyleDelete)
 		return;
 
-	_ignoreNotifications = YES;
-	[[CQConnectionsController defaultController] removeConnectionAtIndex:indexPath.row];
-	_ignoreNotifications = NO;
+	@synchronized([CQConnectionsController defaultController]) {
+		_ignoreNotifications = YES;
+		[[CQConnectionsController defaultController] removeConnectionAtIndex:indexPath.row];
+		_ignoreNotifications = NO;
 
-	[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
+		[self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+	}
 }
 
 - (BOOL) tableView:(UITableView *) tableView canMoveRowAtIndexPath:(NSIndexPath *) indexPath {
@@ -643,19 +657,21 @@
 		return;
 	}
 
-	if (fromIndexPath.section == 1) {
+	@synchronized([CQConnectionsController defaultController]) {
+		if (fromIndexPath.section == 1) {
+			_ignoreNotifications = YES;
+			[[CQConnectionsController defaultController] moveConnectionAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
+			_ignoreNotifications = NO;
+			return;
+		}
+
+		NSArray *bouncers = [CQConnectionsController defaultController].bouncers;
+		CQBouncerSettings *settings = bouncers[(fromIndexPath.section - 2)];
+
 		_ignoreNotifications = YES;
-		[[CQConnectionsController defaultController] moveConnectionAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
+		[[CQConnectionsController defaultController] moveConnectionAtIndex:fromIndexPath.row toIndex:toIndexPath.row forBouncerIdentifier:settings.identifier];
 		_ignoreNotifications = NO;
-		return;
 	}
-
-	NSArray *bouncers = [CQConnectionsController defaultController].bouncers;
-	CQBouncerSettings *settings = [bouncers objectAtIndex:(fromIndexPath.section - 2)];
-
-	_ignoreNotifications = YES;
-	[[CQConnectionsController defaultController] moveConnectionAtIndex:fromIndexPath.row toIndex:toIndexPath.row forBouncerIdentifier:settings.identifier];
-	_ignoreNotifications = NO;
 }
 
 - (BOOL) tableView:(UITableView *) tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *) indexPath {
@@ -682,6 +698,5 @@
 
 	[[CQColloquyApplication sharedApplication] presentModalViewController:preferencesViewController animated:[UIView areAnimationsEnabled]];
 
-	[preferencesViewController release];
 }
 @end

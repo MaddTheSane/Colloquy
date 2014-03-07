@@ -9,10 +9,13 @@
 #import "CQChatPresentationController.h"
 #import "CQConnectionsController.h"
 #import "CQConnectionsNavigationController.h"
-#import "CQWelcomeController.h"
-#import "RegexKitLite.h"
-
 #import "CQPocketController.h"
+#import "CQWelcomeController.h"
+
+#import "UIApplicationAdditions.h"
+
+#import <HockeySDK/HockeySDK.h>
+#import "RegexKitLite.h"
 
 typedef enum {
 	CQSidebarOrientationNone,
@@ -26,6 +29,9 @@ NSString *CQColloquyApplicationDidRecieveDeviceTokenNotification = @"CQColloquyA
 #define BrowserAlertTag 1
 
 static NSMutableArray *highlightWords;
+
+@interface CQColloquyApplication () <BITHockeyManagerDelegate>
+@end
 
 @implementation CQColloquyApplication
 + (CQColloquyApplication *) sharedApplication {
@@ -42,28 +48,11 @@ static NSMutableArray *highlightWords;
 	return self;
 }
 
-- (void) dealloc {
-	[_mainWindow release];
-	[_mainViewController release];
-	[_colloquiesBarButtonItem release];
-	[_colloquiesPopoverController release];
-	[_connectionsBarButtonItem release];
-	[_connectionsPopoverController release];
-	[_launchDate release];
-	[_resumeDate release];
-	[_deviceToken release];
-	[_visibleActionSheet release];
+#pragma mark -
 
-	[super dealloc];
+- (UIWindow *) window {
+	return _mainWindow;
 }
-
-#pragma mark -
-
-@synthesize launchDate = _launchDate;
-@synthesize resumeDate = _resumeDate;
-@synthesize deviceToken = _deviceToken;
-
-#pragma mark -
 
 - (UITabBarController *) tabBarController {
 	if ([_mainViewController isKindOfClass:[UITabBarController class]])
@@ -84,11 +73,11 @@ static NSMutableArray *highlightWords;
 	if (!schemes) {
 		schemes = [[NSMutableSet alloc] init];
 
-		NSArray *urlTypes = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleURLTypes"];
+		NSArray *urlTypes = [NSBundle mainBundle].infoDictionary[@"CFBundleURLTypes"];
 		for (NSDictionary *type in urlTypes) {
-			NSArray *schemesForType = [type objectForKey:@"CFBundleURLSchemes"];
+			NSArray *schemesForType = type[@"CFBundleURLSchemes"];
 			for (NSString *scheme in schemesForType)
-				[schemes addObject:[scheme lowercaseString]];
+				[schemes addObject:scheme.lowercaseString];
 		}
 	}
 
@@ -96,21 +85,23 @@ static NSMutableArray *highlightWords;
 }
 
 - (NSArray *) highlightWords {
-	if (!highlightWords) {
-		highlightWords = [[NSMutableArray alloc] init];
+	@synchronized(self) {
+		if (!highlightWords) {
+			highlightWords = [[NSMutableArray alloc] init];
 
-		NSString *highlightWordsString = [[CQSettingsController settingsController] stringForKey:@"CQHighlightWords"];
-		if (highlightWordsString.length) {
-			[highlightWords addObjectsFromArray:[highlightWordsString cq_componentsMatchedByRegex:@"(?<=\\s|^)[/\"'](.*?)[/\"'](?=\\s|$)" capture:1]];
+			NSString *highlightWordsString = [[CQSettingsController settingsController] stringForKey:@"CQHighlightWords"];
+			if (highlightWordsString.length) {
+				[highlightWords addObjectsFromArray:[highlightWordsString cq_componentsMatchedByRegex:@"(?<=\\s|^)[/\"'](.*?)[/\"'](?=\\s|$)" capture:1]];
 
-			highlightWordsString = [highlightWordsString stringByReplacingOccurrencesOfRegex:@"(?<=\\s|^)[/\"'](.*?)[/\"'](?=\\s|$)" withString:@""];
+				highlightWordsString = [highlightWordsString stringByReplacingOccurrencesOfRegex:@"(?<=\\s|^)[/\"'](.*?)[/\"'](?=\\s|$)" withString:@""];
 
-			[highlightWords addObjectsFromArray:[highlightWordsString componentsSeparatedByString:@" "]];
-			[highlightWords removeObject:@""];
+				[highlightWords addObjectsFromArray:[highlightWordsString componentsSeparatedByString:@" "]];
+				[highlightWords removeObject:@""];
+			}
 		}
-	}
 
-	return highlightWords;
+		return highlightWords;
+	}
 }
 
 - (void) updateAnalytics {
@@ -154,8 +145,9 @@ static NSMutableArray *highlightWords;
 	if (![NSThread isMainThread])
 		return;
 
-	[highlightWords release];
-	highlightWords = nil;
+	@synchronized(self) {
+		highlightWords = nil;
+	}
 
 	if ([UIDevice currentDevice].isPadModel) {
 		NSNumber *newSwipeOrientationValue = [[CQSettingsController settingsController] objectForKey:@"CQSplitSwipeOrientations"];
@@ -177,28 +169,25 @@ static NSMutableArray *highlightWords;
 }
 
 - (void) performDeferredLaunchWork {
+	NSString *hockeyappIdentifier = @"Hockeyapp_App_Identifier";
+	// Hacky check to make sure the identifier was replaced with a string that isn't ""
+	if (![hockeyappIdentifier hasPrefix:@"Hockeyapp"]) {
+		[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:hockeyappIdentifier delegate:self];
+		[[BITHockeyManager sharedHockeyManager] startManager];
+	}
+
+	[self cq_beginReachabilityMonitoring];
+
 	NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-	NSString *version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+	NSString *version = infoDictionary[@"CFBundleShortVersionString"];
 
 	if (![[[CQSettingsController settingsController] stringForKey:@"CQLastVersionUsed"] isEqualToString:version]) {
-		NSString *bundleVersion = [infoDictionary objectForKey:@"CFBundleVersion"];
+		NSString *bundleVersion = infoDictionary[@"CFBundleVersion"];
 		NSString *displayVersion = nil;
 		if (bundleVersion.length)
 			displayVersion = [NSString stringWithFormat:@"%@ (%@)", version, bundleVersion];
 		else displayVersion = version;
 		[[CQSettingsController settingsController] setObject:displayVersion forKey:@"CQCurrentVersion"];
-
-		if (![UIDevice currentDevice].isSystemSix) {
-			NSString *preferencesPath = [@"~/../../Library/Preferences/com.apple.Preferences.plist" stringByStandardizingPath];
-			NSMutableDictionary *preferences = [[NSMutableDictionary alloc] initWithContentsOfFile:preferencesPath];
-
-			if ((preferences && ![[preferences objectForKey:@"KeyboardEmojiEverywhere"] boolValue])) {
-				[preferences setValue:[NSNumber numberWithBool:YES] forKey:@"KeyboardEmojiEverywhere"];
-				[preferences writeToFile:preferencesPath atomically:YES];
-			}
-
-			[preferences release];
-		}
 
 		if (![[CQSettingsController settingsController] boolForKey:@"JVSetUpDefaultQuitMessage"]) {
 			[self setDefaultMessageStringForKey:@"JVQuitMessage"];
@@ -218,10 +207,10 @@ static NSMutableArray *highlightWords;
 
 	CQAnalyticsController *analyticsController = [CQAnalyticsController defaultController];
 
-	NSString *information = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+	NSString *information = infoDictionary[@"CFBundleShortVersionString"];
 	[analyticsController setObject:information forKey:@"application-version"];
 
-	information = [infoDictionary objectForKey:@"CFBundleVersion"];
+	information = infoDictionary[@"CFBundleVersion"];
 	[analyticsController setObject:information forKey:@"application-build-version"];
 
 #if TARGET_IPHONE_SIMULATOR
@@ -247,7 +236,7 @@ static NSMutableArray *highlightWords;
 	[analyticsController setObject:information forKey:@"locale"];
 
 	[analyticsController setObject:([UIDevice currentDevice].multitaskingSupported ? @"1" : @"0") forKey:@"multitasking-supported"];
-	[analyticsController setObject:[NSNumber numberWithDouble:[UIScreen mainScreen].scale] forKey:@"screen-scale-factor"];
+	[analyticsController setObject:@([UIScreen mainScreen].scale) forKey:@"screen-scale-factor"];
 
 	if (_deviceToken.length)
 		[analyticsController setObject:_deviceToken forKey:@"device-push-token"];
@@ -261,12 +250,12 @@ static NSMutableArray *highlightWords;
 	if (!userInfo.count)
 		return;
 
-	NSString *connectionServer = [userInfo objectForKey:@"s"];
-	NSString *connectionIdentifier = [userInfo objectForKey:@"c"];
+	NSString *connectionServer = userInfo[@"s"];
+	NSString *connectionIdentifier = userInfo[@"c"];
 	if (connectionServer.length || connectionIdentifier.length) {
-		NSString *roomName = [userInfo objectForKey:@"r"];
-		NSString *senderNickname = [userInfo objectForKey:@"n"];
-		NSString *action = [userInfo objectForKey:@"a"];
+		NSString *roomName = userInfo[@"r"];
+		NSString *senderNickname = userInfo[@"n"];
+		NSString *action = userInfo[@"a"];
 
 		MVChatConnection *connection = nil;
 
@@ -301,46 +290,38 @@ static NSMutableArray *highlightWords;
 
 - (void) reloadSplitViewController {
 	[_connectionsPopoverController dismissPopoverAnimated:YES];
-	[_connectionsPopoverController release];
 	_connectionsPopoverController = nil;
 
 	[_colloquiesPopoverController dismissPopoverAnimated:YES];
-	[_colloquiesPopoverController release];
 	_colloquiesPopoverController = nil;
-
-	[_colloquiesBarButtonItem release];
 	_colloquiesBarButtonItem = nil;
 
-	[_mainViewController release];
-
 	UISplitViewController *splitViewController = [[UISplitViewController alloc] init];
-	splitViewController.delegate = self;
 
 	_connectionsBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Connections", @"Connections button title") style:UIBarButtonItemStyleBordered target:self action:@selector(toggleConnections:)];
 
 	CQChatPresentationController *presentationController = [CQChatController defaultController].chatPresentationController;
-	[presentationController setStandardToolbarItems:[NSArray arrayWithObject:_connectionsBarButtonItem] animated:NO];
+	[presentationController setStandardToolbarItems:@[_connectionsBarButtonItem] animated:NO];
 
-	NSArray *viewControllers = [[NSArray alloc] initWithObjects:[CQChatController defaultController].chatNavigationController, presentationController, nil];
-	splitViewController.viewControllers = viewControllers;
-	[viewControllers release];
-	
-	_mainViewController = [splitViewController retain];
+	splitViewController.viewControllers = @[[CQChatController defaultController].chatNavigationController, presentationController];
+	splitViewController.delegate = self;
+
+	_mainViewController = splitViewController;
 	_mainWindow.rootViewController = _mainViewController;
-
-	[splitViewController release];
 }
 
 - (BOOL) application:(UIApplication *) application didFinishLaunchingWithOptions:(NSDictionary *) launchOptions {
 	NSDictionary *defaults = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"]];
 	[[CQSettingsController settingsController] registerDefaults:defaults];
 
-	_deviceToken = [[[CQSettingsController settingsController] stringForKey:@"CQPushDeviceToken"] retain];
+	_deviceToken = [[CQSettingsController settingsController] stringForKey:@"CQPushDeviceToken"];
 
 	[CQConnectionsController defaultController];
 	[CQChatController defaultController];
 
 	_mainWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+	if ([_mainWindow respondsToSelector:@selector(setTintColor:)])
+		_mainWindow.tintColor = [UIColor colorWithRed:0.427 green:0.086 blue:0.396 alpha:1];
 
 	[self userDefaultsChanged];
 
@@ -350,19 +331,18 @@ static NSMutableArray *highlightWords;
 		UITabBarController *tabBarController = [[UITabBarController alloc] initWithNibName:nil bundle:nil];
 		tabBarController.delegate = self;
 
-		NSArray *viewControllers = [[NSArray alloc] initWithObjects:[CQConnectionsController defaultController].connectionsNavigationController, [CQChatController defaultController].chatNavigationController, nil];
+		NSArray *viewControllers = @[[CQConnectionsController defaultController].connectionsNavigationController, [CQChatController defaultController].chatNavigationController];
 		tabBarController.viewControllers = viewControllers;
-		[viewControllers release];
-
-		tabBarController.selectedIndex = [[CQSettingsController settingsController] integerForKey:@"CQSelectedTabIndex"];
 
 		_mainViewController = tabBarController;
 		_mainWindow.rootViewController = _mainViewController;
+
+		tabBarController.selectedIndex = [[CQSettingsController settingsController] integerForKey:@"CQSelectedTabIndex"];
 	}
 
 	[_mainWindow makeKeyAndVisible];
 
-	[self handleNotificationWithUserInfo:[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey]];
+	[self handleNotificationWithUserInfo:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
 
 	[self performSelector:@selector(performDeferredLaunchWork) withObject:nil afterDelay:1.];
 
@@ -382,12 +362,12 @@ static NSMutableArray *highlightWords;
 }
 
 - (void) application:(UIApplication *) application didReceiveRemoteNotification:(NSDictionary *) userInfo {
-	NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
+	NSDictionary *apsInfo = userInfo[@"aps"];
 	if (!apsInfo.count)
 		return;
 
 	if ([self areNotificationBadgesAllowed])
-		self.applicationIconBadgeNumber = [[apsInfo objectForKey:@"badge"] integerValue];
+		self.applicationIconBadgeNumber = [apsInfo[@"badge"] integerValue];
 }
 
 - (void) application:(UIApplication *) application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *) deviceToken {
@@ -395,7 +375,6 @@ static NSMutableArray *highlightWords;
 		[[CQAnalyticsController defaultController] setObject:nil forKey:@"device-push-token"];
 		[[CQSettingsController settingsController] removeObjectForKey:@"CQPushDeviceToken"];
 
-		[_deviceToken release];
 		_deviceToken = nil;
 		return;
 	}
@@ -409,11 +388,9 @@ static NSMutableArray *highlightWords;
 	[[CQAnalyticsController defaultController] setObject:deviceTokenString forKey:@"device-push-token"];
 	[[CQSettingsController settingsController] setObject:deviceTokenString forKey:@"CQPushDeviceToken"];
 
-	id old = _deviceToken;
-	_deviceToken = [deviceTokenString retain];
-	[old release];
+	_deviceToken = deviceTokenString;
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:CQColloquyApplicationDidRecieveDeviceTokenNotification object:self userInfo:[NSDictionary dictionaryWithObject:deviceTokenString forKey:@"deviceToken"]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:CQColloquyApplicationDidRecieveDeviceTokenNotification object:self userInfo:@{@"deviceToken": deviceTokenString}];
 }
 
 - (void) application:(UIApplication *) application didFailToRegisterForRemoteNotificationsWithError:(NSError *) error {
@@ -450,20 +427,14 @@ static NSMutableArray *highlightWords;
 	CQChatPresentationController *chatPresentationController = [CQChatController defaultController].chatPresentationController;
 	NSMutableArray *items = [chatPresentationController.standardToolbarItems mutableCopy];
 
-	if ([items objectAtIndex:0] == barButtonItem) {
-		[items release];
+	if (items[0] == barButtonItem) {
 
 		return;
 	}
 
 	if (viewController == [CQChatController defaultController].chatNavigationController) {
-		id old = _colloquiesPopoverController;
-		_colloquiesPopoverController = [popoverController retain];
-		[old release];
-
-		old = _colloquiesBarButtonItem;
-		_colloquiesBarButtonItem = [barButtonItem retain];
-		[old release];
+		_colloquiesPopoverController = popoverController;
+		_colloquiesBarButtonItem = barButtonItem;
 
 		[barButtonItem setAction:@selector(toggleColloquies:)];
 		[barButtonItem setTarget:self];
@@ -472,8 +443,6 @@ static NSMutableArray *highlightWords;
 	[items insertObject:barButtonItem atIndex:0];
 
 	[chatPresentationController setStandardToolbarItems:items animated:NO];
-
-	[items release];
 }
 
 - (void) splitViewController:(UISplitViewController *) splitViewController willShowViewController:(UIViewController *) viewController invalidatingBarButtonItem:(UIBarButtonItem *) barButtonItem {
@@ -481,19 +450,15 @@ static NSMutableArray *highlightWords;
 	NSMutableArray *items = [chatPresentationController.standardToolbarItems mutableCopy];
 
 	if (viewController == [CQChatController defaultController].chatNavigationController) {
-		[_colloquiesPopoverController release];
 		_colloquiesPopoverController = nil;
 
 		NSAssert(_colloquiesBarButtonItem == barButtonItem, @"Bar button item was not the known Colloquies bar button item.");
-		[_colloquiesBarButtonItem release];
 		_colloquiesBarButtonItem = nil;
 	}
 
 	[items removeObjectIdenticalTo:barButtonItem];
 
 	[chatPresentationController setStandardToolbarItems:items animated:NO];
-
-	[items release];
 }
 
 - (BOOL) splitViewController:(UISplitViewController *) splitViewController shouldHideViewController:(UIViewController *) viewController inOrientation:(UIInterfaceOrientation) interfaceOrientation {
@@ -531,23 +496,22 @@ static NSMutableArray *highlightWords;
 	if (sender && [[UIDevice currentDevice] isPadModel]) {
 		id old = _visibleActionSheet;
 		[old dismissWithClickedButtonIndex:[old cancelButtonIndex] animated:NO];
-		[old release];
 		_visibleActionSheet = nil;
 
 		if ([sender isKindOfClass:[UIBarButtonItem class]]) {
 			[sheet showFromBarButtonItem:sender animated:animated];
-			_visibleActionSheet = [sheet retain];
+			_visibleActionSheet = sheet;
 		} else if ([sender isKindOfClass:[UIView class]]) {
 			UIView *view = sender;
 			[sheet showFromRect:view.bounds inView:view animated:animated];
-			_visibleActionSheet = [sheet retain];
+			_visibleActionSheet = sheet;
 		}
 
 		return;
 	}
 
 	UITabBar *tabBar = self.tabBarController.tabBar;
-	if (tabBar && !self.modalViewController) {
+	if (tabBar && tabBar.window && !self.modalViewController) {
 		[sheet showFromTabBar:tabBar];
 		return;
 	}
@@ -567,8 +531,6 @@ static NSMutableArray *highlightWords;
 
 #pragma mark -
 
-@synthesize mainViewController = _mainViewController;
-
 - (UIViewController *) modalViewController {
 	return _mainViewController.presentedViewController;
 }
@@ -582,8 +544,8 @@ static NSMutableArray *highlightWords;
 }
 
 - (void) _presentModalViewControllerWithInfo:(NSDictionary *) info {
-	UIViewController *modalViewController = [info objectForKey:@"modalViewController"];
-	BOOL animated = [[info objectForKey:@"animated"] boolValue];
+	UIViewController *modalViewController = info[@"modalViewController"];
+	BOOL animated = [info[@"animated"] boolValue];
 
 	[self presentModalViewController:modalViewController animated:animated singly:YES];
 }
@@ -592,9 +554,10 @@ static NSMutableArray *highlightWords;
 	if (singly && self.modalViewController) {
 		[self dismissModalViewControllerAnimated:animated];
 		if (animated) {
-			NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:modalViewController, @"modalViewController", [NSNumber numberWithBool:animated], @"animated", nil];
-			[self performSelector:@selector(_presentModalViewControllerWithInfo:) withObject:info afterDelay:0.5];
-			[info release];
+			[self performSelector:@selector(_presentModalViewControllerWithInfo:) withObject:@{
+				@"modalViewController": modalViewController,
+				@"animated": @(animated)
+			} afterDelay:0.5];
 			return;
 		}
 	}
@@ -633,16 +596,12 @@ static NSMutableArray *highlightWords;
 	welcomeController.shouldShowOnlyHelpTopics = YES;
 
 	[self presentModalViewController:welcomeController animated:YES];
-
-	[welcomeController release];
 }
 
 - (void) showWelcome:(id) sender {
 	CQWelcomeController *welcomeController = [[CQWelcomeController alloc] init];
 
 	[self presentModalViewController:welcomeController animated:YES];
-
-	[welcomeController release];
 }
 
 - (void) toggleConnections:(id) sender {
@@ -700,7 +659,7 @@ static NSMutableArray *highlightWords;
 
 - (void) submitRunTime {
 	NSTimeInterval runTime = ABS([_resumeDate timeIntervalSinceNow]);
-	[[CQAnalyticsController defaultController] setObject:[NSNumber numberWithDouble:runTime] forKey:@"run-time"];
+	[[CQAnalyticsController defaultController] setObject:@(runTime) forKey:@"run-time"];
 	[[CQAnalyticsController defaultController] synchronizeSynchronously];
 }
 
@@ -708,7 +667,7 @@ static NSMutableArray *highlightWords;
 
 - (BOOL) isSpecialApplicationURL:(NSURL *) url {
 #if !TARGET_IPHONE_SIMULATOR
-	return (url && ((![UIDevice currentDevice].isSystemSix && [url.host hasCaseInsensitiveSubstring:@"maps.google."]) || (![UIDevice currentDevice].isSystemSix && [url.host hasCaseInsensitiveSubstring:@"youtube."]) || [url.host hasCaseInsensitiveSubstring:@"phobos.apple."]));
+	return (url && ([url.host hasCaseInsensitiveSubstring:@"phobos.apple."]));
 #else
 	return NO;
 #endif
@@ -720,10 +679,6 @@ static NSMutableArray *highlightWords;
 	NSString *scheme = url.scheme;
 #if !TARGET_IPHONE_SIMULATOR
 	NSString *host = url.host;
-	if (![UIDevice currentDevice].isSystemSix && [host hasCaseInsensitiveSubstring:@"maps.google."])
-		return NSLocalizedString(@"Maps", @"Maps application name");
-	if (![UIDevice currentDevice].isSystemSix && [host hasCaseInsensitiveSubstring:@"youtube."])
-		return NSLocalizedString(@"YouTube", @"YouTube application name");
 	if ([host hasCaseInsensitiveSubstring:@"phobos.apple."])
 		return NSLocalizedString(@"iTunes", @"iTunes application name");
 	if ([scheme isCaseInsensitiveEqualToString:@"mailto"])
@@ -767,7 +722,6 @@ static NSMutableArray *highlightWords;
 		[alert addButtonWithTitle:NSLocalizedString(@"Open", @"Open button title")];
 
 		[alert show];
-		[alert release];
 	} else [super openURL:url];
 
 	return YES;

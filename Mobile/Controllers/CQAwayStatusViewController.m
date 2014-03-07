@@ -11,13 +11,7 @@
 - (void) editItemAtIndex:(NSUInteger) index;
 @end
 
-@interface CQAwayStatusViewController (Private)
-- (BOOL) statusIsDefaultAwayStatus:(NSString *) status;
-@end
-
 @implementation CQAwayStatusViewController
-@synthesize connection = _connection;
-
 - (id) init {
 	if (!(self = [super init]))
 		return nil;
@@ -32,14 +26,16 @@
 	if (defaultAwayStatus.length && ![awayStatuses containsObject:defaultAwayStatus])
 		[awayStatuses addObject:defaultAwayStatus];
 	else {
-		if (![self statusIsDefaultAwayStatus:[awayStatuses objectAtIndex:0]]) {
-			for (NSUInteger i = 1; i <  awayStatuses.count; i++) {
-				NSString *status = [awayStatuses objectAtIndex:i];
-				if ([self statusIsDefaultAwayStatus:status])
-					[awayStatuses removeObjectAtIndex:i];
-			}
+		if (awayStatuses.count) {
+			if (![self statusIsDefaultAwayStatus:awayStatuses[0]]) {
+				for (NSUInteger i = 1; i <  awayStatuses.count; i++) {
+					NSString *status = awayStatuses[i];
+					if ([self statusIsDefaultAwayStatus:status])
+						[awayStatuses removeObjectAtIndex:i];
+				}
 
-			[awayStatuses insertObject:defaultAwayStatus atIndex:0];
+				[awayStatuses insertObject:defaultAwayStatus atIndex:0];
+			}
 		}
 	}
 
@@ -52,16 +48,7 @@
 	self.target = self;
 	self.action = @selector(updateAwayStatuses:);
 
-	[awayStatuses release];
-
 	return self;
-}
-
-- (void) dealloc {
-	[_connection release];
-	[_longPressGestureRecognizer release];
-
-	[super dealloc];
 }
 
 - (void) viewDidLoad {
@@ -97,7 +84,6 @@
 #pragma mark -
 
 - (void) _tableWasLongPressed:(UILongPressGestureRecognizer *) gestureReconizer {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_3_2
 	if (gestureReconizer.state != UIGestureRecognizerStateBegan)
 		return;
 
@@ -124,9 +110,6 @@
 	awayStatusActionSheet.destructiveButtonIndex = [awayStatusActionSheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel button title")];
 
 	[[CQColloquyApplication sharedApplication] showActionSheet:awayStatusActionSheet forSender:self animated:[UIView areAnimationsEnabled]];
-
-	[awayStatusActionSheet release];
-#endif
 }
 
 #pragma mark -
@@ -140,7 +123,7 @@
 
 	if (indexPath.row < (NSInteger)_items.count) {
 		cell.textLabel.adjustsFontSizeToFitWidth = YES;
-		cell.textLabel.minimumFontSize = 15.;
+		cell.textLabel.minimumScaleFactor = (15. / cell.textLabel.font.pointSize);
 		cell.textLabel.textColor = [UIColor blackColor];
 	}
 
@@ -160,18 +143,14 @@
 		editingViewController.delegate = self;
 		editingViewController.charactersRemainingBeforeDisplay = 25;
 
-		id old = _customEditingViewController;
-		_customEditingViewController = [editingViewController retain];
-		[old release];
+		_customEditingViewController = editingViewController;
 
 		[self editItemAtIndex:indexPath.row];
-
-		[editingViewController release];
 	} else {
 		if (!_items.count)
 			return;
 
-		_connection.awayStatusMessage = [_items objectAtIndex:indexPath.row];
+		_connection.awayStatusMessage = _items[indexPath.row];
 
 		[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 	}
@@ -235,7 +214,7 @@
 - (void) updateAwayStatuses:(CQPreferencesListViewController *) sender {
 	NSMutableArray *awayStatuses = [[NSMutableArray alloc] initWithCapacity:sender.items.count];
 
-	for (NSString *awayStatus in sender.items) {
+	for (__strong NSString *awayStatus in sender.items) {
 		awayStatus = [awayStatus stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
 		if (awayStatus.length && ![awayStatuses containsObject:awayStatus])
@@ -243,7 +222,5 @@
 	}
 
 	[[CQSettingsController settingsController] setObject:awayStatuses forKey:@"CQAwayStatuses"];
-
-	[awayStatuses release];
 }
 @end

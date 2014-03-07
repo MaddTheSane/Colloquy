@@ -144,14 +144,14 @@
 		[shadow setShadowBlurRadius:0.1];
 		[shadow setShadowColor:[[NSColor shadowColor] colorWithAlphaComponent:0.2]];
 
-		[attributes setObject:boldFont forKey:NSFontAttributeName];
-		[attributes setObject:whiteColor forKey:NSForegroundColorAttributeName];
-		[attributes setObject:shadow forKey:NSShadowAttributeName];
+		attributes[NSFontAttributeName] = boldFont;
+		attributes[NSForegroundColorAttributeName] = whiteColor;
+		attributes[NSShadowAttributeName] = shadow;
 
 		boldFont = [[NSFontManager sharedFontManager] fontWithFamily:@"Lucida Grande" traits:0 weight:15 size:9.];
-		[subAttributes setObject:boldFont forKey:NSFontAttributeName];
-		[subAttributes setObject:whiteColor forKey:NSForegroundColorAttributeName];
-		[subAttributes setObject:shadow forKey:NSShadowAttributeName];
+		subAttributes[NSFontAttributeName] = boldFont;
+		subAttributes[NSForegroundColorAttributeName] = whiteColor;
+		subAttributes[NSShadowAttributeName] = shadow;
 	}
 
 	if( highlighted && _altImage ) {
@@ -220,7 +220,7 @@
 		NSMutableParagraphStyle *numberParaStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
 		[numberParaStyle setAlignment:NSCenterTextAlignment];
 
-		NSDictionary *statusNumberAttributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, numberParaStyle, NSParagraphStyleAttributeName, textColor, NSForegroundColorAttributeName, [NSNumber numberWithFloat:1.0], NSKernAttributeName, nil];
+		NSDictionary *statusNumberAttributes = @{NSFontAttributeName: font, NSParagraphStyleAttributeName: numberParaStyle, NSForegroundColorAttributeName: textColor, NSKernAttributeName: @1.0f};
 
 		NSString *statusText = [NSString stringWithFormat:@"%ld", ( _statusNumber ? _statusNumber : _importantStatusNumber )];
 		NSSize numberSize = [statusText sizeWithAttributes:statusNumberAttributes];

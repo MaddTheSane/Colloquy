@@ -1,0 +1,33 @@
+
+/* Class = "NSWindow"; title = "Browser delle sessioni"; ObjectID = "5"; */
+"5.title" = "Browser delle sessioni";
+
+/* Class = "NSTableColumn"; headerCell.title = "Stanza o amico"; ObjectID = "9"; */
+"9.headerCell.title" = "Stanza o amico";
+
+/* Class = "NSTableColumn"; headerCell.title = "Server"; ObjectID = "10"; */
+"10.headerCell.title" = "Server";
+
+/* Class = "NSTableColumn"; headerCell.title = "Data e/o sessione"; ObjectID = "11"; */
+"11.headerCell.title" = "Data e/o sessione";
+
+/* Class = "NSTableColumn"; headerCell.title = "Rilevanza"; ObjectID = "12"; */
+"12.headerCell.title" = "Rilevanza";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "14"; */
+"14.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Server"; ObjectID = "15"; */
+"15.title" = "Server";
+
+/* Class = "NSMenuItem"; title = "Stanza o amico"; ObjectID = "16"; */
+"16.title" = "Stanza o amico";
+
+/* Class = "NSMenuItem"; title = "Data"; ObjectID = "17"; */
+"17.title" = "Data";
+
+/* Class = "NSMenuItem"; title = "Testo completo"; ObjectID = "18"; */
+"18.title" = "Testo completo";
+
+/* Class = "NSTextFieldCell"; title = "Le sessioni non sono state ancora indicizzate."; ObjectID = "49"; */
+"49.title" = "Le sessioni non sono state ancora indicizzate.";

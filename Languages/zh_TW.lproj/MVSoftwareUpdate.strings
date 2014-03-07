@@ -1,0 +1,12 @@
+
+/* Class = "NSTextFieldCell"; title = "請注意新版軟體與您目前使用版本之間的差異"; ObjectID = "54"; */
+"54.title" = "請注意新版軟體與您目前使用版本之間的差異";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "55"; */
+"55.title" = "取消";
+
+/* Class = "NSButtonCell"; title = "下載更新"; ObjectID = "56"; */
+"56.title" = "下載更新";
+
+/* Class = "NSTextFieldCell"; title = "1.0 (v1E19)"; ObjectID = "57"; */
+"57.title" = "1.0 (v1E19)";

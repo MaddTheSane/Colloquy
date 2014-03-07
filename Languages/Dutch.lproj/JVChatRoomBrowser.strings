@@ -1,0 +1,51 @@
+
+/* Class = "NSPanel"; title = "Betreed Kanaal"; ObjectID = "12"; */
+"12.title" = "Betreed Kanaal";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "19"; */
+"19.title" = "Box";
+
+/* Class = "NSTabViewItem"; label = "Browser"; ObjectID = "28"; */
+"28.label" = "Browser";
+
+/* Class = "NSTabViewItem"; label = "Hidden"; ObjectID = "29"; */
+"29.label" = "Hidden";
+
+/* Class = "NSTableColumn"; headerCell.title = "Kanaal"; ObjectID = "34"; */
+"34.headerCell.title" = "Kanaal";
+
+/* Class = "NSTableColumn"; headerCell.title = "Onderwerp"; ObjectID = "36"; */
+"36.headerCell.title" = "Onderwerp";
+
+/* Class = "NSTabViewItem"; label = "Count"; ObjectID = "48"; */
+"48.label" = "Count";
+
+/* Class = "NSTabViewItem"; label = "Search"; ObjectID = "49"; */
+"49.label" = "Search";
+
+/* Class = "NSTabViewItem"; label = "Hidden"; ObjectID = "65"; */
+"65.label" = "Hidden";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "90"; */
+"90.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "94"; */
+"94.title" = "OtherViews";
+
+/* Class = "NSButtonCell"; title = "Betreed"; ObjectID = "134"; */
+"134.title" = "Betreed";
+
+/* Class = "NSButtonCell"; title = "Annuleer"; ObjectID = "135"; */
+"135.title" = "Annuleer";
+
+/* Class = "NSButtonCell"; title = "Button"; ObjectID = "137"; */
+"137.title" = "Button";
+
+/* Class = "NSTextFieldCell"; title = "Kanaal:"; ObjectID = "138"; */
+"138.title" = "Kanaal:";
+
+/* Class = "NSTextFieldCell"; title = "Verbinding:"; ObjectID = "140"; */
+"140.title" = "Verbinding:";
+
+/* Class = "NSSearchFieldCell"; placeholderString = "Filter Kanalen"; ObjectID = "143"; */
+"143.placeholderString" = "Filter Kanalen";

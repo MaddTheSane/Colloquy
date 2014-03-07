@@ -127,11 +127,11 @@
 #pragma mark -
 
 - (void) ctcpReplyNotification:(NSNotification *) notification {
-	NSString *command = [[notification userInfo] objectForKey:@"command"];
-	NSData *arguments = [[notification userInfo] objectForKey:@"arguments"];
+	NSString *command = [notification userInfo][@"command"];
+	NSData *arguments = [notification userInfo][@"arguments"];
 	if( [command isCaseInsensitiveEqualToString:@"PING"] ) {
 		NSTimeInterval diff = [[NSDate date] timeIntervalSinceDate:[self attributeForKey:@"MVChatUserPingSendDateAttribute"]];
-		[self setAttribute:[NSNumber numberWithDouble:diff] forKey:MVChatUserPingAttribute];
+		[self setAttribute:@(diff) forKey:MVChatUserPingAttribute];
 		[self setAttribute:nil forKey:@"MVChatUserPingSendDateAttribute"];
 	} else if( [command isCaseInsensitiveEqualToString:@"VERSION"] ) {
 		NSString *info = [[NSString alloc] initWithData:arguments encoding:[[self connection] encoding]];

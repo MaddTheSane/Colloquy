@@ -53,7 +53,7 @@
 	[chatViewsOutlineView setRefusesFirstResponder:NO];
 	[chatViewsOutlineView setAllowsEmptySelection:YES];
 
-	[[self window] registerForDraggedTypes:[NSArray arrayWithObjects:TAB_CELL_IDENTIFIER, nil]];
+	[[self window] registerForDraggedTypes:@[TAB_CELL_IDENTIFIER]];
 }
 
 #pragma mark -
@@ -98,7 +98,7 @@
 
 	JVChatTabItem *newTab = [[JVChatTabItem alloc] initWithChatViewController:controller];
 
-	[_tabItems replaceObjectAtIndex:index withObject:newTab];
+	_tabItems[index] = newTab;
 	[tabView removeTabViewItem:[tabView tabViewItemAtIndex:index]];
 	[tabView insertTabViewItem:newTab atIndex:index];
 
@@ -141,14 +141,14 @@
 	[super openViewsDrawer:sender];
 
 	if( [_activeViewController respondsToSelector:@selector( setPreference:forKey: )] )
-		[(id)_activeViewController setPreference:[NSNumber numberWithBool:YES] forKey:@"expanded"];
+		[(id)_activeViewController setPreference:@YES forKey:@"expanded"];
 }
 
 - (IBAction) closeViewsDrawer:(id) sender {
 	[super closeViewsDrawer:sender];
 
 	if( [_activeViewController respondsToSelector:@selector( setPreference:forKey: )] )
-		[(id)_activeViewController setPreference:[NSNumber numberWithBool:NO] forKey:@"expanded"];
+		[(id)_activeViewController setPreference:@NO forKey:@"expanded"];
 }
 
 #pragma mark -
@@ -309,7 +309,7 @@
 }
 
 - (NSArray *) customTabViewAcceptableDragTypes:(AICustomTabsView *) tabsView {
-	return [NSArray arrayWithObject:NSFilenamesPboardType];
+	return @[NSFilenamesPboardType];
 }
 
 - (BOOL) customTabView:(AICustomTabsView *) tabsView didAcceptDragPasteboard:(NSPasteboard *) pasteboard onTabViewItem:(NSTabViewItem *) tabViewItem {
@@ -382,8 +382,8 @@
 	else if( _forceTabBarVisible > 0 ) _forceTabBarVisible = 0;
 
 	if( ! [[NSUserDefaults standardUserDefaults] boolForKey:@"JVTabBarAlwaysVisible"] )
-		[self setPreference:( _forceTabBarVisible == 1 ? [NSNumber numberWithUnsignedLong:1] : nil ) forKey:@"tab bar visible"];
-	else [self setPreference:[NSNumber numberWithLong:_forceTabBarVisible] forKey:@"tab bar visible"];
+		[self setPreference:( _forceTabBarVisible == 1 ? @1UL : nil ) forKey:@"tab bar visible"];
+	else [self setPreference:@(_forceTabBarVisible) forKey:@"tab bar visible"];
 
 	[self updateTabBarVisibilityAndAnimate:NO];
 }
@@ -405,7 +405,7 @@
 
 // Drag entered, enable suppression
 - (NSDragOperation) draggingEntered:(id <NSDraggingInfo>) sender {
-	NSString *type = [[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:TAB_CELL_IDENTIFIER, nil]];
+	NSString *type = [[sender draggingPasteboard] availableTypeFromArray:@[TAB_CELL_IDENTIFIER]];
 	NSDragOperation	operation = NSDragOperationNone;
 
 	if( ! sender || type ) {
@@ -419,7 +419,7 @@
 
 // Drag exited, disable suppression
 - (void) draggingExited:(id <NSDraggingInfo>) sender {
-	NSString *type = [[sender draggingPasteboard] availableTypeFromArray:[NSArray arrayWithObjects:TAB_CELL_IDENTIFIER, nil]];
+	NSString *type = [[sender draggingPasteboard] availableTypeFromArray:@[TAB_CELL_IDENTIFIER]];
 	if( ! sender || type ) [self _supressTabBarHiding:NO]; // hide the tab bar
 }
 @end

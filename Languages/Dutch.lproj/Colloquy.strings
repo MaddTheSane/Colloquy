@@ -1,0 +1,273 @@
+
+/* Class = "NSMenuItem"; title = "Alles op Voorgrond"; ObjectID = "5"; */
+"5.title" = "Alles op Voorgrond";
+
+/* Class = "NSMenuItem"; title = "Venster"; ObjectID = "19"; */
+"19.title" = "Venster";
+
+/* Class = "NSMenuItem"; title = "Minimaliseer"; ObjectID = "23"; */
+"23.title" = "Minimaliseer";
+
+/* Class = "NSMenu"; title = "Venster"; ObjectID = "24"; */
+"24.title" = "Venster";
+
+/* Class = "NSMenu"; title = "Massinova"; ObjectID = "29"; */
+"29.title" = "Massinova";
+
+/* Class = "NSMenuItem"; title = "Colloquy"; ObjectID = "56"; */
+"56.title" = "Colloquy";
+
+/* Class = "NSMenu"; title = "Colloquy"; ObjectID = "57"; */
+"57.title" = "Colloquy";
+
+/* Class = "NSMenuItem"; title = "Over Colloquy"; ObjectID = "58"; */
+"58.title" = "Over Colloquy";
+
+/* Class = "NSMenuItem"; title = "Sluit Venster"; ObjectID = "73"; */
+"73.title" = "Sluit Venster";
+
+/* Class = "NSMenu"; title = "Archief"; ObjectID = "81"; */
+"81.title" = "Archief";
+
+/* Class = "NSMenuItem"; title = "Archief"; ObjectID = "83"; */
+"83.title" = "Archief";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "103"; */
+"103.title" = "Help";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "106"; */
+"106.title" = "Help";
+
+/* Class = "NSMenuItem"; title = "Colloquy Help"; ObjectID = "111"; */
+"111.title" = "Colloquy Help";
+
+/* Class = "NSMenuItem"; title = "Voorkeuren…"; ObjectID = "129"; */
+"129.title" = "Voorkeuren…";
+
+/* Class = "NSMenu"; title = "Voorzieningen"; ObjectID = "130"; */
+"130.title" = "Voorzieningen";
+
+/* Class = "NSMenuItem"; title = "Voorzieningen"; ObjectID = "131"; */
+"131.title" = "Voorzieningen";
+
+/* Class = "NSMenuItem"; title = "Verberg Colloquy"; ObjectID = "134"; */
+"134.title" = "Verberg Colloquy";
+
+/* Class = "NSMenuItem"; title = "Stop Colloquy…"; ObjectID = "136"; */
+"136.title" = "Stop Colloquy…";
+
+/* Class = "NSMenuItem"; title = "Verberg andere"; ObjectID = "145"; */
+"145.title" = "Verberg andere";
+
+/* Class = "NSMenuItem"; title = "Selecteer Alles"; ObjectID = "150"; */
+"150.title" = "Selecteer Alles";
+
+/* Class = "NSMenuItem"; title = "Kopieer"; ObjectID = "197"; */
+"197.title" = "Kopieer";
+
+/* Class = "NSMenuItem"; title = "Selecteer Alles"; ObjectID = "198"; */
+"198.title" = "Selecteer Alles";
+
+/* Class = "NSMenuItem"; title = "Knip"; ObjectID = "199"; */
+"199.title" = "Knip";
+
+/* Class = "NSMenu"; title = "Spelling"; ObjectID = "200"; */
+"200.title" = "Spelling";
+
+/* Class = "NSMenuItem"; title = "Controleer Spelling"; ObjectID = "201"; */
+"201.title" = "Controleer Spelling";
+
+/* Class = "NSMenuItem"; title = "Verwijder"; ObjectID = "202"; */
+"202.title" = "Verwijder";
+
+/* Class = "NSMenuItem"; title = "Spelling..."; ObjectID = "204"; */
+"204.title" = "Spelling...";
+
+/* Class = "NSMenu"; title = "Wijzig"; ObjectID = "205"; */
+"205.title" = "Wijzig";
+
+/* Class = "NSMenuItem"; title = "Herstel"; ObjectID = "207"; */
+"207.title" = "Herstel";
+
+/* Class = "NSMenuItem"; title = "Opnieuw"; ObjectID = "215"; */
+"215.title" = "Opnieuw";
+
+/* Class = "NSMenuItem"; title = "Spelling"; ObjectID = "216"; */
+"216.title" = "Spelling";
+
+/* Class = "NSMenuItem"; title = "Wijzig"; ObjectID = "217"; */
+"217.title" = "Wijzig";
+
+/* Class = "NSMenuItem"; title = "Controlleer Spelling Tijdens Het Typen"; ObjectID = "219"; */
+"219.title" = "Controlleer Spelling Tijdens Het Typen";
+
+/* Class = "NSMenuItem"; title = "Weergave"; ObjectID = "391"; */
+"391.title" = "Weergave";
+
+/* Class = "NSMenu"; title = "Weergave"; ObjectID = "392"; */
+"392.title" = "Weergave";
+
+/* Class = "NSMenuItem"; title = "Pas Knoppenbalk Aan…"; ObjectID = "393"; */
+"393.title" = "Pas Knoppenbalk Aan…";
+
+/* Class = "NSMenuItem"; title = "Toon knoppenbalk"; ObjectID = "395"; */
+"395.title" = "Toon knoppenbalk";
+
+/* Class = "NSMenuItem"; title = "Bestandsoverdrachten"; ObjectID = "658"; */
+"658.title" = "Bestandsoverdrachten";
+
+/* Class = "NSMenuItem"; title = "Zoek naar Nieuwe Versies…"; ObjectID = "696"; */
+"696.title" = "Zoek naar Nieuwe Versies…";
+
+/* Class = "NSMenuItem"; title = "Onderstrepen"; ObjectID = "701"; */
+"701.title" = "Onderstrepen";
+
+/* Class = "NSMenuItem"; title = "Plak Stijl"; ObjectID = "709"; */
+"709.title" = "Plak Stijl";
+
+/* Class = "NSMenu"; title = "Lettertype"; ObjectID = "710"; */
+"710.title" = "Lettertype";
+
+/* Class = "NSMenuItem"; title = "Cursief"; ObjectID = "711"; */
+"711.title" = "Cursief";
+
+/* Class = "NSMenuItem"; title = "Toon Kleuren"; ObjectID = "715"; */
+"715.title" = "Toon Kleuren";
+
+/* Class = "NSMenuItem"; title = "Vetgedrukt"; ObjectID = "719"; */
+"719.title" = "Vetgedrukt";
+
+/* Class = "NSMenuItem"; title = "Lettertype"; ObjectID = "720"; */
+"720.title" = "Lettertype";
+
+/* Class = "NSMenuItem"; title = "Kopieer Stijl"; ObjectID = "723"; */
+"723.title" = "Kopieer Stijl";
+
+/* Class = "NSMenuItem"; title = "Nieuwe Verbinding…"; ObjectID = "749"; */
+"749.title" = "Nieuwe Verbinding…";
+
+/* Class = "NSMenuItem"; title = "Verbindingen"; ObjectID = "751"; */
+"751.title" = "Verbindingen";
+
+/* Class = "NSMenuItem"; title = "Colloquy Kanaal"; ObjectID = "756"; */
+"756.title" = "Colloquy Kanaal";
+
+/* Class = "NSMenuItem"; title = "Colloquy Feedback"; ObjectID = "776"; */
+"776.title" = "Colloquy Feedback";
+
+/* Class = "NSMenuItem"; title = "Bewaar Als…"; ObjectID = "780"; */
+"780.title" = "Bewaar Als…";
+
+/* Class = "NSMenuItem"; title = "Colloquy Foutrapportage"; ObjectID = "786"; */
+"786.title" = "Colloquy Foutrapportage";
+
+/* Class = "NSMenuItem"; title = "Sluit Huidig Paneel"; ObjectID = "789"; */
+"789.title" = "Sluit Huidig Paneel";
+
+/* Class = "NSMenuItem"; title = "Selecteer Volgend Paneel"; ObjectID = "793"; */
+"793.title" = "Selecteer Volgend Paneel";
+
+/* Class = "NSMenuItem"; title = "Selecteer Vorig Paneel"; ObjectID = "794"; */
+"794.title" = "Selecteer Vorig Paneel";
+
+/* Class = "NSMenuItem"; title = "Open Recente"; ObjectID = "804"; */
+"804.title" = "Open Recente";
+
+/* Class = "NSMenu"; title = "Open Recente"; ObjectID = "805"; */
+"805.title" = "Open Recente";
+
+/* Class = "NSMenuItem"; title = "Wis Menu"; ObjectID = "806"; */
+"806.title" = "Wis Menu";
+
+/* Class = "NSMenuItem"; title = "Toon Lade"; ObjectID = "863"; */
+"863.title" = "Toon Lade";
+
+/* Class = "NSMenuItem"; title = "Kleine Symbolen in Lade"; ObjectID = "867"; */
+"867.title" = "Kleine Symbolen in Lade";
+
+/* Class = "NSMenuItem"; title = "Vriendenlijst"; ObjectID = "878"; */
+"878.title" = "Vriendenlijst";
+
+/* Class = "NSMenuItem"; title = "Betreed Kanaal…"; ObjectID = "880"; */
+"880.title" = "Betreed Kanaal…";
+
+/* Class = "NSMenu"; title = "Favorieten"; ObjectID = "888"; */
+"888.title" = "Favorieten";
+
+/* Class = "NSMenuItem"; title = "Favorieten"; ObjectID = "890"; */
+"890.title" = "Favorieten";
+
+/* Class = "NSMenuItem"; title = "Plak"; ObjectID = "900"; */
+"900.title" = "Plak";
+
+/* Class = "NSMenuItem"; title = "Plak als Rich Text"; ObjectID = "901"; */
+"901.title" = "Plak als Rich Text";
+
+/* Class = "NSMenuItem"; title = "Toon Info"; ObjectID = "906"; */
+"906.title" = "Toon Info";
+
+/* Class = "NSMenuItem"; title = "Toon Info"; ObjectID = "908"; */
+"908.title" = "Toon Info";
+
+/* Class = "NSMenuItem"; title = "Selecteer Vorig Actief Paneel"; ObjectID = "910"; */
+"910.title" = "Selecteer Vorig Actief Paneel";
+
+/* Class = "NSMenuItem"; title = "Selecteer Volgend Actief Paneel"; ObjectID = "911"; */
+"911.title" = "Selecteer Volgend Actief Paneel";
+
+/* Class = "NSMenuItem"; title = "Toon Tabbalk"; ObjectID = "915"; */
+"915.title" = "Toon Tabbalk";
+
+/* Class = "NSMenuItem"; title = "Maak paneel los"; ObjectID = "919"; */
+"919.title" = "Maak paneel los";
+
+/* Class = "NSMenuItem"; title = "Wis Buffer Berichten"; ObjectID = "922"; */
+"922.title" = "Wis Buffer Berichten";
+
+/* Class = "NSMenuItem"; title = "Vorig Signaalwoord"; ObjectID = "924"; */
+"924.title" = "Vorig Signaalwoord";
+
+/* Class = "NSMenuItem"; title = "Volgend Signaalwoord"; ObjectID = "926"; */
+"926.title" = "Volgend Signaalwoord";
+
+/* Class = "NSMenuItem"; title = "Zoek…"; ObjectID = "944"; */
+"944.title" = "Zoek…";
+
+/* Class = "NSMenuItem"; title = "Gebruik Selectie voor Zoekactie"; ObjectID = "945"; */
+"945.title" = "Gebruik Selectie voor Zoekactie";
+
+/* Class = "NSMenuItem"; title = "Zoek Vorige"; ObjectID = "946"; */
+"946.title" = "Zoek Vorige";
+
+/* Class = "NSMenuItem"; title = "Zoek"; ObjectID = "948"; */
+"948.title" = "Zoek";
+
+/* Class = "NSMenu"; title = "Zoek"; ObjectID = "949"; */
+"949.title" = "Zoek";
+
+/* Class = "NSMenuItem"; title = "Zoek Volgende"; ObjectID = "950"; */
+"950.title" = "Zoek Volgende";
+
+/* Class = "NSMenuItem"; title = "Slimme Transcripten"; ObjectID = "960"; */
+"960.title" = "Slimme Transcripten";
+
+/* Class = "NSMenu"; title = "Slimme Transcripten"; ObjectID = "961"; */
+"961.title" = "Slimme Transcripten";
+
+/* Class = "NSMenuItem"; title = "Markeer Buffer Berichten"; ObjectID = "964"; */
+"964.title" = "Markeer Buffer Berichten";
+
+/* Class = "NSMenuItem"; title = "Markeer Alles"; ObjectID = "966"; */
+"966.title" = "Markeer Alles";
+
+/* Class = "NSMenuItem"; title = "Ga naar Markering"; ObjectID = "969"; */
+"969.title" = "Ga naar Markering";
+
+/* Class = "NSMenuItem"; title = "Open Transcript…"; ObjectID = "974"; */
+"974.title" = "Open Transcript…";
+
+/* Class = "NSMenuItem"; title = "Stop Colloquy"; ObjectID = "977"; */
+"977.title" = "Stop Colloquy";
+
+/* Class = "NSMenuItem"; title = "Colloquy Website"; ObjectID = "980"; */
+"980.title" = "Colloquy Website";

@@ -128,7 +128,7 @@ static AICustomTabDragging *sharedTabDragInstance = nil;
 
 	//Perform the drag
 	pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
-	[pboard declareTypes:[NSArray arrayWithObjects:TAB_CELL_IDENTIFIER, nil] owner:self];
+	[pboard declareTypes:@[TAB_CELL_IDENTIFIER] owner:self];
 	[pboard setString:TAB_CELL_IDENTIFIER forType:TAB_CELL_IDENTIFIER];
 	[[inEvent window] dragImage:[tabDragWindow dragImage]
 							 at:NSMakePoint(clickLocation.x + dragOffset.width, clickLocation.y + dragOffset.height)

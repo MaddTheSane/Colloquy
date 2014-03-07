@@ -32,21 +32,12 @@
 	_nicknameLabel.highlightedTextColor = self.textLabel.highlightedTextColor;
 
 	_timeLabel.font = [UIFont systemFontOfSize:14.];
-	_timeLabel.textColor = [UIColor colorWithRed:0.19607843 green:0.29803922 blue:0.84313725 alpha:1.];
+	if ([UIDevice currentDevice].isSystemSeven)
+		_timeLabel.textColor = self.tintColor;
+	else _timeLabel.textColor = [UIColor colorWithRed:0.19607843 green:0.29803922 blue:0.84313725 alpha:1.];
 	_timeLabel.highlightedTextColor = self.textLabel.highlightedTextColor;
 
 	return self;
-}
-
-- (void) dealloc {
-	[_iconImageView release];
-	[_badgeImageView release];
-	[_serverLabel release];
-	[_nicknameLabel release];
-	[_timeLabel release];
-	[_connectDate release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -124,28 +115,20 @@
 	}
 
 	if ([_timeLabel.text isEqualToString:newTime]) {
-		[newTime release];
 		return;
 	}
 
 	_timeLabel.text = newTime ? newTime : @"";
 
-	[newTime release];
 
 	[self setNeedsLayout];
 }
 
-@synthesize connectDate = _connectDate;
-
 - (void) setConnectDate:(NSDate *) connectDate {
-	id old = _connectDate;
-	_connectDate = [connectDate retain];
-	[old release];
+	_connectDate = [connectDate copy];
 
 	[self updateConnectTime];
 }
-
-@synthesize status = _status;
 
 - (void) setStatus:(CQConnectionTableCellStatus) status {
 	if (_status == status)
@@ -174,17 +157,11 @@
 }
 
 - (void) setEditing:(BOOL) editing animated:(BOOL) animated {
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationCurve:(editing ? UIViewAnimationCurveEaseIn : UIViewAnimationCurveEaseOut)];
-	}
+	[UIView animateWithDuration:(animated ? .3 : .0) delay:0. options:(editing ? UIViewAnimationOptionCurveEaseIn : UIViewAnimationOptionCurveEaseOut) animations:^{
+		[super setEditing:editing animated:animated];
 
-	[super setEditing:editing animated:animated];
-
-	_timeLabel.alpha = editing ? 0. : 1.;
-
-	if (animated)
-		[UIView commitAnimations];
+		_timeLabel.alpha = editing ? 0. : 1.;
+	} completion:NULL];
 }
 
 - (void) layoutSubviews {
@@ -234,5 +211,9 @@
 	frame.origin.y = round(contentRect.size.height / 2.);
 	frame.size.width = _timeLabel.frame.origin.x - frame.origin.x - TEXT_RIGHT_MARGIN;
 	_nicknameLabel.frame = frame;
+}
+
+- (void) tintColorDidChange {
+	_timeLabel.textColor = self.tintColor;
 }
 @end

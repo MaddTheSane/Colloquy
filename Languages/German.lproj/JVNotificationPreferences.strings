@@ -1,0 +1,54 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "92"; */
+"92.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "95"; */
+"95.title" = " ";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "99"; */
+"99.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "100"; */
+"100.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "104"; */
+"104.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "105"; */
+"105.title" = " ";
+
+/* Class = "NSButtonCell"; title = "Colloquy-Symbol im Dock animieren"; ObjectID = "155"; */
+"155.title" = "Colloquy-Symbol im Dock animieren";
+
+/* Class = "NSTextFieldCell"; title = "Nachrichten, die eines dieser Wörter enthalten, werden hervorgehoben (falls der ausgewählte Stil das unterstützt)."; ObjectID = "156"; */
+"156.title" = "Nachrichten, die eines dieser Wörter enthalten, werden hervorgehoben (falls der ausgewählte Stil das unterstützt).";
+
+/* Class = "NSButtonCell"; title = "Wiederholen bis Colloquy im Vordergrund ist"; ObjectID = "157"; */
+"157.title" = "Wiederholen bis Colloquy im Vordergrund ist";
+
+/* Class = "NSTextFieldCell"; title = "Wörter hervorheben:"; ObjectID = "159"; */
+"159.title" = "Wörter hervorheben:";
+
+/* Class = "NSTextFieldCell"; title = "Gesprächsereignis:"; ObjectID = "161"; */
+"161.title" = "Gesprächsereignis:";
+
+/* Class = "NSButtonCell"; title = "Ton abspielen:"; ObjectID = "162"; */
+"162.title" = "Ton abspielen:";
+
+/* Class = "NSButtonCell"; title = "Ereignisanzeige verwenden"; ObjectID = "164"; */
+"164.title" = "Ereignisanzeige verwenden";
+
+/* Class = "NSButtonCell"; title = "…aber nur, wenn Colloquy im Hintergrund ist"; ObjectID = "165"; */
+"165.title" = "…aber nur, wenn Colloquy im Hintergrund ist";
+
+/* Class = "NSButtonCell"; title = "…bis Colloquy aktiviert wird"; ObjectID = "166"; */
+"166.title" = "…bis Colloquy aktiviert wird";
+
+/* Class = "NSButtonCell"; title = "Alle Hinweistöne aus"; ObjectID = "167"; */
+"167.title" = "Alle Hinweistöne aus";
+
+/* Class = "NSButtonCell"; title = "…aber nur, wenn Colloquy im Hintergrund ist"; ObjectID = "168"; */
+"168.title" = "…aber nur, wenn Colloquy im Hintergrund ist";

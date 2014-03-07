@@ -128,31 +128,33 @@ static void generateDeviceIdentifier() {
 
 	IOObjectRelease(intfIterator);
 #elif SYSTEM(IOS)
-	int	mib[6] = { CTL_NET, AF_ROUTE, 0, AF_LINK, NET_RT_IFLIST, if_nametoindex("en0") };
-	if (!mib[5])
-		goto fail;
+	if (![UIDevice currentDevice].isSystemSeven) {
+		int	mib[6] = { CTL_NET, AF_ROUTE, 0, AF_LINK, NET_RT_IFLIST, if_nametoindex("en0") };
+		if (!mib[5])
+			goto fail;
 
-	size_t length = 0;
-	if (sysctl(mib, 6, NULL, &length, NULL, 0))
-		goto fail;
+		size_t length = 0;
+		if (sysctl(mib, 6, NULL, &length, NULL, 0))
+			goto fail;
 
-	char *buffer = (char *)malloc(length);
-	if (!buffer)
-		goto fail;
+		char *buffer = (char *)malloc(length);
+		if (!buffer)
+			goto fail;
 
-	if (sysctl(mib, 6, buffer, &length, NULL, 0)) {
+		if (sysctl(mib, 6, buffer, &length, NULL, 0)) {
+			free(buffer);
+
+			goto fail;
+		}
+
+		struct if_msghdr	 *ifm = (struct if_msghdr *)buffer;
+		struct sockaddr_dl *sockaddr = (struct sockaddr_dl *)(ifm + 1);
+		unsigned char *MACAddress = (unsigned char *)LLADDR(sockaddr);
+
+		deviceIdentifier = [[NSString alloc] initWithFormat:@"%02x:%02x:%02x:%02x:%02x:%02x", MACAddress[0], MACAddress[1], MACAddress[2], MACAddress[3], MACAddress[4], MACAddress[5]];
+
 		free(buffer);
-
-		goto fail;
 	}
-
-	struct if_msghdr	 *ifm = (struct if_msghdr *)buffer;
-	struct sockaddr_dl *sockaddr = (struct sockaddr_dl *)(ifm + 1);
-	unsigned char *MACAddress = (unsigned char *)LLADDR(sockaddr);
-
-	deviceIdentifier = [[NSString alloc] initWithFormat:@"%02x:%02x:%02x:%02x:%02x:%02x", MACAddress[0], MACAddress[1], MACAddress[2], MACAddress[3], MACAddress[4], MACAddress[5]];
-
-	free(buffer);
 
 	if (deviceIdentifier)
 		return;
@@ -199,9 +201,9 @@ fail:
 	generateDeviceIdentifier();
 
 #if SYSTEM(IOS)
-	[_data setObject:[UIDevice currentDevice].modelIdentifier forKey:@"device-model"];
-	[_data setObject:[UIDevice currentDevice].systemName forKey:@"device-system-name"];
-	[_data setObject:[UIDevice currentDevice].systemVersion forKey:@"device-system-version"];
+	_data[@"device-model"] = [UIDevice currentDevice].modelIdentifier;
+	_data[@"device-system-name"] = [UIDevice currentDevice].systemName;
+	_data[@"device-system-version"] = [UIDevice currentDevice].systemVersion;
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillTerminate) name:UIApplicationWillTerminateNotification object:nil];
 #elif SYSTEM(MAC)
@@ -214,7 +216,7 @@ fail:
 	[_data setObject:@"ppc" forKey:@"machine-class"];
 #elif __i386__ || __x86_64__
 	[_data setObject:@"i386" forKey:@"machine-class"];
-#elif __arm__
+#elif __arm__ || __arm64__
 	[_data setObject:@"arm" forKey:@"machine-class"];
 #else
 	[_data setObject:@"unknown" forKey:@"machine-class"];
@@ -231,7 +233,7 @@ fail:
 #endif
 
 	if (!applicationName)
-		applicationName = [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"] copy];
+		applicationName = [[NSBundle mainBundle].infoDictionary[@"CFBundleName"] copy];
 
 	NSAssert([applicationName isEqualToString:@"Colloquy"], @"If you are not Colloquy, you need to change analyticsURL to a new URL or nil. Thanks!");
 
@@ -253,12 +255,12 @@ fail:
 #pragma mark -
 
 - (id) objectForKey:(NSString *) key {
-	return [_data objectForKey:key];
+	return _data[key];
 }
 
 - (void) setObject:(id) object forKey:(NSString *) key {
 	if (object) {
-		[_data setObject:object forKey:key];
+		_data[key] = object;
 		[self synchronizeSoon];
 	} else [_data removeObjectForKey:key];
 }
@@ -269,7 +271,7 @@ fail:
 	NSMutableString *resultString = [[NSMutableString alloc] initWithCapacity:1024];
 
 	for (__strong NSString *key in _data) {
-		NSString *value = [[_data objectForKey:key] description];
+		NSString *value = [_data[key] description];
 
 		key = [key stringByEncodingIllegalURLCharacters];
 		value = [value stringByEncodingIllegalURLCharacters];
@@ -278,6 +280,8 @@ fail:
 			[resultString appendString:@"&"];
 		[resultString appendFormat:@"%@=%@", key, value];
 	}
+
+	MVAutorelease(resultString);
 
 	return [resultString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
 }
@@ -290,7 +294,7 @@ fail:
 	[request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
 	[request setTimeoutInterval:30.];
 
-	return request;
+	return MVAutorelease(request);
 }
 
 #pragma mark -
@@ -308,8 +312,8 @@ fail:
 	_pendingSynchronize = NO;
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:_cmd object:nil];
 
-	[_data setObject:deviceIdentifier forKey:deviceIdentifierKey];
-	[_data setObject:applicationName forKey:applicationNameKey];
+	_data[deviceIdentifierKey] = deviceIdentifier;
+	_data[applicationNameKey] = applicationName;
 
 	[NSURLConnection connectionWithRequest:[self _urlRequest] delegate:nil];
 
@@ -323,8 +327,8 @@ fail:
 	_pendingSynchronize = NO;
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:_cmd object:nil];
 
-	[_data setObject:deviceIdentifier forKey:deviceIdentifierKey];
-	[_data setObject:applicationName forKey:applicationNameKey];
+	_data[deviceIdentifierKey] = deviceIdentifier;
+	_data[applicationNameKey] = applicationName;
 
 	NSMutableURLRequest *request = [self _urlRequest];
 	[request setTimeoutInterval:5.];

@@ -185,9 +185,9 @@
 	
 	// Use binary search to locate first message with localTimestamp >= minLocalTimestamp.
 	
-	NSInteger mid;
-	NSInteger min = 0;
-	NSInteger max = [messages count] - 1;
+	NSUInteger mid;
+	NSUInteger min = 0;
+	NSUInteger max = [messages count] - 1;
 	
 	while (YES)
 	{

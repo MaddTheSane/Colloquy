@@ -1,0 +1,189 @@
+
+/* Class = "NSPanel"; title = "Verbindingen"; ObjectID = "5"; */
+"5.title" = "Verbindingen";
+
+/* Class = "NSTableColumn"; headerCell.title = "Server"; ObjectID = "115"; */
+"115.headerCell.title" = "Server";
+
+/* Class = "NSPanel"; title = "Nieuwe Verbinding"; ObjectID = "267"; */
+"267.title" = "Nieuwe Verbinding";
+
+/* Class = "NSTableColumn"; headerCell.title = "Poort"; ObjectID = "328"; */
+"328.headerCell.title" = "Poort";
+
+/* Class = "NSTableColumn"; headerCell.title = "Schuilnaam"; ObjectID = "356"; */
+"356.headerCell.title" = "Schuilnaam";
+
+/* Class = "NSMenuItem"; title = "Secure Web"; ObjectID = "659"; */
+"659.title" = "Secure Web";
+
+/* Class = "NSMenuItem"; title = "SOCKS Firewall"; ObjectID = "661"; */
+"661.title" = "SOCKS Firewall";
+
+/* Class = "NSMenuItem"; title = "Geen"; ObjectID = "664"; */
+"664.title" = "Geen";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "671"; */
+"671.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "699"; */
+"699.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "IRC (Internet Relay Chat)"; ObjectID = "702"; */
+"702.title" = "IRC (Internet Relay Chat)";
+
+/* Class = "NSMenuItem"; title = "SILC (Secure Internet Live Conferencing)"; ObjectID = "703"; */
+"703.title" = "SILC (Secure Internet Live Conferencing)";
+
+/* Class = "NSPanel"; title = "Verificatie Openbare Sleutel"; ObjectID = "733"; */
+"733.title" = "Verificatie Openbare Sleutel";
+
+/* Class = "NSTableColumn"; headerCell.title = "Hostnaam"; ObjectID = "783"; */
+"783.headerCell.title" = "Hostnaam";
+
+/* Class = "NSTableColumn"; headerCell.title = "Vingerafdruk"; ObjectID = "784"; */
+"784.headerCell.title" = "Vingerafdruk";
+
+/* Class = "NSMenuItem"; title = "ICB (Internet Citizen's Band)"; ObjectID = "799"; */
+"799.title" = "ICB (Internet Citizen's Band)";
+
+/* Class = "NSMenuItem"; title = "XMPP (Jabber)"; ObjectID = "100795"; */
+"100795.title" = "XMPP (Jabber)";
+
+/* Class = "NSTextFieldCell"; title = "Chatserver:"; ObjectID = "100797"; */
+"100797.title" = "Chatserver:";
+
+/* Class = "NSTextFieldCell"; title = "Schuilnaam:"; ObjectID = "100798"; */
+"100798.title" = "Schuilnaam:";
+
+/* Class = "NSButtonCell"; title = "Onthou deze verbinding"; ObjectID = "100800"; */
+"100800.title" = "Onthou deze verbinding";
+
+/* Class = "NSButtonCell"; title = "Annuleer"; ObjectID = "100801"; */
+"100801.title" = "Annuleer";
+
+/* Class = "NSButtonCell"; title = "Verbind"; ObjectID = "100802"; */
+"100802.title" = "Verbind";
+
+/* Class = "NSButtonCell"; title = "Knop"; ObjectID = "100804"; */
+"100804.title" = "Knop";
+
+/* Class = "NSTextFieldCell"; title = "Details"; ObjectID = "100805"; */
+"100805.title" = "Details";
+
+/* Class = "NSTextFieldCell"; title = "Betreed Kanalen:"; ObjectID = "100807"; */
+"100807.title" = "Betreed Kanalen:";
+
+/* Class = "NSTextFieldCell"; title = "Proxy:"; ObjectID = "100810"; */
+"100810.title" = "Proxy:";
+
+/* Class = "NSButtonCell"; title = "Wijzig…"; ObjectID = "100811"; */
+"100811.title" = "Wijzig…";
+
+/* Class = "NSTextFieldCell"; title = "Wachtwoord Server:"; ObjectID = "100812"; */
+"100812.title" = "Wachtwoord Server:";
+
+/* Class = "NSTextFieldCell"; title = "Gebruikersnaam:"; ObjectID = "100815"; */
+"100815.title" = "Gebruikersnaam:";
+
+/* Class = "NSTextFieldCell"; title = "Echte Naam:"; ObjectID = "100816"; */
+"100816.title" = "Echte Naam:";
+
+/* Class = "NSTextFieldCell"; title = "Chatserverpoort:"; ObjectID = "100819"; */
+"100819.title" = "Chatserverpoort:";
+
+/* Class = "NSButtonCell"; title = "SSL Verbinding"; ObjectID = "100820"; */
+"100820.title" = "SSL Verbinding";
+
+/* Class = "NSTextFieldCell"; title = "Serverprotocol:"; ObjectID = "100821"; */
+"100821.title" = "Serverprotocol:";
+
+/* Class = "NSButtonCell"; title = "Chat"; ObjectID = "100823"; */
+"100823.title" = "Chat";
+
+/* Class = "NSButtonCell"; title = "Annuleer"; ObjectID = "100824"; */
+"100824.title" = "Annuleer";
+
+/* Class = "NSTextFieldCell"; title = "Schuilnaam:"; ObjectID = "100825"; */
+"100825.title" = "Schuilnaam:";
+
+/* Class = "NSButtonCell"; title = "Annuleer"; ObjectID = "100827"; */
+"100827.title" = "Annuleer";
+
+/* Class = "NSTextFieldCell"; title = "Bijnaam authorisatieverzoek"; ObjectID = "100828"; */
+"100828.title" = "Bijnaam authorisatieverzoek";
+
+/* Class = "NSTextFieldCell"; title = "Deze bijnaam is geregistreerd en beveiligd. Voer uw wachtwoord in indien deze van u is. Indien dit niet het geval is, kies a.u.b. een nieuwe bijnaam."; ObjectID = "100829"; */
+"100829.title" = "Deze bijnaam is geregistreerd en beveiligd. Voer uw wachtwoord in indien deze van u is. Indien dit niet het geval is, kies a.u.b. een nieuwe bijnaam.";
+
+/* Class = "NSButtonCell"; title = "Identificeer"; ObjectID = "100831"; */
+"100831.title" = "Identificeer";
+
+/* Class = "NSTextFieldCell"; title = "Wachtwoord:"; ObjectID = "100833"; */
+"100833.title" = "Wachtwoord:";
+
+/* Class = "NSTextFieldCell"; title = "Schuilnaam:"; ObjectID = "100834"; */
+"100834.title" = "Schuilnaam:";
+
+/* Class = "NSTextFieldCell"; title = "Server:"; ObjectID = "100835"; */
+"100835.title" = "Server:";
+
+/* Class = "NSButtonCell"; title = "Voeg toe aan sleutelhanger"; ObjectID = "100838"; */
+"100838.title" = "Voeg toe aan sleutelhanger";
+
+/* Class = "NSButtonCell"; title = "Annuleer"; ObjectID = "100840"; */
+"100840.title" = "Annuleer";
+
+/* Class = "NSButtonCell"; title = "Ontsleutel"; ObjectID = "100841"; */
+"100841.title" = "Ontsleutel";
+
+/* Class = "NSTextFieldCell"; title = "Certificaat authorisatieverzoek"; ObjectID = "100843"; */
+"100843.title" = "Certificaat authorisatieverzoek";
+
+/* Class = "NSButtonCell"; title = "Voeg toe aan sleutelhanger"; ObjectID = "100845"; */
+"100845.title" = "Voeg toe aan sleutelhanger";
+
+/* Class = "NSTextFieldCell"; title = "Wachtzin:"; ObjectID = "100846"; */
+"100846.title" = "Wachtzin:";
+
+/* Class = "NSTextFieldCell"; title = "Verifieer aub de openbare sleutel van de Server."; ObjectID = "100848"; */
+"100848.title" = "Verifieer aub de openbare sleutel van de Server.";
+
+/* Class = "NSTextFieldCell"; title = "Vingerafdruk:"; ObjectID = "100849"; */
+"100849.title" = "Vingerafdruk:";
+
+/* Class = "NSTextFieldCell"; title = "Babbleprint:"; ObjectID = "100850"; */
+"100850.title" = "Babbleprint:";
+
+/* Class = "NSTextFieldCell"; title = "Servernaam:"; ObjectID = "100851"; */
+"100851.title" = "Servernaam:";
+
+/* Class = "NSTextFieldCell"; title = "silc.icore.at"; ObjectID = "100852"; */
+"100852.title" = "silc.icore.at";
+
+/* Class = "NSTextFieldCell"; title = "972E C6E5 3DF3 2E97 BE13  723B 0125 B1C6 5CA5 528F\n"; ObjectID = "100853"; */
+"100853.title" = "972E C6E5 3DF3 2E97 BE13  723B 0125 B1C6 5CA5 528F\n";
+
+/* Class = "NSTextFieldCell"; title = "xohod-vecav-hozyz-ferun-lazec-fisof-rubyd-hases-kalip-hegem-zoxax"; ObjectID = "100854"; */
+"100854.title" = "xohod-vecav-hozyz-ferun-lazec-fisof-rubyd-hases-kalip-hegem-zoxax";
+
+/* Class = "NSButtonCell"; title = "Aanvaard sleutel altijd"; ObjectID = "100855"; */
+"100855.title" = "Aanvaard sleutel altijd";
+
+/* Class = "NSButtonCell"; title = "Aanvaard"; ObjectID = "100856"; */
+"100856.title" = "Aanvaard";
+
+/* Class = "NSButtonCell"; title = "Weiger"; ObjectID = "100857"; */
+"100857.title" = "Weiger";
+
+/* Class = "NSTextFieldCell"; title = "Er zijn meerdere gebruikers met eenzelfde bijnaam gevonden."; ObjectID = "100858"; */
+"100858.title" = "Er zijn meerdere gebruikers met eenzelfde bijnaam gevonden.";
+
+/* Class = "NSTextFieldCell"; title = "Duid aan naar wie u het bericht wilt verzenden."; ObjectID = "100859"; */
+"100859.title" = "Duid aan naar wie u het bericht wilt verzenden.";
+
+/* Class = "NSButtonCell"; title = "Selecteer"; ObjectID = "100860"; */
+"100860.title" = "Selecteer";
+
+/* Class = "NSButtonCell"; title = "Annuleer"; ObjectID = "100861"; */
+"100861.title" = "Annuleer";

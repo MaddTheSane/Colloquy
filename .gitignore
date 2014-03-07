@@ -1,0 +1,6 @@
+build
+**/.DS_Store
+**/xcuserdata
+**/*.pbxuser
+**/*mode?v?
+**/project.xcworkspace

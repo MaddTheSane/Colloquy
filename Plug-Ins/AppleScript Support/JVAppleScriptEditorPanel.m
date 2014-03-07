@@ -211,7 +211,7 @@ static NSString *JVToolbarCompileItemIdentifier = @"JVToolbarCompileItem";
 	if( returnCode == NSOKButton && [self compile:nil] ) {
 		[[[self plugin] script] saveToFile:[sheet filename]];
 		[[self plugin] setScriptFilePath:[sheet filename]];
-		[[NSFileManager defaultManager] changeFileAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:[sheet isExtensionHidden]], NSFileExtensionHidden, nil] atPath:[sheet filename]];
+		[[NSFileManager defaultManager] changeFileAttributes:[NSDictionary dictionaryWithObjectsAndKeys:@([sheet isExtensionHidden]), NSFileExtensionHidden, nil] atPath:[sheet filename]];
 	}
 }
 

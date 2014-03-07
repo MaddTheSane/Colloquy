@@ -11,9 +11,6 @@
 
 	self.title = NSLocalizedString(@"Colloquies", @"Colloquies tab title");
 	self.tabBarItem.image = [UIImage imageNamed:@"colloquies.png"];
-	self.delegate = self;
-
-	self.navigationBar.tintColor = [CQColloquyApplication sharedApplication].tintColor;
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
 
@@ -24,10 +21,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	self.delegate = nil;
-
-	[_chatListViewController release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -38,6 +31,11 @@
 	if (!_chatListViewController) {
 		_chatListViewController = [[CQChatListViewController alloc] init];
 		[self pushViewController:_chatListViewController animated:NO];
+
+		self.delegate = self;
+
+		if (![UIDevice currentDevice].isSystemSeven)
+			self.navigationBar.tintColor = [CQColloquyApplication sharedApplication].tintColor;
 	}
 
 	[[CQChatController defaultController] showPendingChatControllerAnimated:NO];
@@ -86,6 +84,7 @@
 	if (![NSThread isMainThread])
 		return;
 
-	self.navigationBar.tintColor = [CQColloquyApplication sharedApplication].tintColor;
+	if (![UIDevice currentDevice].isSystemSeven)
+		self.navigationBar.tintColor = [CQColloquyApplication sharedApplication].tintColor;
 }
 @end

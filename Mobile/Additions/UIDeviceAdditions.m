@@ -9,8 +9,7 @@ static NSString *hardwareInfoAsString(const char *keyPath) {
 	if (sysctlbyname(keyPath, buffer, &size, NULL, 0) == 0) {
 		NSData *bufferData = [[NSData alloc] initWithBytes:buffer length:(size - 1)]; // Trim off the last character which is \0.
 		NSString *result = [[NSString alloc] initWithData:bufferData encoding:NSASCIIStringEncoding];
-		[bufferData release];
-		return [result autorelease];
+		return result;
 	}
 
 	return @"";
@@ -35,19 +34,6 @@ static NSString *hardwareInfoAsString(const char *keyPath) {
 #else
 	return hardwareInfoAsString("hw.model");
 #endif
-}
-
-- (BOOL) isSystemSix {
-	static BOOL result;
-	static BOOL cached;
-
-	if (cached)
-		return result;
-
-	result = ([self.systemVersion doubleValue] >= 6.);
-	cached = YES;
-
-	return result;
 }
 
 - (BOOL) isSystemSeven {

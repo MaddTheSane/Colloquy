@@ -1,0 +1,24 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "52"; */
+"52.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "54"; */
+"54.title" = " ";
+
+/* Class = "NSTextFieldCell"; title = "Standaard Encodering:"; ObjectID = "137"; */
+"137.title" = "Standaard Encodering:";
+
+/* Class = "NSButtonCell"; title = "Zoek automatisch naar nieuwe versies"; ObjectID = "139"; */
+"139.title" = "Zoek automatisch naar nieuwe versies";
+
+/* Class = "NSTextFieldCell"; title = "Controleer na starten op nieuwe versies van Colloquy"; ObjectID = "140"; */
+"140.title" = "Controleer na starten op nieuwe versies van Colloquy";
+
+/* Class = "NSTextFieldCell"; title = "Bericht Voor Stoppen:"; ObjectID = "141"; */
+"141.title" = "Bericht Voor Stoppen:";
+
+/* Class = "NSButtonCell"; title = "Send anonymous system profile"; ObjectID = "144"; */
+"144.title" = "Send anonymous system profile";

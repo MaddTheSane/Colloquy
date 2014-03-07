@@ -37,7 +37,4 @@
 #endif
 
 #import "MVUtilities.h"
-
-#if !defined(__unsafe_unretained)
-#define objc_unretainedObject(object) (id)(object)
-#endif
+#import <tgmath.h>

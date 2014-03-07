@@ -91,9 +91,9 @@ NSString *MVChatPluginManagerDidFindInvalidPluginsNotification = @"MVChatPluginM
 		for( NSString *file in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil] ) {
 			if( [[file pathExtension] isEqualToString:@"bundle"] || [[file pathExtension] isEqualToString:@"plugin"] ) {
 				NSBundle *bundle = [NSBundle bundleWithPath:[path stringByAppendingPathComponent:file]];
-				NSString *bundleIdentifier = [[bundle infoDictionary] objectForKey:@"CFBundleIdentifier"];
-				NSString *previousPluginVersion = [_invalidPlugins objectForKey:bundleIdentifier];
-				NSString *pluginVersion = [[bundle infoDictionary] objectForKey:@"CFBundleVersion"];
+				NSString *bundleIdentifier = [bundle infoDictionary][@"CFBundleIdentifier"];
+				NSString *previousPluginVersion = _invalidPlugins[bundleIdentifier];
+				NSString *pluginVersion = [bundle infoDictionary][@"CFBundleVersion"];
 
 				if( pluginVersion.length ) {
 					if( [previousPluginVersion isCaseInsensitiveEqualToString:pluginVersion] )
@@ -104,7 +104,7 @@ NSString *MVChatPluginManagerDidFindInvalidPluginsNotification = @"MVChatPluginM
 				if( ![[NSFileManager defaultManager] canExecutePluginAtPath:bundle.executablePath] ) {
 					[invalidPluginList addObject:[NSString stringWithFormat:@"%@/%@", path, file]];
 
-					[_invalidPlugins setObject:pluginVersion forKey:bundleIdentifier];
+					_invalidPlugins[bundleIdentifier] = pluginVersion;
 
 					continue;
 				}

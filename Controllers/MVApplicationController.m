@@ -95,7 +95,7 @@ static BOOL applicationIsTerminating = NO;
 	CFMutableDictionaryRef hidPropertiesRef = (__bridge CFMutableDictionaryRef)hidProperties;
 	IORegistryEntryCreateCFProperties( _hidEntry, &hidPropertiesRef, kCFAllocatorDefault, 0 );
 
-	id hidIdleTimeObj = [hidProperties objectForKey:@"HIDIdleTime"];
+	id hidIdleTimeObj = hidProperties[@"HIDIdleTime"];
 	unsigned long long result;
 
 	if( [hidIdleTimeObj isKindOfClass:[NSData class]] ) [hidIdleTimeObj getBytes:&result];
@@ -113,7 +113,7 @@ static BOOL applicationIsTerminating = NO;
 			// no longer idle
 
 			_isIdle = NO;
-			[[NSNotificationCenter defaultCenter] postNotificationName:JVMachineStoppedIdlingNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:idle] forKey:@"idleTime"]];
+			[[NSNotificationCenter defaultCenter] postNotificationName:JVMachineStoppedIdlingNotification object:self userInfo:@{@"idleTime": @(idle)}];
 
 			// reschedule the timer, to check for idle every 10 seconds
 			[_idleCheck invalidate];
@@ -125,7 +125,7 @@ static BOOL applicationIsTerminating = NO;
 			// we're now idle
 
 			_isIdle = YES;
-			[[NSNotificationCenter defaultCenter] postNotificationName:JVMachineBecameIdleNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:idle] forKey:@"idleTime"]];
+			[[NSNotificationCenter defaultCenter] postNotificationName:JVMachineBecameIdleNotification object:self userInfo:@{@"idleTime": @(idle)}];
 
 			// reschedule the timer, we will check every 2 seconds to catch the user's return quickly
 			[_idleCheck invalidate];
@@ -158,7 +158,7 @@ static BOOL applicationIsTerminating = NO;
 }
 
 - (IBAction) emailDeveloper:(id) sender {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto:support@colloquy.info?subject=Colloquy%%20%%28build%%20%@%%29", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]]]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"mailto:support@colloquy.info?subject=Colloquy%%20%%28build%%20%@%%29", [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"]]]];
 }
 
 - (IBAction) productWebsite:(id) sender {
@@ -255,7 +255,7 @@ static BOOL applicationIsTerminating = NO;
 - (IBAction) openDocument:(id) sender {
 	NSString *path = [[[NSUserDefaults standardUserDefaults] stringForKey:@"JVChatTranscriptFolder"] stringByStandardizingPath];
 
-	NSArray *fileTypes = [NSArray arrayWithObject:@"colloquyTranscript"];
+	NSArray *fileTypes = @[@"colloquyTranscript"];
 	NSOpenPanel *openPanel = [NSOpenPanel openPanel];
 	[openPanel setCanChooseDirectories:NO];
 	[openPanel setCanChooseFiles:YES];
@@ -271,7 +271,7 @@ static BOOL applicationIsTerminating = NO;
 - (void) openDocumentPanelDidEnd:(NSOpenPanel *) panel returnCode:(int) returnCode contextInfo:(void *) contextInfo {
 	NSString *filename = [[panel URL] path];
 	NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filename error:nil];
-	if( returnCode == NSOKButton && [[NSFileManager defaultManager] isReadableFileAtPath:filename] && ( [[filename pathExtension] caseInsensitiveCompare:@"colloquyTranscript"] == NSOrderedSame || ( [[attributes objectForKey:NSFileHFSTypeCode] unsignedLongValue] == 'coTr' && [[attributes objectForKey:NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
+	if( returnCode == NSOKButton && [[NSFileManager defaultManager] isReadableFileAtPath:filename] && ( [[filename pathExtension] caseInsensitiveCompare:@"colloquyTranscript"] == NSOrderedSame || ( [attributes[NSFileHFSTypeCode] unsignedLongValue] == 'coTr' && [attributes[NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
 		[[JVChatController defaultController] chatViewControllerForTranscript:filename];
 	}
 }
@@ -304,7 +304,7 @@ static BOOL applicationIsTerminating = NO;
 	if( ! [[[MVConnectionsController defaultController] connections] count] )
 		return;
 	NSArray *connections = [[MVConnectionsController defaultController] connectedConnections];
-	MVChatConnection *connection = ( [connections count] ? [connections objectAtIndex:0] : nil );
+	MVChatConnection *connection = ( [connections count] ? connections[0] : nil );
 	[[JVChatRoomBrowser chatRoomBrowserForConnection:connection] showWindow:nil];
 }
 
@@ -322,7 +322,7 @@ static BOOL applicationIsTerminating = NO;
 - (BOOL) application:(NSApplication *) sender openFile:(NSString *) filename {
 	NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filename error:nil];
 
-	if( [[NSFileManager defaultManager] isReadableFileAtPath:filename] && ( [[filename pathExtension] caseInsensitiveCompare:@"colloquyTranscript"] == NSOrderedSame || ( [[attributes objectForKey:NSFileHFSTypeCode] unsignedLongValue] == 'coTr' && [[attributes objectForKey:NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
+	if( [[NSFileManager defaultManager] isReadableFileAtPath:filename] && ( [[filename pathExtension] caseInsensitiveCompare:@"colloquyTranscript"] == NSOrderedSame || ( [attributes[NSFileHFSTypeCode] unsignedLongValue] == 'coTr' && [attributes[NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
 		NSString *searchString = nil;
 
 		NSAppleEventManager *sam = [NSAppleEventManager sharedAppleEventManager];
@@ -333,7 +333,7 @@ static BOOL applicationIsTerminating = NO;
 		if( searchString ) [transcript setSearchQuery:searchString];
 
 		return YES;
-	} else if( /* [[NSWorkspace sharedWorkspace] isFilePackageAtPath:filename] && */ ( [[filename pathExtension] caseInsensitiveCompare:@"colloquyStyle"] == NSOrderedSame || [[filename pathExtension] caseInsensitiveCompare:@"fireStyle"] == NSOrderedSame || ( [[attributes objectForKey:NSFileHFSTypeCode] unsignedLongValue] == 'coSt' && [[attributes objectForKey:NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
+	} else if( /* [[NSWorkspace sharedWorkspace] isFilePackageAtPath:filename] && */ ( [[filename pathExtension] caseInsensitiveCompare:@"colloquyStyle"] == NSOrderedSame || [[filename pathExtension] caseInsensitiveCompare:@"fireStyle"] == NSOrderedSame || ( [attributes[NSFileHFSTypeCode] unsignedLongValue] == 'coSt' && [attributes[NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
 		NSString *newPath = [[@"~/Library/Application Support/Colloquy/Styles" stringByExpandingTildeInPath] stringByAppendingPathComponent:[filename lastPathComponent]];
 		if( [newPath isEqualToString:filename] ) return NO;
 
@@ -360,7 +360,7 @@ static BOOL applicationIsTerminating = NO;
 		} else {
 			NSRunCriticalAlertPanel( NSLocalizedString( @"Style Installation Error", "error installing style title" ), NSLocalizedString( @"The style could not be installed, please make sure you have permission to install this item.", "style install error message" ), nil, nil, nil, nil );
 		} return NO;
-	} else if( /* [[NSWorkspace sharedWorkspace] isFilePackageAtPath:filename] && */ ( [[filename pathExtension] caseInsensitiveCompare:@"colloquyEmoticons"] == NSOrderedSame || ( [[attributes objectForKey:NSFileHFSTypeCode] unsignedLongValue] == 'coEm' && [[attributes objectForKey:NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
+	} else if( /* [[NSWorkspace sharedWorkspace] isFilePackageAtPath:filename] && */ ( [[filename pathExtension] caseInsensitiveCompare:@"colloquyEmoticons"] == NSOrderedSame || ( [attributes[NSFileHFSTypeCode] unsignedLongValue] == 'coEm' && [attributes[NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
 		NSString *newPath = [[@"~/Library/Application Support/Colloquy/Emoticons" stringByExpandingTildeInPath] stringByAppendingPathComponent:[filename lastPathComponent]];
 		if( [newPath isEqualToString:filename] ) return NO;
 
@@ -412,11 +412,11 @@ static BOOL applicationIsTerminating = NO;
 		NSMutableDictionary *connectionInformation = [[NSMutableDictionary alloc] init];
 
 		[connection disconnectWithReason:quitAttributedString];
-		[connectionInformation setObject:connection forKey:@"connection"];
+		connectionInformation[@"connection"] = connection;
 
 		if ( [[connection awayStatusMessage] length] )
-			[connectionInformation setObject:[connection awayStatusMessage] forKey:@"away"];
-		else [connectionInformation setObject:@"" forKey:@"away"];
+			connectionInformation[@"away"] = [connection awayStatusMessage];
+		else connectionInformation[@"away"] = @"";
 
 		[_previouslyConnectedConnections addObject:connectionInformation];
 
@@ -432,11 +432,11 @@ static BOOL applicationIsTerminating = NO;
 	NSDictionary *connectionInformation = nil;
 
 	for ( connectionInformation in _previouslyConnectedConnections ) {
-		MVChatConnection *connection = [connectionInformation objectForKey:@"connection"];
+		MVChatConnection *connection = connectionInformation[@"connection"];
 		[connection connect];
 
-		if ([(MVChatString *) [connectionInformation objectForKey:@"away"] length])
-			[connection setAwayStatusMessage:[connectionInformation objectForKey:@"away"]];
+		if ([(MVChatString *) connectionInformation[@"away"] length])
+			[connection setAwayStatusMessage:connectionInformation[@"away"]];
 	}
 
 	_previouslyConnectedConnections = nil;
@@ -540,7 +540,7 @@ static BOOL applicationIsTerminating = NO;
 	[[NSURLCache sharedURLCache] removeAllCachedResponses];
 
 	NSTimeInterval runTime = ABS([_launchDate timeIntervalSinceNow]);
-	[[JVAnalyticsController defaultController] setObject:[NSNumber numberWithDouble:runTime] forKey:@"run-time"];
+	[[JVAnalyticsController defaultController] setObject:@(runTime) forKey:@"run-time"];
 }
 
 - (NSApplicationTerminateReply) applicationShouldTerminate:(NSApplication *) sender {
@@ -662,7 +662,7 @@ static BOOL applicationIsTerminating = NO;
 		for( JVChatRoomPanel *directChat in [[JVChatController defaultController] chatViewControllersOfClass:[JVDirectChatPanel class]] )
 			totalHighlightCount += [directChat newMessagesWaiting];
 
-		[[NSApp dockTile] setBadgeLabel:( totalHighlightCount == 0 ? nil : [[NSNumber numberWithUnsignedInteger:totalHighlightCount] stringValue] )];
+		[[NSApp dockTile] setBadgeLabel:( totalHighlightCount == 0 ? nil : [@(totalHighlightCount) stringValue] )];
 		[[NSApp dockTile] display];
 	} else {
 		[[NSApp dockTile] setBadgeLabel:nil];
@@ -681,13 +681,13 @@ static BOOL applicationIsTerminating = NO;
 	if (analyticsController) {
 		NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
 
-		NSString *information = [infoDictionary objectForKey:@"CFBundleName"];
+		NSString *information = infoDictionary[@"CFBundleName"];
 		[[JVAnalyticsController defaultController] setObject:information forKey:@"application-name"];
 
-		information = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+		information = infoDictionary[@"CFBundleShortVersionString"];
 		[[JVAnalyticsController defaultController] setObject:information forKey:@"application-version"];
 
-		information = [infoDictionary objectForKey:@"CFBundleVersion"];
+		information = infoDictionary[@"CFBundleVersion"];
 		[[JVAnalyticsController defaultController] setObject:information forKey:@"application-build-version"];
 
 		[[JVAnalyticsController defaultController] setObject:[[NSLocale currentLocale] localeIdentifier] forKey:@"locale"];

@@ -1,0 +1,78 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "157"; */
+"157.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Nenhum"; ObjectID = "160"; */
+"160.title" = "Nenhum";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Add identifier"; ObjectID = "208"; */
+"208.ibShadowedToolTip" = "Add identifier";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Edit identifier"; ObjectID = "209"; */
+"209.ibShadowedToolTip" = "Edit identifier";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Delete identifier"; ObjectID = "210"; */
+"210.ibShadowedToolTip" = "Delete identifier";
+
+/* Class = "NSButtonCell"; title = "Only with these domains:"; ObjectID = "281"; */
+"281.title" = "Only with these domains:";
+
+/* Class = "NSButtonCell"; title = "Any Connection"; ObjectID = "282"; */
+"282.title" = "Any Connection";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Add domain"; ObjectID = "287"; */
+"287.ibShadowedToolTip" = "Add domain";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Delete domain"; ObjectID = "289"; */
+"289.ibShadowedToolTip" = "Delete domain";
+
+/* Class = "NSTextFieldCell"; title = "Identifiers:"; ObjectID = "333"; */
+"333.title" = "Identifiers:";
+
+/* Class = "NSTextFieldCell"; title = "Primeiro nome:"; ObjectID = "334"; */
+"334.title" = "Primeiro nome:";
+
+/* Class = "NSTextFieldCell"; title = "Imagem do amigo:"; ObjectID = "337"; */
+"337.title" = "Imagem do amigo:";
+
+/* Class = "NSTextFieldCell"; title = "Último nome:"; ObjectID = "338"; */
+"338.title" = "Último nome:";
+
+/* Class = "NSTextFieldCell"; title = "Email:"; ObjectID = "339"; */
+"339.title" = "Email:";
+
+/* Class = "NSTextFieldCell"; title = "Alcunha:"; ObjectID = "343"; */
+"343.title" = "Alcunha:";
+
+/* Class = "NSTextFieldCell"; title = "Voz:"; ObjectID = "345"; */
+"345.title" = "Voz:";
+
+/* Class = "NSTextFieldCell"; title = "Address Book:"; ObjectID = "349"; */
+"349.title" = "Address Book:";
+
+/* Class = "NSButtonCell"; title = "Change…"; ObjectID = "350"; */
+"350.title" = "Change…";
+
+/* Class = "NSTextFieldCell"; title = "Alcunha:"; ObjectID = "352"; */
+"352.title" = "Alcunha:";
+
+/* Class = "NSTextFieldCell"; title = "Real Name:"; ObjectID = "354"; */
+"354.title" = "Real Name:";
+
+/* Class = "NSTextFieldCell"; title = "Username:"; ObjectID = "356"; */
+"356.title" = "Username:";
+
+/* Class = "NSTextFieldCell"; title = "Host Address:"; ObjectID = "358"; */
+"358.title" = "Host Address:";
+
+/* Class = "NSTextFieldCell"; title = "Connections:"; ObjectID = "360"; */
+"360.title" = "Connections:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "363"; */
+"363.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "364"; */
+"364.title" = "Cancel";
+
+/* Class = "NSButtonCell"; title = "Radio"; ObjectID = "365"; */
+"365.title" = "Radio";

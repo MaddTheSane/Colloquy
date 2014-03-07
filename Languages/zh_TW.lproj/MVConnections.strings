@@ -1,0 +1,186 @@
+
+/* Class = "NSPanel"; title = "連線"; ObjectID = "5"; */
+"5.title" = "連線";
+
+/* Class = "NSTableColumn"; headerCell.title = "伺服器"; ObjectID = "115"; */
+"115.headerCell.title" = "伺服器";
+
+/* Class = "NSPanel"; title = "新增連線"; ObjectID = "267"; */
+"267.title" = "新增連線";
+
+/* Class = "NSTableColumn"; headerCell.title = "連接埠"; ObjectID = "328"; */
+"328.headerCell.title" = "連接埠";
+
+/* Class = "NSTableColumn"; headerCell.title = "代號"; ObjectID = "356"; */
+"356.headerCell.title" = "代號";
+
+/* Class = "NSMenuItem"; title = "安全的網站"; ObjectID = "659"; */
+"659.title" = "安全的網站";
+
+/* Class = "NSMenuItem"; title = "SOCKS 防火牆"; ObjectID = "661"; */
+"661.title" = "SOCKS 防火牆";
+
+/* Class = "NSMenuItem"; title = "無"; ObjectID = "664"; */
+"664.title" = "無";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "671"; */
+"671.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "699"; */
+"699.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "IRC (Internet Relay Chat)"; ObjectID = "702"; */
+"702.title" = "IRC (Internet Relay Chat)";
+
+/* Class = "NSMenuItem"; title = "SILC (Secure Internet Live Conferencing)"; ObjectID = "703"; */
+"703.title" = "SILC (Secure Internet Live Conferencing)";
+
+/* Class = "NSPanel"; title = "公開金鑰認證"; ObjectID = "733"; */
+"733.title" = "公開金鑰認證";
+
+/* Class = "NSTableColumn"; headerCell.title = "主機名稱"; ObjectID = "783"; */
+"783.headerCell.title" = "主機名稱";
+
+/* Class = "NSTableColumn"; headerCell.title = "Fingerprint"; ObjectID = "784"; */
+"784.headerCell.title" = "Fingerprint";
+
+/* Class = "NSMenuItem"; title = "ICB (Internet Citizen's Band)"; ObjectID = "799"; */
+"799.title" = "ICB (Internet Citizen's Band)";
+
+/* Class = "NSTextFieldCell"; title = "聊天伺服器:"; ObjectID = "801"; */
+"801.title" = "聊天伺服器:";
+
+/* Class = "NSTextFieldCell"; title = "代號:"; ObjectID = "802"; */
+"802.title" = "代號:";
+
+/* Class = "NSButtonCell"; title = "記住這個連線"; ObjectID = "804"; */
+"804.title" = "記住這個連線";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "805"; */
+"805.title" = "取消";
+
+/* Class = "NSButtonCell"; title = "連線"; ObjectID = "806"; */
+"806.title" = "連線";
+
+/* Class = "NSButtonCell"; title = "Button"; ObjectID = "808"; */
+"808.title" = "Button";
+
+/* Class = "NSTextFieldCell"; title = "詳情"; ObjectID = "809"; */
+"809.title" = "詳情";
+
+/* Class = "NSTextFieldCell"; title = "加入聊天室:"; ObjectID = "811"; */
+"811.title" = "加入聊天室:";
+
+/* Class = "NSTextFieldCell"; title = "代理:"; ObjectID = "814"; */
+"814.title" = "代理:";
+
+/* Class = "NSButtonCell"; title = "編輯…"; ObjectID = "815"; */
+"815.title" = "編輯…";
+
+/* Class = "NSTextFieldCell"; title = "伺服器密碼:"; ObjectID = "816"; */
+"816.title" = "伺服器密碼:";
+
+/* Class = "NSTextFieldCell"; title = "使用者名稱:"; ObjectID = "819"; */
+"819.title" = "使用者名稱:";
+
+/* Class = "NSTextFieldCell"; title = "真實姓名:"; ObjectID = "820"; */
+"820.title" = "真實姓名:";
+
+/* Class = "NSTextFieldCell"; title = "聊天伺服器連接埠:"; ObjectID = "823"; */
+"823.title" = "聊天伺服器連接埠:";
+
+/* Class = "NSButtonCell"; title = "SSL 連線"; ObjectID = "824"; */
+"824.title" = "SSL 連線";
+
+/* Class = "NSTextFieldCell"; title = "伺服器協定:"; ObjectID = "825"; */
+"825.title" = "伺服器協定:";
+
+/* Class = "NSButtonCell"; title = "聊天"; ObjectID = "827"; */
+"827.title" = "聊天";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "828"; */
+"828.title" = "取消";
+
+/* Class = "NSTextFieldCell"; title = "代號:"; ObjectID = "829"; */
+"829.title" = "代號:";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "831"; */
+"831.title" = "取消";
+
+/* Class = "NSTextFieldCell"; title = "要求認證代號"; ObjectID = "832"; */
+"832.title" = "要求認證代號";
+
+/* Class = "NSTextFieldCell"; title = "您所使用的代號已經註冊並且受到保護。如果這是您所註冊的代號，請輸入您的密碼。不然，請輸入其他的代號。"; ObjectID = "833"; */
+"833.title" = "您所使用的代號已經註冊並且受到保護。如果這是您所註冊的代號，請輸入您的密碼。不然，請輸入其他的代號。";
+
+/* Class = "NSButtonCell"; title = "認證"; ObjectID = "835"; */
+"835.title" = "認證";
+
+/* Class = "NSTextFieldCell"; title = "密碼:"; ObjectID = "837"; */
+"837.title" = "密碼:";
+
+/* Class = "NSTextFieldCell"; title = "代號:"; ObjectID = "838"; */
+"838.title" = "代號:";
+
+/* Class = "NSTextFieldCell"; title = "伺服器:"; ObjectID = "839"; */
+"839.title" = "伺服器:";
+
+/* Class = "NSButtonCell"; title = "加入到鑰匙圈"; ObjectID = "842"; */
+"842.title" = "加入到鑰匙圈";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "844"; */
+"844.title" = "取消";
+
+/* Class = "NSButtonCell"; title = "解除鎖定"; ObjectID = "845"; */
+"845.title" = "解除鎖定";
+
+/* Class = "NSTextFieldCell"; title = "要求授權認證"; ObjectID = "847"; */
+"847.title" = "要求授權認證";
+
+/* Class = "NSButtonCell"; title = "加入到鑰匙圈"; ObjectID = "849"; */
+"849.title" = "加入到鑰匙圈";
+
+/* Class = "NSTextFieldCell"; title = "密碼:"; ObjectID = "850"; */
+"850.title" = "密碼:";
+
+/* Class = "NSTextFieldCell"; title = "請認證伺服器的公開金鑰。"; ObjectID = "852"; */
+"852.title" = "請認證伺服器的公開金鑰。";
+
+/* Class = "NSTextFieldCell"; title = "Fingerprint:"; ObjectID = "853"; */
+"853.title" = "Fingerprint:";
+
+/* Class = "NSTextFieldCell"; title = "Babbleprint:"; ObjectID = "854"; */
+"854.title" = "Babbleprint:";
+
+/* Class = "NSTextFieldCell"; title = "伺服器名稱:"; ObjectID = "855"; */
+"855.title" = "伺服器名稱:";
+
+/* Class = "NSTextFieldCell"; title = "silc.icore.at"; ObjectID = "856"; */
+"856.title" = "silc.icore.at";
+
+/* Class = "NSTextFieldCell"; title = "972E C6E5 3DF3 2E97 BE13 723B 0125 B1C6 5CA5 528F\n"; ObjectID = "857"; */
+"857.title" = "972E C6E5 3DF3 2E97 BE13 723B 0125 B1C6 5CA5 528F\n";
+
+/* Class = "NSTextFieldCell"; title = "xohod-vecav-hozyz-ferun-lazec-fisof-rubyd-hases-kalip-hegem-zoxax"; ObjectID = "858"; */
+"858.title" = "xohod-vecav-hozyz-ferun-lazec-fisof-rubyd-hases-kalip-hegem-zoxax";
+
+/* Class = "NSButtonCell"; title = "永遠接受金鑰"; ObjectID = "859"; */
+"859.title" = "永遠接受金鑰";
+
+/* Class = "NSButtonCell"; title = "接受"; ObjectID = "860"; */
+"860.title" = "接受";
+
+/* Class = "NSButtonCell"; title = "拒絕"; ObjectID = "861"; */
+"861.title" = "拒絕";
+
+/* Class = "NSTextFieldCell"; title = "發現有多個使用者使用相同的代號。"; ObjectID = "862"; */
+"862.title" = "發現有多個使用者使用相同的代號。";
+
+/* Class = "NSTextFieldCell"; title = "請從下表選擇您要傳訊的對象。"; ObjectID = "863"; */
+"863.title" = "請從下表選擇您要傳訊的對象。";
+
+/* Class = "NSButtonCell"; title = "選擇"; ObjectID = "864"; */
+"864.title" = "選擇";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "865"; */
+"865.title" = "取消";

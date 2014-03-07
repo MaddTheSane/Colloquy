@@ -1,0 +1,273 @@
+
+/* Class = "NSMenuItem"; title = "Hent alt frem"; ObjectID = "5"; */
+"5.title" = "Hent alt frem";
+
+/* Class = "NSMenuItem"; title = "Vindu"; ObjectID = "19"; */
+"19.title" = "Vindu";
+
+/* Class = "NSMenuItem"; title = "Minimer"; ObjectID = "23"; */
+"23.title" = "Minimer";
+
+/* Class = "NSMenu"; title = "Vindu"; ObjectID = "24"; */
+"24.title" = "Vindu";
+
+/* Class = "NSMenu"; title = "Massinova"; ObjectID = "29"; */
+"29.title" = "Massinova";
+
+/* Class = "NSMenuItem"; title = "Colloquy"; ObjectID = "56"; */
+"56.title" = "Colloquy";
+
+/* Class = "NSMenu"; title = "Colloquy"; ObjectID = "57"; */
+"57.title" = "Colloquy";
+
+/* Class = "NSMenuItem"; title = "Om Colloquy"; ObjectID = "58"; */
+"58.title" = "Om Colloquy";
+
+/* Class = "NSMenuItem"; title = "Lukk vindu"; ObjectID = "73"; */
+"73.title" = "Lukk vindu";
+
+/* Class = "NSMenu"; title = "Fil"; ObjectID = "81"; */
+"81.title" = "Fil";
+
+/* Class = "NSMenuItem"; title = "Fil"; ObjectID = "83"; */
+"83.title" = "Fil";
+
+/* Class = "NSMenuItem"; title = "Hjelp"; ObjectID = "103"; */
+"103.title" = "Hjelp";
+
+/* Class = "NSMenu"; title = "Hjelp"; ObjectID = "106"; */
+"106.title" = "Hjelp";
+
+/* Class = "NSMenuItem"; title = "Colloquy hjelp"; ObjectID = "111"; */
+"111.title" = "Colloquy hjelp";
+
+/* Class = "NSMenuItem"; title = "Valg..."; ObjectID = "129"; */
+"129.title" = "Valg...";
+
+/* Class = "NSMenu"; title = "Tjenester"; ObjectID = "130"; */
+"130.title" = "Tjenester";
+
+/* Class = "NSMenuItem"; title = "Tjenester"; ObjectID = "131"; */
+"131.title" = "Tjenester";
+
+/* Class = "NSMenuItem"; title = "Skjul Colloquy"; ObjectID = "134"; */
+"134.title" = "Skjul Colloquy";
+
+/* Class = "NSMenuItem"; title = "Avslutt Colloquy..."; ObjectID = "136"; */
+"136.title" = "Avslutt Colloquy...";
+
+/* Class = "NSMenuItem"; title = "Skjul andre"; ObjectID = "145"; */
+"145.title" = "Skjul andre";
+
+/* Class = "NSMenuItem"; title = "Vis alle"; ObjectID = "150"; */
+"150.title" = "Vis alle";
+
+/* Class = "NSMenuItem"; title = "Kopier"; ObjectID = "197"; */
+"197.title" = "Kopier";
+
+/* Class = "NSMenuItem"; title = "Velg alt"; ObjectID = "198"; */
+"198.title" = "Velg alt";
+
+/* Class = "NSMenuItem"; title = "Klipp ut"; ObjectID = "199"; */
+"199.title" = "Klipp ut";
+
+/* Class = "NSMenu"; title = "Staving"; ObjectID = "200"; */
+"200.title" = "Staving";
+
+/* Class = "NSMenuItem"; title = "Sjekk staving"; ObjectID = "201"; */
+"201.title" = "Sjekk staving";
+
+/* Class = "NSMenuItem"; title = "Slett"; ObjectID = "202"; */
+"202.title" = "Slett";
+
+/* Class = "NSMenuItem"; title = "Staving..."; ObjectID = "204"; */
+"204.title" = "Staving...";
+
+/* Class = "NSMenu"; title = "Rediger"; ObjectID = "205"; */
+"205.title" = "Rediger";
+
+/* Class = "NSMenuItem"; title = "Angre"; ObjectID = "207"; */
+"207.title" = "Angre";
+
+/* Class = "NSMenuItem"; title = "Gjør igjen"; ObjectID = "215"; */
+"215.title" = "Gjør igjen";
+
+/* Class = "NSMenuItem"; title = "Staving"; ObjectID = "216"; */
+"216.title" = "Staving";
+
+/* Class = "NSMenuItem"; title = "Rediger"; ObjectID = "217"; */
+"217.title" = "Rediger";
+
+/* Class = "NSMenuItem"; title = "Sjekk staving mens du skriver"; ObjectID = "219"; */
+"219.title" = "Sjekk staving mens du skriver";
+
+/* Class = "NSMenuItem"; title = "Vis"; ObjectID = "391"; */
+"391.title" = "Vis";
+
+/* Class = "NSMenu"; title = "Vis"; ObjectID = "392"; */
+"392.title" = "Vis";
+
+/* Class = "NSMenuItem"; title = "Tilpass verktøyslinje"; ObjectID = "393"; */
+"393.title" = "Tilpass verktøyslinje";
+
+/* Class = "NSMenuItem"; title = "Vis verktøyslinje"; ObjectID = "395"; */
+"395.title" = "Vis verktøyslinje";
+
+/* Class = "NSMenuItem"; title = "Filoverføringer"; ObjectID = "658"; */
+"658.title" = "Filoverføringer";
+
+/* Class = "NSMenuItem"; title = "Se etter oppdateringer"; ObjectID = "696"; */
+"696.title" = "Se etter oppdateringer";
+
+/* Class = "NSMenuItem"; title = "Understrek"; ObjectID = "701"; */
+"701.title" = "Understrek";
+
+/* Class = "NSMenuItem"; title = "Lim inn stil"; ObjectID = "709"; */
+"709.title" = "Lim inn stil";
+
+/* Class = "NSMenu"; title = "Skrift"; ObjectID = "710"; */
+"710.title" = "Skrift";
+
+/* Class = "NSMenuItem"; title = "Kursiv"; ObjectID = "711"; */
+"711.title" = "Kursiv";
+
+/* Class = "NSMenuItem"; title = "Vis fgarger"; ObjectID = "715"; */
+"715.title" = "Vis fgarger";
+
+/* Class = "NSMenuItem"; title = "Fet"; ObjectID = "719"; */
+"719.title" = "Fet";
+
+/* Class = "NSMenuItem"; title = "Skrift"; ObjectID = "720"; */
+"720.title" = "Skrift";
+
+/* Class = "NSMenuItem"; title = "Kopier stil"; ObjectID = "723"; */
+"723.title" = "Kopier stil";
+
+/* Class = "NSMenuItem"; title = "Ny tilkobling..."; ObjectID = "749"; */
+"749.title" = "Ny tilkobling...";
+
+/* Class = "NSMenuItem"; title = "Tilkoblinger"; ObjectID = "751"; */
+"751.title" = "Tilkoblinger";
+
+/* Class = "NSMenuItem"; title = "Colloquys samtalerom"; ObjectID = "756"; */
+"756.title" = "Colloquys samtalerom";
+
+/* Class = "NSMenuItem"; title = "Tilbakemelding til Colloquy"; ObjectID = "776"; */
+"776.title" = "Tilbakemelding til Colloquy";
+
+/* Class = "NSMenuItem"; title = "Lagre som..."; ObjectID = "780"; */
+"780.title" = "Lagre som...";
+
+/* Class = "NSMenuItem"; title = "Feilrapport til Colloquy"; ObjectID = "786"; */
+"786.title" = "Feilrapport til Colloquy";
+
+/* Class = "NSMenuItem"; title = "Lukke nåværende panel"; ObjectID = "789"; */
+"789.title" = "Lukke nåværende panel";
+
+/* Class = "NSMenuItem"; title = "Velg neste panel"; ObjectID = "793"; */
+"793.title" = "Velg neste panel";
+
+/* Class = "NSMenuItem"; title = "Velg forrige panel"; ObjectID = "794"; */
+"794.title" = "Velg forrige panel";
+
+/* Class = "NSMenuItem"; title = "Åpne siste"; ObjectID = "804"; */
+"804.title" = "Åpne siste";
+
+/* Class = "NSMenu"; title = "Åpne siste"; ObjectID = "805"; */
+"805.title" = "Åpne siste";
+
+/* Class = "NSMenuItem"; title = "Tøm meny"; ObjectID = "806"; */
+"806.title" = "Tøm meny";
+
+/* Class = "NSMenuItem"; title = "Vis skuffe"; ObjectID = "863"; */
+"863.title" = "Vis skuffe";
+
+/* Class = "NSMenuItem"; title = "Bruk små skuffeikoner"; ObjectID = "867"; */
+"867.title" = "Bruk små skuffeikoner";
+
+/* Class = "NSMenuItem"; title = "Kompisliste"; ObjectID = "878"; */
+"878.title" = "Kompisliste";
+
+/* Class = "NSMenuItem"; title = "Bli med i samtalerom..."; ObjectID = "880"; */
+"880.title" = "Bli med i samtalerom...";
+
+/* Class = "NSMenu"; title = "Favoritter"; ObjectID = "888"; */
+"888.title" = "Favoritter";
+
+/* Class = "NSMenuItem"; title = "Favoritter"; ObjectID = "890"; */
+"890.title" = "Favoritter";
+
+/* Class = "NSMenuItem"; title = "Lim inn"; ObjectID = "900"; */
+"900.title" = "Lim inn";
+
+/* Class = "NSMenuItem"; title = "Lim inn som rik tekst"; ObjectID = "901"; */
+"901.title" = "Lim inn som rik tekst";
+
+/* Class = "NSMenuItem"; title = "Vis inspektør"; ObjectID = "906"; */
+"906.title" = "Vis inspektør";
+
+/* Class = "NSMenuItem"; title = "Hent info"; ObjectID = "908"; */
+"908.title" = "Hent info";
+
+/* Class = "NSMenuItem"; title = "Velg forrige aktive panel"; ObjectID = "910"; */
+"910.title" = "Velg forrige aktive panel";
+
+/* Class = "NSMenuItem"; title = "Velge neste aktive panel"; ObjectID = "911"; */
+"911.title" = "Velge neste aktive panel";
+
+/* Class = "NSMenuItem"; title = "Vis faner"; ObjectID = "915"; */
+"915.title" = "Vis faner";
+
+/* Class = "NSMenuItem"; title = "Koble fra panel"; ObjectID = "919"; */
+"919.title" = "Koble fra panel";
+
+/* Class = "NSMenuItem"; title = "Tøm scrollback"; ObjectID = "922"; */
+"922.title" = "Tøm scrollback";
+
+/* Class = "NSMenuItem"; title = "Hopp til forrige framheving"; ObjectID = "924"; */
+"924.title" = "Hopp til forrige framheving";
+
+/* Class = "NSMenuItem"; title = "Hopp til neste framheving"; ObjectID = "926"; */
+"926.title" = "Hopp til neste framheving";
+
+/* Class = "NSMenuItem"; title = "Finn..."; ObjectID = "944"; */
+"944.title" = "Finn...";
+
+/* Class = "NSMenuItem"; title = "Bruk valg for å finne"; ObjectID = "945"; */
+"945.title" = "Bruk valg for å finne";
+
+/* Class = "NSMenuItem"; title = "Finn forrige"; ObjectID = "946"; */
+"946.title" = "Finn forrige";
+
+/* Class = "NSMenuItem"; title = "Finn"; ObjectID = "948"; */
+"948.title" = "Finn";
+
+/* Class = "NSMenu"; title = "Finn"; ObjectID = "949"; */
+"949.title" = "Finn";
+
+/* Class = "NSMenuItem"; title = "Finn neste"; ObjectID = "950"; */
+"950.title" = "Finn neste";
+
+/* Class = "NSMenuItem"; title = "Smarte transkripsjoner"; ObjectID = "960"; */
+"960.title" = "Smarte transkripsjoner";
+
+/* Class = "NSMenu"; title = "Smarte transkripsjoner"; ObjectID = "961"; */
+"961.title" = "Smarte transkripsjoner";
+
+/* Class = "NSMenuItem"; title = "Marker scrollback"; ObjectID = "964"; */
+"964.title" = "Marker scrollback";
+
+/* Class = "NSMenuItem"; title = "Marker alt"; ObjectID = "966"; */
+"966.title" = "Marker alt";
+
+/* Class = "NSMenuItem"; title = "Hopp til markering"; ObjectID = "969"; */
+"969.title" = "Hopp til markering";
+
+/* Class = "NSMenuItem"; title = "Åpne transkripsjon..."; ObjectID = "974"; */
+"974.title" = "Åpne transkripsjon...";
+
+/* Class = "NSMenuItem"; title = "Avslutt Colloquy..."; ObjectID = "977"; */
+"977.title" = "Avslutt Colloquy...";
+
+/* Class = "NSMenuItem"; title = "Colloquy info"; ObjectID = "980"; */
+"980.title" = "Colloquy info";

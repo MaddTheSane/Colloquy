@@ -1,0 +1,222 @@
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "34"; */
+"34.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "37"; */
+"37.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "38"; */
+"38.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "符合"; ObjectID = "39"; */
+"39.title" = "符合";
+
+/* Class = "NSMenuItem"; title = "不符合"; ObjectID = "41"; */
+"41.title" = "不符合";
+
+/* Class = "NSMenuItem"; title = "包含"; ObjectID = "42"; */
+"42.title" = "包含";
+
+/* Class = "NSMenuItem"; title = "不包含"; ObjectID = "43"; */
+"43.title" = "不包含";
+
+/* Class = "NSMenuItem"; title = "開頭為"; ObjectID = "44"; */
+"44.title" = "開頭為";
+
+/* Class = "NSMenuItem"; title = "結尾為"; ObjectID = "45"; */
+"45.title" = "結尾為";
+
+/* Class = "NSMenuItem"; title = "等於"; ObjectID = "46"; */
+"46.title" = "等於";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "48"; */
+"48.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "50"; */
+"50.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "52"; */
+"52.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "少於"; ObjectID = "53"; */
+"53.title" = "少於";
+
+/* Class = "NSMenuItem"; title = "大於"; ObjectID = "54"; */
+"54.title" = "大於";
+
+/* Class = "NSMenuItem"; title = "秒"; ObjectID = "56"; */
+"56.title" = "秒";
+
+/* Class = "NSMenuItem"; title = "日"; ObjectID = "57"; */
+"57.title" = "日";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "58"; */
+"58.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "分鐘"; ObjectID = "60"; */
+"60.title" = "分鐘";
+
+/* Class = "NSMenuItem"; title = "小時"; ObjectID = "61"; */
+"61.title" = "小時";
+
+/* Class = "NSMenuItem"; title = "星期"; ObjectID = "62"; */
+"62.title" = "星期";
+
+/* Class = "NSMenuItem"; title = "月"; ObjectID = "63"; */
+"63.title" = "月";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "67"; */
+"67.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "68"; */
+"68.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "71"; */
+"71.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "是"; ObjectID = "72"; */
+"72.title" = "是";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "74"; */
+"74.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "75"; */
+"75.title" = " ";
+
+/* Class = "NSMenuItem"; title = "不是"; ObjectID = "76"; */
+"76.title" = "不是";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "79"; */
+"79.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "80"; */
+"80.title" = " ";
+
+/* Class = "NSMenuItem"; title = "傳送者的名稱"; ObjectID = "81"; */
+"81.title" = "傳送者的名稱";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "82"; */
+"82.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "訊息本文"; ObjectID = "83"; */
+"83.title" = "訊息本文";
+
+/* Class = "NSMenuItem"; title = "接受日期"; ObjectID = "85"; */
+"85.title" = "接受日期";
+
+/* Class = "NSMenuItem"; title = "傳送者在好友名單中"; ObjectID = "87"; */
+"87.title" = "傳送者在好友名單中";
+
+/* Class = "NSMenuItem"; title = "傳送者不在好友名單中"; ObjectID = "88"; */
+"88.title" = "傳送者不在好友名單中";
+
+/* Class = "NSMenuItem"; title = "訊息並不是一個動作"; ObjectID = "91"; */
+"91.title" = "訊息並不是一個動作";
+
+/* Class = "NSMenuItem"; title = "傳送者並未被忽略"; ObjectID = "92"; */
+"92.title" = "傳送者並未被忽略";
+
+/* Class = "NSMenuItem"; title = "傳送者被忽略"; ObjectID = "93"; */
+"93.title" = "傳送者被忽略";
+
+/* Class = "NSMenuItem"; title = "訊息不是發給我的"; ObjectID = "95"; */
+"95.title" = "訊息不是發給我的";
+
+/* Class = "NSMenuItem"; title = "訊息是發給我的"; ObjectID = "96"; */
+"96.title" = "訊息是發給我的";
+
+/* Class = "NSMenuItem"; title = "訊息並沒有被提示顯示"; ObjectID = "98"; */
+"98.title" = "訊息並沒有被提示顯示";
+
+/* Class = "NSMenuItem"; title = "訊息被提示顯示"; ObjectID = "99"; */
+"99.title" = "訊息被提示顯示";
+
+/* Class = "NSMenuItem"; title = "訊息並沒有被忽略"; ObjectID = "101"; */
+"101.title" = "訊息並沒有被忽略";
+
+/* Class = "NSMenuItem"; title = "訊息被忽略"; ObjectID = "103"; */
+"103.title" = "訊息被忽略";
+
+/* Class = "NSMenuItem"; title = "訊息是一個動作"; ObjectID = "133"; */
+"133.title" = "訊息是一個動作";
+
+/* Class = "NSMenuItem"; title = "不是我發出的訊息"; ObjectID = "157"; */
+"157.title" = "不是我發出的訊息";
+
+/* Class = "NSMenuItem"; title = "並不是我發出的訊息"; ObjectID = "158"; */
+"158.title" = "並不是我發出的訊息";
+
+/* Class = "NSMenuItem"; title = "訊息是發給我的"; ObjectID = "175"; */
+"175.title" = "訊息是發給我的";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "176"; */
+"176.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "訊息是一個動作"; ObjectID = "177"; */
+"177.title" = "訊息是一個動作";
+
+/* Class = "NSMenuItem"; title = "訊息並沒有被提示顯示"; ObjectID = "178"; */
+"178.title" = "訊息並沒有被提示顯示";
+
+/* Class = "NSMenuItem"; title = "訊息並沒有被忽略"; ObjectID = "180"; */
+"180.title" = "訊息並沒有被忽略";
+
+/* Class = "NSMenuItem"; title = "不是我發出的訊息"; ObjectID = "181"; */
+"181.title" = "不是我發出的訊息";
+
+/* Class = "NSMenuItem"; title = "傳送者在好友名單中"; ObjectID = "182"; */
+"182.title" = "傳送者在好友名單中";
+
+/* Class = "NSMenuItem"; title = "訊息被提示顯示"; ObjectID = "183"; */
+"183.title" = "訊息被提示顯示";
+
+/* Class = "NSMenuItem"; title = "傳送者並未被忽略"; ObjectID = "184"; */
+"184.title" = "傳送者並未被忽略";
+
+/* Class = "NSMenuItem"; title = "訊息本文"; ObjectID = "188"; */
+"188.title" = "訊息本文";
+
+/* Class = "NSMenuItem"; title = "訊息不是發給我的"; ObjectID = "189"; */
+"189.title" = "訊息不是發給我的";
+
+/* Class = "NSMenuItem"; title = "傳送者的名稱"; ObjectID = "191"; */
+"191.title" = "傳送者的名稱";
+
+/* Class = "NSMenuItem"; title = "傳送者被忽略"; ObjectID = "193"; */
+"193.title" = "傳送者被忽略";
+
+/* Class = "NSMenuItem"; title = "傳送者不在好友名單中"; ObjectID = "194"; */
+"194.title" = "傳送者不在好友名單中";
+
+/* Class = "NSMenuItem"; title = "並不是我發出的訊息"; ObjectID = "195"; */
+"195.title" = "並不是我發出的訊息";
+
+/* Class = "NSMenuItem"; title = "訊息被忽略"; ObjectID = "197"; */
+"197.title" = "訊息被忽略";
+
+/* Class = "NSMenuItem"; title = "訊息並不是一個動作"; ObjectID = "198"; */
+"198.title" = "訊息並不是一個動作";
+
+/* Class = "NSMenuItem"; title = "來源的名稱"; ObjectID = "200"; */
+"200.title" = "來源的名稱";
+
+/* Class = "NSMenuItem"; title = "來源的伺服器"; ObjectID = "201"; */
+"201.title" = "來源的伺服器";
+
+/* Class = "NSMenuItem"; title = "來源是聊天室"; ObjectID = "203"; */
+"203.title" = "來源是聊天室";
+
+/* Class = "NSMenuItem"; title = "訊息不是來自於聊天室"; ObjectID = "204"; */
+"204.title" = "訊息不是來自於聊天室";
+
+/* Class = "NSMenuItem"; title = "來自直接對談"; ObjectID = "206"; */
+"206.title" = "來自直接對談";
+
+/* Class = "NSMenuItem"; title = "不是來自直接對談"; ObjectID = "207"; */
+"207.title" = "不是來自直接對談";
+
+/* Class = "NSMenuItem"; title = "每一則訊息"; ObjectID = "210"; */
+"210.title" = "每一則訊息";
+
+/* Class = "NSTextFieldCell"; title = "前"; ObjectID = "221"; */
+"221.title" = "前";

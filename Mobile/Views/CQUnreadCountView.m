@@ -17,16 +17,12 @@
 	[self setNeedsDisplay];
 }
 
-@synthesize importantCount = _importantCount;
-
 - (void) setImportantCount:(NSUInteger) importantCount {
 	if (_importantCount == importantCount)
 		return;
 	_importantCount = importantCount;
 	[self setNeedsDisplay];
 }
-
-@synthesize highlighted = _highlighted;
 
 - (void) setHighlighted:(BOOL) highlighted {
 	if (_highlighted == highlighted)
@@ -40,7 +36,7 @@
 		return CGSizeZero;
 
 	UIFont *font = [UIFont boldSystemFontOfSize:16.];
-	NSString *numberString = [NSString stringWithFormat:@"%u", (_importantCount ? _importantCount : _normalCount)];
+	NSString *numberString = [NSString stringWithFormat:@"%tu", (_importantCount ? _importantCount : _normalCount)];
 	CGSize textSize = [numberString sizeWithFont:font];
 
 	CGFloat radius = 10.;
@@ -52,7 +48,7 @@
 	if (_importantCount && _normalCount) {
 		CGSize previousTextSize = textSize;
 
-		numberString = [NSString stringWithFormat:@"%u", _normalCount];
+		numberString = [NSString stringWithFormat:@"%tu", _normalCount];
 		textSize = [numberString sizeWithFont:font];
 
 		enclosingRect = CGRectMake(previousTextSize.width + (radius * 1.2), 0., MAX(textSize.width + radius, radius * 2.), radius * 2.);
@@ -69,7 +65,7 @@
 		return;
 
 	UIFont *font = [UIFont boldSystemFontOfSize:16.];
-	NSString *numberString = [NSString stringWithFormat:@"%u", (_importantCount ? _importantCount : _normalCount)];
+	NSString *numberString = [NSString stringWithFormat:@"%tu", (_importantCount ? _importantCount : _normalCount)];
 	CGSize textSize = [numberString sizeWithFont:font];
 
 	CGFloat radius = 10.;
@@ -108,7 +104,7 @@
 	if (_importantCount && _normalCount) {
 		CGSize previousTextSize = textSize;
 
-		numberString = [NSString stringWithFormat:@"%u", _normalCount];
+		numberString = [NSString stringWithFormat:@"%tu", _normalCount];
 		textSize = [numberString sizeWithFont:font];
 
 		enclosingRect = CGRectMake(previousTextSize.width + (radius * 1.2), 0., MAX(textSize.width + radius, radius * 2.), radius * 2.);

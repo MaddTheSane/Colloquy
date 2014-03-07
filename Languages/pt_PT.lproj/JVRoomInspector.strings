@@ -1,0 +1,96 @@
+
+/* Class = "NSTabViewItem"; label = "Indicações de banido"; ObjectID = "316"; */
+"316.label" = "Indicações de banido";
+
+/* Class = "NSTabViewItem"; label = "Modos"; ObjectID = "318"; */
+"318.label" = "Modos";
+
+/* Class = "NSTabViewItem"; label = "Preferências"; ObjectID = "320"; */
+"320.label" = "Preferências";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "326"; */
+"326.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "327"; */
+"327.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "329"; */
+"329.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "330"; */
+"330.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "332"; */
+"332.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "333"; */
+"333.title" = " ";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Adicionar indicação de banido"; ObjectID = "338"; */
+"338.ibShadowedToolTip" = "Adicionar indicação de banido";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Editar indicação de banido"; ObjectID = "339"; */
+"339.ibShadowedToolTip" = "Editar indicação de banido";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Remover indicação de banido"; ObjectID = "340"; */
+"340.ibShadowedToolTip" = "Remover indicação de banido";
+
+/* Class = "NSButtonCell"; title = "Sala de conversa moderada"; ObjectID = "351"; */
+"351.title" = "Sala de conversa moderada";
+
+/* Class = "NSButtonCell"; title = "Sala secreta de conversa"; ObjectID = "352"; */
+"352.title" = "Sala secreta de conversa";
+
+/* Class = "NSButtonCell"; title = "Sala de conversa apenas para convidados"; ObjectID = "353"; */
+"353.title" = "Sala de conversa apenas para convidados";
+
+/* Class = "NSButtonCell"; title = "Negar mensagens exteriores"; ObjectID = "354"; */
+"354.title" = "Negar mensagens exteriores";
+
+/* Class = "NSButtonCell"; title = "Sala privada de conversa"; ObjectID = "355"; */
+"355.title" = "Sala privada de conversa";
+
+/* Class = "NSButtonCell"; title = "Tópico apenas definido por operadores"; ObjectID = "356"; */
+"356.title" = "Tópico apenas definido por operadores";
+
+/* Class = "NSTabViewItem"; label = "Tópico"; ObjectID = "385"; */
+"385.label" = "Tópico";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "401"; */
+"401.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Endereço"; ObjectID = "402"; */
+"402.title" = "Endereço";
+
+/* Class = "NSMenuItem"; title = "Alcunha"; ObjectID = "403"; */
+"403.title" = "Alcunha";
+
+/* Class = "NSMenuItem"; title = "Nome de utilizador"; ObjectID = "404"; */
+"404.title" = "Nome de utilizador";
+
+/* Class = "NSTextFieldCell"; title = "Ordenar por:"; ObjectID = "435"; */
+"435.title" = "Ordenar por:";
+
+/* Class = "NSButtonCell"; title = "Limitar o número de utilizadores"; ObjectID = "436"; */
+"436.title" = "Limitar o número de utilizadores";
+
+/* Class = "NSButtonCell"; title = "Exigir palavra passe para se juntar"; ObjectID = "439"; */
+"439.title" = "Exigir palavra passe para se juntar";
+
+/* Class = "NSTextFieldCell"; title = "Ícones de expressão:"; ObjectID = "440"; */
+"440.title" = "Ícones de expressão:";
+
+/* Class = "NSTextFieldCell"; title = "Estilo:"; ObjectID = "441"; */
+"441.title" = "Estilo:";
+
+/* Class = "NSTextFieldCell"; title = "Encoding:"; ObjectID = "442"; */
+"442.title" = "Encoding:";
+
+/* Class = "NSButtonCell"; title = "Guardar"; ObjectID = "446"; */
+"446.title" = "Guardar";
+
+/* Class = "NSButtonCell"; title = "Voltar às predefinições"; ObjectID = "447"; */
+"447.title" = "Voltar às predefinições";
+
+/* Class = "NSButtonCell"; title = "Switch"; ObjectID = "451"; */
+"451.title" = "Switch";

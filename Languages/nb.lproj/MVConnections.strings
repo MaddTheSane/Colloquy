@@ -1,0 +1,186 @@
+
+/* Class = "NSPanel"; title = "Tilkoblinger"; ObjectID = "5"; */
+"5.title" = "Tilkoblinger";
+
+/* Class = "NSTableColumn"; headerCell.title = "Server"; ObjectID = "115"; */
+"115.headerCell.title" = "Server";
+
+/* Class = "NSPanel"; title = "Ny tilkobling"; ObjectID = "267"; */
+"267.title" = "Ny tilkobling";
+
+/* Class = "NSTableColumn"; headerCell.title = "Port"; ObjectID = "328"; */
+"328.headerCell.title" = "Port";
+
+/* Class = "NSTableColumn"; headerCell.title = "Kallenavn"; ObjectID = "356"; */
+"356.headerCell.title" = "Kallenavn";
+
+/* Class = "NSMenuItem"; title = "Sikker web"; ObjectID = "659"; */
+"659.title" = "Sikker web";
+
+/* Class = "NSMenuItem"; title = "SOCKS-brannmur"; ObjectID = "661"; */
+"661.title" = "SOCKS-brannmur";
+
+/* Class = "NSMenuItem"; title = "Ingen"; ObjectID = "664"; */
+"664.title" = "Ingen";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "671"; */
+"671.title" = "OtherViews";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "699"; */
+"699.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "IRC (Internet Relay Chat)"; ObjectID = "702"; */
+"702.title" = "IRC (Internet Relay Chat)";
+
+/* Class = "NSMenuItem"; title = "SILC (Secure Internet Live Conferencing)"; ObjectID = "703"; */
+"703.title" = "SILC (Secure Internet Live Conferencing)";
+
+/* Class = "NSPanel"; title = "Verifisering av offentlig nøkkel"; ObjectID = "733"; */
+"733.title" = "Verifisering av offentlig nøkkel";
+
+/* Class = "NSTableColumn"; headerCell.title = "Vertsnavn"; ObjectID = "783"; */
+"783.headerCell.title" = "Vertsnavn";
+
+/* Class = "NSTableColumn"; headerCell.title = "Fingeravtrykk"; ObjectID = "784"; */
+"784.headerCell.title" = "Fingeravtrykk";
+
+/* Class = "NSMenuItem"; title = "ICB (Internet Citizen's Band)"; ObjectID = "799"; */
+"799.title" = "ICB (Internet Citizen's Band)";
+
+/* Class = "NSTextFieldCell"; title = "Samtaleserver:"; ObjectID = "801"; */
+"801.title" = "Samtaleserver:";
+
+/* Class = "NSTextFieldCell"; title = "Kallenavn:"; ObjectID = "802"; */
+"802.title" = "Kallenavn:";
+
+/* Class = "NSButtonCell"; title = "Husk denne tilkoblingen"; ObjectID = "804"; */
+"804.title" = "Husk denne tilkoblingen";
+
+/* Class = "NSButtonCell"; title = "Avbryt"; ObjectID = "805"; */
+"805.title" = "Avbryt";
+
+/* Class = "NSButtonCell"; title = "Koble til"; ObjectID = "806"; */
+"806.title" = "Koble til";
+
+/* Class = "NSButtonCell"; title = "Knapp"; ObjectID = "808"; */
+"808.title" = "Knapp";
+
+/* Class = "NSTextFieldCell"; title = "Detaljer"; ObjectID = "809"; */
+"809.title" = "Detaljer";
+
+/* Class = "NSTextFieldCell"; title = "Bli med i rom:"; ObjectID = "811"; */
+"811.title" = "Bli med i rom:";
+
+/* Class = "NSTextFieldCell"; title = "Node:"; ObjectID = "814"; */
+"814.title" = "Node:";
+
+/* Class = "NSButtonCell"; title = "Rediger..."; ObjectID = "815"; */
+"815.title" = "Rediger...";
+
+/* Class = "NSTextFieldCell"; title = "Serverpassord:"; ObjectID = "816"; */
+"816.title" = "Serverpassord:";
+
+/* Class = "NSTextFieldCell"; title = "Brukernavn:"; ObjectID = "819"; */
+"819.title" = "Brukernavn:";
+
+/* Class = "NSTextFieldCell"; title = "Ordentlig navn:"; ObjectID = "820"; */
+"820.title" = "Ordentlig navn:";
+
+/* Class = "NSTextFieldCell"; title = "Serverport for samtale:"; ObjectID = "823"; */
+"823.title" = "Serverport for samtale:";
+
+/* Class = "NSButtonCell"; title = "SSL-tilkobling"; ObjectID = "824"; */
+"824.title" = "SSL-tilkobling";
+
+/* Class = "NSTextFieldCell"; title = "Serverprotokoll:"; ObjectID = "825"; */
+"825.title" = "Serverprotokoll:";
+
+/* Class = "NSButtonCell"; title = "Samtale"; ObjectID = "827"; */
+"827.title" = "Samtale";
+
+/* Class = "NSButtonCell"; title = "Avbryt"; ObjectID = "828"; */
+"828.title" = "Avbryt";
+
+/* Class = "NSTextFieldCell"; title = "Kallenavn:"; ObjectID = "829"; */
+"829.title" = "Kallenavn:";
+
+/* Class = "NSButtonCell"; title = "Avbryt"; ObjectID = "831"; */
+"831.title" = "Avbryt";
+
+/* Class = "NSTextFieldCell"; title = "Autorisasjonsforespørsel av kallenavn"; ObjectID = "832"; */
+"832.title" = "Autorisasjonsforespørsel av kallenavn";
+
+/* Class = "NSTextFieldCell"; title = "Kallenavnet er registrert og beskyttet. Hvis det er ditt, skriv inn passordet. Hvis ikke, venligst velg et annet kallenavn."; ObjectID = "833"; */
+"833.title" = "Kallenavnet er registrert og beskyttet. Hvis det er ditt, skriv inn passordet. Hvis ikke, venligst velg et annet kallenavn.";
+
+/* Class = "NSButtonCell"; title = "Identifiser"; ObjectID = "835"; */
+"835.title" = "Identifiser";
+
+/* Class = "NSTextFieldCell"; title = "Passord:"; ObjectID = "837"; */
+"837.title" = "Passord:";
+
+/* Class = "NSTextFieldCell"; title = "Kallenavn:"; ObjectID = "838"; */
+"838.title" = "Kallenavn:";
+
+/* Class = "NSTextFieldCell"; title = "Server:"; ObjectID = "839"; */
+"839.title" = "Server:";
+
+/* Class = "NSButtonCell"; title = "Legg til i nøkkelring"; ObjectID = "842"; */
+"842.title" = "Legg til i nøkkelring";
+
+/* Class = "NSButtonCell"; title = "Avbryt"; ObjectID = "844"; */
+"844.title" = "Avbryt";
+
+/* Class = "NSButtonCell"; title = "Lås opp"; ObjectID = "845"; */
+"845.title" = "Lås opp";
+
+/* Class = "NSTextFieldCell"; title = "Autorisasjonsforespørsel for sertificat"; ObjectID = "847"; */
+"847.title" = "Autorisasjonsforespørsel for sertificat";
+
+/* Class = "NSButtonCell"; title = "Legg til i nøkkelring"; ObjectID = "849"; */
+"849.title" = "Legg til i nøkkelring";
+
+/* Class = "NSTextFieldCell"; title = "Passordfrase:"; ObjectID = "850"; */
+"850.title" = "Passordfrase:";
+
+/* Class = "NSTextFieldCell"; title = "Vennligst verifiser serverens offentlige nøkkel."; ObjectID = "852"; */
+"852.title" = "Vennligst verifiser serverens offentlige nøkkel.";
+
+/* Class = "NSTextFieldCell"; title = "Fingeravtrykk:"; ObjectID = "853"; */
+"853.title" = "Fingeravtrykk:";
+
+/* Class = "NSTextFieldCell"; title = "Babbletrykk:"; ObjectID = "854"; */
+"854.title" = "Babbletrykk:";
+
+/* Class = "NSTextFieldCell"; title = "Servernavn:"; ObjectID = "855"; */
+"855.title" = "Servernavn:";
+
+/* Class = "NSTextFieldCell"; title = "silc.icore.at"; ObjectID = "856"; */
+"856.title" = "silc.icore.at";
+
+/* Class = "NSTextFieldCell"; title = "972E C6E5 3DF3 2E97 BE13  723B 0125 B1C6 5CA5 528F\n"; ObjectID = "857"; */
+"857.title" = "972E C6E5 3DF3 2E97 BE13  723B 0125 B1C6 5CA5 528F\n";
+
+/* Class = "NSTextFieldCell"; title = "xohod-vecav-hozyz-ferun-lazec-fisof-rubyd-hases-kalip-hegem-zoxax"; ObjectID = "858"; */
+"858.title" = "xohod-vecav-hozyz-ferun-lazec-fisof-rubyd-hases-kalip-hegem-zoxax";
+
+/* Class = "NSButtonCell"; title = "Alltid aksepter nøkkel"; ObjectID = "859"; */
+"859.title" = "Alltid aksepter nøkkel";
+
+/* Class = "NSButtonCell"; title = "Aksepter"; ObjectID = "860"; */
+"860.title" = "Aksepter";
+
+/* Class = "NSButtonCell"; title = "Avvis"; ObjectID = "861"; */
+"861.title" = "Avvis";
+
+/* Class = "NSTextFieldCell"; title = "Flere brukere er funnet med samme kallenavn."; ObjectID = "862"; */
+"862.title" = "Flere brukere er funnet med samme kallenavn.";
+
+/* Class = "NSTextFieldCell"; title = "Vennligst velg den du vil sende en beskjed til."; ObjectID = "863"; */
+"863.title" = "Vennligst velg den du vil sende en beskjed til.";
+
+/* Class = "NSButtonCell"; title = "Velg"; ObjectID = "864"; */
+"864.title" = "Velg";
+
+/* Class = "NSButtonCell"; title = "Avbryt"; ObjectID = "865"; */
+"865.title" = "Avbryt";

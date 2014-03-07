@@ -219,7 +219,7 @@
 	} else if( [self format] == JVChatViewListCriterionFormat ) {
 		NSMenuItem *mitem = [listQuery selectedItem];
 		if( [mitem representedObject] ) [self setQuery:[mitem representedObject]];
-		else [self setQuery:[NSNumber numberWithLong:[mitem tag]]];
+		else [self setQuery:@([mitem tag])];
 	}
 }
 

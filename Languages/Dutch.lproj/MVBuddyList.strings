@@ -1,0 +1,87 @@
+
+/* Class = "NSButton"; ibShadowedToolTip = "Voeg vriend toe"; ObjectID = "39"; */
+"39.ibShadowedToolTip" = "Voeg vriend toe";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Stuur bericht"; ObjectID = "40"; */
+"40.ibShadowedToolTip" = "Stuur bericht";
+
+/* Class = "NSPanel"; title = "Vriendenlijst"; ObjectID = "41"; */
+"41.title" = "Vriendenlijst";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Toon info"; ObjectID = "42"; */
+"42.ibShadowedToolTip" = "Toon info";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Voorkeuren vriendenlijst"; ObjectID = "44"; */
+"44.ibShadowedToolTip" = "Voorkeuren vriendenlijst";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Action"; ObjectID = "105"; */
+"105.ibShadowedToolTip" = "Action";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "148"; */
+"148.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "Toon Offline Vrienden"; ObjectID = "149"; */
+"149.title" = "Toon Offline Vrienden";
+
+/* Class = "NSMenuItem"; title = "Toon Afbeeldingen van Vrienden"; ObjectID = "150"; */
+"150.title" = "Toon Afbeeldingen van Vrienden";
+
+/* Class = "NSMenuItem"; title = "Toon Volledige Namen"; ObjectID = "151"; */
+"151.title" = "Toon Volledige Namen";
+
+/* Class = "NSMenuItem"; title = "Rangschikken op Beschikbaarheid"; ObjectID = "153"; */
+"153.title" = "Rangschikken op Beschikbaarheid";
+
+/* Class = "NSMenuItem"; title = "Rangschikken op Voornaam"; ObjectID = "154"; */
+"154.title" = "Rangschikken op Voornaam";
+
+/* Class = "NSMenuItem"; title = "Rangschikken op Familienaam"; ObjectID = "155"; */
+"155.title" = "Rangschikken op Familienaam";
+
+/* Class = "NSMenuItem"; title = "Toon Bijnaam "; ObjectID = "160"; */
+"160.title" = "Toon Bijnaam ";
+
+/* Class = "NSMenuItem"; title = "Rangschikken op Server"; ObjectID = "183"; */
+"183.title" = "Rangschikken op Server";
+
+/* Class = "NSTextFieldCell"; title = "Kies een contact uit uw adresboek,\nof voeg toe aan vriendenlijst."; ObjectID = "209"; */
+"209.title" = "Kies een contact uit uw adresboek,\nof voeg toe aan vriendenlijst.";
+
+/* Class = "NSButtonCell"; title = "Annuleer"; ObjectID = "210"; */
+"210.title" = "Annuleer";
+
+/* Class = "NSButtonCell"; title = "selecteer persoon"; ObjectID = "211"; */
+"211.title" = "selecteer persoon";
+
+/* Class = "NSButtonCell"; title = "nieuwe vriend"; ObjectID = "212"; */
+"212.title" = "nieuwe vriend";
+
+/* Class = "NSTextFieldCell"; title = "Geef de bijnaam van uw vriend en de servers welke hij gebruikt op:"; ObjectID = "213"; */
+"213.title" = "Geef de bijnaam van uw vriend en de servers welke hij gebruikt op:";
+
+/* Class = "NSTextFieldCell"; title = "Bijnaam:"; ObjectID = "214"; */
+"214.title" = "Bijnaam:";
+
+/* Class = "NSTextFieldCell"; title = "Chatservers:"; ObjectID = "216"; */
+"216.title" = "Chatservers:";
+
+/* Class = "NSTextFieldCell"; title = "Facultatieve info:"; ObjectID = "217"; */
+"217.title" = "Facultatieve info:";
+
+/* Class = "NSTextFieldCell"; title = "Afbeelding van Vriend"; ObjectID = "219"; */
+"219.title" = "Afbeelding van Vriend";
+
+/* Class = "NSTextFieldCell"; title = "Voornaam:"; ObjectID = "220"; */
+"220.title" = "Voornaam:";
+
+/* Class = "NSTextFieldCell"; title = "Familienaam:"; ObjectID = "223"; */
+"223.title" = "Familienaam:";
+
+/* Class = "NSTextFieldCell"; title = "E-mail:"; ObjectID = "225"; */
+"225.title" = "E-mail:";
+
+/* Class = "NSButtonCell"; title = "Voeg Vriend Toe"; ObjectID = "226"; */
+"226.title" = "Voeg Vriend Toe";
+
+/* Class = "NSButtonCell"; title = "Annuleer"; ObjectID = "227"; */
+"227.title" = "Annuleer";

@@ -1,0 +1,72 @@
+
+/* Class = "NSTextFieldCell"; title = "—"; ObjectID = "65"; */
+"65.title" = "—";
+
+/* Class = "NSTextFieldCell"; title = "Ping:"; ObjectID = "66"; */
+"66.title" = "Ping:";
+
+/* Class = "NSTextFieldCell"; title = "—"; ObjectID = "67"; */
+"67.title" = "—";
+
+/* Class = "NSTextFieldCell"; title = "ルーム："; ObjectID = "68"; */
+"68.title" = "ルーム：";
+
+/* Class = "NSTextFieldCell"; title = "—"; ObjectID = "69"; */
+"69.title" = "—";
+
+/* Class = "NSTextFieldCell"; title = "—"; ObjectID = "70"; */
+"70.title" = "—";
+
+/* Class = "NSTextFieldCell"; title = "ホスト名："; ObjectID = "71"; */
+"71.title" = "ホスト名：";
+
+/* Class = "NSTextFieldCell"; title = "調査中…"; ObjectID = "72"; */
+"72.title" = "調査中…";
+
+/* Class = "NSTextFieldCell"; title = "アイドル時間："; ObjectID = "73"; */
+"73.title" = "アイドル時間：";
+
+/* Class = "NSTextFieldCell"; title = "—"; ObjectID = "74"; */
+"74.title" = "—";
+
+/* Class = "NSTextFieldCell"; title = "サーバ："; ObjectID = "77"; */
+"77.title" = "サーバ：";
+
+/* Class = "NSTextFieldCell"; title = "クライアント："; ObjectID = "78"; */
+"78.title" = "クライアント：";
+
+/* Class = "NSTextFieldCell"; title = "離席情報："; ObjectID = "79"; */
+"79.title" = "離席情報：";
+
+/* Class = "NSTextFieldCell"; title = "本名："; ObjectID = "80"; */
+"80.title" = "本名：";
+
+/* Class = "NSTextFieldCell"; title = "ユーザ名："; ObjectID = "82"; */
+"82.title" = "ユーザ名：";
+
+/* Class = "NSTextFieldCell"; title = "クラス："; ObjectID = "83"; */
+"83.title" = "クラス：";
+
+/* Class = "NSTextFieldCell"; title = "—"; ObjectID = "85"; */
+"85.title" = "—";
+
+/* Class = "NSTextFieldCell"; title = "現地時間："; ObjectID = "86"; */
+"86.title" = "現地時間：";
+
+/* Class = "NSTextFieldCell"; title = "—"; ObjectID = "87"; */
+"87.title" = "—";
+
+/* Class = "NSTextFieldCell"; title = "—"; ObjectID = "88"; */
+"88.title" = "—";
+
+/* Class = "NSTextFieldCell"; title = "接続時間："; ObjectID = "89"; */
+"89.title" = "接続時間：";
+
+/* Class = "NSTextFieldCell"; title = "—"; ObjectID = "91"; */
+"91.title" = "—";
+
+/* Class = "NSTextFieldCell"; title = "IP アドレス："; ObjectID = "92"; */
+"92.title" = "IP アドレス：";
+
+/* Class = "NSTextFieldCell"; title = "—"; ObjectID = "94"; */
+"94.title" = "—";

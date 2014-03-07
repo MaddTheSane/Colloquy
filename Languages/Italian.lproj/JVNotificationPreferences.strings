@@ -1,0 +1,54 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "92"; */
+"92.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "95"; */
+"95.title" = " ";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "99"; */
+"99.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "100"; */
+"100.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "104"; */
+"104.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "105"; */
+"105.title" = " ";
+
+/* Class = "NSButtonCell"; title = "Fai rimbalzare l'icona di Colloquy nel dock"; ObjectID = "155"; */
+"155.title" = "Fai rimbalzare l'icona di Colloquy nel dock";
+
+/* Class = "NSTextFieldCell"; title = "I messaggi che contengono una qualsiasi delle parole che hai immesso verranno evidenziate (se lo stile corrente supporta l'evidenziatura)."; ObjectID = "156"; */
+"156.title" = "I messaggi che contengono una qualsiasi delle parole che hai immesso verranno evidenziate (se lo stile corrente supporta l'evidenziatura).";
+
+/* Class = "NSButtonCell"; title = "…ripetutamente finché Colloquy non è in primo piano"; ObjectID = "157"; */
+"157.title" = "…ripetutamente finché Colloquy non è in primo piano";
+
+/* Class = "NSTextFieldCell"; title = "Evidenzia le parole:"; ObjectID = "159"; */
+"159.title" = "Evidenzia le parole:";
+
+/* Class = "NSTextFieldCell"; title = "Eventi chat:"; ObjectID = "161"; */
+"161.title" = "Eventi chat:";
+
+/* Class = "NSButtonCell"; title = "Riproduci suono:"; ObjectID = "162"; */
+"162.title" = "Riproduci suono:";
+
+/* Class = "NSButtonCell"; title = "Mostra un avviso"; ObjectID = "164"; */
+"164.title" = "Mostra un avviso";
+
+/* Class = "NSButtonCell"; title = "…solo se Colloquy è in background"; ObjectID = "165"; */
+"165.title" = "…solo se Colloquy è in background";
+
+/* Class = "NSButtonCell"; title = "…e mantienilo sullo schermo finché attivo"; ObjectID = "166"; */
+"166.title" = "…e mantienilo sullo schermo finché attivo";
+
+/* Class = "NSButtonCell"; title = "Non emettere alcun suono di notifica"; ObjectID = "167"; */
+"167.title" = "Non emettere alcun suono di notifica";
+
+/* Class = "NSButtonCell"; title = "…solo se Colloquy e' in background"; ObjectID = "168"; */
+"168.title" = "…solo se Colloquy e' in background";

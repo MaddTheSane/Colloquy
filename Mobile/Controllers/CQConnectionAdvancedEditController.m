@@ -17,10 +17,6 @@ static inline __attribute__((always_inline)) BOOL isDefaultValue(NSString *strin
 	return [string isEqualToString:@"<<default>>"];
 }
 
-static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *string) {
-	return [string isEqualToString:@"<<placeholder>>"];
-}
-
 static inline __attribute__((always_inline)) NSString *currentPreferredNickname(MVChatConnection *connection) {
 	NSString *preferredNickname = connection.preferredNickname;
 	return (isDefaultValue(preferredNickname) ? [MVChatConnection defaultNickname] : preferredNickname);
@@ -36,12 +32,6 @@ static inline __attribute__((always_inline)) NSString *currentPreferredNickname(
 	self.title = NSLocalizedString(@"Advanced", @"Advanced view title");
 
 	return self;
-}
-
-- (void) dealloc {
-	[_connection release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -64,14 +54,8 @@ static inline __attribute__((always_inline)) NSString *currentPreferredNickname(
 
 #pragma mark -
 
-@synthesize newConnection = _newConnection;
-
-@synthesize connection = _connection;
-
 - (void) setConnection:(MVChatConnection *) connection {
-	id old = _connection;
-	_connection = [connection retain];
-	[old release];
+	_connection = connection;
 
 	[self.tableView setContentOffset:CGPointZero animated:NO];
 	[self.tableView reloadData];
@@ -238,8 +222,6 @@ static NSString *localizedNameOfStringEncoding(NSStringEncoding encoding) {
 
 		[self.navigationController pushViewController:listViewController animated:YES];
 
-		[listViewController release];
-
 		return;
 	}
 
@@ -259,8 +241,6 @@ static NSString *localizedNameOfStringEncoding(NSStringEncoding encoding) {
 		[self endEditing];
 
 		[self.navigationController pushViewController:listViewController animated:YES];
-
-		[listViewController release];
 
 		return;
 	}
@@ -290,9 +270,6 @@ static NSString *localizedNameOfStringEncoding(NSStringEncoding encoding) {
 
 		[self.navigationController pushViewController:listViewController animated:YES];
 
-		[listViewController release];
-		[encodings release];
-
 		return;
 	}
 }
@@ -305,9 +282,12 @@ static NSString *localizedNameOfStringEncoding(NSStringEncoding encoding) {
 	portListViewController.allowEditing = NO;
 	portListViewController.items = [MVChatConnection defaultServerPortsForType:_connection.type];
 	portListViewController.selectedItemIndex = [portListViewController.items indexOfObject:@(_connection.serverPort)];
+
+	__weak __typeof__((_connection)) weakConnection = _connection;
 	portListViewController.preferencesListBlock = ^(CQPreferencesListViewController *listViewController) {
 		if (listViewController.selectedItemIndex != NSNotFound) {
-			_connection.serverPort = [[listViewController.items objectAtIndex:listViewController.selectedItemIndex] shortValue];
+			__strong __typeof__((weakConnection)) strongConnection = weakConnection;
+			strongConnection.serverPort = [(listViewController.items)[listViewController.selectedItemIndex] shortValue];
 
 			[tableView beginUpdates];
 			[tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -431,7 +411,7 @@ static NSString *localizedNameOfStringEncoding(NSStringEncoding encoding) {
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 		if (_connection.alternateNicknames.count) {
-			cell.detailTextLabel.text = [NSString stringWithFormat:@"%u", _connection.alternateNicknames.count];
+			cell.detailTextLabel.text = [NSString stringWithFormat:@"%tu", _connection.alternateNicknames.count];
 			cell.accessibilityLabel = [NSString stringWithFormat:NSLocalizedString(@"Alternate Nicknames: %u nicknames", @"Voiceover alternate nicknames count label"), _connection.alternateNicknames.count];
 		} else {
 			cell.detailTextLabel.text = NSLocalizedString(@"None", @"None label");
@@ -449,7 +429,7 @@ static NSString *localizedNameOfStringEncoding(NSStringEncoding encoding) {
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 		NSArray *commands = _connection.automaticCommands;
-		if (commands.count) cell.detailTextLabel.text = [NSString stringWithFormat:@"%u", commands.count];
+		if (commands.count) cell.detailTextLabel.text = [NSString stringWithFormat:@"%tu", commands.count];
 		else cell.detailTextLabel.text = NSLocalizedString(@"None", @"None label");
 
 		if (commands.count)

@@ -1,0 +1,96 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenuItem"; title = "Altro…"; ObjectID = "69"; */
+"69.title" = "Altro…";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "70"; */
+"70.title" = " ";
+
+/* Class = "NSMenuItem"; title = "Chiedi ogni volta"; ObjectID = "71"; */
+"71.title" = "Chiedi ogni volta";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "72"; */
+"72.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "In seguito al trasferimento completato con successo"; ObjectID = "74"; */
+"74.title" = "In seguito al trasferimento completato con successo";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "76"; */
+"76.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Quando esci da Colloquy"; ObjectID = "79"; */
+"79.title" = "Quando esci da Colloquy";
+
+/* Class = "NSMenuItem"; title = "Amici nella mia lista degli amici"; ObjectID = "95"; */
+"95.title" = "Amici nella mia lista degli amici";
+
+/* Class = "NSMenuItem"; title = "Tutti"; ObjectID = "96"; */
+"96.title" = "Tutti";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "99"; */
+"99.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Nessuno"; ObjectID = "100"; */
+"100.title" = "Nessuno";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "134"; */
+"134.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "176"; */
+"176.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Annulla sempre"; ObjectID = "177"; */
+"177.title" = "Annulla sempre";
+
+/* Class = "NSMenuItem"; title = "Sovrascrivi sempre"; ObjectID = "178"; */
+"178.title" = "Sovrascrivi sempre";
+
+/* Class = "NSMenuItem"; title = "Chiedi ogni volta"; ObjectID = "179"; */
+"179.title" = "Chiedi ogni volta";
+
+/* Class = "NSMenuItem"; title = "Riprendi se possibile"; ObjectID = "181"; */
+"181.title" = "Riprendi se possibile";
+
+/* Class = "NSTextFieldCell"; title = "Salva gli archivi scaricati in:"; ObjectID = "210"; */
+"210.title" = "Salva gli archivi scaricati in:";
+
+/* Class = "NSTextFieldCell"; title = "Salva i file scaricati in:"; ObjectID = "212"; */
+"212.title" = "Salva i file scaricati in:";
+
+/* Class = "NSButtonCell"; title = "Apri i file \"sicuri\" dopo lo scaricamento"; ObjectID = "214"; */
+"214.title" = "Apri i file \"sicuri\" dopo lo scaricamento";
+
+/* Class = "NSTextFieldCell"; title = "I file “sicuri” includono filmati, immagini, suoni, PDF e documenti di testo, immagini di dischi e altri formati di archivio."; ObjectID = "215"; */
+"215.title" = "I file “sicuri” includono filmati, immagini, suoni, PDF e documenti di testo, immagini di dischi e altri formati di archivio.";
+
+/* Class = "NSTextFieldCell"; title = "Porte per trasferimento file:"; ObjectID = "216"; */
+"216.title" = "Porte per trasferimento file:";
+
+/* Class = "NSTextFieldCell"; title = "1024"; ObjectID = "217"; */
+"217.title" = "1024";
+
+/* Class = "NSTextFieldCell"; title = "e"; ObjectID = "218"; */
+"218.title" = "e";
+
+/* Class = "NSTextFieldCell"; title = "1048"; ObjectID = "219"; */
+"219.title" = "1048";
+
+/* Class = "NSTextFieldCell"; title = "Accetta automaticamente i file da:"; ObjectID = "220"; */
+"220.title" = "Accetta automaticamente i file da:";
+
+/* Class = "NSButtonCell"; title = "Manda gli archivi in modalità passiva per default"; ObjectID = "222"; */
+"222.title" = "Manda gli archivi in modalità passiva per default";
+
+/* Class = "NSTextFieldCell"; title = "La modalità passiva permette l'invio di file senza la necessità di modificare le impostazioni del firewall o router—il ricevente invece dovrà impostare il firewall o router."; ObjectID = "223"; */
+"223.title" = "La modalità passiva permette l'invio di file senza la necessità di modificare le impostazioni del firewall o router—il ricevente invece dovrà impostare il firewall o router.";
+
+/* Class = "NSTextFieldCell"; title = "Se i file esistono ancora:"; ObjectID = "225"; */
+"225.title" = "Se i file esistono ancora:";
+
+/* Class = "NSButtonCell"; title = "Automatically open ports in router"; ObjectID = "226"; */
+"226.title" = "Automatically open ports in router";
+
+/* Class = "NSTextFieldCell"; title = "Requires a router that supports NAT-PMP or UPnP."; ObjectID = "227"; */
+"227.title" = "Requires a router that supports NAT-PMP or UPnP.";

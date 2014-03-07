@@ -3,9 +3,6 @@
 NSString *const CQSettingsDidChangeNotification = @"CQSettingsDidChangeNotification";
 
 @implementation CQSettingsController
-@synthesize settingsLocation = _settingsLocation;
-@synthesize mirroringEnabled = _mirroringEnabled;
-
 + (instancetype)  settingsController {
 	static CQSettingsController *settingsController;
 	static dispatch_once_t onceToken;
@@ -28,8 +25,6 @@ NSString *const CQSettingsDidChangeNotification = @"CQSettingsDidChangeNotificat
 - (void) dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSUserDefaultsDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification object:nil];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -97,7 +92,7 @@ NSString *const CQSettingsDidChangeNotification = @"CQSettingsDidChangeNotificat
 				id cloudStore = [self _storeForLocation:CQSettingsLocationCloud];
 
 				for (NSString *key in notification.userInfo[NSUbiquitousKeyValueStoreChangedKeysKey])
-					[localStore setObject:[cloudStore objectForKey:key] forKey:key];
+					localStore[key] = cloudStore[key];
 			}
 		}
 	}

@@ -276,7 +276,7 @@
 }
 
 - (IBAction) configureRule:(id) sender {
-	KAIgnoreRule *rule = [_ignoreRules objectAtIndex:[editRules selectedRow]];
+	KAIgnoreRule *rule = _ignoreRules[[editRules selectedRow]];
 
 	_editingRuleRooms = [[rule rooms] mutableCopy];
 
@@ -352,7 +352,7 @@
 			[_ignoreRules addObject:rule];
 			[editRules noteNumberOfRowsChanged];
 		} else {
-			KAIgnoreRule *rule = [_ignoreRules objectAtIndex:[editRules selectedRow]];
+			KAIgnoreRule *rule = _ignoreRules[[editRules selectedRow]];
 			if ( [message isValidIRCMask] ) {
 				[rule setMask:user];
 				[rule setUser:nil];
@@ -379,24 +379,24 @@
 }
 
 - (id) tableView:(NSTableView *) tableView objectValueForTableColumn:(NSTableColumn *) column row:(NSInteger) row {
-	if( tableView == editRooms ) return [_editingRooms objectAtIndex:row];
+	if( tableView == editRooms ) return _editingRooms[row];
 	else if( tableView == editRules ) {
-		KAIgnoreRule *rule = [_ignoreRules objectAtIndex:row];
+		KAIgnoreRule *rule = _ignoreRules[row];
 		if( [[column identifier] isEqualToString:@"icon"] ) {
 			if( [rule user] && [rule message] ) return [NSImage imageNamed:@"privateChatTab"];
 			else if( [rule user] ) return [NSImage imageNamed:@"person"];
 			else return [NSImage imageNamed:@"roomTabNewMessage"];
 		} else {
-			if( ! [rule isPermanent] ) return [[NSAttributedString alloc] initWithString:[rule friendlyName] attributes:[NSDictionary dictionaryWithObject:[[NSColor blackColor] colorWithAlphaComponent:0.67] forKey:NSForegroundColorAttributeName]];
+			if( ! [rule isPermanent] ) return [[NSAttributedString alloc] initWithString:[rule friendlyName] attributes:@{NSForegroundColorAttributeName: [[NSColor blackColor] colorWithAlphaComponent:0.67]}];
 			else return [rule friendlyName];
 		}
-	} else if( tableView == editRuleRooms ) return [_editingRuleRooms objectAtIndex:row];
+	} else if( tableView == editRuleRooms ) return _editingRuleRooms[row];
 	else return nil;
 }
 
 - (void) tableView:(NSTableView *) tableView setObjectValue:(id) object forTableColumn:(NSTableColumn *) column row:(NSInteger) row {
-	if( tableView == editRooms ) [_editingRooms replaceObjectAtIndex:row withObject:object];
-	else if( tableView == editRuleRooms ) [_editingRuleRooms replaceObjectAtIndex:row withObject:object];
+	if( tableView == editRooms ) _editingRooms[row] = object;
+	else if( tableView == editRuleRooms ) _editingRuleRooms[row] = object;
 }
 
 - (void) tableViewSelectionDidChange:(NSNotification *) notification {
@@ -417,7 +417,7 @@
 }
 
 - (id) comboBox:(NSComboBox *) comboBox objectValueForItemAtIndex:(NSInteger) index {
-	return [[[NSUserDefaults standardUserDefaults] arrayForKey:@"JVChatServers"] objectAtIndex:index];
+	return [[NSUserDefaults standardUserDefaults] arrayForKey:@"JVChatServers"][index];
 }
 
 - (NSUInteger) comboBox:(NSComboBox *) comboBox indexOfItemWithStringValue:(NSString *) string {

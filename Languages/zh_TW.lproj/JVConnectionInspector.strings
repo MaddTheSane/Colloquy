@@ -1,0 +1,159 @@
+
+/* Class = "NSTabViewItem"; label = "代理"; ObjectID = "138"; */
+"138.label" = "代理";
+
+/* Class = "NSTabViewItem"; label = "一般"; ObjectID = "139"; */
+"139.label" = "一般";
+
+/* Class = "NSTabViewItem"; label = "自動"; ObjectID = "154"; */
+"154.label" = "自動";
+
+/* Class = "NSMenuItem"; title = "SOCKS 防火牆"; ObjectID = "156"; */
+"156.title" = "SOCKS 防火牆";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "157"; */
+"157.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "無"; ObjectID = "158"; */
+"158.title" = "無";
+
+/* Class = "NSMenuItem"; title = "Secure Web"; ObjectID = "162"; */
+"162.title" = "Secure Web";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "230"; */
+"230.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "232"; */
+"232.title" = "OtherViews";
+
+/* Class = "NSTabViewItem"; label = "忽略"; ObjectID = "241"; */
+"241.label" = "忽略";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "321"; */
+"321.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "訊息符合"; ObjectID = "324"; */
+"324.title" = "訊息符合";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "328"; */
+"328.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "發送人符合"; ObjectID = "335"; */
+"335.title" = "發送人符合";
+
+/* Class = "NSMenuItem"; title = "發送人的名稱符合"; ObjectID = "336"; */
+"336.title" = "發送人的名稱符合";
+
+/* Class = "NSMenuItem"; title = "訊息包含"; ObjectID = "338"; */
+"338.title" = "訊息包含";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Add ignore"; ObjectID = "403"; */
+"403.ibShadowedToolTip" = "Add ignore";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Edit ignore"; ObjectID = "404"; */
+"404.ibShadowedToolTip" = "Edit ignore";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Delete ignore"; ObjectID = "405"; */
+"405.ibShadowedToolTip" = "Delete ignore";
+
+/* Class = "NSTextFieldCell"; title = "類別:"; ObjectID = "416"; */
+"416.title" = "類別:";
+
+/* Class = "NSTextFieldCell"; title = "帳號:"; ObjectID = "418"; */
+"418.title" = "帳號:";
+
+/* Class = "NSTextFieldCell"; title = "密碼:"; ObjectID = "421"; */
+"421.title" = "密碼:";
+
+/* Class = "NSButtonCell"; title = "使用系統設定"; ObjectID = "422"; */
+"422.title" = "使用系統設定";
+
+/* Class = "NSTextFieldCell"; title = "位置:"; ObjectID = "423"; */
+"423.title" = "位置:";
+
+/* Class = "NSTextFieldCell"; title = "連接埠:"; ObjectID = "425"; */
+"425.title" = "連接埠:";
+
+/* Class = "NSTextFieldCell"; title = "密碼:"; ObjectID = "427"; */
+"427.title" = "密碼:";
+
+/* Class = "NSTextFieldCell"; title = "代號:"; ObjectID = "429"; */
+"429.title" = "代號:";
+
+/* Class = "NSTextFieldCell"; title = "聊天伺服器:"; ObjectID = "431"; */
+"431.title" = "聊天伺服器:";
+
+/* Class = "NSTextFieldCell"; title = "伺服器密碼:"; ObjectID = "434"; */
+"434.title" = "伺服器密碼:";
+
+/* Class = "NSTextFieldCell"; title = "使用者名稱:"; ObjectID = "435"; */
+"435.title" = "使用者名稱:";
+
+/* Class = "NSTextFieldCell"; title = "真實姓名:"; ObjectID = "438"; */
+"438.title" = "真實姓名:";
+
+/* Class = "NSTextFieldCell"; title = "另一個代號:"; ObjectID = "439"; */
+"439.title" = "另一個代號:";
+
+/* Class = "NSComboBoxCell"; title = "6667"; ObjectID = "441"; */
+"441.title" = "6667";
+
+/* Class = "NSComboBoxCell"; 441.ibShadowedObjectValues[0] = "6667"; ObjectID = "441"; */
+"441.ibShadowedObjectValues[0]" = "6667";
+
+/* Class = "NSComboBoxCell"; 441.ibShadowedObjectValues[1] = "6668"; ObjectID = "441"; */
+"441.ibShadowedObjectValues[1]" = "6668";
+
+/* Class = "NSComboBoxCell"; 441.ibShadowedObjectValues[2] = "6669"; ObjectID = "441"; */
+"441.ibShadowedObjectValues[2]" = "6669";
+
+/* Class = "NSComboBoxCell"; 441.ibShadowedObjectValues[3] = "7000"; ObjectID = "441"; */
+"441.ibShadowedObjectValues[3]" = "7000";
+
+/* Class = "NSComboBoxCell"; 441.ibShadowedObjectValues[4] = "9999"; ObjectID = "441"; */
+"441.ibShadowedObjectValues[4]" = "9999";
+
+/* Class = "NSTextFieldCell"; title = "伺服器連接埠:"; ObjectID = "442"; */
+"442.title" = "伺服器連接埠:";
+
+/* Class = "NSTextFieldCell"; title = "文字編碼:"; ObjectID = "444"; */
+"444.title" = "文字編碼:";
+
+/* Class = "NSButtonCell"; title = "SSL"; ObjectID = "445"; */
+"445.title" = "SSL";
+
+/* Class = "NSButtonCell"; title = "在開啟應用程式時連線"; ObjectID = "446"; */
+"446.title" = "在開啟應用程式時連線";
+
+/* Class = "NSTextFieldCell"; title = "加入聊天室:"; ObjectID = "447"; */
+"447.title" = "加入聊天室:";
+
+/* Class = "NSTextFieldCell"; title = "指令:"; ObjectID = "450"; */
+"450.title" = "指令:";
+
+/* Class = "NSButtonCell"; title = "Open console on connect"; ObjectID = "451"; */
+"451.title" = "Open console on connect";
+
+/* Class = "NSButtonCell"; title = "訊息將會傳送到以下任何聊天適中:"; ObjectID = "457"; */
+"457.title" = "訊息將會傳送到以下任何聊天適中:";
+
+/* Class = "NSTextFieldCell"; title = "忽略符合以下全部狀況的訊息:"; ObjectID = "460"; */
+"460.title" = "忽略符合以下全部狀況的訊息:";
+
+/* Class = "NSTextFieldCell"; title = "描述:"; ObjectID = "466"; */
+"466.title" = "描述:";
+
+/* Class = "NSButtonCell"; title = "好"; ObjectID = "467"; */
+"467.title" = "好";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "468"; */
+"468.title" = "取消";
+
+/* Class = "NSButtonCell"; title = "這一條取消規則是被永久設置的。"; ObjectID = "469"; */
+"469.title" = "這一條取消規則是被永久設置的。";
+
+/* Class = "NSButtonCell"; title = "SASL"; ObjectID = "483"; */
+"483.title" = "SASL";
+
+/* Class = "NSButtonCell"; title = "Rooms wait for Identification"; ObjectID = "487"; */
+"487.title" = "Rooms wait for Identification";

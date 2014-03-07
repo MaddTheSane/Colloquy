@@ -1,0 +1,54 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "92"; */
+"92.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "95"; */
+"95.title" = " ";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "99"; */
+"99.title" = "Box";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "100"; */
+"100.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "104"; */
+"104.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "105"; */
+"105.title" = " ";
+
+/* Class = "NSButtonCell"; title = "Bounce Colloquy icon in the Dock"; ObjectID = "155"; */
+"155.title" = "Bounce Colloquy icon in the Dock";
+
+/* Class = "NSTextFieldCell"; title = "Messages containing any of your typed words will be highlighted (if the active style supports highlights)."; ObjectID = "156"; */
+"156.title" = "Messages containing any of your typed words will be highlighted (if the active style supports highlights).";
+
+/* Class = "NSButtonCell"; title = "…repeatedly until Colloquy is in the front"; ObjectID = "157"; */
+"157.title" = "…repeatedly until Colloquy is in the front";
+
+/* Class = "NSTextFieldCell"; title = "Highlight words:"; ObjectID = "159"; */
+"159.title" = "Highlight words:";
+
+/* Class = "NSTextFieldCell"; title = "Chat Event:"; ObjectID = "161"; */
+"161.title" = "Chat Event:";
+
+/* Class = "NSButtonCell"; title = "Play sound:"; ObjectID = "162"; */
+"162.title" = "Play sound:";
+
+/* Class = "NSButtonCell"; title = "Show event bubble"; ObjectID = "164"; */
+"164.title" = "Show event bubble";
+
+/* Class = "NSButtonCell"; title = "…only if Colloquy is in the background"; ObjectID = "165"; */
+"165.title" = "…only if Colloquy is in the background";
+
+/* Class = "NSButtonCell"; title = "…and keep on screen until activated"; ObjectID = "166"; */
+"166.title" = "…and keep on screen until activated";
+
+/* Class = "NSButtonCell"; title = "Mute all notification sounds"; ObjectID = "167"; */
+"167.title" = "Mute all notification sounds";
+
+/* Class = "NSButtonCell"; title = "…only if Colloquy is in the background"; ObjectID = "168"; */
+"168.title" = "…only if Colloquy is in the background";

@@ -1,3 +1,5 @@
+#ifndef ColloquyNSSTRINGADDITIONS
+#define ColloquyNSSTRINGADDITIONS
 BOOL isValidUTF8( const char *string, NSUInteger length );
 
 #define is7Bit(ch) (((ch) & 0x80) == 0)
@@ -17,8 +19,8 @@ BOOL isValidUTF8( const char *string, NSUInteger length );
 + (NSString *) locallyUniqueString;
 
 #if ENABLE(SCRIPTING)
-+ (unsigned long) scriptTypedEncodingFromStringEncoding:(NSStringEncoding) encoding;
-+ (NSStringEncoding) stringEncodingFromScriptTypedEncoding:(unsigned long) encoding;
++ (OSType) scriptTypedEncodingFromStringEncoding:(NSStringEncoding) encoding;
++ (NSStringEncoding) stringEncodingFromScriptTypedEncoding:(OSType) encoding;
 #endif
 
 + (NSArray *) knownEmoticons;
@@ -102,3 +104,5 @@ BOOL isValidUTF8( const char *string, NSUInteger length );
 - (void) substituteEmojiForEmoticonsInRange:(NSRangePointer) range;
 - (void) substituteEmojiForEmoticonsInRange:(NSRangePointer) range encodeXMLSpecialCharactersAsEntities:(BOOL) encode;
 @end
+
+#endif

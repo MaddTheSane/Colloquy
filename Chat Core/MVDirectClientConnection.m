@@ -27,7 +27,12 @@ NSString *MVDCCFriendlyAddress( NSString *address ) {
 
 @interface MVDirectClientConnection (MVDirectClientConnectionPrivate)
 - (void) _setupThread;
+- (void) _connect:(NSDictionary *) info;
+- (void) _acceptConnectionOnFirstPortInRange:(NSValue *) portsObject;
 - (void) _sendDelegateAcceptingConnections;
+- (void) _portMappingStatusChanged:(NSNotification *) notification;
+- (void) _finish;
+- (oneway void) _dccRunloop;
 @end
 
 #pragma mark -
@@ -92,7 +97,7 @@ NSString *MVDCCFriendlyAddress( NSString *address ) {
 
 	if( ! _connectionThread ) return;
 
-	NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithUnsignedShort:port], @"port", host, @"host", nil];
+	NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:@(port), @"port", host, @"host", nil];
 	[self performSelector:@selector( _connect: ) withObject:info inThread:_connectionThread];
 	[info release];
 }
@@ -242,8 +247,8 @@ NSString *MVDCCFriendlyAddress( NSString *address ) {
 
 	_connection = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:_connectionDelegateQueue socketQueue:_connectionDelegateQueue];
 
-	NSString *host = [info objectForKey:@"host"];
-	NSNumber *port = [info objectForKey:@"port"];
+	NSString *host = info[@"host"];
+	NSNumber *port = info[@"port"];
 
 	if( ! [_connection connectToHost:host onPort:[port unsignedShortValue] error:NULL] ) {
 		NSLog(@"can't connect to DCC %@ on port %d", host, [port unsignedShortValue] );

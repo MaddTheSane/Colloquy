@@ -1,0 +1,162 @@
+
+/* Class = "NSTabViewItem"; label = "Proxy"; ObjectID = "138"; */
+"138.label" = "Proxy";
+
+/* Class = "NSTabViewItem"; label = "Geral"; ObjectID = "139"; */
+"139.label" = "Geral";
+
+/* Class = "NSTabViewItem"; label = "Automático"; ObjectID = "154"; */
+"154.label" = "Automático";
+
+/* Class = "NSMenuItem"; title = "SOCKS Firewall"; ObjectID = "156"; */
+"156.title" = "SOCKS Firewall";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "157"; */
+"157.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Nenhum"; ObjectID = "158"; */
+"158.title" = "Nenhum";
+
+/* Class = "NSMenuItem"; title = "Secure Web"; ObjectID = "162"; */
+"162.title" = "Secure Web";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "230"; */
+"230.title" = " ";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "232"; */
+"232.title" = "OtherViews";
+
+/* Class = "NSTabViewItem"; label = "A ignorar"; ObjectID = "241"; */
+"241.label" = "A ignorar";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "321"; */
+"321.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Resultados de mensagens"; ObjectID = "324"; */
+"324.title" = "Resultados de mensagens";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "328"; */
+"328.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "O remetente respeita"; ObjectID = "335"; */
+"335.title" = "O remetente respeita";
+
+/* Class = "NSMenuItem"; title = "O nome do remetente é"; ObjectID = "336"; */
+"336.title" = "O nome do remetente é";
+
+/* Class = "NSMenuItem"; title = "A mensagem contém"; ObjectID = "338"; */
+"338.title" = "A mensagem contém";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Adicionar regra para ignorar"; ObjectID = "404"; */
+"404.ibShadowedToolTip" = "Adicionar regra para ignorar";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Editar regra para ignorar"; ObjectID = "405"; */
+"405.ibShadowedToolTip" = "Editar regra para ignorar";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Apagar regra para ignorar"; ObjectID = "406"; */
+"406.ibShadowedToolTip" = "Apagar regra para ignorar";
+
+/* Class = "NSTextFieldCell"; title = "Tipo:"; ObjectID = "417"; */
+"417.title" = "Tipo:";
+
+/* Class = "NSTextFieldCell"; title = "Conta:"; ObjectID = "419"; */
+"419.title" = "Conta:";
+
+/* Class = "NSTextFieldCell"; title = "Palavra passe:"; ObjectID = "422"; */
+"422.title" = "Palavra passe:";
+
+/* Class = "NSButtonCell"; title = "Usar definições do sistema"; ObjectID = "423"; */
+"423.title" = "Usar definições do sistema";
+
+/* Class = "NSTextFieldCell"; title = "Endereço:"; ObjectID = "424"; */
+"424.title" = "Endereço:";
+
+/* Class = "NSTextFieldCell"; title = "Porto:"; ObjectID = "426"; */
+"426.title" = "Porto:";
+
+/* Class = "NSTextFieldCell"; title = "Palavra passe:"; ObjectID = "428"; */
+"428.title" = "Palavra passe:";
+
+/* Class = "NSTextFieldCell"; title = "Alcunha:"; ObjectID = "430"; */
+"430.title" = "Alcunha:";
+
+/* Class = "NSTextFieldCell"; title = "Servidor de conversa:"; ObjectID = "432"; */
+"432.title" = "Servidor de conversa:";
+
+/* Class = "NSTextFieldCell"; title = "Palavra passe do servidor:"; ObjectID = "435"; */
+"435.title" = "Palavra passe do servidor:";
+
+/* Class = "NSTextFieldCell"; title = "Nome de utilizador:"; ObjectID = "436"; */
+"436.title" = "Nome de utilizador:";
+
+/* Class = "NSTextFieldCell"; title = "Nome real:"; ObjectID = "439"; */
+"439.title" = "Nome real:";
+
+/* Class = "NSTextFieldCell"; title = "Alcunhas Alternativas:"; ObjectID = "440"; */
+"440.title" = "Alcunhas Alternativas:";
+
+/* Class = "NSComboBoxCell"; title = "6667"; ObjectID = "442"; */
+"442.title" = "6667";
+
+/* Class = "NSComboBoxCell"; 442.ibShadowedObjectValues[0] = "6667"; ObjectID = "442"; */
+"442.ibShadowedObjectValues[0]" = "6667";
+
+/* Class = "NSComboBoxCell"; 442.ibShadowedObjectValues[1] = "6668"; ObjectID = "442"; */
+"442.ibShadowedObjectValues[1]" = "6668";
+
+/* Class = "NSComboBoxCell"; 442.ibShadowedObjectValues[2] = "6669"; ObjectID = "442"; */
+"442.ibShadowedObjectValues[2]" = "6669";
+
+/* Class = "NSComboBoxCell"; 442.ibShadowedObjectValues[3] = "7000"; ObjectID = "442"; */
+"442.ibShadowedObjectValues[3]" = "7000";
+
+/* Class = "NSComboBoxCell"; 442.ibShadowedObjectValues[4] = "9999"; ObjectID = "442"; */
+"442.ibShadowedObjectValues[4]" = "9999";
+
+/* Class = "NSTextFieldCell"; title = "Porto do servidor:"; ObjectID = "443"; */
+"443.title" = "Porto do servidor:";
+
+/* Class = "NSTextFieldCell"; title = "Encoding:"; ObjectID = "445"; */
+"445.title" = "Encoding:";
+
+/* Class = "NSButtonCell"; title = "SSL"; ObjectID = "446"; */
+"446.title" = "SSL";
+
+/* Class = "NSButtonCell"; title = "Ligar ao iniciar"; ObjectID = "447"; */
+"447.title" = "Ligar ao iniciar";
+
+/* Class = "NSTextFieldCell"; title = "Salas a que se juntou:"; ObjectID = "448"; */
+"448.title" = "Salas a que se juntou:";
+
+/* Class = "NSTextFieldCell"; title = "Comandos:"; ObjectID = "451"; */
+"451.title" = "Comandos:";
+
+/* Class = "NSButtonCell"; title = "Abrir consola ao ligar"; ObjectID = "452"; */
+"452.title" = "Abrir consola ao ligar";
+
+/* Class = "NSButtonCell"; title = "A mensagem é enviada para qualquer uma"; ObjectID = "458"; */
+"458.title" = "A mensagem é enviada para qualquer uma";
+
+/* Class = "NSTextFieldCell"; title = "Ignorar mensagens se todas as condições escolhidas são satisfeitas:"; ObjectID = "461"; */
+"461.title" = "Ignorar mensagens se todas as condições escolhidas são satisfeitas:";
+
+/* Class = "NSTextFieldCell"; title = "Descrição:"; ObjectID = "467"; */
+"467.title" = "Descrição:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "468"; */
+"468.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancelar"; ObjectID = "469"; */
+"469.title" = "Cancelar";
+
+/* Class = "NSButtonCell"; title = "Esta regra para ignorar é permanente."; ObjectID = "470"; */
+"470.title" = "Esta regra para ignorar é permanente.";
+
+/* Class = "NSTextFieldCell"; title = "destas salas:"; ObjectID = "471"; */
+"471.title" = "destas salas:";
+
+/* Class = "NSButtonCell"; title = "SASL"; ObjectID = "485"; */
+"485.title" = "SASL";
+
+/* Class = "NSButtonCell"; title = "Rooms wait for Identification"; ObjectID = "489"; */
+"489.title" = "Rooms wait for Identification";

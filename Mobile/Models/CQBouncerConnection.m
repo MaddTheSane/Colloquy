@@ -5,11 +5,6 @@
 
 #import <objc/message.h>
 
-@interface CQBouncerConnection (CQBouncerConnectionPrivate)
-- (void) _readNextMessage;
-- (NSString *) _newStringWithBytes:(const char *) bytes length:(unsigned) length;
-@end
-
 @implementation CQBouncerConnection
 - (id) initWithBouncerSettings:(CQBouncerSettings *) settings {
 	if (!(self = [super init]))
@@ -22,27 +17,7 @@
 
 - (void) dealloc {
 	[self disconnect];
-
-	[_settings release];
-	[_socket release];
-
-	[_connectionIdentifier release];
-	[_serverAddress release];
-	[_username release];
-	[_realName release];
-	[_password release];
-	[_nickname release];
-	[_nicknamePassword release];
-	[_alternateNicknames release];
-	[_error release];
-	[_userInfo release];
-
-	[super dealloc];
 }
-
-@synthesize settings = _settings;
-@synthesize delegate = _delegate;
-@synthesize userInfo = _userInfo;
 
 - (void) sendRawMessage:(id) raw {
 	NSParameterAssert(raw != nil);
@@ -55,13 +30,13 @@
 	if ([message hasSuffixBytes:"\x0D" length:1]) {
 		NSMutableData *mutableMessage = [message mutableCopy];
 		[mutableMessage appendBytes:"\x0A" length:1];
-		message = [mutableMessage autorelease];
+		message = mutableMessage;
 	} else if (![message hasSuffixBytes:"\x0D\x0A" length:2]) {
 		NSMutableData *mutableMessage = [message mutableCopy];
 		if ([mutableMessage hasSuffixBytes:"\x0A" length:1])
 			[mutableMessage replaceBytesInRange:NSMakeRange((mutableMessage.length - 1), 1) withBytes:"\x0D\x0A" length:2];
 		else [mutableMessage appendBytes:"\x0D\x0A" length:2];
-		message = [mutableMessage autorelease];
+		message = mutableMessage;
 	}
 
 	[_socket writeData:message withTimeout:-1. tag:0];
@@ -78,7 +53,6 @@
 	va_end(ap);
 
 	[self sendRawMessage:command];
-	[command release];
 }
 
 - (void) connect {
@@ -100,7 +74,6 @@
 }
 
 - (void) socket:(GCDAsyncSocket *) sock didConnectToHost:(NSString *) host port:(UInt16)port {
-	[_error release];
 	_error = nil;
 
 	if ([_delegate respondsToSelector:@selector(bouncerConnectionDidConnect:)])
@@ -121,12 +94,10 @@
 }
 
 - (void) socket:(GCDAsyncSocket *) sock willDisconnectWithError:(NSError *) error {
-	[_error release];
-	_error = [error retain];
+	_error = error;
 }
 
 - (void) socketDidDisconnect:(GCDAsyncSocket *) sock {
-	[_socket release];
 	_socket = nil;
 
 	if ([_delegate respondsToSelector:@selector(bouncerConnectionDidDisconnect:withError:)])
@@ -148,14 +119,14 @@ static inline NSString *newStringWithBytes(const char *bytes, NSUInteger length)
 
 - (void) socket:(GCDAsyncSocket *) sock didReadData:(NSData *) data withTag:(long) tag {
 	const char *line = (const char *)data.bytes;
-	unsigned int len = data.length;
+	NSUInteger len = data.length;
 	const char *end = line + len - 2; // minus the line endings
 
 	if (*end != '\x0D')
 		end = line + len - 1; // this server only uses \x0A for the message line ending, lets work with it
 
 	const char *command = NULL;
-	unsigned commandLength = 0;
+	NSUInteger commandLength = 0;
 
 	NSMutableArray *parameters = [[NSMutableArray alloc] initWithCapacity:15];
 
@@ -197,7 +168,6 @@ static inline NSString *newStringWithBytes(const char *bytes, NSUInteger length)
 		}
 
 		if (param) [parameters addObject:param];
-		[param release];
 
 		consumeWhitespace();
 	}
@@ -211,29 +181,15 @@ end:
 		NSString *commandString = [[NSString alloc] initWithBytes:command length:commandLength encoding:NSASCIIStringEncoding];
 		NSString *selectorString = [[NSString alloc] initWithFormat:@"_handle%@WithParameters:", [commandString capitalizedString]];
 		SEL selector = NSSelectorFromString(selectorString);
-		[selectorString release];
 
 		if ([self respondsToSelector:selector])
 			((void(*)(id, SEL, id))objc_msgSend)(self, selector, parameters);
-
-		[commandString release];
 	}
-
-	[parameters release];
 
 	[self _readNextMessage];
 }
 
 - (void) _resetState {
-	[_connectionIdentifier release];
-	[_serverAddress release];
-	[_username release];
-	[_realName release];
-	[_password release];
-	[_nickname release];
-	[_nicknamePassword release];
-	[_alternateNicknames release];
-
 	_connectionIdentifier = nil;
 	_serverAddress = nil;
 	_username = nil;
@@ -257,10 +213,10 @@ end:
 
 	[self _resetState];
 
-	MVSafeRetainAssign( _connectionIdentifier, [parameters objectAtIndex:0] );
-	MVSafeRetainAssign( _serverAddress, [parameters objectAtIndex:1] );
-	_serverPort = ([[parameters objectAtIndex:2] integerValue] % 65536);
-	_secure = (parameters.count > 3 ? [[parameters objectAtIndex:3] isCaseInsensitiveEqualToString:@"SSL"] : NO);
+	MVSafeRetainAssign( _connectionIdentifier, parameters[0] );
+	MVSafeRetainAssign( _serverAddress, parameters[1] );
+	_serverPort = ([parameters[2] integerValue] % 65536);
+	_secure = (parameters.count > 3 ? [parameters[3] isCaseInsensitiveEqualToString:@"SSL"] : NO);
 }
 
 - (void) _handle802WithParameters:(NSArray *) parameters {
@@ -269,8 +225,8 @@ end:
 		return;
 	}
 
-	MVSafeRetainAssign( _username, [parameters objectAtIndex:0] );
-	MVSafeRetainAssign( _realName, [parameters objectAtIndex:1] );
+	MVSafeRetainAssign( _username, parameters[0] );
+	MVSafeRetainAssign( _realName, parameters[1] );
 }
 
 - (void) _handle803WithParameters:(NSArray *) parameters {
@@ -279,7 +235,7 @@ end:
 		return;
 	}
 
-	MVSafeRetainAssign( _password, [parameters objectAtIndex:0] );
+	MVSafeRetainAssign( _password, parameters[0] );
 }
 
 - (void) _handle804WithParameters:(NSArray *) parameters {
@@ -288,8 +244,8 @@ end:
 		return;
 	}
 
-	MVSafeRetainAssign( _nickname, [parameters objectAtIndex:0] );
-	MVSafeRetainAssign( _nicknamePassword, (parameters.count > 1 ? [parameters objectAtIndex:1] : nil) );
+	MVSafeRetainAssign( _nickname, parameters[0] );
+	MVSafeRetainAssign( _nicknamePassword, (parameters.count > 1 ? parameters[1] : nil) );
 }
 
 - (void) _handle805WithParameters:(NSArray *) parameters {
@@ -307,7 +263,7 @@ end:
 		return;
 	}
 
-	_encoding = [[parameters objectAtIndex:0] integerValue];
+	_encoding = [parameters[0] integerValue];
 }
 
 - (void) _handle807WithParameters:(NSArray *) parameters {
@@ -316,7 +272,7 @@ end:
 		return;
 	}
 
-	_connectedTime = [[parameters objectAtIndex:0] doubleValue];
+	_connectedTime = [parameters[0] doubleValue];
 }
 
 - (void) _handle810WithParameters:(NSArray *) parameters {
@@ -324,33 +280,31 @@ end:
 		NSMutableDictionary *info = [[NSMutableDictionary alloc] initWithCapacity:10];
 
 		if (_connectionIdentifier.length)
-			[info setObject:_connectionIdentifier forKey:@"connectionIdentifier"];
+			info[@"connectionIdentifier"] = _connectionIdentifier;
 		if (_serverAddress.length)
-			[info setObject:_serverAddress forKey:@"serverAddress"];
+			info[@"serverAddress"] = _serverAddress;
 		if (_serverPort)
-			[info setObject:[NSNumber numberWithUnsignedShort:_serverPort] forKey:@"serverPort"];
+			info[@"serverPort"] = @(_serverPort);
 		if (_secure)
-			[info setObject:[NSNumber numberWithBool:_secure] forKey:@"secure"];
+			info[@"secure"] = @(_secure);
 		if (_username.length)
-			[info setObject:_username forKey:@"username"];
+			info[@"username"] = _username;
 		if (_realName.length)
-			[info setObject:_realName forKey:@"realName"];
+			info[@"realName"] = _realName;
 		if (_password.length)
-			[info setObject:_password forKey:@"password"];
+			info[@"password"] = _password;
 		if (_nickname.length)
-			[info setObject:_nickname forKey:@"nickname"];
+			info[@"nickname"] = _nickname;
 		if (_nicknamePassword.length)
-			[info setObject:_nicknamePassword forKey:@"nicknamePassword"];
+			info[@"nicknamePassword"] = _nicknamePassword;
 		if (_alternateNicknames.count)
-			[info setObject:_alternateNicknames forKey:@"alternateNicknames"];
+			info[@"alternateNicknames"] = _alternateNicknames;
 		if (_connectedTime)
-			[info setObject:[NSNumber numberWithDouble:_connectedTime] forKey:@"connectedTime"];
+			info[@"connectedTime"] = @(_connectedTime);
 		if (_encoding)
-			[info setObject:[NSNumber numberWithInteger:_encoding] forKey:@"encoding"];
+			info[@"encoding"] = @(_encoding);
 
 		[_delegate bouncerConnection:self didRecieveConnectionInfo:info];
-
-		[info release];
 	}
 
 	[self _resetState];

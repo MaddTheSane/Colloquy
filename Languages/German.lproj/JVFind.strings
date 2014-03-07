@@ -1,0 +1,36 @@
+
+/* Class = "NSPanel"; title = "Finden"; ObjectID = "21"; */
+"21.title" = "Finden";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "239"; */
+"239.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "allen"; ObjectID = "240"; */
+"240.title" = "allen";
+
+/* Class = "NSMenuItem"; title = "einer"; ObjectID = "241"; */
+"241.title" = "einer";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Continue search at the beginning of the document"; ObjectID = "252"; */
+"252.ibShadowedToolTip" = "Continue search at the beginning of the document";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Groß-/Kleinschreibung ignorieren"; ObjectID = "253"; */
+"253.ibShadowedToolTip" = "Groß-/Kleinschreibung ignorieren";
+
+/* Class = "NSTextFieldCell"; title = "Nachrichten finden, die"; ObjectID = "405"; */
+"405.title" = "Nachrichten finden, die";
+
+/* Class = "NSTextFieldCell"; title = "der folgenden Eigenschaften entsprechen:"; ObjectID = "407"; */
+"407.title" = "der folgenden Eigenschaften entsprechen:";
+
+/* Class = "NSButtonCell"; title = "Nächste"; ObjectID = "408"; */
+"408.title" = "Nächste";
+
+/* Class = "NSButtonCell"; title = "Vorherige"; ObjectID = "409"; */
+"409.title" = "Vorherige";
+
+/* Class = "NSButtonCell"; title = "Nur Nachrichtenverlauf"; ObjectID = "410"; */
+"410.title" = "Nur Nachrichtenverlauf";
+
+/* Class = "NSButtonCell"; title = "Groß-/Kleinschreibung ignorieren"; ObjectID = "411"; */
+"411.title" = "Groß-/Kleinschreibung ignorieren";

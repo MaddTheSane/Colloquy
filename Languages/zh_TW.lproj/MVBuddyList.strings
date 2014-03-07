@@ -1,0 +1,87 @@
+
+/* Class = "NSButton"; ibShadowedToolTip = "新增聯絡人"; ObjectID = "39"; */
+"39.ibShadowedToolTip" = "新增聯絡人";
+
+/* Class = "NSButton"; ibShadowedToolTip = "傳送訊息"; ObjectID = "40"; */
+"40.ibShadowedToolTip" = "傳送訊息";
+
+/* Class = "NSPanel"; title = "好友列表"; ObjectID = "41"; */
+"41.title" = "好友列表";
+
+/* Class = "NSButton"; ibShadowedToolTip = "顯示簡介"; ObjectID = "42"; */
+"42.ibShadowedToolTip" = "顯示簡介";
+
+/* Class = "NSButton"; ibShadowedToolTip = "好友列表選項"; ObjectID = "44"; */
+"44.ibShadowedToolTip" = "好友列表選項";
+
+/* Class = "NSButton"; ibShadowedToolTip = "指令"; ObjectID = "105"; */
+"105.ibShadowedToolTip" = "指令";
+
+/* Class = "NSMenu"; title = "Menu"; ObjectID = "148"; */
+"148.title" = "Menu";
+
+/* Class = "NSMenuItem"; title = "顯示離線的好友"; ObjectID = "149"; */
+"149.title" = "顯示離線的好友";
+
+/* Class = "NSMenuItem"; title = "顯示好友大頭照"; ObjectID = "150"; */
+"150.title" = "顯示好友大頭照";
+
+/* Class = "NSMenuItem"; title = "顯示全名:"; ObjectID = "151"; */
+"151.title" = "顯示全名:";
+
+/* Class = "NSMenuItem"; title = "根據上線狀況排序"; ObjectID = "153"; */
+"153.title" = "根據上線狀況排序";
+
+/* Class = "NSMenuItem"; title = "根據名字排序"; ObjectID = "154"; */
+"154.title" = "根據名字排序";
+
+/* Class = "NSMenuItem"; title = "根據姓氏排序"; ObjectID = "155"; */
+"155.title" = "根據姓氏排序";
+
+/* Class = "NSMenuItem"; title = "顯示代號與伺服器簡介"; ObjectID = "160"; */
+"160.title" = "顯示代號與伺服器簡介";
+
+/* Class = "NSMenuItem"; title = "根據伺服器排序"; ObjectID = "183"; */
+"183.title" = "根據伺服器排序";
+
+/* Class = "NSTextFieldCell"; title = "請從您的通訊錄中選擇好友，或是新增一位聯絡人。"; ObjectID = "209"; */
+"209.title" = "請從您的通訊錄中選擇好友，或是新增一位聯絡人。";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "210"; */
+"210.title" = "取消";
+
+/* Class = "NSButtonCell"; title = "選擇好友"; ObjectID = "211"; */
+"211.title" = "選擇好友";
+
+/* Class = "NSButtonCell"; title = "新增聯絡人"; ObjectID = "212"; */
+"212.title" = "新增聯絡人";
+
+/* Class = "NSTextFieldCell"; title = "請輸入好友的 IRC 代號以及他們使用的伺服器:"; ObjectID = "213"; */
+"213.title" = "請輸入好友的 IRC 代號以及他們使用的伺服器:";
+
+/* Class = "NSTextFieldCell"; title = "代號:"; ObjectID = "214"; */
+"214.title" = "代號:";
+
+/* Class = "NSTextFieldCell"; title = "聊天伺服器:"; ObjectID = "216"; */
+"216.title" = "聊天伺服器:";
+
+/* Class = "NSTextFieldCell"; title = "額外的通訊錄資訊:"; ObjectID = "217"; */
+"217.title" = "額外的通訊錄資訊:";
+
+/* Class = "NSTextFieldCell"; title = "好友大頭照"; ObjectID = "219"; */
+"219.title" = "好友大頭照";
+
+/* Class = "NSTextFieldCell"; title = "名字:"; ObjectID = "220"; */
+"220.title" = "名字:";
+
+/* Class = "NSTextFieldCell"; title = "姓氏:"; ObjectID = "223"; */
+"223.title" = "姓氏:";
+
+/* Class = "NSTextFieldCell"; title = "電子郵件:"; ObjectID = "225"; */
+"225.title" = "電子郵件:";
+
+/* Class = "NSButtonCell"; title = "新增好友"; ObjectID = "226"; */
+"226.title" = "新增好友";
+
+/* Class = "NSButtonCell"; title = "取消"; ObjectID = "227"; */
+"227.title" = "取消";

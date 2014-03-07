@@ -132,7 +132,7 @@
 
 - (void *) node {
 	if( ! _node ) {
-		NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"IgnoreFonts", [NSNumber numberWithBool:YES], @"IgnoreFontSizes", nil];
+		NSDictionary *options = @{@"IgnoreFonts": @YES, @"IgnoreFontSizes": @YES};
 		NSString *htmlMessage = ( [self body] ? [[self body] HTMLFormatWithOptions:options] : @"" );
 		const char *msgStr = [[NSString stringWithFormat:@"<message>%@</message>", [htmlMessage stringByStrippingIllegalXMLCharacters]] UTF8String];
 
@@ -273,7 +273,7 @@
 }
 
 - (NSString *) bodyAsHTML {
-	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"IgnoreFonts", [NSNumber numberWithBool:YES], @"IgnoreFontSizes", nil];
+	NSDictionary *options = @{@"IgnoreFonts": @YES, @"IgnoreFontSizes": @YES};
 	return [[self body] HTMLFormatWithOptions:options];
 }
 
@@ -330,13 +330,13 @@
 	// Add important attributes which are set via normal setters, and therefore don't exist normally in the attributes-dict.
 	if( ! _attributes )
 		_attributes = [[NSMutableDictionary alloc] init];
-	[_attributes setObject:[NSNumber numberWithBool:_action] forKey:@"action"];
+	_attributes[@"action"] = @(_action);
 
 	return _attributes;
 }
 
 - (id) attributeForKey:(id) key {
-	return [_attributes objectForKey:key];
+	return _attributes[key];
 }
 
 #pragma mark -
@@ -571,7 +571,7 @@
 - (void) setAttribute:(id) object forKey:(id) key {
 	if( ! _attributes )
 		_attributes = [[NSMutableDictionary alloc] init];
-	[_attributes setObject:object forKey:key];
+	_attributes[key] = object;
 }
 
 #pragma mark -

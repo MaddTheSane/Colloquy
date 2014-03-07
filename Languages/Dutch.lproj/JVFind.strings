@@ -1,0 +1,36 @@
+
+/* Class = "NSPanel"; title = "Zoek"; ObjectID = "21"; */
+"21.title" = "Zoek";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "239"; */
+"239.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "alle"; ObjectID = "240"; */
+"240.title" = "alle";
+
+/* Class = "NSMenuItem"; title = "een of meerdere"; ObjectID = "241"; */
+"241.title" = "een of meerdere";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Continue search at the beginning of the document"; ObjectID = "252"; */
+"252.ibShadowedToolTip" = "Continue search at the beginning of the document";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Negeer HOOFDLETTERS en kleine letters"; ObjectID = "253"; */
+"253.ibShadowedToolTip" = "Negeer HOOFDLETTERS en kleine letters";
+
+/* Class = "NSTextFieldCell"; title = "Zoek items die voldoen aan"; ObjectID = "405"; */
+"405.title" = "Zoek items die voldoen aan";
+
+/* Class = "NSTextFieldCell"; title = "van de volgende voorwaarden:"; ObjectID = "407"; */
+"407.title" = "van de volgende voorwaarden:";
+
+/* Class = "NSButtonCell"; title = "Volgende"; ObjectID = "408"; */
+"408.title" = "Volgende";
+
+/* Class = "NSButtonCell"; title = "Vorige"; ObjectID = "409"; */
+"409.title" = "Vorige";
+
+/* Class = "NSButtonCell"; title = "Enkel Buffer Berichten"; ObjectID = "410"; */
+"410.title" = "Enkel Buffer Berichten";
+
+/* Class = "NSButtonCell"; title = "Negeer Hoofdletters"; ObjectID = "411"; */
+"411.title" = "Negeer Hoofdletters";

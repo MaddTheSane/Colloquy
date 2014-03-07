@@ -112,7 +112,7 @@
 
 -(id) itemAtIndex: (unsigned) index
 {
-    return [_items objectAtIndex: index];
+    return _items[index];
 }
 @end
 
@@ -129,7 +129,7 @@
 
 - (id) groupAtIndex: (unsigned) i
 {
-    return [_groupArray objectAtIndex: i];
+    return _groupArray[i];
 }
 
 -(BOOL) onAddedItem: (id)item
@@ -217,13 +217,13 @@
 
 -(BOOL) item: (id) item addedToGroup: (NSString*) groupName
 {
-    JRGroup* group = [_groups objectForKey: groupName];
+    JRGroup* group = _groups[groupName];
     if (group == nil)
     {
         unsigned int i;
         int index;
         group = [JRGroup groupWithName: groupName];
-        [_groups setObject:group forKey:groupName];
+        _groups[groupName] = group;
         index = [_groupArray addObject: group
                     sortStringSelector: @selector(displayName)];
         assert (index != -1);
@@ -231,7 +231,7 @@
         // now update all group indices
         for (i = index + 1; i < [_groupArray count]; i++)
         {
-            JRGroup* cur_group = [_groupArray objectAtIndex: i];
+            JRGroup* cur_group = _groupArray[i];
             [cur_group setIndex: i];
         }
     }
@@ -241,7 +241,7 @@
 -(BOOL) item: (id) item removedFromGroup: (NSString*) groupName
 {
     BOOL retval;
-    JRGroup* group = [_groups objectForKey:groupName];
+    JRGroup* group = _groups[groupName];
     assert(group != nil);
     retval = [group removeItem: item];
     if ([group count] == 0)
@@ -250,7 +250,7 @@
         [_groupArray removeObjectAtIndex: [group index]];
         for (index = [group index]; index < [_groupArray count]; index++)
         {
-            JRGroup* cur_group = [_groupArray objectAtIndex: index];
+            JRGroup* cur_group = _groupArray[index];
             [cur_group setIndex: index];
         }
         [_groups removeObjectForKey: groupName];

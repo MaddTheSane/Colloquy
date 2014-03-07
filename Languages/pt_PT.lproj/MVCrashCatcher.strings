@@ -1,0 +1,12 @@
+
+/* Class = "NSWindow"; title = "Crash Catcher"; ObjectID = "14"; */
+"14.title" = "Crash Catcher";
+
+/* Class = "NSButtonCell"; title = "Enviar relatório de falha"; ObjectID = "25"; */
+"25.title" = "Enviar relatório de falha";
+
+/* Class = "NSTextFieldCell"; title = "%@ encontrou um erro irrecuperável durante uma sessão anterior. Por favor introduza quaisquer detalhes de que se lembre sobre o que fazia quando a aplicação falhou. Isto ajudar-nos-á a melhorar as futuras versões do %@."; ObjectID = "26"; */
+"26.title" = "%@ encontrou um erro irrecuperável durante uma sessão anterior. Por favor introduza quaisquer detalhes de que se lembre sobre o que fazia quando a aplicação falhou. Isto ajudar-nos-á a melhorar as futuras versões do %@.";
+
+/* Class = "NSButtonCell"; title = "Continuar sem enviar"; ObjectID = "27"; */
+"27.title" = "Continuar sem enviar";

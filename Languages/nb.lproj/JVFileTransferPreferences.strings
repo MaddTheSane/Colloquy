@@ -1,0 +1,96 @@
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "6"; */
+"6.title" = "Box";
+
+/* Class = "NSMenuItem"; title = "Andre..."; ObjectID = "69"; */
+"69.title" = "Andre...";
+
+/* Class = "NSMenuItem"; title = " "; ObjectID = "70"; */
+"70.title" = " ";
+
+/* Class = "NSMenuItem"; title = "Spør alltid"; ObjectID = "71"; */
+"71.title" = "Spør alltid";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "72"; */
+"72.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Ved vellykket overføring"; ObjectID = "74"; */
+"74.title" = "Ved vellykket overføring";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "76"; */
+"76.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Når Colloquy avslutter"; ObjectID = "79"; */
+"79.title" = "Når Colloquy avslutter";
+
+/* Class = "NSMenuItem"; title = "Kompiser i min kompisliste"; ObjectID = "95"; */
+"95.title" = "Kompiser i min kompisliste";
+
+/* Class = "NSMenuItem"; title = "Hvem som helst"; ObjectID = "96"; */
+"96.title" = "Hvem som helst";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "99"; */
+"99.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Ingen"; ObjectID = "100"; */
+"100.title" = "Ingen";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "134"; */
+"134.title" = "Box";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "176"; */
+"176.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "Avvis alltid"; ObjectID = "177"; */
+"177.title" = "Avvis alltid";
+
+/* Class = "NSMenuItem"; title = "Skriv alltid over"; ObjectID = "178"; */
+"178.title" = "Skriv alltid over";
+
+/* Class = "NSMenuItem"; title = "Spør alltid"; ObjectID = "179"; */
+"179.title" = "Spør alltid";
+
+/* Class = "NSMenuItem"; title = "Fortsett hvis mulig"; ObjectID = "181"; */
+"181.title" = "Fortsett hvis mulig";
+
+/* Class = "NSTextFieldCell"; title = "Lagre nedlastede filer i:"; ObjectID = "210"; */
+"210.title" = "Lagre nedlastede filer i:";
+
+/* Class = "NSTextFieldCell"; title = "Fjern overførte gjenstander:"; ObjectID = "212"; */
+"212.title" = "Fjern overførte gjenstander:";
+
+/* Class = "NSButtonCell"; title = "Åpne \"sikre filer\" etter nedlastnig"; ObjectID = "214"; */
+"214.title" = "Åpne \"sikre filer\" etter nedlastnig";
+
+/* Class = "NSTextFieldCell"; title = "\"Sikre filer\" inkluderer filmer, bilder, lyder, PDF- og tekstdokumenter, diskfiler og andre arkivformat."; ObjectID = "215"; */
+"215.title" = "\"Sikre filer\" inkluderer filmer, bilder, lyder, PDF- og tekstdokumenter, diskfiler og andre arkivformat.";
+
+/* Class = "NSTextFieldCell"; title = "Portområde for filoverføring:"; ObjectID = "216"; */
+"216.title" = "Portområde for filoverføring:";
+
+/* Class = "NSTextFieldCell"; title = "1024"; ObjectID = "217"; */
+"217.title" = "1024";
+
+/* Class = "NSTextFieldCell"; title = "til"; ObjectID = "218"; */
+"218.title" = "til";
+
+/* Class = "NSTextFieldCell"; title = "1048"; ObjectID = "219"; */
+"219.title" = "1048";
+
+/* Class = "NSTextFieldCell"; title = "Aksepter filer automatisk fra:"; ObjectID = "220"; */
+"220.title" = "Aksepter filer automatisk fra:";
+
+/* Class = "NSButtonCell"; title = "Send filer passivt som standard"; ObjectID = "222"; */
+"222.title" = "Send filer passivt som standard";
+
+/* Class = "NSTextFieldCell"; title = "Passiv filoverføring tillater at filer blir sendt uten at porter trenger å åpnes i brannmuren eller routeren - mottakeren må gjøre dette."; ObjectID = "223"; */
+"223.title" = "Passiv filoverføring tillater at filer blir sendt uten at porter trenger å åpnes i brannmuren eller routeren - mottakeren må gjøre dette.";
+
+/* Class = "NSTextFieldCell"; title = "Hvis fil allerede finnes:"; ObjectID = "225"; */
+"225.title" = "Hvis fil allerede finnes:";
+
+/* Class = "NSButtonCell"; title = "Åpne porter automatisk i router"; ObjectID = "226"; */
+"226.title" = "Åpne porter automatisk i router";
+
+/* Class = "NSTextFieldCell"; title = "Krever en server som støtter NAT-PMP eller UPnP."; ObjectID = "227"; */
+"227.title" = "Krever en server som støtter NAT-PMP eller UPnP.";

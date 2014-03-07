@@ -1,0 +1,36 @@
+
+/* Class = "NSPanel"; title = "Find"; ObjectID = "21"; */
+"21.title" = "Find";
+
+/* Class = "NSMenu"; title = "OtherViews"; ObjectID = "239"; */
+"239.title" = "OtherViews";
+
+/* Class = "NSMenuItem"; title = "todas"; ObjectID = "240"; */
+"240.title" = "todas";
+
+/* Class = "NSMenuItem"; title = "qualquer"; ObjectID = "241"; */
+"241.title" = "qualquer";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Continue search at the beginning of the document"; ObjectID = "252"; */
+"252.ibShadowedToolTip" = "Continue search at the beginning of the document";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Ignorar MAIÚSCULAS e minúsculas"; ObjectID = "253"; */
+"253.ibShadowedToolTip" = "Ignorar MAIÚSCULAS e minúsculas";
+
+/* Class = "NSTextFieldCell"; title = "Encontrar itens que coincidam com\n"; ObjectID = "405"; */
+"405.title" = "Encontrar itens que coincidam com\n";
+
+/* Class = "NSTextFieldCell"; title = "das seguintes condições:"; ObjectID = "407"; */
+"407.title" = "das seguintes condições:";
+
+/* Class = "NSButtonCell"; title = "Próximo"; ObjectID = "408"; */
+"408.title" = "Próximo";
+
+/* Class = "NSButtonCell"; title = "Anterior"; ObjectID = "409"; */
+"409.title" = "Anterior";
+
+/* Class = "NSButtonCell"; title = "Só mensagens passadas"; ObjectID = "410"; */
+"410.title" = "Só mensagens passadas";
+
+/* Class = "NSButtonCell"; title = "Ignorar capitalização"; ObjectID = "411"; */
+"411.title" = "Ignorar capitalização";
