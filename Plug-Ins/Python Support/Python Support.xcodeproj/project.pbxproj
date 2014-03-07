@@ -43,6 +43,13 @@
 			remoteGlobalIDString = 55C8A2D0180735D100A7BB42;
 			remoteInfo = "Colloquy Tests";
 		};
+		55B0FD8118C9966F0052D450 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92823D2216900FDA000EC36E /* Colloquy (Old).xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1CB2CCF5052DDC560094AAA4;
+			remoteInfo = "Colloquy (Application)";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -184,6 +191,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55B0FD8218C9966F0052D450 /* PBXTargetDependency */,
 			);
 			name = "Python Support Plugin";
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -278,6 +286,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		55B0FD8218C9966F0052D450 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Colloquy (Application)";
+			targetProxy = 55B0FD8118C9966F0052D450 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		0A61C80307E05F7200C326B4 /* Localizable.strings */ = {

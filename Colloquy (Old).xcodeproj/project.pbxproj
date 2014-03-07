@@ -928,7 +928,7 @@
 		55C8A41418077ABF00A7BB42 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = pt_PT.lproj/JVFileTransferPreferences.strings; sourceTree = "<group>"; };
 		55C8A41518077AC500A7BB42 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Spanish.lproj/JVFileTransferPreferences.strings; sourceTree = "<group>"; };
 		55C8A41618077ACD00A7BB42 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = zh_TW.lproj/JVFileTransferPreferences.strings; sourceTree = "<group>"; };
-		55E4B88018C99115005CE3BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/TSCustomBan.xib; sourceTree = "<group>"; };
+		55E4B88018C99115005CE3BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TSCustomBan.xib; sourceTree = "<group>"; };
 		55E4B88318C9911E005CE3BF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TSCustomBan.strings; sourceTree = "<group>"; };
 		55E4B88518C99123005CE3BF /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/TSCustomBan.strings; sourceTree = "<group>"; };
 		55E4B88718C99125005CE3BF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/TSCustomBan.strings; sourceTree = "<group>"; };
@@ -3054,7 +3054,6 @@
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SYMROOT = build;
 			};
@@ -3143,7 +3142,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SYMROOT = build;
 			};
 			name = Release;
