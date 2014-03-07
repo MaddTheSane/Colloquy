@@ -4,3 +4,4 @@ build
 **/*.pbxuser
 **/*mode?v?
 **/project.xcworkspace
+*.xccheckout

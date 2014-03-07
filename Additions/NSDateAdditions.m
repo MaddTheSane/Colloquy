@@ -8,7 +8,6 @@
 		dateFormatter.dateFormat = format;
 
 		([NSThread currentThread].threadDictionary)[format] = dateFormatter;
-		[dateFormatter autorelease];
 	}
 
 	return [dateFormatter stringFromDate:date];
@@ -31,7 +30,6 @@
 		dateFormatter.timeStyle = timeStyle;
 
 		dateFormatters[key] = dateFormatter;
-		[dateFormatter autorelease];
 	}
 
 	return [dateFormatter stringFromDate:date];

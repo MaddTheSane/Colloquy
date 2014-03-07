@@ -467,7 +467,7 @@
         </customView>
         <drawer leadingOffset="15" trailingOffset="15" id="208">
             <size key="contentSize" width="200" height="200"/>
-            <size key="minContentSize" width="250" height="100"/>
+            <size key="minContentSize" width="200" height="100"/>
             <size key="maxContentSize" width="300" height="400"/>
             <connections>
                 <outlet property="contentView" destination="209" id="210"/>
