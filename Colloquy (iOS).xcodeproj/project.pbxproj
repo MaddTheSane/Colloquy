@@ -895,17 +895,12 @@
 		1CA2652E11C35FB200AB4E44 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				55B0EF3118CE34B90000E4CA /* Images.xcassets */,
+				55B0EF3318CE34E20000E4CA /* AppIcon.xcassets */,
 				92AD960017EC26500044B8B1 /* iTunesArtwork */,
-			);
-			name = Images;
-			sourceTree = "<group>";
-		};
-		1CA2653111C35FB800AB4E44 /* Images (2x) */ = {
-			isa = PBXGroup;
-			children = (
 				92AD960217EC265C0044B8B1 /* iTunesArtwork@2x */,
 			);
-			name = "Images (2x)";
+			name = Images;
 			sourceTree = "<group>";
 		};
 		1CA2653811C3600F00AB4E44 /* Transcript Styles */ = {
@@ -1007,10 +1002,7 @@
 			isa = PBXGroup;
 			children = (
 				92B6661217ED7C5000BA3DD9 /* Fonts */,
-				55B0EF3118CE34B90000E4CA /* Images.xcassets */,
-				55B0EF3318CE34E20000E4CA /* AppIcon.xcassets */,
 				1CA2652E11C35FB200AB4E44 /* Images */,
-				1CA2653111C35FB800AB4E44 /* Images (2x) */,
 				1C4CE6240FA03D7800215521 /* Sounds */,
 				1CA2653811C3600F00AB4E44 /* Transcript Styles */,
 				1C95B41C0FEC9BD900DAE9DF /* Entitlements.plist */,
@@ -1436,6 +1428,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Colloquy;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = Splash;
+				CODE_SIGN_ENTITLEMENTS = Colloquy.entitlements;
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1470,6 +1463,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Colloquy;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = Splash;
+				CODE_SIGN_ENTITLEMENTS = Colloquy.entitlements;
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1503,6 +1497,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Colloquy;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = Splash;
+				CODE_SIGN_ENTITLEMENTS = Colloquy.entitlements;
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
