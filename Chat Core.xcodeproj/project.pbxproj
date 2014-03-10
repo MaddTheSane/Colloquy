@@ -753,7 +753,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = 1C041DDE08553AD200A5A5BA /* Build configuration list for PBXProject "Chat Core" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1051,6 +1051,7 @@
 		92417D94149C019A0009B06E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 2;
 				EXPORTED_SYMBOLS_FILE = "Chat Core.exp";
@@ -1102,6 +1103,7 @@
 		92417D95149C019A0009B06E /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 2;
 				EXPORTED_SYMBOLS_FILE = "Chat Core.exp";

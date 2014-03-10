@@ -192,7 +192,6 @@
 		55C3812318CA62D90013161C /* JVRoomInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C3812118CA62D90013161C /* JVRoomInspector.xib */; };
 		55C3812618CA62F00013161C /* JVTranscriptCriterion.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C3812418CA62F00013161C /* JVTranscriptCriterion.xib */; };
 		55C3812918CA63080013161C /* JVTranscriptPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C3812718CA63080013161C /* JVTranscriptPreferences.xib */; };
-		55C8A2D3180735D100A7BB42 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C8A2D2180735D100A7BB42 /* SenTestingKit.framework */; };
 		55C8A2D9180735D100A7BB42 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55C8A2D7180735D100A7BB42 /* InfoPlist.strings */; };
 		55C8A2E41807361900A7BB42 /* JVChatWindowControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C59A91F09FDEBA3000682B8 /* JVChatWindowControllerTests.m */; };
 		55C8A2E51807391600A7BB42 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
@@ -801,7 +800,6 @@
 		55C3816418CA63980013161C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/JVTranscriptPreferences.strings; sourceTree = "<group>"; };
 		55C3816518CA63990013161C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/JVTranscriptPreferences.strings"; sourceTree = "<group>"; };
 		55C8A2D0180735D100A7BB42 /* Colloquy Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Colloquy Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		55C8A2D2180735D100A7BB42 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		55C8A2D6180735D100A7BB42 /* Colloquy Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Colloquy Tests-Info.plist"; sourceTree = "<group>"; };
 		55C8A2D8180735D100A7BB42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55C8A2FB18073D2B00A7BB42 /* Base */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Base; path = Base.lproj/MVFileTransfer.nib; sourceTree = "<group>"; };
@@ -967,7 +965,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55C8A2E51807391600A7BB42 /* Cocoa.framework in Frameworks */,
-				55C8A2D3180735D100A7BB42 /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1024,7 +1021,6 @@
 				55B0EF3818CE3E250000E4CA /* libexslt.dylib */,
 				55B0EF3918CE3E250000E4CA /* libxslt.dylib */,
 				55B0EF3518CE3DE10000E4CA /* libxml2.dylib */,
-				55C8A2D2180735D100A7BB42 /* SenTestingKit.framework */,
 				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -1663,7 +1659,8 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 0460;
+				LastTestingUpgradeCheck = 0510;
+				LastUpgradeCheck = 0510;
 				TargetAttributes = {
 					55C8A2CF180735D100A7BB42 = {
 						TestTargetID = 1CB2CCF5052DDC560094AAA4;
@@ -2699,7 +2696,9 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -2709,6 +2708,8 @@
 					DEBUG,
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SYMROOT = build;
@@ -2782,12 +2783,16 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				LLVM_LTO = YES;
 				SYMROOT = build;
