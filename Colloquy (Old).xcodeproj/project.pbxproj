@@ -172,6 +172,10 @@
 		5560649818C979B4002F72FC /* JVChatTranscript.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5560649718C979B4002F72FC /* JVChatTranscript.xib */; };
 		5560649A18C979C6002F72FC /* JVDirectChat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5560649918C979C6002F72FC /* JVDirectChat.xib */; };
 		55B0EF2E18CE34850000E4CA /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55B0EF2D18CE34850000E4CA /* AppIcon.xcassets */; };
+		55B0EF3618CE3DE10000E4CA /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0EF3518CE3DE10000E4CA /* libxml2.dylib */; };
+		55B0EF3718CE3E040000E4CA /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0EF3518CE3DE10000E4CA /* libxml2.dylib */; };
+		55B0EF3A18CE3E250000E4CA /* libexslt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0EF3818CE3E250000E4CA /* libexslt.dylib */; };
+		55B0EF3B18CE3E250000E4CA /* libxslt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0EF3918CE3E250000E4CA /* libxslt.dylib */; };
 		55C380B518CA5E760013161C /* Colloquy.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C380B718CA5E760013161C /* Colloquy.xib */; };
 		55C380C118CA5EF60013161C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55C380BD18CA5EF60013161C /* Credits.rtf */; };
 		55C380C218CA5EF60013161C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55C380BF18CA5EF60013161C /* Localizable.strings */; };
@@ -602,6 +606,9 @@
 		5560649718C979B4002F72FC /* JVChatTranscript.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JVChatTranscript.xib; sourceTree = "<group>"; };
 		5560649918C979C6002F72FC /* JVDirectChat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JVDirectChat.xib; sourceTree = "<group>"; };
 		55B0EF2D18CE34850000E4CA /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
+		55B0EF3518CE3DE10000E4CA /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		55B0EF3818CE3E250000E4CA /* libexslt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexslt.dylib; path = usr/lib/libexslt.dylib; sourceTree = SDKROOT; };
+		55B0EF3918CE3E250000E4CA /* libxslt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxslt.dylib; path = usr/lib/libxslt.dylib; sourceTree = SDKROOT; };
 		55C3808118CA57480013161C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/JVAppearancePreferences.strings; sourceTree = "<group>"; };
 		55C3808518CA574C0013161C /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/JVAppearancePreferences.strings; sourceTree = "<group>"; };
 		55C3808718CA57750013161C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/JVAppearancePreferences.strings; sourceTree = "<group>"; };
@@ -934,6 +941,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B0EF3A18CE3E250000E4CA /* libexslt.dylib in Frameworks */,
+				55B0EF3B18CE3E250000E4CA /* libxslt.dylib in Frameworks */,
+				55B0EF3618CE3DE10000E4CA /* libxml2.dylib in Frameworks */,
 				928FB03613EE64C700A0DF4B /* libicucore.dylib in Frameworks */,
 				1CB2CD79052DDC560094AAA4 /* Cocoa.framework in Frameworks */,
 				1CB2CD7B052DDC560094AAA4 /* Security.framework in Frameworks */,
@@ -965,6 +975,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B0EF3718CE3E040000E4CA /* libxml2.dylib in Frameworks */,
 				CBF6857708201C4C00F498FB /* Foundation.framework in Frameworks */,
 				1CBAB8B00884BF49005D1CDD /* CoreServices.framework in Frameworks */,
 			);
@@ -995,12 +1006,13 @@
 		089C1671FE841209C02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				89EB91A90F269BEF0028B3E3 /* Sparkle.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 				1C397390082D4ADA00DCF3CF /* IOKit.framework */,
 				F51F91F103796FCD01A35792 /* Security.framework */,
 				1C3C112E050265AE000001C8 /* WebKit.framework */,
 				F5FB4CE60393C15601000102 /* AddressBook.framework */,
+				CBF687A508202F3F00F498FB /* CoreServices.framework */,
+				89EB91A90F269BEF0028B3E3 /* Sparkle.framework */,
 				DDF64DA50BD2B0C3009E8FF6 /* Acid.framework */,
 				1C6C75450630AD5300698F55 /* AGRegex.framework */,
 				1C386FA91032471F00660864 /* TCMPortMapper.framework */,
@@ -1009,6 +1021,9 @@
 				1CF8030D070C893500C9B54C /* libsilcclient.framework */,
 				1CF5F8D107D537E50019DC13 /* Growl.framework */,
 				928FB03513EE64C700A0DF4B /* libicucore.dylib */,
+				55B0EF3818CE3E250000E4CA /* libexslt.dylib */,
+				55B0EF3918CE3E250000E4CA /* libxslt.dylib */,
+				55B0EF3518CE3DE10000E4CA /* libxml2.dylib */,
 				55C8A2D2180735D100A7BB42 /* SenTestingKit.framework */,
 				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
 			);
@@ -1034,7 +1049,6 @@
 		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CBF687A508202F3F00F498FB /* CoreServices.framework */,
 				089C1672FE841209C02AAC07 /* Foundation.framework */,
 				089C167FFE841241C02AAC07 /* AppKit.framework */,
 			);
@@ -2639,7 +2653,6 @@
 				);
 				INFOPLIST_FILE = "Resources/Info-StandardCommands.plist";
 				PRODUCT_NAME = "Standard Commands";
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Development;
@@ -2663,13 +2676,7 @@
 					"-fconstant-cfstrings",
 					"-Wno-arc-performSelector-leaks",
 				);
-				OTHER_LDFLAGS = (
-					"-lxml2",
-					"-lxslt",
-					"-lexslt",
-				);
 				PRODUCT_NAME = Colloquy;
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Development;
@@ -2681,9 +2688,7 @@
 				GCC_PREFIX_HEADER = Basic.pch;
 				HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2";
 				INFOPLIST_FILE = Importer/Info.plist;
-				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Colloquy;
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Development;
@@ -2692,6 +2697,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89FB4EDC12FAABBB00668905 /* Less Common Settings.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -2722,7 +2728,6 @@
 				);
 				INFOPLIST_FILE = "Resources/Info-StandardCommands.plist";
 				PRODUCT_NAME = "Standard Commands";
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -2746,13 +2751,7 @@
 					"-fconstant-cfstrings",
 					"-Wno-arc-performSelector-leaks",
 				);
-				OTHER_LDFLAGS = (
-					"-lxml2",
-					"-lxslt",
-					"-lexslt",
-				);
 				PRODUCT_NAME = Colloquy;
-				SDKROOT = macosx;
 				SECTORDER_FLAGS = (
 					"-sectorder",
 					__TEXT,
@@ -2772,9 +2771,7 @@
 				GCC_PREFIX_HEADER = Basic.pch;
 				HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2";
 				INFOPLIST_FILE = Importer/Info.plist;
-				OTHER_LDFLAGS = "-lxml2";
 				PRODUCT_NAME = Colloquy;
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Release;
@@ -2783,6 +2780,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89FB4EDC12FAABBB00668905 /* Less Common Settings.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -2808,7 +2806,6 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -2873,7 +2870,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -2882,7 +2878,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
 			};
 			name = Development;
 		};
