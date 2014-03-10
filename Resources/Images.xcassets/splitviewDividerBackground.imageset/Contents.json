@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "scale" : "1x",
       "filename" : "splitviewDividerBackground.png"
     },
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "scale" : "2x"
     }
   ],

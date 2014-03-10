@@ -171,6 +171,7 @@
 		5560649618C9799D002F72FC /* JVChatConsole.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5560649518C9799D002F72FC /* JVChatConsole.xib */; };
 		5560649818C979B4002F72FC /* JVChatTranscript.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5560649718C979B4002F72FC /* JVChatTranscript.xib */; };
 		5560649A18C979C6002F72FC /* JVDirectChat.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5560649918C979C6002F72FC /* JVDirectChat.xib */; };
+		55B0EF2E18CE34850000E4CA /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55B0EF2D18CE34850000E4CA /* AppIcon.xcassets */; };
 		55C380B518CA5E760013161C /* Colloquy.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C380B718CA5E760013161C /* Colloquy.xib */; };
 		55C380C118CA5EF60013161C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55C380BD18CA5EF60013161C /* Credits.rtf */; };
 		55C380C218CA5EF60013161C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55C380BF18CA5EF60013161C /* Localizable.strings */; };
@@ -600,6 +601,7 @@
 		5560649518C9799D002F72FC /* JVChatConsole.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JVChatConsole.xib; sourceTree = "<group>"; };
 		5560649718C979B4002F72FC /* JVChatTranscript.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JVChatTranscript.xib; sourceTree = "<group>"; };
 		5560649918C979C6002F72FC /* JVDirectChat.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JVDirectChat.xib; sourceTree = "<group>"; };
+		55B0EF2D18CE34850000E4CA /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		55C3808118CA57480013161C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/JVAppearancePreferences.strings; sourceTree = "<group>"; };
 		55C3808518CA574C0013161C /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/JVAppearancePreferences.strings; sourceTree = "<group>"; };
 		55C3808718CA57750013161C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/JVAppearancePreferences.strings; sourceTree = "<group>"; };
@@ -640,7 +642,7 @@
 		55C380B218CA5E690013161C /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/JVChatMemberInspector.strings"; sourceTree = "<group>"; };
 		55C380B318CA5E6B0013161C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/JVChatMemberInspector.strings; sourceTree = "<group>"; };
 		55C380B418CA5E6D0013161C /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/JVChatMemberInspector.strings"; sourceTree = "<group>"; };
-		55C380B618CA5E760013161C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/Colloquy.xib; sourceTree = "<group>"; };
+		55C380B618CA5E760013161C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Colloquy.xib; sourceTree = "<group>"; };
 		55C380B818CA5EA10013161C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/JVChatRoomBrowser.strings; sourceTree = "<group>"; };
 		55C380B918CA5EA30013161C /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/JVChatRoomBrowser.strings; sourceTree = "<group>"; };
 		55C380BA18CA5EA60013161C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/JVChatRoomBrowser.strings; sourceTree = "<group>"; };
@@ -1446,6 +1448,7 @@
 		F50B0AA10170C89301A84BDE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55B0EF2D18CE34850000E4CA /* AppIcon.xcassets */,
 				5507BABA18185997005A7F21 /* Images.xcassets */,
 				9295C84E1675E10A009F9014 /* Colloquy.exp */,
 				1C51B89D052DF91E00BB459B /* Info.plist */,
@@ -1801,6 +1804,7 @@
 				5551387518CA56CF00E95E02 /* JVAppearancePreferences.nib in Resources */,
 				1CB2CD30052DDC560094AAA4 /* Chat.clr in Resources */,
 				55C3812318CA62D90013161C /* JVRoomInspector.xib in Resources */,
+				55B0EF2E18CE34850000E4CA /* AppIcon.xcassets in Resources */,
 				1CB2CD31052DDC560094AAA4 /* GPL.txt in Resources */,
 				1CB2CD34052DDC560094AAA4 /* MVConnections.nib in Resources */,
 				1CB2CD50052DDC560094AAA4 /* template.html in Resources */,

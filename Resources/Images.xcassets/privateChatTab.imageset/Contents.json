@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "scale" : "1x",
       "filename" : "privateChatTab.png"
     },
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "scale" : "2x"
     }
   ],
