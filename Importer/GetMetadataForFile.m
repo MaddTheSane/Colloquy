@@ -4,7 +4,7 @@
 #include <libxml/xmlerror.h>
 #include "GetMetadataForFile.h"
 
-__attribute__((visibility("hidden"))) @interface JVChatTranscriptMetadataExtractor : NSObject <NSXMLParserDelegate>
+__private_extern @interface JVChatTranscriptMetadataExtractor : NSObject <NSXMLParserDelegate>
 {
 	BOOL inEnvelope;
 	BOOL inMessage;
@@ -138,38 +138,36 @@ __attribute__((visibility("hidden"))) @interface JVChatTranscriptMetadataExtract
 
 static BOOL GetMetadataForNSURL(void* thisInterface, NSMutableDictionary *attributes, NSString *contentTypeUTI, NSURL *urlForFile)
 {
-	@autoreleasepool {
-		NSXMLParser *parser;
-		JVChatTranscriptMetadataExtractor *extractor;
-		NSNumber *fileSizeClass;
-		unsigned long long fileSize = 0;
-		unsigned long long capacity = 0;
-		
-		if (![urlForFile checkResourceIsReachableAndReturnError:NULL])
-			goto badend;
-		
-		parser = [[NSXMLParser alloc] initWithContentsOfURL:urlForFile];
-		
-		if (![urlForFile getResourceValue:&fileSizeClass forKey:NSURLFileSizeKey error:NULL])
-			goto badend;
-		
-		fileSize = [fileSizeClass unsignedLongLongValue];
-		fileSizeClass = nil;
-		capacity = (fileSize ? fileSize / 3 : 5000); // the message content takes up about a third of the XML file's size
-		
-		extractor = [[JVChatTranscriptMetadataExtractor alloc] initWithCapacity:capacity];
-		
-		[parser setDelegate:extractor];
-		[parser parse];
-		
-		[attributes addEntriesFromDictionary:[extractor metadataAttributes]];
-		
-		xmlSetStructuredErrorFunc(NULL, NULL);
-		return YES;
-		
-	badend:
-		return NO;
-	}
+	NSXMLParser *parser;
+	JVChatTranscriptMetadataExtractor *extractor;
+	NSNumber *fileSizeClass;
+	unsigned long long fileSize = 0;
+	unsigned long long capacity = 0;
+	
+	if (![urlForFile checkResourceIsReachableAndReturnError:NULL])
+		goto badend;
+	
+	parser = [[NSXMLParser alloc] initWithContentsOfURL:urlForFile];
+	
+	if (![urlForFile getResourceValue:&fileSizeClass forKey:NSURLFileSizeKey error:NULL])
+		goto badend;
+	
+	fileSize = [fileSizeClass unsignedLongLongValue];
+	fileSizeClass = nil;
+	capacity = (fileSize ? fileSize / 3 : 5000); // the message content takes up about a third of the XML file's size
+	
+	extractor = [[JVChatTranscriptMetadataExtractor alloc] initWithCapacity:capacity];
+	
+	[parser setDelegate:extractor];
+	[parser parse];
+	
+	[attributes addEntriesFromDictionary:[extractor metadataAttributes]];
+	
+	xmlSetStructuredErrorFunc(NULL, NULL);
+	return YES;
+	
+badend:
+	return NO;
 }
 
 
