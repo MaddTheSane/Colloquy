@@ -1,5 +1,6 @@
 #import "CQBouncerEditViewController.h"
 
+#import "CQAlertView.h"
 #import "CQBouncerSettings.h"
 #import "CQColloquyApplication.h"
 #import "CQConnectionsController.h"
@@ -23,7 +24,7 @@ static BOOL pushAvailable = YES;
 #pragma mark -
 
 @implementation CQBouncerEditViewController
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
 		return nil;
 
@@ -35,15 +36,7 @@ static BOOL pushAvailable = YES;
 	return self;
 }
 
-- (void) dealloc {
-	[_settings release];
-
-	[super dealloc];
-}
-
 #pragma mark -
-
-@synthesize newBouncer = _newBouncer;
 
 - (void) setNewBouncer:(BOOL) newBouncer {
 	if (_newBouncer ==  newBouncer)
@@ -55,12 +48,8 @@ static BOOL pushAvailable = YES;
 	else self.title = _settings.displayName;
 }
 
-@synthesize settings = _settings;
-
 - (void) setSettings:(CQBouncerSettings *) settings {
-	id old = _settings;
-	_settings = [settings retain];
-	[old release];
+	_settings = settings;
 
 	if (!_newBouncer)
 		self.title = settings.displayName;
@@ -212,21 +201,15 @@ static BOOL pushAvailable = YES;
 		return cell;
 	} else if (indexPath.section == UpdateTableSection && indexPath.row == 0) {
 		UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0., 10., 320., 20.)];
 
-		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		label.font = [UIFont boldSystemFontOfSize:15.];
-		label.textColor = [UIColor colorWithRed:(85. / 255.) green:(102. / 255.) blue:(145. / 255.) alpha:1.];
-		label.highlightedTextColor = [UIColor whiteColor];
+		cell.textLabel.font = [UIFont boldSystemFontOfSize:15.];
+		cell.textLabel.textColor = [UIColor colorWithRed:(85. / 255.) green:(102. / 255.) blue:(145. / 255.) alpha:1.];
+		cell.textLabel.highlightedTextColor = [UIColor whiteColor];
 
-		[cell.contentView addSubview:label];
+		cell.textLabel.text = NSLocalizedString(@"Update Connection List", @"Update Connection List button label");
+		cell.textLabel.textAlignment = NSTextAlignmentCenter;
 
-		label.text = NSLocalizedString(@"Update Connection List", @"Update Connection List button label");
-		label.textAlignment = UITextAlignmentCenter;
-
-		[label release];
-
-		return [cell autorelease];
+		return cell;
 	} else if (indexPath.section == DeleteTableSection && indexPath.row == 0) {
 		CQPreferencesDeleteCell *cell = [CQPreferencesDeleteCell reusableTableViewCellInTableView:tableView];
 
@@ -304,7 +287,7 @@ static BOOL pushAvailable = YES;
 
 - (void) deleteBouncer:(id) sender {
 	if ([[UIDevice currentDevice] isPadModel]) {
-		UIAlertView *alert = [[UIAlertView alloc] init];
+		UIAlertView *alert = [[CQAlertView alloc] init];
 		alert.delegate = self;
 
 		alert.title = NSLocalizedString(@"Delete Bouncer", @"Delete Bouncer alert title");
@@ -313,7 +296,6 @@ static BOOL pushAvailable = YES;
 		[alert addButtonWithTitle:NSLocalizedString(@"Delete", @"Delete alert button title")];
 
 		[alert show];
-		[alert release];
 
 		return;
 	}
@@ -325,8 +307,6 @@ static BOOL pushAvailable = YES;
 	sheet.cancelButtonIndex = [sheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel button title")];
 
 	[[CQColloquyApplication sharedApplication] showActionSheet:sheet forSender:sender animated:YES];
-
-	[sheet release];
 }
 
 #pragma mark -
@@ -335,7 +315,7 @@ static BOOL pushAvailable = YES;
 	if (buttonIndex == alertView.cancelButtonIndex)
 		return;
 	[[CQConnectionsController defaultController] removeBouncerSettings:_settings];
-	[self.navigationController popViewControllerAnimated:YES];
+	[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark -
@@ -344,6 +324,6 @@ static BOOL pushAvailable = YES;
 	if (buttonIndex == actionSheet.cancelButtonIndex)
 		return;
 	[[CQConnectionsController defaultController] removeBouncerSettings:_settings];
-	[self.navigationController popViewControllerAnimated:YES];
+	[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 @end

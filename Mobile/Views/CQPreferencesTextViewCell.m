@@ -8,9 +8,7 @@
 @end
 
 @implementation CQPreferencesTextViewCell
-@synthesize textView = _textView;
-
-- (id) initWithStyle:(UITableViewCellStyle) style reuseIdentifier:(NSString *) reuseIdentifier {
+- (instancetype) initWithStyle:(UITableViewCellStyle) style reuseIdentifier:(NSString *) reuseIdentifier {
 	if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]))
 		return nil;
 
@@ -19,7 +17,7 @@
 	_textView.scrollEnabled = [[UIDevice currentDevice] isPadModel] ? NO : YES;
 	_textView.font = [UIFont systemFontOfSize:17.];
 	_textView.keyboardType = UIKeyboardTypeDefault;
-	_textView.textAlignment = UITextAlignmentLeft;
+	_textView.textAlignment = NSTextAlignmentLeft;
 	_textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
 	_textView.autocorrectionType = UITextAutocorrectionTypeDefault;
 	_textView.enablesReturnKeyAutomatically = NO;
@@ -39,9 +37,6 @@
 
 	[_textView endEditing:YES];
 	[_textView resignFirstResponder];
-	[_textView release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -53,7 +48,7 @@
 	_textView.editable = YES;
 	_textView.scrollEnabled = ![[UIDevice currentDevice] isPadModel];
 	_textView.textColor = [UIColor blackColor];
-	_textView.textAlignment = UITextAlignmentLeft;
+	_textView.textAlignment = NSTextAlignmentLeft;
 	_textView.font = [UIFont systemFontOfSize:17.];
 	_textView.keyboardType = UIKeyboardTypeDefault;
 	_textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
@@ -102,14 +97,9 @@
 	if (height == _textView.frame.size.height && _textView.frame.size.width == self.contentView.frame.size.width)
 		return;
 
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:.25];
-	[UIView setAnimationBeginsFromCurrentState:YES];
-
-	_textView.frame = CGRectMake(0, 0, self.contentView.frame.size.width, height);
-
-	[UIView commitAnimations];
+	[UIView animateWithDuration:.25 delay:0. options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState) animations:^{
+		_textView.frame = CGRectMake(0, 0, self.contentView.frame.size.width, height);
+	} completion:NULL];
 }
 
 #pragma mark -

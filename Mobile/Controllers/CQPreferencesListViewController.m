@@ -1,6 +1,9 @@
 #import "CQPreferencesListViewController.h"
 #import "CQPreferencesListEditViewController.h"
 #import "CQPreferencesListChannelEditViewController.h"
+#import "CQPreferencesTextViewController.h"
+
+#import "UIFontAdditions.h"
 
 #import <AVFoundation/AVFoundation.h>
 
@@ -8,12 +11,8 @@ enum {
 	CQTableViewCellAccessoryPlay = (UITableViewCellAccessoryCheckmark + 10)
 };
 
-@interface CQPreferencesListViewController (Private)
-- (void) _previewAudioAlertAtIndex:(NSUInteger) index;
-@end
-
 @implementation CQPreferencesListViewController
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
 		return nil;
 
@@ -30,22 +29,6 @@ enum {
 	return self;
 }
 
-- (void) dealloc {
-	[_items release];
-	[_itemImage release];
-	[_addItemLabelText release];
-	[_noItemsLabelText release];
-	[_editViewTitle release];
-	[_editPlaceholder release];
-	[_editingViewController release];
-	[_customEditingViewController release];
-	[_audioPlayer release];
-
-	self.preferencesListBlock = nil;
-
-	[super dealloc];
-}
-
 #pragma mark -
 
 - (void) viewDidLoad {
@@ -59,18 +42,18 @@ enum {
 
 	if (_editingViewController) {
 		NSIndexPath *changedIndexPath = [NSIndexPath indexPathForRow:_editingIndex inSection:0];
-		NSArray *changedIndexPaths = [NSArray arrayWithObject:changedIndexPath];
+		NSArray *changedIndexPaths = @[changedIndexPath];
 
 #define validListItem(item) \
 	(([item isKindOfClass:[NSString class]] && [item length]) || (item && ![item isKindOfClass:[NSString class]]))
 		if (_editingIndex < _items.count) {
 			if (validListItem(_editingViewController.listItem)) {
-				[_items replaceObjectAtIndex:_editingIndex withObject:_editingViewController.listItem];
+				_items[_editingIndex] = _editingViewController.listItem;
 
 				[tableView updateCellAtIndexPath:changedIndexPath withAnimation:UITableViewRowAnimationFade];
 			} else {
 				[_items removeObjectAtIndex:_editingIndex];
-				[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:_editingIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+				[tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_editingIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
 			}
 
 			_pendingChanges = YES;
@@ -87,7 +70,6 @@ enum {
 		}
 #undef validListItem
 
-		[_editingViewController release];
 		_editingViewController = nil;
 	}
 
@@ -103,8 +85,9 @@ enum {
 	if (_editingViewController || !_pendingChanges || (!_action && !self.preferencesListBlock))
 		return;
 
-	if (!_target || [_target respondsToSelector:_action])
-		if ([[UIApplication sharedApplication] sendAction:_action to:_target from:self forEvent:nil])
+	__strong __typeof__((_target)) strongTarget = _target;
+	if (!strongTarget || [strongTarget respondsToSelector:_action])
+		if ([[UIApplication sharedApplication] sendAction:_action to:strongTarget from:self forEvent:nil])
 			_pendingChanges = NO;
 
 	if (self.preferencesListBlock) {
@@ -114,8 +97,6 @@ enum {
 }
 
 #pragma mark -
-
-@synthesize allowEditing = _allowEditing;
 
 - (void) setAllowEditing:(BOOL) allowEditing {
 	_allowEditing = allowEditing;
@@ -129,37 +110,15 @@ enum {
 	}
 }
 
-@synthesize selectedItemIndex = _selectedItemIndex;
-
 - (void) setSelectedItemIndex:(NSInteger) index {
 	_selectedItemIndex = (_allowEditing ? NSNotFound : index);
 }
 
-@synthesize addItemLabelText = _addItemLabelText;
-
-@synthesize noItemsLabelText = _noItemsLabelText;
-
-@synthesize editViewTitle = _editViewTitle;
-
-@synthesize editPlaceholder = _editPlaceholder;
-
-@synthesize target = _target;
-
-@synthesize action = _action;
-
-@synthesize preferencesListBlock = _preferencesListBlock;
-
-@synthesize itemImage = _itemImage;
-
 - (void) setItemImage:(UIImage *) image {
-	id old = _itemImage;
-	_itemImage = [image retain];
-	[old release];
+	_itemImage = image;
 
 	[self.tableView reloadData];
 }
-
-@synthesize items = _items;
 
 - (void) setItems:(NSArray *) items {
 	_pendingChanges = NO;
@@ -168,10 +127,6 @@ enum {
 
 	[self.tableView reloadData];
 }
-
-@synthesize customEditingViewController = _customEditingViewController;
-
-@synthesize listType = _listType;
 
 #pragma mark -
 
@@ -182,7 +137,7 @@ enum {
 	if ((NSUInteger)indexPath.row >= _items.count)
 		return UITableViewCellAccessoryNone;
 
-	NSString *item = [_items objectAtIndex:indexPath.row];
+	NSString *item = _items[indexPath.row];
 	if (_listType == CQPreferencesListTypeAudio) {
 		NSString *path = [[NSBundle mainBundle] pathForResource:item ofType:@"aiff"];
 		if (path.length)
@@ -190,7 +145,11 @@ enum {
 	} else if (_listType == CQPreferencesListTypeImage) {
 		NSString *path = [[NSBundle mainBundle] pathForResource:item ofType:@"aiff"];
 		if (path.length)
-			return  UITableViewCellAccessoryDetailDisclosureButton;
+			return UITableViewCellAccessoryDetailDisclosureButton;
+	} else {
+		NSString *license = self.details[indexPath.row];
+		if (license.length)
+			return UITableViewCellAccessoryDetailDisclosureButton;
 	}
 
 	return  UITableViewCellAccessoryNone;
@@ -205,9 +164,8 @@ enum {
 
 	UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(customAccessoryViewTapped:)];
 	[imageView addGestureRecognizer:tapGestureRecognizer];
-	[tapGestureRecognizer release];
 
-	return [imageView autorelease];
+	return imageView;
 }
 
 - (UITableViewCellAccessoryType) accessoryTypeForIndexPath:(NSIndexPath *) indexPath {
@@ -229,13 +187,13 @@ enum {
 
 - (void) editItemAtIndex:(NSUInteger) index {
 	if (_customEditingViewController)
-		_editingViewController = [_customEditingViewController retain];
+		_editingViewController = _customEditingViewController;
 	else _editingViewController = [[CQPreferencesListEditViewController alloc] init];
 
 	_editingIndex = index;
 
 	_editingViewController.title = _editViewTitle;
-	_editingViewController.listItem = (index < _items.count ? [_items objectAtIndex:index] : @"");
+	_editingViewController.listItem = (index < _items.count ? _items[index] : @"");
 	_editingViewController.listItemPlaceholder = _editPlaceholder;
 
 	[self.navigationController pushViewController:_editingViewController animated:YES];
@@ -247,15 +205,16 @@ enum {
 	[super setEditing:editing animated:animated];
 
 	if (_items.count) {
-		NSArray *indexPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:_items.count inSection:0]];
+		NSArray *indexPaths = @[[NSIndexPath indexPathForRow:_items.count inSection:0]];
 		if (editing) [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
 		else [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationTop];
 	} else {
 		[self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.25];
 	}
 
-	if (!editing && _pendingChanges && _action && (!_target || [_target respondsToSelector:_action]))
-		if ([[UIApplication sharedApplication] sendAction:_action to:_target from:self forEvent:nil])
+	__strong __typeof__((_target)) strongTarget = _target;
+	if (!editing && _pendingChanges && _action && (!strongTarget || [strongTarget respondsToSelector:_action]))
+		if ([[UIApplication sharedApplication] sendAction:_action to:strongTarget from:self forEvent:nil])
 			_pendingChanges = NO;
 
 	if (self.preferencesListBlock) {
@@ -274,12 +233,16 @@ enum {
 	return _items.count;
 }
 
+- (NSString *) tableView:(UITableView *) tableView titleForFooterInSection:(NSInteger) section {
+	return _footerText;
+}
+
 - (UITableViewCell *) tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) indexPath {
 	UITableViewCell *cell = [UITableViewCell reusableTableViewCellInTableView:tableView];
 
 	if (indexPath.row < (NSInteger)_items.count) {
 		cell.textLabel.textColor = [UIColor blackColor];
-		id item = [_items objectAtIndex:indexPath.row];
+		id item = _items[indexPath.row];
 		if ([item isKindOfClass:[NSString class]])
 			cell.textLabel.text = item;
 		else cell.textLabel.text = [item description];
@@ -291,7 +254,6 @@ enum {
 		cell.imageView.image = nil;
 	} else {
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		cell.textLabel.textColor = [UIColor lightGrayColor];
 		cell.textLabel.text = _noItemsLabelText;
 		cell.imageView.image = nil;
 	}
@@ -344,10 +306,23 @@ enum {
 		cell.accessoryView = [self accessoryViewForAccessoryType:accessoryType];
 		cell.textLabel.textColor = [UIColor colorWithRed:(50. / 255.) green:(79. / 255.) blue:(133. / 255.) alpha:1.];
 
+		if (self.listType == CQPreferencesListTypeFont) {
+			UIFont *font = [UIFont fontWithName:self.values[indexPath.row] size:12.];
+			if ((!font || [font.familyName hasCaseInsensitiveSubstring:@"Helvetica"]) && [[UIFont cq_availableRemoteFontNames] containsObject:self.values[indexPath.row]])
+			{
+				__weak __typeof__((self)) weakSelf = self;
+				[UIFont cq_loadFontWithName:self.values[indexPath.row] withCompletionHandler:^(NSString *fontName, UIFont *font) {
+					__strong __typeof__((weakSelf)) strongSelf = weakSelf;
+					[strongSelf.tableView beginUpdates];
+					[strongSelf.tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
+					[strongSelf.tableView endUpdates];
+				}];
+			}
+		}
 		// If the accessory type isn't custom, the accessory view will refresh right away. Otherwise, we help it out a bit.
 		if (previouslySelectedAccessoryType < CQTableViewCellAccessoryPlay) {
 			[tableView beginUpdates];
-			[tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:previouslySelectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+			[tableView reloadRowsAtIndexPaths:@[previouslySelectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 			[tableView endUpdates];
 		}
 		[tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
@@ -365,12 +340,24 @@ enum {
 }
 
 - (void) tableView:(UITableView *) tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *) indexPath {
-	NSString *item = [_items objectAtIndex:indexPath.row];
+	NSString *item = _items[indexPath.row];
 	NSString *path = nil;
 	if (_listType == CQPreferencesListTypeAudio)
 		path = [[NSBundle mainBundle] pathForResource:item ofType:@"aiff"];
 	else if (_listType == CQPreferencesListTypeImage)
 		path = [[NSBundle mainBundle] pathForResource:item ofType:@"png"];
+	else {
+		NSString *license = self.details[indexPath.row];
+		if (!license.length)
+			return;
+
+		CQPreferencesTextViewController *textViewController = [[CQPreferencesTextViewController alloc] init];
+		textViewController.text = license;
+		textViewController.title = [self tableView:tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+		[self.navigationController pushViewController:textViewController animated:YES];
+
+		return;
+	}
 
 	if (!path.length)
 		return;
@@ -379,7 +366,7 @@ enum {
 		[self _previewAudioAlertAtIndex:indexPath.row];
 
 	// Call this ourselves because we have a custom accessory view, and it steals the tap from the cell otherwise
-	if ([self accessoryTypeForIndexPath:indexPath] >= CQTableViewCellAccessoryPlay)
+	if ([self accessoryTypeForIndexPath:indexPath] >= (UITableViewCellAccessoryType)CQTableViewCellAccessoryPlay)
 		[self tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
@@ -390,7 +377,7 @@ enum {
 - (void) tableView:(UITableView *) tableView commitEditingStyle:(UITableViewCellEditingStyle) editingStyle forRowAtIndexPath:(NSIndexPath *) indexPath {
 	if (editingStyle == UITableViewCellEditingStyleDelete) {
 		[_items removeObjectAtIndex:indexPath.row];
-		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
+		[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
 		_pendingChanges = YES;
 	} else if (editingStyle == UITableViewCellEditingStyleInsert) {
 		[self editItemAtIndex:indexPath.row];
@@ -411,10 +398,9 @@ enum {
 	if (toIndexPath.row >= (NSInteger)_items.count)
 		return;
 
-	id item = [[_items objectAtIndex:fromIndexPath.row] retain];
+	id item = _items[fromIndexPath.row];
 	[_items removeObject:item];
 	[_items insertObject:item atIndex:toIndexPath.row];
-	[item release];
 
 	_pendingChanges = YES;
 }
@@ -422,17 +408,15 @@ enum {
 #pragma mark -
 
 - (void) _previewAudioAlertAtIndex:(NSUInteger) index {
-	NSString *item = [_items objectAtIndex:index];
-	NSString *path = [[NSBundle mainBundle] pathForResource:item ofType:@"aiff"];
+	NSString *item = _items[index];
+	NSString *path = [[NSBundle mainBundle] pathForResource:[item description] ofType:@"aiff"];
 	if (!path)
 		return;
 
 	NSURL *audioURL = [NSURL fileURLWithPath:path];
 
 	if (![_audioPlayer.url isEqual:audioURL]) {
-		id old = _audioPlayer;
 		_audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil];
-		[old release];
 	}
 
 	[_audioPlayer play];

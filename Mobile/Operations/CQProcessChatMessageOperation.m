@@ -4,28 +4,33 @@
 #import "CQIgnoreRulesController.h"
 
 #import "NSDateAdditions.h"
+#import "NSNotificationAdditions.h"
 #import "NSStringAdditions.h"
 #import "RegexKitLite.h"
 
 #import <ChatCore/MVChatUser.h>
 
-typedef enum {
+typedef NS_ENUM(NSInteger, CQMentionLinkService) {
 	CQMentionLinkServiceNone,
 	CQMentionLinkServiceTwitter,
 	CQMentionLinkServiceAppDotNet
-} CQMentionLinkService;
+};
+
+NSString *const CQInlineGIFImageKey = @"CQInlineGIFImageKey";
 
 static BOOL graphicalEmoticons;
 static BOOL stripMessageFormatting;
 static NSMutableDictionary *highlightRegexes;
 static BOOL inlineImages;
+static BOOL inlineVideo;
+static BOOL inlineAudio;
 static NSString *mentionServiceRegex;
 static NSString *mentionServiceReplacementFormat;
 static BOOL timestampEveryMessage;
 static NSString *timestampFormat;
 
 @implementation CQProcessChatMessageOperation
-@synthesize ignoreController = _ignoreController;
+@synthesize processedMessageInfo = _processedMessage;
 
 + (void) userDefaultsChanged {
 	if (![NSThread isMainThread])
@@ -34,12 +39,13 @@ static NSString *timestampFormat;
 	graphicalEmoticons = [[CQSettingsController settingsController] boolForKey:@"CQGraphicalEmoticons"];
 	stripMessageFormatting = [[CQSettingsController settingsController] boolForKey:@"JVChatStripMessageFormatting"];
 
-	[highlightRegexes release];
 	highlightRegexes = nil;
 	highlightRegexes = [[NSMutableDictionary alloc] init];
 	inlineImages = [[CQSettingsController settingsController] boolForKey:@"CQInlineImages"];
+	inlineVideo = [[CQSettingsController settingsController] boolForKey:@"CQInlineVideo"];
+	inlineAudio = [[CQSettingsController settingsController] boolForKey:@"CQInlineAudio"];
 
-	CQMentionLinkService mentionService = [[CQSettingsController settingsController] integerForKey:@"CQMentionLinkService"];
+	CQMentionLinkService mentionService = (CQMentionLinkService)[[CQSettingsController settingsController] integerForKey:@"CQMentionLinkService"];
 	if (mentionService == CQMentionLinkServiceAppDotNet) {
 		mentionServiceRegex = @"\\B@[a-zA-Z0-9_]{1,20}";
 		mentionServiceReplacementFormat = @"<a href=\"https://alpha.app.net/%@\">@%@</a>";
@@ -63,63 +69,43 @@ static NSString *timestampFormat;
 
 	userDefaultsInitialized = YES;
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
 
 	[self userDefaultsChanged];
 }
 
-- (id) initWithMessageData:(NSData *) messageData {
+- (instancetype) initWithMessageData:(NSData *) messageData {
 	if (messageData)
-		return [self initWithMessageInfo:[NSDictionary dictionaryWithObject:messageData forKey:@"message"]];
-	return [self initWithMessageInfo:[NSDictionary dictionary]];
+		return [self initWithMessageInfo:@{@"message": messageData}];
+	return [self initWithMessageInfo:@{}];
 }
 
-- (id) initWithMessageInfo:(NSDictionary *) messageInfo {
+- (instancetype) initWithMessageInfo:(NSDictionary *) messageInfo {
 	NSParameterAssert(messageInfo != nil);
 
 	if (!(self = [self init]))
 		return nil;
 
-	_message = [messageInfo retain];
+	_message = messageInfo;
 	_encoding = NSUTF8StringEncoding;
 	_fallbackEncoding = NSISOLatin1StringEncoding;
 
 	return self;
 }
 
-- (void) dealloc {
-	[_message release];
-	[_processedMessage release];
-	[_highlightNickname release];
-	[_target release];
-	[_userInfo release];
-
-	[super dealloc];
-}
-
-#pragma mark -
-
-@synthesize processedMessageInfo = _processedMessage;
-@synthesize highlightNickname = _highlightNickname;
-@synthesize encoding = _encoding;
-@synthesize fallbackEncoding = _fallbackEncoding;
-@synthesize target = _target;
-@synthesize action = _action;
-@synthesize userInfo = _userInfo;
-
 #pragma mark -
 
 - (NSString *) processedMessageAsHTML {
-	return [_processedMessage objectForKey:@"message"];
+	return _processedMessage[@"message"];
 }
 
 - (NSString *) processedMessageAsPlainText {
-	return [_processedMessage objectForKey:@"messagePlain"];
+	return _processedMessage[@"messagePlain"];
 }
 
 #pragma mark -
 
-static void commonChatReplacment(NSMutableString *string, NSRangePointer textRange) {
+static void commonChatAndImageReplacment(NSMutableString *string, NSRangePointer textRange, NSMutableDictionary *foundGIFs) {
 	if (graphicalEmoticons)
 		[string substituteEmoticonsForEmojiInRange:textRange withXMLSpecialCharactersEncodedAsEntities:YES];
 
@@ -133,9 +119,9 @@ static void commonChatReplacment(NSMutableString *string, NSRangePointer textRan
 		NSArray *components = [string cq_captureComponentsMatchedByRegex:urlRegex options:RKLCaseless range:matchedRange error:NULL];
 		NSCAssert(components.count == 4, @"component count needs to be 4");
 
-		NSString *room = [components objectAtIndex:1];
-		NSString *url = [components objectAtIndex:2];
-		NSString *email = [components objectAtIndex:3];
+		NSString *room = components[1];
+		NSString *url = components[2];
+		NSString *email = components[3];
 
 		NSString *linkHTMLString = nil;
 		if (room.length) {
@@ -153,15 +139,18 @@ static void commonChatReplacment(NSMutableString *string, NSRangePointer textRan
 				fullURL = [NSURL URLWithString:[@"http://" stringByAppendingString:url]];
 
 			if ([[CQColloquyApplication sharedApplication] canOpenURL:fullURL]) {
-				if ([fullURL.host hasCaseInsensitiveSubstring:@"imgur"] && ![NSFileManager isValidImageFormat:fullURL.pathExtension]) {
-					// rebuild URL, since we can't assume .png at the end (due to params and stuff)
-				} // else if twitpic
-				// elseif yfrog
-				// elseif cloud.app (?)
-
 				if (inlineImages && [NSFileManager isValidImageFormat:fullURL.pathExtension]) {
-					linkHTMLString = [NSString stringWithFormat:@"<a href=\"%@\"><img src=\"%@\" style=\"max-width: 100%%; max-height: 100%%\"></a>", [fullURL absoluteString], [fullURL absoluteString]];
-				} else {
+					if ([fullURL.pathExtension isCaseInsensitiveEqualToString:@"gif"]) {
+						NSString *key = [NSString stringWithFormat:@"%zd-%d", fullURL.hash, arc4random()];
+						if (foundGIFs)
+							foundGIFs[key] = fullURL;
+						linkHTMLString = [NSString stringWithFormat:@"<a href=\"%@\"><img id=\"%@\" style=\"max-width: 100%%; max-height: 100%%\"></a>", [fullURL absoluteString], key];
+					} else linkHTMLString = [NSString stringWithFormat:@"<a href=\"%@\"><img src=\"%@\" style=\"max-width: 100%%; max-height: 100%%\"></a>", [fullURL absoluteString], [fullURL absoluteString]];
+				} else if (inlineAudio && [NSFileManager isValidAudioFormat:fullURL.pathExtension]) {
+					linkHTMLString = [NSString stringWithFormat:@"<audio controls preload=\"metadata\" src=\"%@\" id=\"%@\" style=\"max-width: 100%%; max-height: 75%%\"></audio>", [fullURL absoluteString], [fullURL absoluteString]];
+				} else if (inlineVideo && [NSFileManager isValidVideoFormat:fullURL.pathExtension]) {
+					linkHTMLString = [NSString stringWithFormat:@"<video controls preload=\"metadata\" src=\"%@\" id=\"%@\" style=\"max-width: 100%%; max-height: 100%%\"></video>", [fullURL absoluteString], [fullURL absoluteString]];
+				}  else {
 					url = [url stringByReplacingOccurrencesOfString:@"/" withString:@"/\u200b"];
 					url = [url stringByReplacingOccurrencesOfString:@"?" withString:@"?\u200b"];
 					url = [url stringByReplacingOccurrencesOfString:@"=" withString:@"=\u200b"];
@@ -187,7 +176,7 @@ static void commonChatReplacment(NSMutableString *string, NSRangePointer textRan
 	}
 }
 
-static void mentionChatReplacment(NSMutableString *string, NSRangePointer textRange) {
+static void mentionChatReplacment(NSMutableString *string, NSRangePointer textRange, NSMutableDictionary *unused) {
 	if (!mentionServiceRegex)
 		return;
 
@@ -205,7 +194,7 @@ static void mentionChatReplacment(NSMutableString *string, NSRangePointer textRa
 	}
 }
 
-static void applyFunctionToTextInMutableHTMLString(NSMutableString *html, NSRangePointer range, void (*function)(NSMutableString *, NSRangePointer)) {
+static void applyFunctionToTextInMutableHTMLString(NSMutableString *html, NSRangePointer range, NSMutableDictionary *foundGIFs, void (*function)(NSMutableString *, NSRangePointer, NSMutableDictionary *)) {
 	if (!html || !function || !range)
 		return;
 
@@ -219,7 +208,7 @@ static void applyFunctionToTextInMutableHTMLString(NSMutableString *html, NSRang
 
 			NSRange textRange = NSMakeRange(NSMaxRange(tagEndRange), length);
 
-			function(html, &textRange);
+			function(html, &textRange, foundGIFs);
 			range->length += (textRange.length - length);
 
 			break;
@@ -228,7 +217,7 @@ static void applyFunctionToTextInMutableHTMLString(NSMutableString *html, NSRang
 		NSUInteger length = (tagStartRange.location - NSMaxRange(tagEndRange));
 		NSRange textRange = NSMakeRange(NSMaxRange(tagEndRange), length);
 		if (length) {
-			function(html, &textRange);
+			function(html, &textRange, foundGIFs);
 			range->length += (textRange.length - length);
 		}
 
@@ -252,52 +241,55 @@ static void applyFunctionToTextInMutableHTMLString(NSMutableString *html, NSRang
 	if (!messageString)
 		messageString = [[NSMutableString alloc] initWithChatData:messageData encoding:NSASCIIStringEncoding];
 
-	return [messageString autorelease];
+	return messageString;
 }
 
 - (void) _processMessageString:(NSMutableString *) messageString {
 	if (!messageString.length)
 		return;
 
+	NSMutableDictionary *foundGIFs = [NSMutableDictionary dictionary];
 	NSRange range = NSMakeRange(0, messageString.length);
 	if (stripMessageFormatting) {
 		[messageString stripXMLTags];
 
 		range = NSMakeRange(0, messageString.length);
-		commonChatReplacment(messageString, &range);
+		commonChatAndImageReplacment(messageString, &range, foundGIFs);
+		_processedMessage[CQInlineGIFImageKey] = foundGIFs;
 
 		range = NSMakeRange(0, messageString.length);
-		mentionChatReplacment(messageString, &range);
+		mentionChatReplacment(messageString, &range, NULL);
 		return;
 	}
 
-	applyFunctionToTextInMutableHTMLString(messageString, &range, commonChatReplacment);
-	applyFunctionToTextInMutableHTMLString(messageString, &range, mentionChatReplacment);
+	applyFunctionToTextInMutableHTMLString(messageString, &range, foundGIFs, commonChatAndImageReplacment);
+	applyFunctionToTextInMutableHTMLString(messageString, &range, NULL, mentionChatReplacment);
+
+	_processedMessage[CQInlineGIFImageKey] = foundGIFs;
 }
 
 #pragma mark -
 
 - (void) main {
-	NSArray *highlightWords = [[CQColloquyApplication sharedApplication].highlightWords retain];
+	NSArray *highlightWords = [CQColloquyApplication sharedApplication].highlightWords;
 	if (_highlightNickname.length && ![highlightWords containsObject:_highlightNickname]) {
 		NSMutableArray *mutableHighlightWords = [highlightWords mutableCopy];
 		[mutableHighlightWords insertObject:_highlightNickname atIndex:0];
 
-		[highlightWords release];
 		highlightWords = mutableHighlightWords;
 	}
 
-	NSMutableString *messageString = [self _processMessageData:[_message objectForKey:@"message"]];
-	MVChatUser *user = [_message objectForKey:@"user"];
-
-	if ([_ignoreController shouldIgnoreMessage:messageString fromUser:user inRoom:_target]) {
-		[highlightWords release];
+	NSMutableString *messageString = [self _processMessageData:_message[@"message"]];
+	if (!messageString)
 		return;
-	}
+	MVChatUser *user = _message[@"user"];
+
+	if ([_ignoreController shouldIgnoreMessage:messageString fromUser:user inRoom:_target])
+		return;
 
 	BOOL highlighted = NO;
 
-	NSString *regex = [[highlightRegexes objectForKey:_highlightNickname] retain];
+	NSString *regex = highlightRegexes[_highlightNickname];
 	if (user && !regex && !user.localUser && highlightWords.count) {
 		NSCharacterSet *escapedCharacters = [NSCharacterSet characterSetWithCharactersInString:@"^[]{}()\\.$*+?|"];
 
@@ -329,7 +321,7 @@ static void applyFunctionToTextInMutableHTMLString(NSMutableString *html, NSRang
 		}
 
 		if (processingRegex.length)
-			[highlightRegexes setObject:processingRegex forKey:_highlightNickname];
+			highlightRegexes[_highlightNickname] = processingRegex;
 		regex = [processingRegex copy];
 	}
 
@@ -337,39 +329,41 @@ static void applyFunctionToTextInMutableHTMLString(NSMutableString *html, NSRang
 		NSString *stylelessMessageString = [messageString stringByStrippingXMLTags];
 		highlighted = [stylelessMessageString isMatchedByRegex:regex options:NSRegularExpressionCaseInsensitive inRange:NSMakeRange(0, stylelessMessageString.length) error:NULL];
 	}
-	[regex release];
+
+	_processedMessage = [NSMutableDictionary dictionary];
 
 	[self _processMessageString:messageString];
 
 	static NSArray *sameKeys = nil;
 	if (!sameKeys)
-		sameKeys = [[NSArray alloc] initWithObjects:@"user", @"action", @"notice", @"identifier", nil];
+		sameKeys = @[@"user", @"action", @"notice", @"identifier"];
 
-	_processedMessage = [[NSMutableDictionary alloc] initWithKeys:sameKeys fromDictionary:_message];
+	[_processedMessage setObjectsForKeys:sameKeys fromDictionary:_message];
 
-	[_processedMessage setObject:@"message" forKey:@"type"];
-	[_processedMessage setObject:messageString forKey:@"message"];
+	_processedMessage[@"type"] = @"message";
+	if (messageString)
+		_processedMessage[@"message"] = messageString;
 	if (timestampEveryMessage) {
 		NSString *timestamp = nil;
+		NSDate *time = _message[@"time"] ?: [NSDate date];
 		if (timestampFormat.length)
-			timestamp = [NSDate formattedStringWithDate:[NSDate date] dateFormat:timestampFormat];
-		else timestamp = [NSDate formattedShortTimeStringForDate:[NSDate date]];
+			timestamp = [NSDate formattedStringWithDate:time dateFormat:timestampFormat];
+		else timestamp = [NSDate formattedShortTimeStringForDate:time];
 		timestamp = [timestamp stringByEncodingXMLSpecialCharactersAsEntities];
 
-		[_processedMessage setObject:timestamp forKey:@"timestamp"];
+		_processedMessage[@"timestamp"] = timestamp;
 	}
 
 	NSString *plainMessage = [messageString stringByStrippingXMLTags];
 	plainMessage = [plainMessage stringByDecodingXMLSpecialCharacterEntities];
 
-	[_processedMessage setObject:plainMessage forKey:@"messagePlain"];
+	_processedMessage[@"messagePlain"] = plainMessage;
 
 	if (highlighted)
-		[_processedMessage setObject:[NSNumber numberWithBool:YES] forKey:@"highlighted"];
+		_processedMessage[@"highlighted"] = @(YES);
 
-	[highlightWords release];
-
-	if (_target && _action)
-		[_target performSelectorOnMainThread:_action withObject:self waitUntilDone:NO];
+	__strong __typeof__((_target)) strongTarget = _target;
+	if (strongTarget && _action)
+		[strongTarget performSelectorOnMainThread:_action withObject:self waitUntilDone:NO];
 }
 @end

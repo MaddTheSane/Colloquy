@@ -84,6 +84,8 @@
 	<true/>
 	<key>CQShowLocalNotificationOnPrivateMessage</key>
 	<true/>
+	<key>CQChatRoomSortOrder</key>
+	<string>alphabetic</string>
 	<key>JVQuitMessage</key>
 	<string>Colloquy for iPhone - http://colloquy.mobi</string>
 	<key>CQAwayStatus</key>
@@ -126,8 +128,14 @@
 	<integer>3</integer>
 	<key>CQInlineImages</key>
 	<true/>
+	<key>CQInlineVideo</key>
+	<true/>
+	<key>CQInlineAudio</key>
+	<true/>
+	<key>CQPausePlaybackWhenHidden</key>
+	<false/>
 	<key>CQBookmarkingService</key>
-	<string>CQBookmarkingServicePocket</string>
+	<string>CQBookmarkingServiceSafariReadingList</string>
 	<key>CQMentionLinkService</key>
 	<integer>1</integer>
 	<key>CQTimestampFormat</key>
@@ -135,6 +143,8 @@
 	<key>CQTimestampOnLeft</key>
 	<string>NO</string>
 	<key>CQShowRoomTopic</key>
-	<integer>2</integer>
+	<integer>0</integer>
+	<key>CQUseDynamicType</key>
+	<false/>
 </dict>
 </plist>

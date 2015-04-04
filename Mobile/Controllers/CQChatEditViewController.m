@@ -12,38 +12,19 @@
 static NSUInteger lastSelectedConnectionIndex = NSNotFound;
 
 @implementation CQChatEditViewController
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
 		return nil;
 	return self;
 }
 
-- (void) dealloc {
-	[_name release];
-	[_password release];
-	[_sortedConnections release];
-	[_selectedConnection release];
-
-	[super dealloc];
-}
-
 #pragma mark -
 
-@synthesize roomTarget = _roomTarget;
-
-@synthesize selectedConnection = _selectedConnection;
-
 - (void) setSelectedConnection:(MVChatConnection *) connection {
-	id old = _selectedConnection;
-	_selectedConnection = [connection retain];
-	[old release];
+	_selectedConnection = connection;
 
 	[self.tableView updateCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] withAnimation:UITableViewRowAnimationNone];
 }
-
-@synthesize name = _name;
-
-@synthesize password = _password;
 
 #pragma mark -
 
@@ -70,21 +51,21 @@ static NSInteger sortConnections(MVChatConnection *a, MVChatConnection *b, void 
 		MVChatConnection *visibleConnection = [[[CQChatController defaultController] visibleChatController] connection];
 
 		if (visibleConnection != nil) {
-			_selectedConnection = [visibleConnection retain];
+			_selectedConnection = visibleConnection;
 		} else if (lastSelectedConnectionIndex != NSNotFound) {
 			if (lastSelectedConnectionIndex >= _sortedConnections.count && _sortedConnections.count)
-				_selectedConnection = [[_sortedConnections lastObject] retain];
-			else _selectedConnection = [[_sortedConnections objectAtIndex:lastSelectedConnectionIndex] retain];
+				_selectedConnection = [_sortedConnections lastObject];
+			else _selectedConnection = _sortedConnections[lastSelectedConnectionIndex];
 		} else {
 			for (MVChatConnection *connection in _sortedConnections) {
 				if (connection.connected) {
-					_selectedConnection = [connection retain];
+					_selectedConnection = connection;
 					break;
 				}
 			}
 
 			if (!_selectedConnection && _sortedConnections.count)
-				_selectedConnection = [[_sortedConnections objectAtIndex:0] retain];
+				_selectedConnection = _sortedConnections[0];
 		}
 
 		[self.tableView updateCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] withAnimation:UITableViewRowAnimationNone];
@@ -137,9 +118,6 @@ static NSInteger sortConnections(MVChatConnection *a, MVChatConnection *b, void 
 		[self endEditing];
 
 		[self.navigationController pushViewController:listViewController animated:YES];
-
-		[listViewController release];
-		[connectionTitles release];
 
 		return;
 	}
@@ -228,22 +206,17 @@ static NSInteger sortConnections(MVChatConnection *a, MVChatConnection *b, void 
 	}
 
 	UITableViewCell *helpCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0., 10., 320., 20.)];
+	helpCell.textLabel.font = [UIFont boldSystemFontOfSize:15.];
+	helpCell.textLabel.textColor = [UIColor colorWithRed:(85. / 255.) green:(102. / 255.) blue:(145. / 255.) alpha:1.];
+	helpCell.textLabel.highlightedTextColor = [UIColor whiteColor];
+	helpCell.textLabel.backgroundColor = [UIColor clearColor];
 
-	label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	label.font = [UIFont boldSystemFontOfSize:15.];
-	label.textColor = [UIColor colorWithRed:(85. / 255.) green:(102. / 255.) blue:(145. / 255.) alpha:1.];
-	label.highlightedTextColor = [UIColor whiteColor];
-	label.backgroundColor = [UIColor clearColor];
+	[helpCell.contentView addSubview:helpCell.textLabel];
 
-	[helpCell.contentView addSubview:label];
+	helpCell.textLabel.text = NSLocalizedString(@"Join Colloquy Support Room", @"Join Colloquy Support Room label");
+	helpCell.textLabel.textAlignment = NSTextAlignmentCenter;
 
-	label.text = NSLocalizedString(@"Join Colloquy Support Room", @"Join Colloquy Support Room label");
-	label.textAlignment = UITextAlignmentCenter;
-
-	[label release];
-
-	return [helpCell autorelease];
+	return helpCell;
 }
 
 #pragma mark -
@@ -265,30 +238,23 @@ static NSInteger sortConnections(MVChatConnection *a, MVChatConnection *b, void 
 
 	[self.navigationController pushViewController:listViewController animated:YES];
 
-	[listViewController release];
 }
 
 #pragma mark -
 
 - (void) nameChanged:(CQPreferencesTextCell *) sender {
-	id old = _name;
 	_name = [sender.textField.text copy];
-	[old release];
 
 	if (!_roomTarget && self.navigationItem.rightBarButtonItem.tag == UIBarButtonSystemItemSave)
 		self.navigationItem.rightBarButtonItem.enabled = (_name.length ? YES : NO);
 }
 
 - (void) passwordChanged:(CQPreferencesTextCell *) sender {
-	id old = _password;
 	_password = [sender.textField.text copy];
-	[old release];
 }
 
 - (void) connectionChanged:(CQPreferencesListViewController *) sender {
-	id old = _selectedConnection;
-	_selectedConnection = (sender.selectedItemIndex != NSNotFound ? [[_sortedConnections objectAtIndex:sender.selectedItemIndex] retain] : nil);
-	[old release];
+	_selectedConnection = (sender.selectedItemIndex != NSNotFound ? _sortedConnections[sender.selectedItemIndex] : nil);
 
 	lastSelectedConnectionIndex = sender.selectedItemIndex;
 
@@ -296,9 +262,7 @@ static NSInteger sortConnections(MVChatConnection *a, MVChatConnection *b, void 
 }
 
 - (void) roomChanged:(CQChatRoomListViewController *) sender {
-	id old = _name;
 	_name = [sender.selectedRoom copy];
-	[old release];
 
 	[self.tableView updateCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] withAnimation:UITableViewRowAnimationNone];
 }

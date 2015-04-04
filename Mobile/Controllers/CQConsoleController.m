@@ -2,6 +2,9 @@
 
 #import "CQProcessConsoleMessageOperation.h"
 
+#import "NSAttributedStringAdditions.h"
+#import "NSNotificationAdditions.h"
+
 #import "MVIRCChatConnection.h"
 
 #import "DDLog.h"
@@ -42,7 +45,7 @@ static BOOL verbose;
 	hideCTCPs = defaultNamed(@"Unknown");
 	hidePINGs = defaultNamed(@"Ping");
 	hideUnknown = defaultNamed(@"Ctcp");
-	hideSocketInformation = !defaultNamed(@"Socket");
+	hideSocketInformation = defaultNamed(@"Socket");
 
 	verbose = defaultNamed(@"Verbose");
 }
@@ -54,22 +57,22 @@ static BOOL verbose;
 	dispatch_once(&pred, ^{
 		[self userDefaultsChanged];
 
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
 	});
 }
 
-- (id) initWithTarget:(id) target {
+- (instancetype) initWithTarget:(id) target {
 	if (!(self = [super initWithTarget:nil]))
 		return self;
 
-	_connection = [target retain];
+	_connection = target;
 
 	_delegateLogger = [[MVDelegateLogger alloc] initWithDelegate:self];
 
 	[DDLog addLogger:_delegateLogger];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_gotRawMessage:) name:MVChatConnectionGotRawMessageNotification object:_connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_connectionWillConnect:) name:MVChatConnectionWillConnectNotification object:_connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_gotRawMessage:) name:MVChatConnectionGotRawMessageNotification object:_connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_connectionWillConnect:) name:MVChatConnectionWillConnectNotification object:_connection];
 
 	return self;
 }
@@ -77,23 +80,24 @@ static BOOL verbose;
 - (void) dealloc {
 	[DDLog removeLogger:_delegateLogger];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionGotRawMessageNotification object:_connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionGotRawMessageNotification object:_connection];
 
-	[_delegateLogger release];
-	[_connection release];
 
-	[super dealloc];
 }
 
 #pragma mark -
+
+- (void) awakeFromNib {
+	[super awakeFromNib];
+
+	transcriptView.styleIdentifier = @"console";
+	transcriptView.allowsStyleChanges = NO;
+}
 
 - (void) viewDidLoad {
 	[super viewDidLoad];
 
 	self.navigationItem.title = NSLocalizedString(@"Console", @"Console view title");
-
-	transcriptView.styleIdentifier = @"console";
-	transcriptView.allowsStyleChanges = NO;
 
 	[transcriptView noteTopicChangeTo:@"" by:@""];
 }
@@ -147,16 +151,19 @@ static BOOL verbose;
 	operation.verbose = verbose;
 
 	[[CQDirectChatController chatMessageProcessingQueue] addOperation:operation];
-
-	[operation release];
 }
 
 #pragma mark -
 
-- (BOOL) chatInputBar:(CQChatInputBar *) chatInputBar sendText:(NSString *) text {
+- (BOOL) chatInputBar:(CQChatInputBar *) chatInputBar sendText:(MVChatString *) text {
 	[_connection sendRawMessage:text];
 
-	NSData *data = [text dataUsingEncoding:_connection.encoding];
+	NSData *data = nil;
+	if ([text respondsToSelector:@selector(dataUsingEncoding:)])
+		data = [text performPrivateSelector:@"dataUsingEncoding" withUnsignedInteger:_connection.encoding];
+	else if ([text respondsToSelector:@selector(string)])
+		data = [text.string dataUsingEncoding:_connection.encoding];
+
 	if (!data)
 		return YES;
 
@@ -177,11 +184,11 @@ static BOOL verbose;
 	[self addMessage:notification.userInfo[@"message"] outbound:[notification.userInfo[@"outbound"] boolValue]];
 }
 
-- (void) socketTrafficDidOccur:(NSString *) socketTraffic context:(void *) context {
+- (void) delegateLogger:(MVDelegateLogger *) delegateLogger socketTrafficDidOccur:(NSString *) socketTraffic context:(void *) context {
 	if (hideSocketInformation)
 		return;
 
-	if (context != _connection._chatConnection)
+	if (context != (__bridge void *)_connection._chatConnection)
 		return;
 
 	[self addMessage:socketTraffic outbound:NO];
@@ -222,7 +229,7 @@ static BOOL verbose;
 
 	[self _addPendingComponent:operation.processedMessageInfo];
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:CQChatViewControllerRecentMessagesUpdatedNotification object:self];
+	[[NSNotificationCenter chatCenter] postNotificationName:CQChatViewControllerRecentMessagesUpdatedNotification object:self];
 }
 
 #pragma mark -
@@ -233,7 +240,6 @@ static BOOL verbose;
 
 	[self clearController];
 
-	[_recentMessages release];
 	_recentMessages = nil;
 }
 @end

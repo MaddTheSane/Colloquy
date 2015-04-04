@@ -1,7 +1,7 @@
 @import url(common.css);
 
 body {
-	font-family: Helvetica, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
 	font-size: 14px;
 	padding: 4px 0;
 }
@@ -75,7 +75,6 @@ body {
 }
 
 .nickname {
-	-webkit-touch-callout: none;
 	text-decoration: none;
 }
 

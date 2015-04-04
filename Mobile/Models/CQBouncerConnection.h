@@ -5,7 +5,7 @@
 @interface CQBouncerConnection : NSObject {
 	GCDAsyncSocket *_socket;
 	CQBouncerSettings *_settings;
-	id <CQBouncerConnectionDelegate> _delegate;
+	id <CQBouncerConnectionDelegate> __weak _delegate;
 
 	NSString *_connectionIdentifier;
 	NSString *_serverAddress;
@@ -22,10 +22,10 @@
 	NSError *_error;
 	id _userInfo;
 }
-- (id) initWithBouncerSettings:(CQBouncerSettings *) settings;
+- (instancetype) initWithBouncerSettings:(CQBouncerSettings *) settings NS_DESIGNATED_INITIALIZER;
 
-@property (nonatomic, retain) CQBouncerSettings *settings;
-@property (nonatomic, retain) id userInfo;
+@property (nonatomic, strong) CQBouncerSettings *settings;
+@property (nonatomic, strong) id userInfo;
 
 - (void) sendRawMessage:(id) raw;
 - (void) sendRawMessageWithFormat:(NSString *) format, ...;
@@ -33,7 +33,7 @@
 - (void) connect;
 - (void) disconnect;
 
-@property (nonatomic, assign) id <CQBouncerConnectionDelegate> delegate;
+@property (nonatomic, weak) id <CQBouncerConnectionDelegate> delegate;
 @end
 
 @protocol CQBouncerConnectionDelegate <NSObject>

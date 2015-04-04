@@ -2,22 +2,29 @@
 
 #import "CQChatController.h"
 
+#import "CQNavigationToolbar.h"
+
+#import "UIDeviceAdditions.h"
+#import "NSNotificationAdditions.h"
+
+@interface CQChatPresentationController ()
+@end
+
 @implementation CQChatPresentationController
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super init]))
 		return nil;
 
-	_standardToolbarItems = [[NSArray alloc] init];
+	_standardToolbarItems = @[];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applyiOS7NavigationBarSizing) name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
 
 	return self;
 }
 
 - (void) dealloc {
-	[_toolbar release];
-	[_standardToolbarItems release];
-	[_topChatViewController release];
-
-    [super dealloc];
+	[[NSNotificationCenter chatCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark -
@@ -26,33 +33,30 @@
 	UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	self.view = view;
 
-	view.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
 	view.clipsToBounds = YES;
 
-	_toolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-	_toolbar.layer.shadowOpacity = 1.;
-	_toolbar.layer.shadowRadius = 3.;
-	_toolbar.layer.shadowOffset = CGSizeMake(0., 0.);
+	_toolbar = [[CQNavigationToolbar alloc] initWithFrame:CGRectZero];
+	_toolbar.layer.shadowOpacity = 0.;
 	_toolbar.items = _standardToolbarItems;
 	_toolbar.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin);
 
 	[_toolbar sizeToFit];
 
 	[view addSubview:_toolbar];
-
-	[view release];
 }
 
-- (void) viewDidUnload {
-	[super viewDidUnload];
+- (void) viewWillTransitionToSize:(CGSize) size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>) coordinator {
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-	[_toolbar release];
-	_toolbar = nil;
+	// 480. is an arbitrary value, this can be changed if a new value comes up that makes more sense
+	[self updateToolbarForInterfaceOrientation:size.width > 480. ? UIInterfaceOrientationLandscapeLeft : UIInterfaceOrientationPortrait animated:NO];
 }
 
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0
 - (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation) interfaceOrientation duration:(NSTimeInterval) duration {
     [self updateToolbarForInterfaceOrientation:interfaceOrientation animated:NO];
 }
+#endif
 
 #pragma mark -
 
@@ -61,6 +65,9 @@
 }
 
 - (void) updateToolbarForInterfaceOrientation:(UIInterfaceOrientation) interfaceOrientation animated:(BOOL) animated {
+	if ([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad)
+		return;
+
 	NSMutableArray *allItems = [_standardToolbarItems mutableCopy];
 
 	UIBarButtonItem *leftBarButtonItem = _topChatViewController.navigationItem.leftBarButtonItem;
@@ -71,25 +78,25 @@
 	if (title.length) {
 		UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		titleLabel.backgroundColor = [UIColor clearColor];
-		titleLabel.textColor = [UIColor colorWithRed:(113. / 255.) green:(120. / 255.) blue:(128. / 255.) alpha:1.];
-		titleLabel.font = [UIFont boldSystemFontOfSize:20.];
+		titleLabel.tag = 1000;
+		titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+		titleLabel.textColor = [UIColor blackColor];
 		titleLabel.text = title;
-		titleLabel.shadowColor = [UIColor colorWithWhite:1.0 alpha:0.5];
-		titleLabel.shadowOffset = CGSizeMake(0., 1.);
 
 		[titleLabel sizeToFit];
 
 		UIBarButtonItem *leftSpaceItem = nil;
+		// TODO: Update to calculate width correctly
 		// Only used a fixed space if there are 2 standard toolbar buttons. This means the sidebar is hidden
 		// and we should try to center the title to the device.
-		if (_standardToolbarItems.count == 2 && [[[NSLocale currentLocale] localeIdentifier] hasCaseInsensitivePrefix:@"en"]) {
+		/* if (_standardToolbarItems.count == 2 && [[[NSLocale currentLocale] localeIdentifier] hasCaseInsensitivePrefix:@"en"]) {
 			leftSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
 
 			// This calculation makes a big assumption about the width of the right side buttons.
 			// So this is only correct for English, and needs updated if the right buttons change in width.
 			CGFloat offset = UIDeviceOrientationIsPortrait(interfaceOrientation) ? 182. : 310.;
 			leftSpaceItem.width = offset - (titleLabel.frame.size.width / 2.);
-		} else leftSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+		} else */ leftSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
 		UIBarButtonItem *titleItem = [[UIBarButtonItem alloc] initWithCustomView:titleLabel];
 		UIBarButtonItem *rightSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -98,10 +105,6 @@
 		[allItems addObject:titleItem];
 		[allItems addObject:rightSpaceItem];
 
-		[leftSpaceItem release];
-		[titleItem release];
-		[rightSpaceItem release];
-		[titleLabel release];
 	}
 
 	[allItems addObjectsFromArray:_topChatViewController.toolbarItems];
@@ -112,12 +115,10 @@
 
 	[_toolbar setItems:allItems animated:animated];
 
-	[allItems release];
+	[self _applyiOS7NavigationBarSizing];
 }
 
 #pragma mark -
-
-@synthesize standardToolbarItems = _standardToolbarItems;
 
 - (void) setStandardToolbarItems:(NSArray *) items {
 	[self setStandardToolbarItems:items animated:YES];
@@ -126,55 +127,76 @@
 - (void) setStandardToolbarItems:(NSArray *) items animated:(BOOL) animated {
 	NSParameterAssert(items);
 
-	id old = _standardToolbarItems;
 	_standardToolbarItems = [items copy];
-	[old release];
 
 	[self updateToolbarAnimated:animated];
 }
 
 #pragma mark -
 
-@synthesize topChatViewController = _topChatViewController;
-
-- (void) setTopChatViewController:(UIViewController <CQChatViewController> *) chatViewController {
+- (void) setTopChatViewController:(id <CQChatViewController>) chatViewController {
 	if (chatViewController == _topChatViewController)
 		return;
 
 	UIViewController <CQChatViewController> *oldViewController = _topChatViewController;
 
+	[oldViewController willMoveToParentViewController:nil];
 	[oldViewController viewWillDisappear:NO];
 
-	_topChatViewController = [chatViewController retain];
+	_topChatViewController = (UIViewController <CQChatViewController> *)chatViewController;
 
 	UIView *view = _topChatViewController.view;
+	CGRect frame = self.view.frame;
+	frame.origin = CGPointZero;
+	view.frame = frame;
 
 	if (_topChatViewController) {
-		CGRect frame = self.view.bounds;
-		frame.origin.y += _toolbar.frame.size.height;
-		frame.size.height -= _toolbar.frame.size.height;
-		view.frame = frame;
+		[self _applyiOS7NavigationBarSizing];
 
-		frame = _toolbar.frame;
-		frame.size.width = view.frame.size.width;
-		_toolbar.frame = frame;
-
+		[self addChildViewController:_topChatViewController];
 		[_topChatViewController viewWillAppear:NO];
 	}
 
 	if ([oldViewController respondsToSelector:@selector(dismissPopoversAnimated:)])
 		[oldViewController dismissPopoversAnimated:NO];
+
 	[oldViewController.view removeFromSuperview];
 	[oldViewController viewDidDisappear:NO];
-
-	[oldViewController release];
+	[oldViewController removeFromParentViewController];
+	[oldViewController didMoveToParentViewController:nil];
 
 	[self updateToolbarAnimated:NO];
 
 	if (!_topChatViewController)
 		return;
 
-	[self.view insertSubview:view aboveSubview:_toolbar];
+	[self.view insertSubview:view belowSubview:_toolbar];
 	[_topChatViewController viewDidAppear:NO];
+	[_topChatViewController didMoveToParentViewController:self];
+}
+
+#pragma mark -
+
+- (void) _applyiOS7NavigationBarSizing {
+	[_toolbar sizeToFit];
+
+	CGRect frame = _toolbar.frame;
+	frame.size.width = self.view.frame.size.width;
+
+	BOOL isNotOS8 = ![UIDevice currentDevice].isSystemEight;
+
+	// If we are on iOS 7 or up, the statusbar is now part of the navigation bar, so, we need to fake its height
+	CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+	// We can't do the following:
+	// CGFloat height = [[UIApplication sharedApplication].delegate.window convertRect:statusBarFrame toView:nil];
+	// because when the app first loads, it fails to convert the rect, and we are given {{0, 0}, {20, 1024}} as the
+	// statusBarFrame, even after self.view is added to its superview, is loaded, and self.view.window is set.
+	CGFloat statusBarHeight = fmin(statusBarFrame.size.height, statusBarFrame.size.width);
+	if (isNotOS8)
+		frame.size.height += statusBarHeight;
+	_toolbar.frame = frame;
+
+	if (isNotOS8 || UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation))
+		_topChatViewController.scrollView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(_toolbar.frame), 0., 0., 0.);
 }
 @end

@@ -3,7 +3,7 @@
 body {
 	margin: 0;
 	font-size: 14px;
-	font-family: Helvetica, sans-serif;
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
 	-webkit-text-size-adjust: none;
 }
 
@@ -62,7 +62,6 @@ body {
 }
 
 .nickname {
-	-webkit-touch-callout: none;
 	text-decoration: none;
 }
 

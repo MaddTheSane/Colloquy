@@ -6,17 +6,10 @@
 #import "MVIRCChatConnection.h"
 #import "MVChatUser.h"
 
-@interface CQPreferencesTextEditViewController (Private)
-- (void) updateFooterView;
-@end
-
 @implementation CQPreferencesTextEditViewController
-@synthesize delegate = _delegate;
 @synthesize listItem = _listItemText;
-@synthesize listItemPlaceholder = _listItemPlaceholder;
-@synthesize charactersRemainingBeforeDisplay = _charactersRemainingBeforeDisplay;
 
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
 		return nil;
 
@@ -26,7 +19,7 @@
 
 	_footerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	_footerLabel.font = [UIFont systemFontOfSize:14.];
-	_footerLabel.textAlignment = UITextAlignmentCenter;
+	_footerLabel.textAlignment = NSTextAlignmentCenter;
 	_footerLabel.backgroundColor = [UIColor clearColor];
 	_footerLabel.adjustsFontSizeToFitWidth = NO;
 
@@ -40,15 +33,6 @@
 
 - (void) dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-	[_delegate release];
-
-	[_listItemText release];
-	[_listItemPlaceholder release];
-
-	[_footerLabel release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -79,12 +63,12 @@
 	CQPreferencesTextViewCell *cell = (CQPreferencesTextViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
 	CQTextView *textView = cell.textView;
 
-	id old = _listItemText;
 	_listItemText = [textView.text copy];
-	[old release];
 
-	BOOL stringForFooterWithTextView = [_delegate respondsToSelector:@selector(stringForFooterWithTextView:)];
-	BOOL integerCountdown = [_delegate respondsToSelector:@selector(integerForCountdownInFooterWithTextView:)];
+	__strong __typeof__((_delegate)) delegate = _delegate;
+
+	BOOL stringForFooterWithTextView = [delegate respondsToSelector:@selector(stringForFooterWithTextView:)];
+	BOOL integerCountdown = [delegate respondsToSelector:@selector(integerForCountdownInFooterWithTextView:)];
 
 	if (!stringForFooterWithTextView && !integerCountdown) {
 		_footerLabel.frame = CGRectZero;
@@ -93,11 +77,11 @@
 
 	NSString *message = nil;
 	if (stringForFooterWithTextView)
-		message = [_delegate stringForFooterWithTextView:textView];
+		message = [delegate stringForFooterWithTextView:textView];
 
 	NSInteger charactersRemaining = 0;
 	if (integerCountdown)
-		charactersRemaining = [_delegate integerForCountdownInFooterWithTextView:textView];
+		charactersRemaining = [delegate integerForCountdownInFooterWithTextView:textView];
 
 	BOOL emptyFrame = CGRectEqualToRect(_footerLabel.frame, CGRectZero);
 
@@ -105,14 +89,9 @@
 		if (emptyFrame)
 			return;
 
-		[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:.15];
-		[UIView setAnimationBeginsFromCurrentState:YES];
-
-		_footerLabel.frame = CGRectZero;
-
-		[UIView commitAnimations];
+		[UIView animateWithDuration:.15 delay:.0 options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState) animations:^{
+			_footerLabel.frame = CGRectZero;
+		} completion:NULL];
 
 		return;
 	}
@@ -122,26 +101,18 @@
 	self.tableView.tableFooterView = _footerLabel;
 
 	if (integerCountdown && stringForFooterWithTextView)
-		_footerLabel.text = [NSString stringWithFormat:@"%d %@", charactersRemaining, message];
+		_footerLabel.text = [NSString stringWithFormat:@"%tu %@", charactersRemaining, message];
 	else if (stringForFooterWithTextView)
 		_footerLabel.text = message;
-	else _footerLabel.text = [NSString stringWithFormat:@"%d", charactersRemaining];
+	else _footerLabel.text = [NSString stringWithFormat:@"%tu", charactersRemaining];
 
 	// only animate if we're showing up on screen for the first time
-	if (emptyFrame) {
-		[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:.15];
-		[UIView setAnimationBeginsFromCurrentState:YES];
-	}
+	[UIView animateWithDuration:(emptyFrame ? .15 : .0) delay:.0 options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionBeginFromCurrentState) animations:^{
+		[_footerLabel sizeToFit];
 
-	[_footerLabel sizeToFit];
-
-	CGRect frame = _footerLabel.frame;
-	_footerLabel.frame = CGRectMake((self.tableView.frame.size.width / 2) - floor((frame.size.width / 2)), frame.origin.y, frame.size.width, frame.size.height);
-
-	if (emptyFrame)
-		[UIView commitAnimations];
+		CGRect frame = _footerLabel.frame;
+		_footerLabel.frame = CGRectMake((self.tableView.frame.size.width / 2) - floor((frame.size.width / 2)), frame.origin.y, frame.size.width, frame.size.height);
+	} completion:NULL];
 }
 
 #pragma mark -
@@ -168,7 +139,15 @@
 	return cell;
 }
 
-- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void) viewWillTransitionToSize:(CGSize) size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>) coordinator {
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 	[self.tableView reloadData];
 }
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+	[self.tableView reloadData];
+}
+#endif
 @end

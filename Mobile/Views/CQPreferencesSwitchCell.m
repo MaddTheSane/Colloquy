@@ -1,14 +1,9 @@
 #import "CQPreferencesSwitchCell.h"
 
 @implementation CQPreferencesSwitchCell
-@synthesize switchControlBlock = _switchControlBlock;
-
-- (id) initWithStyle:(UITableViewCellStyle) style reuseIdentifier:(NSString *) reuseIdentifier {
+- (instancetype) initWithStyle:(UITableViewCellStyle) style reuseIdentifier:(NSString *) reuseIdentifier {
 	if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]))
 		return nil;
-
-	// Workaround the font showing up larger in edit vs new. Not sure why...
-	self.textLabel.font = [UIFont boldSystemFontOfSize:17.];
 
 	self.selectionStyle = UITableViewCellSelectionStyleNone;
 
@@ -21,14 +16,6 @@
 	return self;
 }
 
-- (void) dealloc {
-	self.switchControlBlock = nil;
-
-	[_switchControl release];
-
-	[super dealloc];
-}
-
 #pragma mark -
 
 - (void) valueChanged:(id) sender {
@@ -36,12 +23,10 @@
 		self.switchControlBlock(sender);
 }
 
-@synthesize switchControl = _switchControl;
-
 - (SEL) switchAction {
 	NSArray *actions = [_switchControl actionsForTarget:nil forControlEvent:UIControlEventValueChanged];
 	if (!actions.count) return NULL;
-	return NSSelectorFromString([actions objectAtIndex:0]);
+	return NSSelectorFromString(actions[0]);
 }
 
 - (void) setSwitchAction:(SEL) action {

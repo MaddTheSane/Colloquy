@@ -1,7 +1,7 @@
 #import "CQChatRoomInfoTableCell.h"
 
 @implementation CQChatRoomInfoTableCell
-- (id) initWithStyle:(UITableViewCellStyle) style reuseIdentifier:(NSString *) reuseIdentifier {
+- (instancetype) initWithStyle:(UITableViewCellStyle) style reuseIdentifier:(NSString *) reuseIdentifier {
 	if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]))
 		return nil;
 
@@ -45,17 +45,6 @@
 	return self;
 }
 
-- (void) dealloc {
-	[_iconImageView release];
-	[_memberIconImageView release];
-	[_nameLabel release];
-	[_topicLabel release];
-	[_memberCountLabel release];
-	[_checkmarkImageView release];
-
-	[super dealloc];
-}
-
 #pragma mark -
 
 - (NSString *) name {
@@ -81,7 +70,7 @@
 }
 
 - (void) setMemberCount:(NSUInteger) memberCount {
-	_memberCountLabel.text = [NSString stringWithFormat:@"%d", memberCount];
+	_memberCountLabel.text = [NSString stringWithFormat:@"%tu", memberCount];
 	_memberCountLabel.hidden = (memberCount ? NO : YES);
 	_memberIconImageView.hidden = (memberCount ? NO : YES);
 
@@ -108,18 +97,12 @@
 }
 
 - (void) setEditing:(BOOL) editing animated:(BOOL) animated {
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationCurve:(editing ? UIViewAnimationCurveEaseIn : UIViewAnimationCurveEaseOut)];
-	}
+	[UIView animateWithDuration:.3 delay:.0 options:(editing ? UIViewAnimationOptionCurveEaseIn : UIViewAnimationOptionCurveEaseOut) animations:^{
+		[super setEditing:editing animated:animated];
 
-	[super setEditing:editing animated:animated];
-
-	_memberCountLabel.alpha = editing ? 0. : 1.;
-	_memberIconImageView.alpha = editing ? 0. : 1.;
-
-	if (animated)
-		[UIView commitAnimations];
+		_memberCountLabel.alpha = editing ? 0. : 1.;
+		_memberIconImageView.alpha = editing ? 0. : 1.;
+	} completion:NULL];
 }
 
 - (void) layoutSubviews {
@@ -146,15 +129,16 @@
 	_iconImageView.frame = frame;
 
 	frame = _memberIconImageView.frame;
-	frame.size = [_memberIconImageView sizeThatFits:_memberIconImageView.bounds.size];
+	frame.size = _memberIconImageView.image.size; // [_memberIconImageView sizeThatFits:_memberIconImageView.bounds.size];
+	frame.size.height -= 4.0;
+	frame.size.width -= 4.0;
 	frame.origin.y = round((contentRect.size.height / 2.) - frame.size.height - 1.);
 
 	if (self.showingDeleteConfirmation || self.showsReorderControl)
 		frame.origin.x = self.bounds.size.width - contentRect.origin.x + frame.size.width;
 	else if (self.editing)
 		frame.origin.x = contentRect.size.width - frame.size.width;
-	else
-		frame.origin.x = contentRect.size.width - frame.size.width - TEXT_RIGHT_MARGIN;
+	else frame.origin.x = contentRect.size.width - frame.size.width - TEXT_RIGHT_MARGIN;
 
 	_memberIconImageView.frame = frame;
 

@@ -7,7 +7,9 @@
 #define CompletionBubbleInset 6.5
 
 @implementation CQTextCompletionView
-- (id) initWithFrame:(CGRect) frame {
+@synthesize delegate = _delegate;
+
+- (instancetype) initWithFrame:(CGRect) frame {
 	if (!(self = [super initWithFrame:frame]))
 		return nil;
 	self.opaque = NO;
@@ -57,7 +59,7 @@
 	CGFloat offset = CompletionMargin;
 	UIFont *font = CompletionFont;
 
-	for (NSString *completion in _completions) {
+	for (__strong NSString *completion in _completions) {
 		BOOL selected = (_selectedCompletion == i);
 		CGSize textSize = _completionTextSizes[i++];
 
@@ -84,7 +86,7 @@
 		else CGContextSetRGBFillColor(ctx, (25. / 255.), (121. / 255.), (227. / 255.), 1.);
 
 		completion = [completion stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-		[completion drawAtPoint:textPoint withFont:font];
+		[completion drawAtPoint:textPoint withAttributes:@{ NSFontAttributeName: font }];
 
 		offset += textSize.width + (CompletionMargin * 2.);
 	}
@@ -117,25 +119,16 @@
 
 	font = [UIFont systemFontOfSize:18.];
 
-	CGSize textSize = [@"\u00d7" sizeWithFont:font];
+	CGSize textSize = [@"\u00d7" sizeWithAttributes:@{ NSFontAttributeName: font }];
 	CGPoint textPoint = CGPointZero;
 	textPoint.x = round(enclosingRect.origin.x + offset + 2.);
 	textPoint.y = round(enclosingRect.origin.y + (enclosingRect.size.height / 2.) - (textSize.height / 2.) - 1.);
 
-	[@"\u00d7" drawAtPoint:textPoint withFont:font];
+	[@"\u00d7" drawAtPoint:textPoint withAttributes:@{ NSFontAttributeName: font }];
 }
 
-- (void) dealloc {
-	[_completions release];
-
-	[super dealloc];
-}
 
 #pragma mark -
-
-@synthesize delegate;
-
-@synthesize completions = _completions;
 
 - (void) setCompletions:(NSArray *) completions {
 	UIFont *font = CompletionFont;
@@ -149,16 +142,14 @@
 			continue;
 
 		objects[i] = completion;
-		_completionTextSizes[i] = [[completion stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] sizeWithFont:font];
+		_completionTextSizes[i] = [[completion stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] sizeWithAttributes:@{ NSFontAttributeName: font }];
 
 		[existingCompletions addObject:completion];
 
 		if (++i >= MaximumCompletions) break;
 	}
 
-	id old = _completions;
 	_completions = [[NSArray alloc] initWithObjects:objects count:i];
-	[old release];
 
 	_selectedCompletion = NSNotFound;
 
@@ -261,19 +252,17 @@
 	if (_selectedCompletion == NSNotFound)
 		return;
 
-	[self retain];
-
+	__strong __typeof__((_delegate)) delegate = _delegate;
 	if (_selectedCompletion >= MaximumCompletions || _selectedCompletion >= _completions.count) {
 		if ([delegate respondsToSelector:@selector(textCompletionViewDidClose:)])
 			[delegate textCompletionViewDidClose:self];
 	} else {
 		if ([delegate respondsToSelector:@selector(textCompletionView:didSelectCompletion:)])
-			[delegate textCompletionView:self didSelectCompletion:[_completions objectAtIndex:_selectedCompletion]];
+			[delegate textCompletionView:self didSelectCompletion:_completions[_selectedCompletion]];
 	}
 
 	self.selectedCompletion = NSNotFound;
 
-	[self release];
 }
 
 - (void) touchesCancelled:(NSSet *) touches withEvent:(UIEvent *) event {

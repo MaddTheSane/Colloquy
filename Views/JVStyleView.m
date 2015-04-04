@@ -186,8 +186,8 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 }
 
 - (void) dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:JVStyleVariantChangedNotification object:nil];
-
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:JVStyleVariantChangedNotification object:nil];
 
 	nextTextView = nil;
 	_transcript = nil;
@@ -200,7 +200,6 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 	_body = nil;
 	_bodyTemplate = nil;
 	_messagesToAppend = nil;
-
 }
 
 #pragma mark -
@@ -278,8 +277,8 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 	NSString *timeFormatParameter = [NSString stringWithFormat:@"'%@'", [NSDate formattedShortTimeStringForDate:[NSDate date]]];
 	[_styleParameters setObject:timeFormatParameter forKey:@"timeFormat"];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:JVStyleVariantChangedNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _styleVariantChanged: ) name:JVStyleVariantChangedNotification object:style];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:JVStyleVariantChangedNotification object:nil];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _styleVariantChanged: ) name:JVStyleVariantChangedNotification object:style];
 
 	_switchingStyles = YES;
 	_requiresFullMessage = YES;
@@ -771,7 +770,7 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 		[[self window] enableFlushWindow];
 
 	_contentFrameReady = YES;
-	[[NSNotificationCenter defaultCenter] postNotificationName:JVStyleViewDidClearNotification object:self];
+	[[NSNotificationCenter chatCenter] postNotificationName:JVStyleViewDidClearNotification object:self];
 	if( _switchingStyles )
 		[NSThread detachNewThreadSelector:@selector( _switchStyle ) toTarget:self withObject:nil];
 }
@@ -843,8 +842,7 @@ quickEnd:
 		[self performSelectorOnMainThread:@selector( _switchingStyleFinished: ) withObject:nil waitUntilDone:YES];
 
 		NSNotification *note = [NSNotification notificationWithName:JVStyleViewDidChangeStylesNotification object:self userInfo:nil];
-		[[NSNotificationCenter defaultCenter] postNotificationOnMainThread:note];
-
+		[[NSNotificationCenter chatCenter] postNotificationOnMainThread:note];
 	}
 }
 

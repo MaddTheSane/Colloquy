@@ -5,8 +5,6 @@
 #import "CQWelcomeViewController.h"
 
 @implementation CQWelcomeController
-@synthesize shouldShowOnlyHelpTopics = _shouldShowOnlyHelpTopics;
-
 - (void) viewDidLoad {
 	if (_shouldShowOnlyHelpTopics && !_rootViewController)
 		_rootViewController = [[CQHelpTopicsViewController alloc] init];
@@ -17,7 +15,6 @@
 
 	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(close:)];
 	_rootViewController.navigationItem.leftBarButtonItem = doneButton;
-	[doneButton release];
 }
 
 - (void) close:(id) sender {

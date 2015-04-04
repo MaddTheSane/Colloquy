@@ -3,49 +3,49 @@
 #import <ChatCore/MVAvailability.h>
 #import <ChatCore/MVChatString.h>
 
-typedef enum {
+typedef NS_ENUM(NSInteger, MVChatConnectionType) {
 	MVChatConnectionUnsupportedType = 0,
 	MVChatConnectionICBType = 'icbC',
 	MVChatConnectionIRCType = 'ircC',
 	MVChatConnectionSILCType = 'silC',
 	MVChatConnectionXMPPType = 'xmpC'
-} MVChatConnectionType;
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, MVChatConnectionStatus) {
 	MVChatConnectionDisconnectedStatus = 'disC',
 	MVChatConnectionServerDisconnectedStatus = 'sdsC',
 	MVChatConnectionConnectingStatus = 'conG',
 	MVChatConnectionConnectedStatus = 'conD',
 	MVChatConnectionSuspendedStatus = 'susP'
-} MVChatConnectionStatus;
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, MVChatConnectionProxy) {
 	MVChatConnectionNoProxy = 'nonE',
 	MVChatConnectionHTTPProxy = 'httP',
 	MVChatConnectionHTTPSProxy = 'htpS',
 	MVChatConnectionSOCKS4Proxy = 'soK4',
 	MVChatConnectionSOCKS5Proxy = 'soK5'
-} MVChatConnectionProxy;
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, MVChatConnectionBouncer) {
 	MVChatConnectionNoBouncer = 'nonB',
 	MVChatConnectionGenericBouncer = 'gbnC',
 	MVChatConnectionColloquyBouncer = 'cbnC'
-} MVChatConnectionBouncer;
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, MVChatConnectionPublicKeyType) {
 	MVChatConnectionServerPublicKeyType = 'serV',
 	MVChatConnectionClientPublicKeyType = 'clnT'
-} MVChatConnectionPublicKeyType;
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, MVChatMessageFormat) {
 	MVChatConnectionDefaultMessageFormat = 'cDtF',
 	MVChatNoMessageFormat = 'nOcF',
 	MVChatWindowsIRCMessageFormat = 'mIrF',
 	MVChatCTCPTwoMessageFormat = 'ct2F'
-} MVChatMessageFormat;
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, MVChatConnectionError) {
 	MVChatConnectionUnknownError = -1,
 	MVChatConnectionNoSuchUserError = -2,
 	MVChatConnectionNoSuchRoomError = -3,
@@ -68,17 +68,50 @@ typedef enum {
 	MVChatConnectionIdentifyToJoinRoomError = -20,
 	MVChatConnectionRoomDoesNotSupportModesError = -21,
 	MVChatConnectionNickChangedByServicesError = -22,
-	MVChatConnectionServicesDownError = -23
-} MVChatConnectionError;
+	MVChatConnectionServicesDownError = -23,
+	MVChatConnectionTLSError = -24
+};
+
+typedef BOOL (^MVPeerTrustHandler)(SecTrustRef);
 
 @class MVChatRoom;
 @class MVChatUser;
 @class MVChatUserWatchRule;
 @class MVUploadFileTransfer;
 
+extern NSString *MVChatConnectionWatchFeature;
+
+// IRC3v1 Required
 extern NSString *MVChatConnectionSASLFeature;
 extern NSString *MVChatConnectionMultipleNicknamePrefixFeature;
 
+// IRC3v1 Optional
+extern NSString *MVChatConnectionAccountNotify;
+extern NSString *MVChatConnectionAwayNotify;
+extern NSString *MVChatConnectionExtendedJoin;
+extern NSString *MVChatConnectionTLS;
+
+// IRC3v2 Required
+extern NSString *MVChatConnectionMessageTags;
+extern NSString *MVChatConnectionMessageIntents;
+extern NSString *MVChatConnectionMetadata;
+extern NSString *MVChatConnectionMonitor;
+
+// IRC3v2 Optional
+extern NSString *MVChatConnectionServerTime;
+extern NSString *MVChatConnectionBatch;
+extern NSString *MVChatConnectionUserhostInNames;
+extern NSString *MVChatConnectionChghost;
+
+extern NSString *MVChatConnectionAccountTag;
+extern NSString *MVChatConnectionCapNotify;
+extern NSString *MVChatConnectionInvite;
+extern NSString *MVChatConnectionSelfMessage;
+
+// InspIRCd Enhancements
+extern NSString *MVChatConnectionNamesx;
+
+// Notifications
 extern NSString *MVChatConnectionWillConnectNotification;
 extern NSString *MVChatConnectionDidConnectNotification;
 extern NSString *MVChatConnectionDidNotConnectNotification;
@@ -87,7 +120,9 @@ extern NSString *MVChatConnectionDidDisconnectNotification;
 extern NSString *MVChatConnectionGotErrorNotification;
 extern NSString *MVChatConnectionErrorNotification;
 
+extern NSString *MVChatConnectionNeedTLSPeerTrustFeedbackNotification; // used when connecting
 extern NSString *MVChatConnectionNeedNicknamePasswordNotification;
+extern NSString *MVChatConnectionNeedServerPasswordNotification;
 extern NSString *MVChatConnectionNeedCertificatePasswordNotification;
 extern NSString *MVChatConnectionNeedPublicKeyVerificationNotification;
 
@@ -97,6 +132,8 @@ extern NSString *MVChatConnectionGotInformationalMessageNotification;
 extern NSString *MVChatConnectionGotRawMessageNotification;
 extern NSString *MVChatConnectionGotPrivateMessageNotification;
 extern NSString *MVChatConnectionChatRoomListUpdatedNotification;
+extern NSString *MVChatConnectionBatchUpdatesWillBeginNotification;
+extern NSString *MVChatConnectionBatchUpdatesDidEndNotification;
 
 extern NSString *MVChatConnectionSelfAwayStatusChangedNotification;
 
@@ -154,6 +191,7 @@ extern NSString *MVChatConnectionErrorDomain;
 	unsigned short _bouncerServerPort;
 
 	BOOL _secure;
+	BOOL _connectedSecurely;
 	BOOL _requestsSASL;
 	BOOL _roomsWaitForIdentification;
 	BOOL _roomListDirty;
@@ -172,9 +210,9 @@ extern NSString *MVChatConnectionErrorDomain;
 
 #pragma mark -
 
-- (id) initWithType:(MVChatConnectionType) type;
-- (id) initWithURL:(NSURL *) url;
-- (id) initWithServer:(NSString *) server type:(MVChatConnectionType) type port:(unsigned short) port user:(NSString *) nickname;
+- (instancetype) initWithType:(MVChatConnectionType) type;
+- (instancetype) initWithURL:(NSURL *) url;
+- (instancetype) initWithServer:(NSString *) server type:(MVChatConnectionType) type port:(unsigned short) port user:(NSString *) nickname;
 
 #pragma mark -
 
@@ -182,14 +220,14 @@ extern NSString *MVChatConnectionErrorDomain;
 
 @property(copy) NSString *uniqueIdentifier;
 
-@property(readonly) NSSet *supportedFeatures;
+@property(strong, readonly) NSSet *supportedFeatures;
 @property(readonly) const NSStringEncoding *supportedStringEncodings;
 
-@property(readonly) NSError *lastError;
-@property(readonly) NSError *serverError;
+@property(strong, readonly) NSError *lastError;
+@property(strong, readonly) NSError *serverError;
 
-@property(readonly) NSString *urlScheme;
-@property(readonly) NSURL *url;
+@property(strong, readonly) NSString *urlScheme;
+@property(strong, readonly) NSURL *url;
 
 @property NSStringEncoding encoding;
 
@@ -199,12 +237,12 @@ extern NSString *MVChatConnectionErrorDomain;
 @property(copy) NSString *preferredNickname;
 
 @property(copy) NSArray *alternateNicknames;
-@property(readonly) NSString *nextAlternateNickname;
+@property(strong, readonly) NSString *nextAlternateNickname;
 
 @property(copy) NSString *nicknamePassword;
 
-@property(readonly) NSString *certificateServiceName;
-@property(readonly) NSString *certificatePassword;
+@property(strong, readonly) NSString *certificateServiceName;
+@property(strong, readonly) NSString *certificatePassword;
 
 @property(copy) NSString *password;
 
@@ -216,6 +254,7 @@ extern NSString *MVChatConnectionErrorDomain;
 
 @property MVChatMessageFormat outgoingChatFormat;
 
+@property(getter=didConnectSecurely) BOOL connectedSecurely; // IRCv3.1 + `tls` capability can indicate that the *next* connection will be secure, but not our current one
 @property(getter=isSecure) BOOL secure;
 @property BOOL requestsSASL;
 @property BOOL roomsWaitForIdentification;
@@ -236,20 +275,20 @@ extern NSString *MVChatConnectionErrorDomain;
 @property(copy) NSString *bouncerDeviceIdentifier;
 @property(copy) NSString *bouncerConnectionIdentifier;
 
-@property(readonly) NSSet *knownChatRooms;
-@property(readonly) NSSet *joinedChatRooms;
-@property(readonly) NSCharacterSet *chatRoomNamePrefixes;
+@property(strong, readonly) NSSet *knownChatRooms;
+@property(strong, readonly) NSSet *joinedChatRooms;
+@property(strong, readonly) NSCharacterSet *chatRoomNamePrefixes;
 
-@property(readonly) NSSet *knownChatUsers;
-@property(readonly) MVChatUser *localUser;
+@property(strong, readonly) NSSet *knownChatUsers;
+@property(strong, readonly) MVChatUser *localUser;
 
-@property(readonly) NSSet *chatUserWatchRules;
+@property(strong, readonly) NSSet *chatUserWatchRules;
 
 @property(copy) MVChatString *awayStatusMessage;
 
 @property(readonly, getter=isConnected) BOOL connected;
-@property(readonly) NSDate *connectedDate;
-@property(readonly) NSDate *nextReconnectAttemptDate;
+@property(strong, readonly) NSDate *connectedDate;
+@property(strong, readonly) NSDate *nextReconnectAttemptDate;
 @property(readonly, getter=isWaitingToReconnect) BOOL waitingToReconnect;
 @property(readonly) unsigned short reconnectAttemptCount;
 @property(readonly) MVChatConnectionStatus status;
@@ -278,6 +317,7 @@ extern NSString *MVChatConnectionErrorDomain;
 - (void) connectToServer:(NSString *) server onPort:(unsigned short) port asUser:(NSString *) nickname;
 - (void) disconnect;
 - (void) disconnectWithReason:(MVChatString *) reason;
+- (void) forceDisconnect;
 
 #pragma mark -
 
@@ -338,7 +378,7 @@ extern NSString *MVChatConnectionErrorDomain;
 
 - (void) fetchChatRoomList;
 - (void) stopFetchingChatRoomList;
-- (NSMutableDictionary *) chatRoomListResults;
+@property (readonly, copy) NSMutableDictionary *chatRoomListResults;
 
 #pragma mark -
 

@@ -5,7 +5,6 @@
 #import "NSAttributedStringMoreAdditions.h"
 
 #import <libxml/tree.h>
-#import <ChatCore/NSStringAdditions.h>
 
 static void setItalicOrObliqueFont( NSMutableDictionary *attrs ) {
 	NSFontManager *fm = [NSFontManager sharedFontManager];

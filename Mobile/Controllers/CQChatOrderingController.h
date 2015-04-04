@@ -9,6 +9,8 @@
 @class MVChatConnection;
 @class MVDirectChatConnection;
 
+extern NSString *const CQChatOrderingControllerDidChangeOrderingNotification;
+
 @interface CQChatOrderingController : NSObject {
 	@private
 	NSMutableArray *_chatControllers;
@@ -19,6 +21,7 @@
 
 - (NSUInteger) indexOfViewController:(id <CQChatViewController>) controller;
 - (void) addViewController:(id <CQChatViewController>) controller;
+- (void) addViewControllers:(NSArray *) controllers;
 - (void) removeViewController:(id <CQChatViewController>) controller;
 
 - (BOOL) connectionHasAnyChatRooms:(MVChatConnection *) connection;
@@ -38,4 +41,7 @@
 
 - (id <CQChatViewController>) chatViewControllerPreceedingChatController:(id <CQChatViewController>) chatViewController requiringActivity:(BOOL) requiringActivity requiringHighlight:(BOOL) requiringHighlight;
 - (id <CQChatViewController>) chatViewControllerFollowingChatController:(id <CQChatViewController>) chatViewController requiringActivity:(BOOL) requiringActivity requiringHighlight:(BOOL) requiringHighlight;
+
+- (id) connectionAtIndex:(NSInteger) index;
+- (NSUInteger) sectionIndexForConnection:(id) connection;
 @end

@@ -1,7 +1,7 @@
 #import "CQUnreadCountView.h"
 
 @implementation CQUnreadCountView
-- (id) initWithFrame:(CGRect) frame {
+- (instancetype) initWithFrame:(CGRect) frame {
 	if (!(self = [super initWithFrame:frame]))
 		return nil;
 	self.opaque = NO;
@@ -17,16 +17,12 @@
 	[self setNeedsDisplay];
 }
 
-@synthesize importantCount = _importantCount;
-
 - (void) setImportantCount:(NSUInteger) importantCount {
 	if (_importantCount == importantCount)
 		return;
 	_importantCount = importantCount;
 	[self setNeedsDisplay];
 }
-
-@synthesize highlighted = _highlighted;
 
 - (void) setHighlighted:(BOOL) highlighted {
 	if (_highlighted == highlighted)
@@ -40,8 +36,8 @@
 		return CGSizeZero;
 
 	UIFont *font = [UIFont boldSystemFontOfSize:16.];
-	NSString *numberString = [NSString stringWithFormat:@"%u", (_importantCount ? _importantCount : _normalCount)];
-	CGSize textSize = [numberString sizeWithFont:font];
+	NSString *numberString = [NSString stringWithFormat:@"%tu", (_importantCount ? _importantCount : _normalCount)];
+	CGSize textSize = [numberString sizeWithAttributes:@{ NSFontAttributeName: font }];
 
 	CGFloat radius = 10.;
 	CGRect enclosingRect = CGRectMake(0., 0., MAX(textSize.width + radius + (_importantCount && _normalCount ? radius * 1.2 : 0.), radius * 2.), radius * 2.);
@@ -52,8 +48,8 @@
 	if (_importantCount && _normalCount) {
 		CGSize previousTextSize = textSize;
 
-		numberString = [NSString stringWithFormat:@"%u", _normalCount];
-		textSize = [numberString sizeWithFont:font];
+		numberString = [NSString stringWithFormat:@"%tu", _normalCount];
+		textSize = [numberString sizeWithAttributes:@{ NSFontAttributeName: font }];
 
 		enclosingRect = CGRectMake(previousTextSize.width + (radius * 1.2), 0., MAX(textSize.width + radius, radius * 2.), radius * 2.);
 
@@ -69,8 +65,8 @@
 		return;
 
 	UIFont *font = [UIFont boldSystemFontOfSize:16.];
-	NSString *numberString = [NSString stringWithFormat:@"%u", (_importantCount ? _importantCount : _normalCount)];
-	CGSize textSize = [numberString sizeWithFont:font];
+	NSString *numberString = [NSString stringWithFormat:@"%tu", (_importantCount ? _importantCount : _normalCount)];
+	CGSize textSize = [numberString sizeWithAttributes:@{ NSFontAttributeName: font }];
 
 	CGFloat radius = 10.;
 	CGRect enclosingRect = CGRectMake(0., 0., MAX(textSize.width + radius + (_importantCount && _normalCount ? radius * 1.2 : 0.), radius * 2.), radius * 2.);
@@ -103,13 +99,13 @@
 	textPoint.x += round(((enclosingRect.size.width - (_importantCount && _normalCount ? radius * .8 : 0.)) / 2.) - (textSize.width / 2.));
 	textPoint.y += round((enclosingRect.size.height / 2.) - (textSize.height / 2.));
 
-	[numberString drawAtPoint:textPoint withFont:font];
+	[numberString drawAtPoint:textPoint withAttributes:@{ NSFontAttributeName: font }];
 
 	if (_importantCount && _normalCount) {
 		CGSize previousTextSize = textSize;
 
-		numberString = [NSString stringWithFormat:@"%u", _normalCount];
-		textSize = [numberString sizeWithFont:font];
+		numberString = [NSString stringWithFormat:@"%tu", _normalCount];
+		textSize = [numberString sizeWithAttributes:@{ NSFontAttributeName: font }];
 
 		enclosingRect = CGRectMake(previousTextSize.width + (radius * 1.2), 0., MAX(textSize.width + radius, radius * 2.), radius * 2.);
 		if (((NSUInteger)enclosingRect.size.width % 2) == 0 && ((NSUInteger)textSize.width % 2) != 0)
@@ -150,7 +146,7 @@
 		textPoint.x += round((enclosingRect.size.width / 2.) - (textSize.width / 2.));
 		textPoint.y += round((enclosingRect.size.height / 2.) - (textSize.height / 2.));
 
-		[numberString drawAtPoint:textPoint withFont:font];
+		[numberString drawAtPoint:textPoint withAttributes:@{ NSFontAttributeName: font }];
 	}
 }
 @end

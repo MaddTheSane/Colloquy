@@ -17,7 +17,7 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 #pragma mark -
 
 @implementation CQConnectionCreationViewController
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super init]))
 		return nil;
 
@@ -33,12 +33,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 	_connection.encoding = [MVChatConnection defaultEncoding];
 
 	return self;
-}
-
-- (void) dealloc {
-	[_connection release];
-
-	[super dealloc];
 }
 
 - (NSURL *) url {
@@ -58,7 +52,7 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 	else if (url.path.length > 1) target = [[url.path substringFromIndex:1] stringByDecodingIllegalURLCharacters];
 
 	if (target.length)
-		_connection.automaticJoinedRooms = [NSArray arrayWithObject:target];
+		_connection.automaticJoinedRooms = @[target];
 
 	_rootViewController.navigationItem.rightBarButtonItem.enabled = (url.host.length ? YES : NO);
 }
@@ -76,7 +70,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 
 	UIBarButtonItem *connectItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Connect", @"Connect button title") style:UIBarButtonItemStyleDone target:self action:@selector(commit:)];
 	_rootViewController.navigationItem.rightBarButtonItem = connectItem;
-	[connectItem release];
 
 	_rootViewController.navigationItem.rightBarButtonItem.tag = UIBarButtonSystemItemSave;
 	_rootViewController.navigationItem.rightBarButtonItem.enabled = (_connection.server.length && !isPlaceholderValue(_connection.server));

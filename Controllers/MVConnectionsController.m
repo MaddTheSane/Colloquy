@@ -13,7 +13,11 @@
 #import <ChatCore/MVChatConnection.h>
 #import <ChatCore/MVChatRoom.h>
 
+#import <SecurityInterface/SFCertificateTrustPanel.h>
+
 static MVConnectionsController *sharedInstance = nil;
+
+static NSString *const connectionInvalidSSLCertAction = nil;
 
 static NSString *MVToolbarConnectToggleItemIdentifier = @"MVToolbarConnectToggleItem";
 static NSString *MVToolbarEditItemIdentifier = @"MVToolbarEditItem";
@@ -55,8 +59,8 @@ static NSMenu *favoritesMenu = nil;
 		sharedInstance = [sharedInstance initWithWindowNibName:nil];
 	}
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_refreshFavoritesMenu) name:MVChatRoomJoinedNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_refreshFavoritesMenu) name:MVChatRoomPartedNotification object:nil];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_refreshFavoritesMenu) name:MVChatRoomJoinedNotification object:nil];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_refreshFavoritesMenu) name:MVChatRoomPartedNotification object:nil];
 
 	return sharedInstance;
 }
@@ -81,7 +85,6 @@ static NSMenu *favoritesMenu = nil;
 	}
 
 	NSImage *icon = [[NSImage imageNamed:@"room"] copy];
-	[icon setScalesWhenResized:YES];
 	[icon setSize:NSMakeSize( 16., 16. )];
 
 	for( NSDictionary *item in favorites ) {
@@ -164,6 +167,7 @@ static NSMenu *favoritesMenu = nil;
 		_bookmarks = nil;
 		_passConnection = nil;
 
+		_connectionToErrorToAlertMap = [NSMapTable strongToStrongObjectsMapTable];
 		_joinRooms = [[NSMutableArray allocWithZone:nil] init];
 		_publicKeyRequestQueue = [[NSMutableSet allocWithZone:nil] init];
 
@@ -193,6 +197,7 @@ static NSMenu *favoritesMenu = nil;
 			if ([favorites writeToFile:[@"~/Library/Application Support/Colloquy/Favorites/Favorites.plist" stringByExpandingTildeInPath] atomically:YES])
 				[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"JVFavoritesMigrated"];
 		}
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_peerTrustFeedbackNotification:) name:MVChatConnectionNeedTLSPeerTrustFeedbackNotification object:nil];
 	}
 
 	return self;
@@ -210,6 +215,7 @@ static NSMenu *favoritesMenu = nil;
 	[userSelectionTable setDelegate:nil];
 	[userSelectionTable setDataSource:nil];
 
+	[[NSNotificationCenter chatCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	if( self == sharedInstance ) sharedInstance = nil;
 
@@ -411,6 +417,37 @@ static NSMenu *favoritesMenu = nil;
 	[[NSWorkspace sharedWorkspace] openFile:@"/System/Library/PreferencePanes/Network.prefPane"];
 }
 
+- (void) _peerTrustFeedbackNotification:(NSNotification *) notification {
+	void (^completionHandler)(BOOL shouldTrustPeer) = notification.userInfo[@"completionHandler"];
+	if ([connectionInvalidSSLCertAction isEqualToString:@"Deny"]) {
+		completionHandler(NO);
+		return;
+	}
+
+	if ([connectionInvalidSSLCertAction isEqualToString:@"Allow"]) {
+		completionHandler(YES);
+		return;
+	}
+
+	// Ask people what to do, if its ever been turned on
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MVAskOnInvalidCertificates"] || [[[MVKeyChain defaultKeyChain] genericPasswordForService:@"MVAskOnInvalidCertificates" account:@"MVSecurePrefs"] boolValue]) {
+		[[MVKeyChain defaultKeyChain] setGenericPassword:@"1" forService:@"MVAskOnInvalidCertificates" account:@"MVSecurePrefs"];
+
+		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel sharedCertificateTrustPanel];
+		panel.showsHelp = YES;
+
+		[panel setDefaultButtonTitle:NSLocalizedString(@"Continue", @"Continue button")];
+		[panel setAlternateButtonTitle:NSLocalizedString(@"Cancel", @"Cancel button")];
+
+		SecTrustRef trust = (__bridge SecTrustRef)notification.userInfo[@"trust"];
+		NSInteger shouldTrust = [panel runModalForTrust:trust showGroup:YES];
+
+		completionHandler(shouldTrust == NSOKButton);
+	} else {
+		completionHandler(YES);
+	}
+}
+
 - (IBAction) connectNewConnection:(id) sender {
 	if( ! [[newNickname stringValue] length] ) {
 		[[self window] makeFirstResponder:newNickname];
@@ -441,7 +478,7 @@ static NSMenu *favoritesMenu = nil;
 	}
 
 	NSMutableCharacterSet *allowedCharacters = (NSMutableCharacterSet *)[NSMutableCharacterSet alphanumericCharacterSet];
-	[allowedCharacters addCharactersInString:@"`_-|^{}[]@."];
+	[allowedCharacters addCharactersInString:@"`_-|^{}[]@./"];
 
 	NSCharacterSet *illegalCharacters = [allowedCharacters invertedSet];
 
@@ -597,7 +634,7 @@ static NSMenu *favoritesMenu = nil;
 
 		if( note ) {
 			[_publicKeyRequestQueue removeObject:note];
-			[[NSNotificationCenter defaultCenter] postNotification:note];
+			[[NSNotificationCenter chatCenter] postNotification:note];
 		}
 	}
 }
@@ -1443,42 +1480,42 @@ static NSMenu *favoritesMenu = nil;
 }
 
 - (void) _registerNotificationsForConnection:(MVChatConnection *) connection {
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _refresh: ) name:MVChatConnectionWillConnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _refresh: ) name:MVChatConnectionDidConnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _refresh: ) name:MVChatConnectionDidNotConnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _refresh: ) name:MVChatConnectionDidDisconnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _refresh: ) name:MVChatConnectionNicknameAcceptedNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _refresh: ) name:MVChatConnectionWillConnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _refresh: ) name:MVChatConnectionDidConnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _refresh: ) name:MVChatConnectionDidNotConnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _refresh: ) name:MVChatConnectionDidDisconnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _refresh: ) name:MVChatConnectionNicknameAcceptedNotification object:connection];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _willConnect: ) name:MVChatConnectionWillConnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _didConnect: ) name:MVChatConnectionDidConnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _didDisconnect: ) name:MVChatConnectionDidDisconnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _errorOccurred : ) name:MVChatConnectionErrorNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _willConnect: ) name:MVChatConnectionWillConnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _didConnect: ) name:MVChatConnectionDidConnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _didDisconnect: ) name:MVChatConnectionDidDisconnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _errorOccurred : ) name:MVChatConnectionErrorNotification object:connection];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _requestPassword: ) name:MVChatConnectionNeedNicknamePasswordNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _requestCertificatePassword: ) name:MVChatConnectionNeedCertificatePasswordNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _requestPublicKeyVerification: ) name:MVChatConnectionNeedPublicKeyVerificationNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _didIdentify: ) name:MVChatConnectionDidIdentifyWithServicesNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _machineDidBecomeIdle: ) name:JVMachineBecameIdleNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _machineDidStopIdling: ) name:JVMachineStoppedIdlingNotification object:connection];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _gotConnectionError: ) name:MVChatConnectionGotErrorNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _requestPassword: ) name:MVChatConnectionNeedNicknamePasswordNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _requestCertificatePassword: ) name:MVChatConnectionNeedCertificatePasswordNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _requestPublicKeyVerification: ) name:MVChatConnectionNeedPublicKeyVerificationNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _didIdentify: ) name:MVChatConnectionDidIdentifyWithServicesNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _machineDidBecomeIdle: ) name:JVMachineBecameIdleNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _machineDidStopIdling: ) name:JVMachineStoppedIdlingNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _gotConnectionError: ) name:MVChatConnectionGotErrorNotification object:connection];
 }
 
 - (void) _deregisterNotificationsForConnection:(MVChatConnection *) connection {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionWillConnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionDidConnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionDidNotConnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionDidDisconnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionNicknameAcceptedNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionWillConnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionDidConnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionDidNotConnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionDidDisconnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionNicknameAcceptedNotification object:connection];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionWillConnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionDidConnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionDidDisconnectNotification object:connection];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionErrorNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionWillConnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionDidConnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionDidDisconnectNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionErrorNotification object:connection];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionNeedNicknamePasswordNotification object:connection];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionNeedCertificatePasswordNotification object:connection];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionNeedPublicKeyVerificationNotification object:connection];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionDidIdentifyWithServicesNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionNeedNicknamePasswordNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionNeedCertificatePasswordNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionNeedPublicKeyVerificationNotification object:connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionDidIdentifyWithServicesNotification object:connection];
 }
 
 - (void) _refresh:(NSNotification *) notification {
@@ -1502,7 +1539,8 @@ static NSMenu *favoritesMenu = nil;
 - (void) _errorOccurred:(NSNotification *) notification {
 	NSString *errorTitle = nil;
 
-	switch ( [(NSError *)[[notification userInfo] objectForKey:@"error"] code] ) {
+	NSError *error = notification.userInfo[@"error"];
+	switch ( error.code ) {
 		case MVChatConnectionCantSendToRoomError:
 			errorTitle = NSLocalizedString( @"Can't Send to Room", "cannot send to room error title" );
 			break;
@@ -1540,15 +1578,27 @@ static NSMenu *favoritesMenu = nil;
 	[context setObject:[[[notification userInfo] objectForKey:@"error"] localizedDescription] forKey:@"description"];
 	[[JVNotificationController defaultController] performNotification:@"JVChatError" withContextInfo:context];
 
-	NSAlert *chatErrorAlert = [[NSAlert alloc] init];
+	NSMapTable *errorToAlertMappingsForConnection = [_connectionToErrorToAlertMap objectForKey:notification.object];
+	if (!errorToAlertMappingsForConnection) {
+		errorToAlertMappingsForConnection = [NSMapTable strongToStrongObjectsMapTable];
+		[_connectionToErrorToAlertMap setObject:errorToAlertMappingsForConnection forKey:notification.object];
+	}
+
+	NSAlert *chatErrorAlert = [errorToAlertMappingsForConnection objectForKey:@(error.code)];
+	if (chatErrorAlert) return;
+
+	chatErrorAlert = [[NSAlert alloc] init];
+
+	[errorToAlertMappingsForConnection setObject:chatErrorAlert forKey:@(error.code)];
+
 	[chatErrorAlert setMessageText:errorTitle];
-	if( [[[[notification userInfo] objectForKey:@"error"] userInfo] objectForKey:@"errorLiteralReason"] )
+	if( error.userInfo[@"errorLiteralReason"] )
 		[chatErrorAlert setInformativeText:[NSString stringWithFormat:NSLocalizedString( @"%@\n\nServer Details:\n%@", "error alert informative text with literal reason"), [[[notification userInfo] objectForKey:@"error"] localizedDescription], [[[[notification userInfo] objectForKey:@"error"] userInfo] objectForKey:@"errorLiteralReason"]]];
 	else [chatErrorAlert setInformativeText:[[[notification userInfo] objectForKey:@"error"] localizedDescription]];
 
 	[chatErrorAlert setAlertStyle:NSInformationalAlertStyle];
 
-	if ( [(NSError *)[[notification userInfo] objectForKey:@"error"] code] == MVChatConnectionServicesDownError ) {
+	if ( error.code == MVChatConnectionServicesDownError ) {
 		// ask the user if we want to continue auto joining rooms without identification (== no hostmask cloaking) now that we know services are down
 		// add "Continue Auto Join Sequence without identification?" to InformativeText
 		[chatErrorAlert addButtonWithTitle:NSLocalizedString( @"Join", "join button" )];
@@ -1556,7 +1606,7 @@ static NSMenu *favoritesMenu = nil;
 		if ( [chatErrorAlert runModal] == NSAlertFirstButtonReturn ) {
 			[self _didIdentify:[NSNotification notificationWithName:@"continueConnectWithoutIdentification" object:[notification object]]];
 		}
-	} else if ( [(NSError *)[[notification userInfo] objectForKey:@"error"] code] == MVChatConnectionRoomPasswordIncorrectError && floor( NSAppKitVersionNumber ) > NSAppKitVersionNumber10_4) {
+	} else if ( error.code == MVChatConnectionRoomPasswordIncorrectError && floor( NSAppKitVersionNumber ) > NSAppKitVersionNumber10_4) {
 		// in case of incorrect password we can simplytry again with the correct one. leopard only for now, because NSAlert's setAccessoryView is 10.5+ only, 10.4 would need a new NIB for this feature:
 		[chatErrorAlert addButtonWithTitle:NSLocalizedString( @"Join", "join button" )];
 		[chatErrorAlert addButtonWithTitle:NSLocalizedString( @"Cancel", "cancel button" )];
@@ -1572,6 +1622,8 @@ static NSMenu *favoritesMenu = nil;
 	} else {
 		[chatErrorAlert runModal];
 	}
+
+	[errorToAlertMappingsForConnection removeObjectForKey:@(error.code)];
 
 /*	MVChatConnection *connection = [notification object];
 	MVChatError error = (MVChatError) [[[notification userInfo] objectForKey:@"error"] intValue];

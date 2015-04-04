@@ -1,7 +1,7 @@
 #import "CQTextView.h"
 
 @implementation CQTextView
-- (id) initWithFrame:(CGRect) frame {
+- (instancetype) initWithFrame:(CGRect) frame {
 	if (!(self = [super initWithFrame:frame]))
 		return nil;
 
@@ -21,10 +21,6 @@
 
 - (void) dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-	[_placeholder release];
-
-	[super dealloc];
 }
 
 #pragma mark -

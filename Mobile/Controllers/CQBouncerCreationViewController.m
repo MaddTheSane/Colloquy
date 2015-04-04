@@ -6,19 +6,13 @@
 #import "CQConnectionsController.h"
 
 @implementation CQBouncerCreationViewController
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super init]))
 		return nil;
 
 	_settings = [[CQBouncerSettings alloc] init];
 
 	return self;
-}
-
-- (void) dealloc {
-	[_settings release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -34,7 +28,6 @@
 
 	UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Add", @"Add button title") style:UIBarButtonItemStyleDone target:self action:@selector(commit:)];
 	_rootViewController.navigationItem.rightBarButtonItem = addItem;
-	[addItem release];
 
 	_rootViewController.navigationItem.rightBarButtonItem.tag = UIBarButtonSystemItemSave;
 	_rootViewController.navigationItem.rightBarButtonItem.enabled = NO;

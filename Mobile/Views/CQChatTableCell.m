@@ -7,7 +7,7 @@
 #import <ChatCore/MVChatUser.h>
 
 @implementation CQChatTableCell
-- (id) initWithStyle:(UITableViewCellStyle) style reuseIdentifier:(NSString *) reuseIdentifier {
+- (instancetype) initWithStyle:(UITableViewCellStyle) style reuseIdentifier:(NSString *) reuseIdentifier {
 	if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]))
 		return nil;
 
@@ -30,15 +30,6 @@
 	_chatPreviewLabels = [[NSMutableArray alloc] init];
 
 	return self;
-}
-
-- (void) dealloc {
-	[_iconImageView release];
-	[_unreadCountView release];
-	[_nameLabel release];
-	[_chatPreviewLabels release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -64,9 +55,6 @@
 		self.accessibilityLabel = [NSString stringWithFormat:NSLocalizedString(@"%@: %u unread messages.", @"Voiceover unread messages in chat label"), self.name, self.unreadCount];
 	else self.accessibilityLabel = self.name;
 }
-
-@synthesize maximumMessagePreviews = _maximumMessagePreviews;
-@synthesize showsUserInMessagePreviews = _showsUserInMessagePreviews;
 
 - (BOOL) showsIcon {
 	return !_iconImageView.hidden;
@@ -114,8 +102,6 @@
 	[self setNeedsLayout];
 }
 
-@synthesize available = _available;
-
 - (void) setAvailable:(BOOL) available {
 	_available = available;
 
@@ -143,8 +129,8 @@
 		for (NSUInteger i = 0; i < _chatPreviewLabels.count; ++i) {
 			if (i == 0)
 				continue;
-			UILabel *currentLabel = [_chatPreviewLabels objectAtIndex:i];
-			UILabel *previousLabel = [_chatPreviewLabels objectAtIndex:(i - 1)];
+			UILabel *currentLabel = _chatPreviewLabels[i];
+			UILabel *previousLabel = _chatPreviewLabels[(i - 1)];
 			previousLabel.text = currentLabel.text;
 
 			if (i == (_chatPreviewLabels.count - 1))
@@ -160,33 +146,26 @@
 	NSTimeInterval animationDelay = 0.;
 
 	if (_chatPreviewLabels.count >= _maximumMessagePreviews) {
-		UILabel *firstLabel = [[_chatPreviewLabels objectAtIndex:0] retain];
+		UILabel *firstLabel = _chatPreviewLabels[0];
 		[_chatPreviewLabels removeObjectAtIndex:0];
 
 		if (animated) {
-			[UIView beginAnimations:nil context:firstLabel];
-			[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-			[UIView setAnimationDuration:0.2];
-			[UIView setAnimationDelegate:self];
-			[UIView setAnimationDidStopSelector:@selector(labelFadeOutAnimationDidStop:finished:context:)];
-
-			firstLabel.alpha = 0.;
-
-			[UIView commitAnimations];
+			[UIView animateWithDuration:.2 delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^{
+				firstLabel.alpha = 0.;
+			} completion:^(BOOL finished) {
+				[firstLabel removeFromSuperview];
+			}];
 
 			animationDelay = 0.15;
 		} else {
 			[firstLabel removeFromSuperview];
 		}
-
-		[firstLabel release];
 	}
 
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
 	label.font = [UIFont systemFontOfSize:14.];
 	label.backgroundColor = [UIColor clearColor];
-	label.textColor = [UIColor colorWithWhite:0.4 alpha:1.];
-	label.highlightedTextColor = [UIColor whiteColor];
+	label.textColor = [UIColor colorWithWhite:(150. / 255.) alpha:1.];
 	label.alpha = (animated ? 0. : (_available ? 1. : 0.5));
 	label.text = labelText;
 
@@ -196,32 +175,14 @@
 	[self layoutSubviewsWithAnimation:animated withDelay:animationDelay];
 
 	if (animated) {
-		animationDelay += 0.15;
+		[UIView animateWithDuration:.35 delay:0. options:UIViewAnimationOptionCurveEaseIn animations:^{
+			label.alpha = (_available ? 1. : 0.5);
+		} completion:^(BOOL finished) {
+			_animating = NO;
 
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
-		[UIView setAnimationDuration:0.2];
-		[UIView setAnimationDelay:animationDelay];
-		[UIView setAnimationDelegate:self];
-		[UIView setAnimationDidStopSelector:@selector(labelFadeInAnimationDidStop:finished:context:)];
-
-		label.alpha = (_available ? 1. : 0.5);
-
-		[UIView commitAnimations];
+			[self setNeedsLayout];
+		}];
 	}
-
-	[label release];
-}
-
-- (void) labelFadeOutAnimationDidStop:(NSString *) animation finished:(NSNumber *) finished context:(void *) context {
-	UILabel *label = (UILabel *)context;
-	[label removeFromSuperview];
-}
-
-- (void) labelFadeInAnimationDidStop:(NSString *) animation finished:(NSNumber *) finished context:(void *) context {
-	_animating = NO;
-
-	[self setNeedsLayout];
 }
 
 #pragma mark -
@@ -229,9 +190,7 @@
 - (void) prepareForReuse {
 	[super prepareForReuse];
 
-	for (UILabel *label in _chatPreviewLabels)
-		[label removeFromSuperview];
-
+	[_chatPreviewLabels makeObjectsPerformSelector:@selector(removeFromSuperview)];
 	[_chatPreviewLabels removeAllObjects];
 
 	self.name = @"";
@@ -248,18 +207,14 @@
 	if ([[UIDevice currentDevice] isPadModel])
 		return;
 
-	if (animated)
-		[UIView beginAnimations:nil context:NULL];
+	[UIView animateWithDuration:(animated ? .3 : 0.) animations:^{
+		CGFloat alpha = (_available || highlighted || self.selected ? 1. : 0.5);
+		_nameLabel.alpha = alpha;
+		_iconImageView.alpha = alpha;
 
-	CGFloat alpha = (_available || highlighted || self.selected ? 1. : 0.5);
-	_nameLabel.alpha = alpha;
-	_iconImageView.alpha = alpha;
-
-	for (UILabel *label in _chatPreviewLabels)
-		label.alpha = alpha;
-
-	if (animated)
-		[UIView commitAnimations];
+		for (UILabel *label in _chatPreviewLabels)
+			label.alpha = alpha;
+	}];
 }
 
 - (void) _delayedDeselect {
@@ -272,32 +227,22 @@
 	if ([[UIDevice currentDevice] isPadModel])
 		return;
 
-	if (animated)
-		[UIView beginAnimations:nil context:NULL];
+	[UIView animateWithDuration:(animated ? .3 : 0.) animations:^{
+		CGFloat alpha = (_available || selected || self.highlighted ? 1. : 0.5);
+		_nameLabel.alpha = alpha;
+		_iconImageView.alpha = alpha;
 
-	CGFloat alpha = (_available || selected || self.highlighted ? 1. : 0.5);
-	_nameLabel.alpha = alpha;
-	_iconImageView.alpha = alpha;
-
-	for (UILabel *label in _chatPreviewLabels)
-		label.alpha = alpha;
-
-	if (animated)
-		[UIView commitAnimations];
+		for (UILabel *label in _chatPreviewLabels)
+			label.alpha = alpha;
+	}];
 }
 
 - (void) setEditing:(BOOL) editing animated:(BOOL) animated {
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationCurve:(editing ? UIViewAnimationCurveEaseIn : UIViewAnimationCurveEaseOut)];
-	}
+	[UIView animateWithDuration:(animated ? .3 : 0.) delay:0. options:(editing ? UIViewAnimationOptionCurveEaseIn : UIViewAnimationOptionCurveEaseOut) animations:^{
+		[super setEditing:editing animated:animated];
 
-	[super setEditing:editing animated:animated];
-
-	_unreadCountView.alpha = editing ? 0. : 1.;
-
-	if (animated)
-		[UIView commitAnimations];
+		_unreadCountView.alpha = editing ? 0. : 1.;
+	} completion:NULL];
 }
 
 - (void) layoutSubviewsWithAnimation:(BOOL) animated withDelay:(NSTimeInterval) animationDelay {
@@ -359,35 +304,28 @@
 	if (!self.editing && _unreadCountView.bounds.size.width)
 		frame.size.width -= (contentRect.size.width - CGRectGetMinX(_unreadCountView.frame));
 
-	if (animated) {
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDelay:animationDelay];
-		[UIView setAnimationDuration:0.25];
-	}
+	[UIView animateWithDuration:(animated ? .25 : .0) animations:^{
+		_nameLabel.frame = frame;
 
-	_nameLabel.frame = frame;
+		CGFloat newVerticalOrigin = frame.origin.y + frame.size.height - LABEL_SPACING;
+		for (UILabel *label in _chatPreviewLabels) {
+			CGRect labelFrame = label.frame;
 
-	CGFloat newVerticalOrigin = frame.origin.y + frame.size.height - LABEL_SPACING;
-	for (UILabel *label in _chatPreviewLabels) {
-		CGRect labelFrame = label.frame;
+			BOOL disableAnimation = !labelFrame.origin.x;
+			if (disableAnimation)
+				[UIView setAnimationsEnabled:NO];
 
-		BOOL disableAnimation = !labelFrame.origin.x;
-		if (disableAnimation)
-			[UIView setAnimationsEnabled:NO];
+			labelFrame.origin.x = frame.origin.x;
+			labelFrame.origin.y = newVerticalOrigin;
+			labelFrame.size.width = frame.size.width;
+			label.frame = labelFrame;
 
-		labelFrame.origin.x = frame.origin.x;
-		labelFrame.origin.y = newVerticalOrigin;
-		labelFrame.size.width = frame.size.width;
-		label.frame = labelFrame;
+			if (disableAnimation)
+				[UIView setAnimationsEnabled:YES];
 
-		if (disableAnimation)
-			[UIView setAnimationsEnabled:YES];
-
-		newVerticalOrigin = labelFrame.origin.y + labelFrame.size.height - LABEL_SPACING;
-	}
-
-	if (animated)
-		[UIView commitAnimations];
+			newVerticalOrigin = labelFrame.origin.y + labelFrame.size.height - LABEL_SPACING;
+		}
+	}];
 }
 
 - (void) layoutSubviews {

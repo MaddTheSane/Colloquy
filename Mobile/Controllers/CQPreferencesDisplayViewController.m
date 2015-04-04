@@ -5,6 +5,8 @@
 #import "CQPreferencesSwitchCell.h"
 #import "CQPreferencesTextCell.h"
 
+#import <objc/runtime.h>
+
 // These are defined as constants because they are used in Settings.app
 static NSString *const CQPSGroupSpecifier = @"PSGroupSpecifier";
 static NSString *const CQPSTextFieldSpecifier = @"PSTextFieldSpecifier";
@@ -17,6 +19,8 @@ static NSString *const CQPSType = @"Type";
 static NSString *const CQPSTitle = @"Title";
 static NSString *const CQPSKey = @"Key";
 static NSString *const CQPSDefaultValue = @"DefaultValue";
+static NSString *const CQPSTrueValue = @"TrueValue";
+static NSString *const CQPSFalseValue = @"FalseValue";
 static NSString *const CQPSAction = @"CQAction";
 static NSString *const CQPSAddress = @"CQAddress";
 static NSString *const CQPSLink = @"Link";
@@ -24,6 +28,8 @@ static NSString *const CQPSEmail = @"Email";
 static NSString *const CQPSFile = @"File";
 static NSString *const CQPSValues = @"Values";
 static NSString *const CQPSTitles = @"Titles";
+static NSString *const CQPSViewController = @"ViewController";
+static NSString *const CQPSLicenses = @"Licenses";
 static NSString *const CQPSFooterText = @"FooterText";
 static NSString *const CQPSAutocorrectType = @"AutocorrectionType";
 static NSString *const CQPSAutocorrectionTypeDefault = @"Default";
@@ -49,12 +55,15 @@ static NSString *const CQPSListTypeAudio = @"Audio";
 static NSString *const CQPSListTypeImage = @"Image";
 static NSString *const CQPSListTypeFont = @"Font";
 
-@implementation CQPreferencesDisplayViewController
-- (id) initWithRootPlist {
+@implementation CQPreferencesDisplayViewController {
+	BOOL _active;
+}
+
+- (instancetype) initWithRootPlist {
 	return [self initWithPlistNamed:@"Root"];
 }
 
-- (id) initWithPlistNamed:(NSString *) plist {
+- (instancetype) initWithPlistNamed:(NSString *) plist {
 	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
 		return nil;
 
@@ -65,13 +74,6 @@ static NSString *const CQPSListTypeFont = @"Font";
 	return self;
 }
 
-- (void) dealloc {
-	[_preferences release];
-	[_selectedIndexPath release];
-
-	[super dealloc];
-}
-
 #pragma mark -
 
 - (void) viewWillAppear:(BOOL) animated {
@@ -79,9 +81,17 @@ static NSString *const CQPSListTypeFont = @"Font";
 
 	if (_selectedIndexPath) {
 		[self.tableView beginUpdates];
-		[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+		[self.tableView reloadRowsAtIndexPaths:@[_selectedIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 		[self.tableView endUpdates];
 	}
+
+	_active = YES;
+}
+
+- (void) viewDidDisappear:(BOOL) animated {
+	[super viewDidDisappear:animated];
+
+	_active = NO;
 }
 
 #pragma mark -
@@ -95,34 +105,35 @@ static NSString *const CQPSListTypeFont = @"Font";
 		return;
 
 	if (!self.title.length)
-		self.title = [preferences objectForKey:CQPSTitle];
+		self.title = preferences[CQPSTitle];
 	if (!self.title.length)
 		self.title = [plist capitalizedStringWithLocale:[NSLocale currentLocale]];
 
 	__block NSMutableDictionary *workingSection = nil;
-	[[preferences objectForKey:CQPSPreferenceSpecifiers] enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
-		if ([[object objectForKey:CQPSType] isEqualToString:CQPSGroupSpecifier]) {
-			id old = workingSection;
+	__weak __typeof__((_preferences)) weakPreferences = _preferences;
+	[preferences[CQPSPreferenceSpecifiers] enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+		__strong  __typeof__((weakPreferences)) strongPreferences = weakPreferences;
+
+		if ([object[CQPSType] isEqualToString:CQPSGroupSpecifier]) {
 			workingSection = [object mutableCopy];
-			[old release];
 
-			[workingSection setObject:[NSMutableArray array] forKey:@"rows"];
+			workingSection[@"rows"] = [NSMutableArray array];
 
-			[_preferences addObject:workingSection];
+			[strongPreferences addObject:workingSection];
 		} else {
 			NSMutableArray *rows = nil;
-			if (_preferences.count)
-				rows = [[[_preferences objectAtIndex:(_preferences.count - 1)] objectForKey:@"rows"] retain];
+			if (strongPreferences.count)
+				rows = strongPreferences[(strongPreferences.count - 1)][@"rows"];
 
 			if (!rows) {
 				rows = [[NSMutableArray alloc] init];
 				workingSection = [[NSMutableDictionary alloc] init];
-				[workingSection setObject:rows forKey:@"rows"];
+				workingSection[@"rows"] = rows;
 
-				[_preferences addObject:workingSection];
+				[strongPreferences addObject:workingSection];
 			}
 
-			NSArray *supportedInterfaceIdioms = [object objectForKey:CQPSSupportedUserInterfaceIdioms];
+			NSArray *supportedInterfaceIdioms = object[CQPSSupportedUserInterfaceIdioms];
 			BOOL supportsCurrentInterfaceIdiom = YES;
 			if (supportedInterfaceIdioms) {
 				supportsCurrentInterfaceIdiom = NO;
@@ -136,16 +147,13 @@ static NSString *const CQPSListTypeFont = @"Font";
 				}
 			}
 			
-
 			if (supportsCurrentInterfaceIdiom)
-				[rows addObject:[[object copy] autorelease]];
-
-			[rows release];
+				[rows addObject:[object copy]];
 		}
 	}];
-	[workingSection release];
 
-	[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+	if ([self isViewLoaded] && _active)
+		[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
 }
 
 #pragma mark -
@@ -155,58 +163,58 @@ static NSString *const CQPSListTypeFont = @"Font";
 }
 
 - (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
-	return [[[_preferences objectAtIndex:section] objectForKey:@"rows"] count];
+	return [_preferences[section][@"rows"] count];
 }
 
 - (NSString *) tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger) section {
-	return [[_preferences objectAtIndex:section] objectForKey:CQPSTitle];
+	return _preferences[section][CQPSTitle];
 }
 
 - (NSString *) tableView:(UITableView *) tableView titleForFooterInSection:(NSInteger) section {
-	return [[_preferences objectAtIndex:section] objectForKey:CQPSFooterText];
+	return _preferences[section][CQPSFooterText];
 }
 
 - (NSIndexPath *) tableView:(UITableView *) tableView willSelectRowAtIndexPath:(NSIndexPath *) indexPath {
-	NSDictionary *rowDictionary = [[[_preferences objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row];
-	if ([[rowDictionary objectForKey:CQPSType] isEqualToString:CQPSTitleValueSpecifier])
-		if (![rowDictionary objectForKey:CQPSAction])
+	NSDictionary *rowDictionary = _preferences[indexPath.section][@"rows"][indexPath.row];
+	if ([rowDictionary[CQPSType] isEqualToString:CQPSTitleValueSpecifier])
+		if (!rowDictionary[CQPSAction])
 			return nil;
 	return indexPath;
 }
 
 - (UITableViewCell *) tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) indexPath {
-	NSDictionary *rowDictionary = [[[_preferences objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row];
-	id key = [rowDictionary objectForKey:CQPSKey];
+	NSDictionary *rowDictionary = _preferences[indexPath.section][@"rows"][indexPath.row];
+	id key = rowDictionary[CQPSKey];
 	id value = nil;
 	if (key) {
 		value = [[CQSettingsController settingsController] objectForKey:key];
 		if (!value)
-			value = [rowDictionary objectForKey:CQPSDefaultValue];
+			value = rowDictionary[CQPSDefaultValue];
 	}
 
-	if ([[rowDictionary objectForKey:CQPSType] isEqualToString:CQPSTextFieldSpecifier]) {
+	if ([rowDictionary[CQPSType] isEqualToString:CQPSTextFieldSpecifier]) {
 		CQPreferencesTextCell *cell = [CQPreferencesTextCell reusableTableViewCellInTableView:tableView];
 		cell.textField.text = [[NSBundle mainBundle] localizedStringForKey:value value:@"" table:nil];
 
 		if (!cell.textField.text.length) {
 			if (value)
 				cell.textField.text = value;
-			else cell.textField.text = [rowDictionary objectForKey:CQPSDefaultValue];
+			else cell.textField.text = rowDictionary[CQPSDefaultValue];
 		}
 
-		cell.textLabel.text = [[NSBundle mainBundle] localizedStringForKey:[rowDictionary objectForKey:CQPSTitle] value:@"" table:nil];;
+		cell.textLabel.text = [[NSBundle mainBundle] localizedStringForKey:rowDictionary[CQPSTitle] value:@"" table:nil];;
 		cell.textFieldBlock = ^(UITextField *textField) {
 			[[CQSettingsController settingsController] setObject:textField.text forKey:key];
 		};
 
-		NSString *autocorrectionType = [rowDictionary objectForKey:CQPSAutocorrectType];
+		NSString *autocorrectionType = rowDictionary[CQPSAutocorrectType];
 		if ([autocorrectionType isEqualToString:CQPSAutocorrectionTypeNo])
 			cell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
 		else if ([autocorrectionType isEqualToString:CQPSAutocorrectionTypeYes])
 			cell.textField.autocorrectionType = UITextAutocorrectionTypeYes;
 		else cell.textField.autocorrectionType = UITextAutocorrectionTypeDefault;
 
-		NSString *autocapitalizationType = [rowDictionary objectForKey:CQPSAutocapitalizationType];
+		NSString *autocapitalizationType = rowDictionary[CQPSAutocapitalizationType];
 		if ([autocapitalizationType isEqualToString:CQPSAutocapitalizationTypeAllCharacters])
 			cell.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
 		else if ([autocapitalizationType isEqualToString:CQPSAutocapitalizationTypeWords])
@@ -215,9 +223,9 @@ static NSString *const CQPSListTypeFont = @"Font";
 			cell.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
 		else cell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
 
-		cell.textField.secureTextEntry = [[rowDictionary objectForKey:CQPSIsSecure] boolValue];
+		cell.textField.secureTextEntry = [rowDictionary[CQPSIsSecure] boolValue];
 
-		NSString *keyboardType = [rowDictionary objectForKey:CQPSKeyboardType];
+		NSString *keyboardType = rowDictionary[CQPSKeyboardType];
 		if ([keyboardType isEqualToString:CQPSKeyboardTypeEmailAddress])
 			cell.textField.keyboardType = UIKeyboardTypeEmailAddress;
 		else if ([keyboardType isEqualToString:CQPSKeyboardTypeNumberPad])
@@ -228,40 +236,55 @@ static NSString *const CQPSListTypeFont = @"Font";
 			cell.textField.keyboardType = UIKeyboardTypeURL;
 		else cell.textField.keyboardType = UIKeyboardTypeDefault;
 
-		cell.textField.placeholder = [rowDictionary objectForKey:CQPSPlaceholder];
+		cell.textField.placeholder = rowDictionary[CQPSPlaceholder];
 
 		return cell;
-	} else if ([[rowDictionary objectForKey:CQPSType] isEqualToString:CQPSToggleSwitchSpecifier]) {
+	} else if ([rowDictionary[CQPSType] isEqualToString:CQPSToggleSwitchSpecifier]) {
 		CQPreferencesSwitchCell *cell = [CQPreferencesSwitchCell reusableTableViewCellInTableView:tableView];
-		cell.switchControl.on = [value boolValue];
-		cell.textLabel.text = [[NSBundle mainBundle] localizedStringForKey:[rowDictionary objectForKey:CQPSTitle] value:@"" table:nil];
+		id trueValue = rowDictionary[CQPSTrueValue];
+		id falseValue = rowDictionary[CQPSFalseValue];
+
+		BOOL isTrueValue = [trueValue isEqual:value];
+		BOOL isFalseValue = [falseValue isEqual:value];
+		if (isTrueValue)
+			cell.switchControl.on = YES;
+		else if (isFalseValue)
+			cell.switchControl.on = NO;
+		else cell.switchControl.on = [value boolValue];
+
+		cell.textLabel.text = [[NSBundle mainBundle] localizedStringForKey:rowDictionary[CQPSTitle] value:@"" table:nil];
 		cell.switchControlBlock = ^(UISwitch *switchControl) {
-			[[CQSettingsController settingsController] setBool:switchControl.on forKey:key];
+			if (trueValue && switchControl.on)
+				[[CQSettingsController settingsController] setObject:trueValue forKey:key];
+			else if (falseValue && !switchControl.on)
+				[[CQSettingsController settingsController] setObject:falseValue forKey:key];
+			else [[CQSettingsController settingsController] setBool:switchControl.on forKey:key];
 		};
 
 		return cell;
-	} else if ([[rowDictionary objectForKey:CQPSType] isEqualToString:CQPSChildPaneSpecifier]) {
+	} else if ([rowDictionary[CQPSType] isEqualToString:CQPSChildPaneSpecifier]) {
 		UITableViewCell *cell = [UITableViewCell reusableTableViewCellWithStyle:UITableViewCellStyleValue1 inTableView:tableView];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		cell.detailTextLabel.text = [[NSBundle mainBundle] localizedStringForKey:value value:@"" table:nil];
-		cell.textLabel.text = [[NSBundle mainBundle] localizedStringForKey:[rowDictionary objectForKey:CQPSTitle] value:@"" table:nil];
+		cell.textLabel.text = [[NSBundle mainBundle] localizedStringForKey:rowDictionary[CQPSTitle] value:@"" table:nil];
 
 		return cell;
-	} else if ([[rowDictionary objectForKey:CQPSType] isEqualToString:CQPSMultiValueSpecifier]) {
+	} else if ([rowDictionary[CQPSType] isEqualToString:CQPSMultiValueSpecifier]) {
 		UITableViewCell *cell = [UITableViewCell reusableTableViewCellWithStyle:UITableViewCellStyleValue1 inTableView:tableView];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		cell.textLabel.text = [[NSBundle mainBundle] localizedStringForKey:[rowDictionary objectForKey:CQPSTitle] value:@"" table:nil];
+		cell.textLabel.text = [[NSBundle mainBundle] localizedStringForKey:rowDictionary[CQPSTitle] value:@"" table:nil];
 
-		NSUInteger index = [[rowDictionary objectForKey:CQPSValues] indexOfObject:value];
-		cell.detailTextLabel.text = [[rowDictionary objectForKey:CQPSTitles] objectAtIndex:index];
+		NSUInteger index = [rowDictionary[CQPSValues] indexOfObject:value];
+		if (index != NSNotFound)
+			cell.detailTextLabel.text = rowDictionary[CQPSTitles][index];
 
 		return cell;
-	} else if ([[rowDictionary objectForKey:CQPSType] isEqualToString:CQPSTitleValueSpecifier]) {
+	} else if ([rowDictionary[CQPSType] isEqualToString:CQPSTitleValueSpecifier]) {
 		UITableViewCell *cell = [UITableViewCell reusableTableViewCellWithStyle:UITableViewCellStyleValue1 inTableView:tableView];
-		if ([rowDictionary objectForKey:CQPSAction])
+		if (rowDictionary[CQPSAction])
 			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
 		else cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		cell.textLabel.text = [[NSBundle mainBundle] localizedStringForKey:[rowDictionary objectForKey:CQPSTitle] value:@"" table:nil];
+		cell.textLabel.text = [[NSBundle mainBundle] localizedStringForKey:rowDictionary[CQPSTitle] value:@"" table:nil];
 		cell.detailTextLabel.text = [[NSBundle mainBundle] localizedStringForKey:value value:@"" table:nil];
 
 		return cell;
@@ -271,67 +294,72 @@ static NSString *const CQPSListTypeFont = @"Font";
 }
 
 - (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *) indexPath {
-	id old = _selectedIndexPath;
-	_selectedIndexPath = [indexPath retain];
-	[old release];
+	_selectedIndexPath = indexPath;
 
 	UIViewController *viewController = nil;
-	NSDictionary *rowDictionary = [[[_preferences objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row];
-	if ([[rowDictionary objectForKey:CQPSType] isEqualToString:CQPSChildPaneSpecifier]) {
-		viewController = [[CQPreferencesDisplayViewController alloc] initWithPlistNamed:[rowDictionary objectForKey:CQPSFile]];
-	} else if ([[rowDictionary objectForKey:CQPSType] isEqualToString:CQPSMultiValueSpecifier]) {
+	NSDictionary *rowDictionary = _preferences[indexPath.section][@"rows"][indexPath.row];
+	if (rowDictionary[CQPSViewController]) {
+		NSString *className = rowDictionary[CQPSViewController];
+		Class class = objc_lookUpClass([className UTF8String]);
+		if (!class || ![class isSubclassOfClass:[UIViewController class]])
+			return;
+
+		[self.navigationController pushViewController:[[class alloc] init] animated:YES];
+
+		[tableView deselectRowAtIndexPath:indexPath animated:[UIView areAnimationsEnabled]];
+	} else if ([rowDictionary[CQPSType] isEqualToString:CQPSChildPaneSpecifier]) {
+		viewController = [[CQPreferencesDisplayViewController alloc] initWithPlistNamed:rowDictionary[CQPSFile]];
+	} else if ([rowDictionary[CQPSType] isEqualToString:CQPSMultiValueSpecifier]) {
 		CQPreferencesListViewController *preferencesListViewController = [[CQPreferencesListViewController alloc] init];
 		preferencesListViewController.allowEditing = NO;
-		preferencesListViewController.items = [rowDictionary objectForKey:CQPSTitles];
+		preferencesListViewController.items = rowDictionary[CQPSTitles];
+		preferencesListViewController.details = rowDictionary[CQPSLicenses];
+		preferencesListViewController.footerText = rowDictionary[CQPSFooterText];
 
-		id key = [rowDictionary objectForKey:CQPSKey];
+		id key = rowDictionary[CQPSKey];
 		id value = [[CQSettingsController settingsController] objectForKey:key];
 		if (!value)
-			value = [rowDictionary objectForKey:CQPSDefaultValue];
-		preferencesListViewController.selectedItemIndex = [[rowDictionary objectForKey:CQPSValues] indexOfObject:value];
+			value = rowDictionary[CQPSDefaultValue];
+		preferencesListViewController.selectedItemIndex = [rowDictionary[CQPSValues] indexOfObject:value];
 		preferencesListViewController.preferencesListBlock = ^(CQPreferencesListViewController *editedPreferencesListViewController) {
-			id newValue = [[rowDictionary objectForKey:CQPSValues] objectAtIndex:editedPreferencesListViewController.selectedItemIndex];
+			id newValue = rowDictionary[CQPSValues][editedPreferencesListViewController.selectedItemIndex];
 			[[CQSettingsController settingsController] setObject:newValue forKey:key];
 		};
 
-		NSString *listType = [rowDictionary objectForKey:CQPSListType];
+		NSString *listType = rowDictionary[CQPSListType];
 		if ([listType isCaseInsensitiveEqualToString:CQPSListTypeAudio])
 			preferencesListViewController.listType = CQPreferencesListTypeAudio;
 		else if ([listType isCaseInsensitiveEqualToString:CQPSListTypeImage])
 			preferencesListViewController.listType = CQPreferencesListTypeImage;
 		else if ([listType isCaseInsensitiveEqualToString:CQPSListTypeFont])
 			preferencesListViewController.listType = CQPreferencesListTypeFont;
+		preferencesListViewController.values = rowDictionary[CQPSValues];
 		viewController = preferencesListViewController;
-	} else if ([[rowDictionary objectForKey:CQPSType] isEqualToString:CQPSTitleValueSpecifier]) {
-		NSString *address = [rowDictionary objectForKey:CQPSAddress];
-		if ([[rowDictionary objectForKey:CQPSAction] isEqualToString:CQPSLink])
+	} else if ([rowDictionary[CQPSType] isEqualToString:CQPSTitleValueSpecifier]) {
+		NSString *address = rowDictionary[CQPSAddress];
+		if ([rowDictionary[CQPSAction] isEqualToString:CQPSLink])
 			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:address]];
-		else if ([[rowDictionary objectForKey:CQPSAction] isEqualToString:CQPSEmail]) {
+		else if ([rowDictionary[CQPSAction] isEqualToString:CQPSEmail]) {
 			MFMailComposeViewController *mailComposeViewController = [[MFMailComposeViewController alloc] init];
 			mailComposeViewController.mailComposeDelegate = self;
-			mailComposeViewController.toRecipients = [NSArray arrayWithObject:address];
+			mailComposeViewController.toRecipients = @[address];
 			mailComposeViewController.subject = NSLocalizedString(@"Mobile Colloquy Support", @"Mobile Colloquy Support subject header");
 
 			[self.navigationController presentViewController:mailComposeViewController animated:[UIView areAnimationsEnabled] completion:NULL];
-
-			[mailComposeViewController release];
 		}
 
 		[tableView deselectRowAtIndexPath:indexPath animated:[UIView areAnimationsEnabled]];
 	} else {
-		[_selectedIndexPath release];
 		_selectedIndexPath = nil;
 
 		return;
 	}
 
 	if (viewController) {
-		viewController.title = [rowDictionary objectForKey:CQPSTitle];
+		viewController.title = rowDictionary[CQPSTitle];
 
 		[self.navigationController pushViewController:viewController animated:[UIView areAnimationsEnabled]];
 	}
-
-	[viewController release];
 }
 
 - (void) mailComposeController:(MFMailComposeViewController *) controller didFinishWithResult:(MFMailComposeResult) result error:(NSError *) error {

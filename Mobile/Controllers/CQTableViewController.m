@@ -1,7 +1,7 @@
 #import "CQTableViewController.h"
 
 @implementation CQTableViewController
-- (id) initWithStyle:(UITableViewStyle) style {
+- (instancetype) initWithStyle:(UITableViewStyle) style {
 	return (self = [super initWithStyle:style]);
 }
 
@@ -12,23 +12,12 @@
 	}
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
-	[super dealloc];
-}
-
-#pragma mark -
-
-- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation) interfaceOrientation {
-	if (interfaceOrientation == UIInterfaceOrientationPortrait)
-		return YES;
-	if (![[UIDevice currentDevice] isPadModel] && interfaceOrientation == UIDeviceOrientationPortraitUpsideDown)
-		return NO;
-	return ![[CQSettingsController settingsController] boolForKey:@"CQDisableLandscape"];
 }
 
 #pragma mark -
 
 - (void) viewDidLoad {
+	[super viewDidLoad];
 	[self.tableView performSelectorOnMainThread:@selector(hideEmptyCells) withObject:nil waitUntilDone:YES];
 }
 

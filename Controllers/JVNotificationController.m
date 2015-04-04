@@ -90,6 +90,12 @@ static JVNotificationController *sharedInstance = nil;
 	if ( target && action && [target respondsToSelector:action] )
 		[target performSelector:action withObject:nil];
 }
+
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification {
+	// Always show when asked, because we have our own preference for "only notify when not active".
+	return YES;
+}
+
 @end
 
 #pragma mark -
@@ -127,7 +133,7 @@ static JVNotificationController *sharedInstance = nil;
 			[eventPrefs objectForKey:@"keepBubbleOnScreen"], GROWL_NOTIFICATION_STICKY,
 			nil];
 		[GrowlApplicationBridge notifyWithDictionary:notification];
-	} else if( NSAppKitVersionNumber10_8 < floor( NSAppKitVersionNumber ) ) {
+	} else if( NSAppKitVersionNumber10_8 > floor( NSAppKitVersionNumber ) ) {
 		if( ( bubble = [_bubbles objectForKey:[context objectForKey:@"coalesceKey"]] ) ) {
 			[(id)bubble setTitle:title];
 			[(id)bubble setText:description];

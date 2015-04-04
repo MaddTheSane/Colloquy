@@ -8,47 +8,11 @@
 #import <ChatCore/MVChatUser.h>
 #import <ChatCore/MVChatConnection.h>
 
-static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFormat) {
-	static NSDictionary *singularWords;
-	if (!singularWords)
-		singularWords = [[NSDictionary alloc] initWithObjectsAndKeys:NSLocalizedString(@"second", "Singular second"), [NSNumber numberWithUnsignedInt:1], NSLocalizedString(@"minute", "Singular minute"), [NSNumber numberWithUnsignedInt:60], NSLocalizedString(@"hour", "Singular hour"), [NSNumber numberWithUnsignedInt:3600], NSLocalizedString(@"day", "Singular day"), [NSNumber numberWithUnsignedInt:86400], NSLocalizedString(@"week", "Singular week"), [NSNumber numberWithUnsignedInt:604800], NSLocalizedString(@"month", "Singular month"), [NSNumber numberWithUnsignedInt:2628000], NSLocalizedString(@"year", "Singular year"), [NSNumber numberWithUnsignedInt:31536000], nil];
-
-	static NSDictionary *pluralWords;
-	if (!pluralWords)
-		pluralWords = [[NSDictionary alloc] initWithObjectsAndKeys:NSLocalizedString(@"seconds", "Plural seconds"), [NSNumber numberWithUnsignedInt:1], NSLocalizedString(@"minutes", "Plural minutes"), [NSNumber numberWithUnsignedInt:60], NSLocalizedString(@"hours", "Plural hours"), [NSNumber numberWithUnsignedInt:3600], NSLocalizedString(@"days", "Plural days"), [NSNumber numberWithUnsignedInt:86400], NSLocalizedString(@"weeks", "Plural weeks"), [NSNumber numberWithUnsignedInt:604800], NSLocalizedString(@"months", "Plural months"), [NSNumber numberWithUnsignedInt:2628000], NSLocalizedString(@"years", "Plural years"), [NSNumber numberWithUnsignedInt:31536000], nil];
-
-	static NSArray *breaks;
-	if (!breaks)
-		breaks = [[NSArray alloc] initWithObjects:[NSNumber numberWithUnsignedInt:1], [NSNumber numberWithUnsignedInt:60], [NSNumber numberWithUnsignedInt:3600], [NSNumber numberWithUnsignedInt:86400], [NSNumber numberWithUnsignedInt:604800], [NSNumber numberWithUnsignedInt:2628000], [NSNumber numberWithUnsignedInt:31536000], nil];
-
-	NSTimeInterval seconds = ABS(interval);
-
-	NSUInteger i = 0;
-	while (i < [breaks count] && seconds >= [[breaks objectAtIndex:i] doubleValue]) ++i;
-	if (i > 0) --i;
-
-	float stop = [[breaks objectAtIndex:i] floatValue];
-	NSUInteger value = (seconds / stop);
-	NSDictionary *words = (value != 1 ? pluralWords : singularWords);
-
-	NSMutableString *result = [NSMutableString stringWithFormat:NSLocalizedString(@"%u %@", "Time with a unit word"), value, [words objectForKey:[NSNumber numberWithUnsignedInt:stop]]];
-	if (longFormat && i > 0) {
-		NSUInteger remainder = ((NSUInteger)seconds % (NSUInteger)stop);
-		stop = [[breaks objectAtIndex:--i] floatValue];
-		remainder = (remainder / stop);
-		if (remainder) {
-			words = (remainder != 1 ? pluralWords : singularWords);
-			[result appendFormat:NSLocalizedString(@" %u %@", "Time with a unit word, appended to a previous larger unit of time"), remainder, [words objectForKey:[breaks objectAtIndex:i]]];
-		}
-	}
-
-	return result;
-}
-
-#pragma mark -
+#import "NSDateAdditions.h"
+#import "NSNotificationAdditions.h"
 
 @implementation CQUserInfoViewController
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
 		return nil;
 
@@ -57,19 +21,13 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 
 	self.navigationItem.rightBarButtonItem = reloadItem;
 
-	[reloadItem release];
-
 	return self;
 }
 
 - (void) dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter chatCenter] removeObserver:self];
 
-	[_user release];
-	[_updateInfoTimer release];
-	[_updateTimesTimer release];
 
-	[super dealloc];
 }
 
 #pragma mark -
@@ -77,19 +35,17 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 - (void) viewDidAppear:(BOOL) animated {
 	[super viewDidAppear:animated];
 
-	_updateTimesTimer = [[NSTimer scheduledTimerWithTimeInterval:1. target:self selector:@selector(_updateTimes) userInfo:nil repeats:YES] retain];
-	_updateInfoTimer = [[NSTimer scheduledTimerWithTimeInterval:20. target:self selector:@selector(_updateInfo) userInfo:nil repeats:YES] retain];
+	_updateTimesTimer = [NSTimer scheduledTimerWithTimeInterval:1. target:self selector:@selector(_updateTimes) userInfo:nil repeats:YES];
+	_updateInfoTimer = [NSTimer scheduledTimerWithTimeInterval:20. target:self selector:@selector(_updateInfo) userInfo:nil repeats:YES];
 }
 
 - (void) viewWillDisappear:(BOOL) animated {
 	[super viewWillDisappear:animated];
 
 	[_updateTimesTimer invalidate];
-	[_updateTimesTimer release];
 	_updateTimesTimer = nil;
 
 	[_updateInfoTimer invalidate];
-	[_updateInfoTimer release];
 	_updateInfoTimer = nil;
 }
 
@@ -140,12 +96,10 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 				cell.detailTextLabel.text = notAvailableString;
 				cell.accessibilityLabel = NSLocalizedString(@"Away information not available.", @"Voiceover away information not available");
 			}
-
-			[value release];
 		}
 	} else if (section == 1) {
 		 if (row == 0) { // Class
-			cell.textLabel.text = NSLocalizedString(@"class", "Class user info label");
+			cell.textLabel.text = NSLocalizedString(@"Class", "Class user info label");
 
 			NSString *value = nil;
 			if (_user.status == MVChatUserOfflineStatus)
@@ -199,7 +153,8 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 			NSArray *rooms = [_user attributeForKey:MVChatUserKnownRoomsAttribute];
 			if (rooms) {
 				if (rooms.count) {
-					NSString *roomsString = [rooms componentsJoinedByString:NSLocalizedString(@", ", "User info rooms list separator")];
+					NSString *separator = [[NSLocale currentLocale] objectForKey:NSLocaleGroupingSeparator];
+					NSString *roomsString = [rooms componentsJoinedByString:[NSString stringWithFormat:@"%@ ", separator]];
 					cell.detailTextLabel.text = roomsString;
 					cell.accessibilityLabel = [NSString stringWithFormat:NSLocalizedString(@"Rooms: %@", @"Voiceover rooms label"), roomsString];
 				} else {
@@ -279,8 +234,6 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 	roomsController.connection = _user.connection;
 
 	[self.navigationController pushViewController:roomsController animated:YES];
-
-	[roomsController release];
 }
 
 - (IBAction) refreshInformation:(id) sender {
@@ -325,31 +278,27 @@ static NSString *humanReadableTimeInterval(NSTimeInterval interval, BOOL longFor
 
 #pragma mark -
 
-@synthesize user = _user;
-
 - (void) setUser:(MVChatUser *) user {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatUserAttributeUpdatedNotification object:_user];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatUserInformationUpdatedNotification object:_user];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatUserNicknameChangedNotification object:_user];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatUserStatusChangedNotification object:_user];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatUserAwayStatusMessageChangedNotification object:_user];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatUserIdleTimeUpdatedNotification object:_user];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatUserAttributeUpdatedNotification object:_user];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatUserInformationUpdatedNotification object:_user];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatUserNicknameChangedNotification object:_user];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatUserStatusChangedNotification object:_user];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatUserAwayStatusMessageChangedNotification object:_user];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatUserIdleTimeUpdatedNotification object:_user];
 
-	id old = _user;
-	_user = [user retain];
-	[old release];
+	_user = user;
 
 	_idleTimeStart = ([NSDate timeIntervalSinceReferenceDate] - _user.idleTime);
 
 	[_user refreshInformation];
 
 	if (_user) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_informationUpdated:) name:MVChatUserAttributeUpdatedNotification object:_user];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_informationUpdated:) name:MVChatUserInformationUpdatedNotification object:_user];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_informationUpdated:) name:MVChatUserNicknameChangedNotification object:_user];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_informationUpdated:) name:MVChatUserStatusChangedNotification object:_user];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_informationUpdated:) name:MVChatUserAwayStatusMessageChangedNotification object:_user];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_idleTimeUpdated:) name:MVChatUserIdleTimeUpdatedNotification object:_user];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_informationUpdated:) name:MVChatUserAttributeUpdatedNotification object:_user];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_informationUpdated:) name:MVChatUserInformationUpdatedNotification object:_user];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_informationUpdated:) name:MVChatUserNicknameChangedNotification object:_user];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_informationUpdated:) name:MVChatUserStatusChangedNotification object:_user];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_informationUpdated:) name:MVChatUserAwayStatusMessageChangedNotification object:_user];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_idleTimeUpdated:) name:MVChatUserIdleTimeUpdatedNotification object:_user];
 	}
 
 	self.navigationItem.title = _user.nickname;

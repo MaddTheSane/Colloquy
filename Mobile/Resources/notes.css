@@ -44,7 +44,6 @@ body {
 }
 
 .nickname {
-	-webkit-touch-callout: none;
 	text-decoration: none;
 }
 

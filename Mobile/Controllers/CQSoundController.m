@@ -13,51 +13,42 @@
 	AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
 
-- (id) initWithSoundNamed:(NSString *) soundName {
-	if (!soundName.length) {
-		[self release];
-		return nil;
-	}
-
-	NSString *pathString = [[NSBundle mainBundle] pathForResource:soundName ofType:@"aiff"];
-	if (!pathString.length) {
-		[self release];
-		return nil;
-	}
-
-	NSURL *path = [[NSURL fileURLWithPath:pathString] absoluteURL];
+- (instancetype) initWithSoundNamed:(NSString *) soundName {
+	NSParameterAssert(soundName);
 
 	if (!(self = [super init]))
 		return nil;
 
-	if (path) {
-		OSStatus error = AudioServicesCreateSystemSoundID((CFURLRef)path, &_sound);
-		if (error != kAudioServicesNoError) {
-			[self release];
-			return nil;
-		}
-	} else {
-		[self release];
-		return nil;
-	}
-
 	_soundName = [soundName copy];
-	_previousPlayTime = 0.;
 
 	return self;
 }
 
 - (void) dealloc {
 	AudioServicesDisposeSystemSoundID(_sound);
-
-	[_soundName release];
-
-	[super dealloc];
 }
 
-@synthesize soundName = _soundName;
-
 - (void) playSound {
+	if (!_sound) {
+		if (!_soundName.length)
+			return;
+
+		NSString *pathString = [[NSBundle mainBundle] pathForResource:_soundName ofType:@"aiff"];
+		if (!pathString.length)
+			return;
+
+		NSURL *path = [NSURL fileURLWithPath:pathString];
+		if (!path)
+			return;
+
+		OSStatus error = AudioServicesCreateSystemSoundID((__bridge CFURLRef)path, &_sound);
+		if (error != kAudioServicesNoError) {
+			if (_sound)
+				AudioServicesDisposeSystemSoundID(_sound);
+			return;
+		}
+	}
+
 	NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
 	if ((currentTime - _previousPlayTime) < 2.)
 		return;

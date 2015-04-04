@@ -1,5 +1,6 @@
 #import "CQConnectionEditViewController.h"
 
+#import "CQAlertView.h"
 #import "CQColloquyApplication.h"
 #import "CQConnectionAdvancedEditController.h"
 #import "CQConnectionPushEditController.h"
@@ -67,32 +68,21 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 	}
 }
 
-- (id) init {
-	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
-		return nil;
-	return self;
-}
-
-- (void) dealloc {
-	[_connection release];
-	[_servers release];
-
-	[super dealloc];
+- (instancetype) init {
+	return (self = [super initWithStyle:UITableViewStyleGrouped]);
 }
 
 #pragma mark -
 
 - (void) viewWillAppear:(BOOL) animated {
+	[super viewWillAppear:animated];
+
 	if (pushAvailable)
 		[self.tableView updateCellAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:PushTableSection] withAnimation:UITableViewRowAnimationNone];
 	[self.tableView updateCellAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:AutomaticTableSection] withAnimation:UITableViewRowAnimationNone];
-
-	[super viewWillAppear:animated];
 }
 
 #pragma mark -
-
-@synthesize newConnection = _newConnection;
 
 - (void) setNewConnection:(BOOL)newConnection {
 	if (_newConnection ==  newConnection)
@@ -104,12 +94,8 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 	else self.title = _connection.displayName;
 }
 
-@synthesize connection = _connection;
-
 - (void) setConnection:(MVChatConnection *) connection {
-	id old = _connection;
-	_connection = [connection retain];
-	[old release];
+	_connection = connection;
 
 	if (!_newConnection)
 		self.title = connection.displayName;
@@ -122,7 +108,7 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 
 - (void) showDefaultServerList {
 	if (!_servers)
-		_servers = [[NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Servers" ofType:@"plist"]] retain];
+		_servers = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Servers" ofType:@"plist"]];
 
 	CQPreferencesListViewController *listViewController = [[CQPreferencesListViewController alloc] init];
 	NSMutableArray *servers = [[NSMutableArray alloc] init];
@@ -130,8 +116,8 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 
 	NSUInteger index = 0;
 	for (NSDictionary *serverInfo in _servers) {
-		NSString *name = [serverInfo objectForKey:@"Name"];
-		NSString *address = [serverInfo objectForKey:@"Address"];
+		NSString *name = serverInfo[@"Name"];
+		NSString *address = serverInfo[@"Address"];
 		NSAssert(name.length, @"Server name required.");
 
 		[servers addObject:name];
@@ -154,9 +140,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 	[self endEditing];
 
 	[self.navigationController pushViewController:listViewController animated:YES];
-
-	[listViewController release];
-	[servers release];
 }
 
 #pragma mark -
@@ -207,6 +190,7 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 - (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *) indexPath {
 	if (pushAvailable && indexPath.section == PushTableSection && indexPath.row == 0) {
 		CQConnectionPushEditController *pushEditViewController = [[CQConnectionPushEditController alloc] init];
+		pushEditViewController.newConnection = self.newConnection;
 
 		pushEditViewController.navigationItem.prompt = self.navigationItem.prompt;
 		pushEditViewController.connection = _connection;
@@ -215,7 +199,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 
 		[self.navigationController pushViewController:pushEditViewController animated:YES];
 
-		[pushEditViewController release];
 
 		return;
 	}
@@ -243,9 +226,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 
 		[self.navigationController pushViewController:listViewController animated:YES];
 
-		[editingViewController release];
-		[listViewController release];
-
 		return;
 	}
 
@@ -267,9 +247,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 
 		[self.navigationController pushViewController:listViewController animated:YES];
 
-		[ignoreEditViewController release];
-		[listViewController release];
-
 		return;
 	}
 
@@ -283,8 +260,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 		[self endEditing];
 
 		[self.navigationController pushViewController:advancedEditViewController animated:YES];
-
-		[advancedEditViewController release];
 
 		return;
 	}
@@ -410,7 +385,7 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 
 			NSArray *rooms = _connection.automaticJoinedRooms;
 			if (rooms.count)
-				cell.detailTextLabel.text = [NSString stringWithFormat:@"%u", rooms.count];
+				cell.detailTextLabel.text = [NSString stringWithFormat:@"%tu", rooms.count];
 			else cell.detailTextLabel.text = NSLocalizedString(@"None", @"None label");
 
 			if (rooms.count)
@@ -470,9 +445,9 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 	if (sender.selectedItemIndex == NSNotFound)
 		return;
 
-	NSDictionary *serverInfo = [_servers objectAtIndex:sender.selectedItemIndex];
-	_connection.displayName = [serverInfo objectForKey:@"Name"];
-	_connection.server = [serverInfo objectForKey:@"Address"];
+	NSDictionary *serverInfo = _servers[sender.selectedItemIndex];
+	_connection.displayName = serverInfo[@"Name"];
+	_connection.server = serverInfo[@"Address"];
 
 	if (!_newConnection)
 		self.title = _connection.displayName;
@@ -534,6 +509,11 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 
 - (void) automaticJoinRoomsChanged:(CQPreferencesListViewController *) sender {
 	_connection.automaticJoinedRooms = sender.items;
+
+	[self.tableView beginUpdates];
+	[self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:2 inSection:AutomaticTableSection]] withRowAnimation:UITableViewRowAnimationAutomatic];
+	[self.tableView endUpdates];
+
 }
 
 - (void) ignoreListChanged:(CQPreferencesListViewController *) sender {
@@ -557,7 +537,7 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 	if (sender.on && ![[CQSettingsController settingsController] doubleForKey:@"CQMultitaskingTimeout"]) {
 		[[CQSettingsController settingsController] setDouble:300 forKey:@"CQMultitaskingTimeout"];
 
-		UIAlertView *alert = [[UIAlertView alloc] init];
+		UIAlertView *alert = [[CQAlertView alloc] init];
 
 		alert.title = NSLocalizedString(@"Multitasking Enabled", @"Multitasking enabled alert title");
 		alert.message = NSLocalizedString(@"Multitasking was disabled for Colloquy, but has been enabled again with a timeout of 5 minutes.", @"Multitasking enabled alert message");
@@ -565,7 +545,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 		alert.cancelButtonIndex = [alert addButtonWithTitle:NSLocalizedString(@"Dismiss", @"Dismiss alert button title")];
 
 		[alert show];
-		[alert release];
 	}
 
 	_connection.multitaskingSupported = sender.on;
@@ -573,7 +552,7 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 
 - (void) deleteConnection:(id) sender {
 	if ([[UIDevice currentDevice] isPadModel]) {
-		UIAlertView *alert = [[UIAlertView alloc] init];
+		UIAlertView *alert = [[CQAlertView alloc] init];
 		alert.delegate = self;
 
 		alert.title = NSLocalizedString(@"Delete Connection", @"Delete Connection alert title");
@@ -582,7 +561,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 		[alert addButtonWithTitle:NSLocalizedString(@"Delete", @"Delete alert button title")];
 
 		[alert show];
-		[alert release];
 
 		return;
 	}
@@ -594,8 +572,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 	sheet.cancelButtonIndex = [sheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel button title")];
 
 	[[CQColloquyApplication sharedApplication] showActionSheet:sheet forSender:sender animated:YES];
-
-	[sheet release];
 }
 
 #pragma mark -
@@ -604,7 +580,7 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 	if (buttonIndex == alertView.cancelButtonIndex)
 		return;
 	[[CQConnectionsController defaultController] removeConnection:_connection];
-	[self.navigationController popViewControllerAnimated:YES];
+	[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark -
@@ -613,6 +589,6 @@ static inline __attribute__((always_inline)) BOOL isPlaceholderValue(NSString *s
 	if (buttonIndex == actionSheet.cancelButtonIndex)
 		return;
 	[[CQConnectionsController defaultController] removeConnection:_connection];
-	[self.navigationController popViewControllerAnimated:YES];
+	[self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 @end

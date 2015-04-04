@@ -50,7 +50,7 @@
 
 	sheet.cancelButtonIndex = [sheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel button title")];
 
-	return [sheet autorelease];
+	return sheet;
 }
 
 + (UIActionSheet *) operatorActionSheetWithLocalUserModes:(NSUInteger) localUserModes targetingUserWithModes:(NSUInteger) selectedUserModes disciplineModes:(NSUInteger) disciplineModes onRoomWithFeatures:(NSSet *) features {
@@ -78,22 +78,22 @@
 		[operatorSheet addButtonWithTitle:NSLocalizedString(@"Kick from Room", @"Kick from Room button title")];
 		[operatorSheet addButtonWithTitle:NSLocalizedString(@"Ban from Room", @"Ban From Room button title")];
 
-		[context setObject:@"kick" forKey:[NSNumber numberWithUnsignedInteger:0]];
-		[context setObject:@"ban" forKey:[NSNumber numberWithUnsignedInteger:1]];
+		context[@(0U)] = @"kick";
+		context[@(1U)] = @"ban";
 	}
 
 	if (localUserIsFounder && [features containsObject:MVChatRoomMemberFounderFeature]) {
 		if (selectedUserIsFounder) [operatorSheet addButtonWithTitle:NSLocalizedString(@"Demote from Founder", @"Demote from Founder button title")];
 		else [operatorSheet addButtonWithTitle:NSLocalizedString(@"Promote to Founder", @"Promote to Founder button title")];
 
-		[context setObject:[NSNumber numberWithUnsignedInteger:(MVChatRoomMemberFounderMode | (selectedUserIsFounder ? (1 << 16) : 0))] forKey:[NSNumber numberWithUnsignedInteger:(operatorSheet.numberOfButtons - 1)]];
+		context[@(operatorSheet.numberOfButtons - 1)] = @(MVChatRoomMemberFounderMode | (selectedUserIsFounder ? (1 << 16) : 0));
 	}
 
 	if ((localUserIsAdministrator || localUserIsFounder) && ((localUserIsAdministrator && !selectedUserIsFounder) || localUserIsFounder) && [features containsObject:MVChatRoomMemberAdministratorFeature]) {
 		if (selectedUserIsAdministrator) [operatorSheet addButtonWithTitle:NSLocalizedString(@"Demote from Admin", @"Demote from Admin button title")];
 		else [operatorSheet addButtonWithTitle:NSLocalizedString(@"Promote to Admin", @"Promote to Admin button title")];
 
-		[context setObject:[NSNumber numberWithUnsignedInteger:(MVChatRoomMemberAdministratorMode | (selectedUserIsAdministrator ? (1 << 16) : 0))] forKey:[NSNumber numberWithUnsignedInteger:(operatorSheet.numberOfButtons - 1)]];
+		context[@(operatorSheet.numberOfButtons - 1)] = @(MVChatRoomMemberAdministratorMode | (selectedUserIsAdministrator ? (1 << 16) : 0));
 	}
 
 	if ((localUserIsOperator || localUserIsAdministrator || localUserIsFounder) && ((localUserIsOperator && !(selectedUserIsAdministrator || selectedUserIsFounder)) || (localUserIsAdministrator && !selectedUserIsFounder) || localUserIsFounder)) {
@@ -101,14 +101,14 @@
 			if (selectedUserIsOperator) [operatorSheet addButtonWithTitle:NSLocalizedString(@"Demote from Operator", @"Demote from Operator button title")];
 			else [operatorSheet addButtonWithTitle:NSLocalizedString(@"Promote to Operator", @"Promote to Operator button title")];
 
-			[context setObject:[NSNumber numberWithUnsignedInteger:(MVChatRoomMemberOperatorMode | (selectedUserIsOperator ? (1 << 16) : 0))] forKey:[NSNumber numberWithUnsignedInteger:(operatorSheet.numberOfButtons - 1)]];
+			context[@(operatorSheet.numberOfButtons - 1)] = @(MVChatRoomMemberOperatorMode | (selectedUserIsOperator ? (1 << 16) : 0));
 		}
 
 		if ([features containsObject:MVChatRoomMemberHalfOperatorFeature]) {
 			if (selectedUserIsHalfOperator) [operatorSheet addButtonWithTitle:NSLocalizedString(@"Demote from Half-Operator", @"Demote From Half-Operator button title")];
 			else [operatorSheet addButtonWithTitle:NSLocalizedString(@"Promote to Half-Operator", @"Promote to Half-Operator button title")];
 
-			[context setObject:[NSNumber numberWithUnsignedInteger:(MVChatRoomMemberHalfOperatorMode | (selectedUserIsHalfOperator ? (1 << 16) : 0))] forKey:[NSNumber numberWithUnsignedInteger:(operatorSheet.numberOfButtons - 1)]];
+			context[@(operatorSheet.numberOfButtons - 1)] = @(MVChatRoomMemberHalfOperatorMode | (selectedUserIsHalfOperator ? (1 << 16) : 0));
 		}
 	}
 
@@ -117,23 +117,20 @@
 			if (selectedUserHasVoice) [operatorSheet addButtonWithTitle:NSLocalizedString(@"Remove Voice", @"Remove Voice button title")];
 			else [operatorSheet addButtonWithTitle:NSLocalizedString(@"Grant Voice", @"Grant Voice button title")];
 
-			[context setObject:[NSNumber numberWithUnsignedInteger:(MVChatRoomMemberVoicedMode | (selectedUserHasVoice ? (1 << 16) : 0))] forKey:[NSNumber numberWithUnsignedInteger:(operatorSheet.numberOfButtons - 1)]];
+			context[@(operatorSheet.numberOfButtons - 1)] = @(MVChatRoomMemberVoicedMode | (selectedUserHasVoice ? (1 << 16) : 0));
 		}
 
 		if ([features containsObject:MVChatRoomMemberQuietedFeature]) {
 			if (selectedUserIsQuieted) [operatorSheet addButtonWithTitle:NSLocalizedString(@"Remove Force Quiet", @"Rmeove Force Quiet button title")];
 			else [operatorSheet addButtonWithTitle:NSLocalizedString(@"Force Quiet", @"Force Quiet button title")];
 
-			[context setObject:[NSNumber numberWithUnsignedInteger:(MVChatRoomMemberDisciplineQuietedMode | (selectedUserIsQuieted ? (1 << 16) : 0))] forKey:[NSNumber numberWithUnsignedInteger:(operatorSheet.numberOfButtons - 1)]];
+			context[@(operatorSheet.numberOfButtons - 1)] = @(MVChatRoomMemberDisciplineQuietedMode | (selectedUserIsQuieted ? (1 << 16) : 0));
 		}
 	}
 
 	operatorSheet.cancelButtonIndex = [operatorSheet addButtonWithTitle:NSLocalizedString(@"Cancel", @"Cancel button title")];
 
-	[context release];
-
-
-	return [operatorSheet autorelease];
+	return operatorSheet;
 }
 
 #pragma mark -
@@ -142,58 +139,59 @@
 	if (buttonIndex == actionSheet.cancelButtonIndex)
 		return;
 
-	MVChatUser *user = [actionSheet associatedObjectForKey:@"user"];
-	MVChatRoom *room = [actionSheet associatedObjectForKey:@"room"];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		MVChatUser *user = [actionSheet associatedObjectForKey:@"user"];
+		MVChatRoom *room = [actionSheet associatedObjectForKey:@"room"];
 
-	if (actionSheet.tag == UserActionSheetTag) {
-		if (buttonIndex == SendMessageButtonIndex) {
-			CQDirectChatController *chatController = [[CQChatOrderingController defaultController] chatViewControllerForUser:user ifExists:NO];
-			[[CQChatController defaultController] showChatController:chatController animated:YES];
-		} else if (buttonIndex == [self userInfoButtonIndex]) {
-			CQUserInfoController *userInfoController = [[CQUserInfoController alloc] init];
-			userInfoController.user = user;
+		if (actionSheet.tag == UserActionSheetTag) {
+			if (buttonIndex == SendMessageButtonIndex) {
+				CQDirectChatController *chatController = [[CQChatOrderingController defaultController] chatViewControllerForUser:user ifExists:NO];
+				[[CQChatController defaultController] showChatController:chatController animated:YES];
+			} else if (buttonIndex == [self userInfoButtonIndex]) {
+				CQUserInfoController *userInfoController = [[CQUserInfoController alloc] init];
+				userInfoController.user = user;
 
-			[[CQColloquyApplication sharedApplication] dismissPopoversAnimated:YES];
-			[[CQColloquyApplication sharedApplication] presentModalViewController:userInfoController animated:YES];
+				[[CQColloquyApplication sharedApplication] dismissPopoversAnimated:YES];
+				[[CQColloquyApplication sharedApplication] presentModalViewController:userInfoController animated:YES];
 
-			[userInfoController release];
-#if ENABLE(FILE_TRANSFERS)
-		} else if (buttonIndex == [self sendFileButtonIndex]) {
-			[[CQChatController defaultController] showFilePickerWithUser:user];
-#endif
-		} else if (buttonIndex == [self operatorActionsButtonIndex]) {
-			NSUInteger localUserModes = (room.connection.localUser ? [room modesForMemberUser:room.connection.localUser] : 0);
-			NSUInteger selectedUserModes = (user ? [room modesForMemberUser:user] : 0);
+	#if ENABLE(FILE_TRANSFERS)
+			} else if (buttonIndex == [self sendFileButtonIndex]) {
+				[[CQChatController defaultController] showFilePickerWithUser:user];
+	#endif
+			} else if (buttonIndex == [self operatorActionsButtonIndex]) {
+				NSUInteger localUserModes = (room.connection.localUser ? [room modesForMemberUser:room.connection.localUser] : 0);
+				NSUInteger selectedUserModes = (user ? [room modesForMemberUser:user] : 0);
 
-			UIActionSheet *operatorSheet = [UIActionSheet operatorActionSheetWithLocalUserModes:localUserModes targetingUserWithModes:selectedUserModes disciplineModes:[room disciplineModesForMemberUser:user] onRoomWithFeatures:room.connection.supportedFeatures];
-			operatorSheet.delegate = operatorSheet;
-			operatorSheet.title = actionSheet.title;
+				UIActionSheet *operatorSheet = [UIActionSheet operatorActionSheetWithLocalUserModes:localUserModes targetingUserWithModes:selectedUserModes disciplineModes:[room disciplineModesForMemberUser:user] onRoomWithFeatures:room.connection.supportedFeatures];
+				operatorSheet.delegate = operatorSheet;
+				operatorSheet.title = actionSheet.title;
 
-			[operatorSheet associateObject:user forKey:@"user"];
-			[operatorSheet associateObject:room forKey:@"room"];
+				[operatorSheet associateObject:user forKey:@"user"];
+				[operatorSheet associateObject:room forKey:@"room"];
 
-			[[CQColloquyApplication sharedApplication] showActionSheet:operatorSheet forSender:[actionSheet associatedObjectForKey:@"userInfo"] animated:YES];
-		} else if (buttonIndex == [self ignoreButtonIndex]) {
-			if ([self associatedObjectForKey:@"has-ignore-rule"])
-				[room.connection.ignoreController removeIgnoreRuleFromString:user.nickname];
-			else [room.connection.ignoreController addIgnoreRule:[KAIgnoreRule ruleForUser:user.nickname mask:nil message:nil inRooms:nil isPermanent:YES friendlyName:nil]];
+				[[CQColloquyApplication sharedApplication] showActionSheet:operatorSheet forSender:[actionSheet associatedObjectForKey:@"userInfo"] animated:YES];
+			} else if (buttonIndex == [self ignoreButtonIndex]) {
+				if ([self associatedObjectForKey:@"has-ignore-rule"])
+					[room.connection.ignoreController removeIgnoreRuleFromString:user.nickname];
+				else [room.connection.ignoreController addIgnoreRule:[KAIgnoreRule ruleForUser:user.nickname mask:nil message:nil inRooms:nil isPermanent:YES friendlyName:nil]];
+			}
+		} else if (actionSheet.tag == OperatorActionSheetTag) {
+			id action = [actionSheet associatedObjectForKey:@"userInfo"][@(buttonIndex)];
+
+			if ([action isKindOfClass:[NSNumber class]]) {
+				MVChatRoomMemberMode mode = ([action unsignedIntegerValue] & 0x7FFF);
+				BOOL removeMode = (([action unsignedIntegerValue] & (1 << 16)) == (1 << 16));
+
+				if (removeMode) [room removeMode:mode forMemberUser:user];
+				else [room setMode:mode forMemberUser:user];
+			} else if ([action isEqual:@"ban"]) {
+				MVChatUser *wildcardUser = [MVChatUser wildcardUserWithNicknameMask:nil andHostMask:[NSString stringWithFormat:@"*@%@", user.address]];
+				[room addBanForUser:wildcardUser];
+			} else if ([action isEqual:@"kick"]) {
+				[room kickOutMemberUser:user forReason:nil];
+			}
 		}
-	} else if (actionSheet.tag == OperatorActionSheetTag) {
-		id action = [[actionSheet associatedObjectForKey:@"userInfo"] objectForKey:[NSNumber numberWithUnsignedInteger:buttonIndex]];
-
-		if ([action isKindOfClass:[NSNumber class]]) {
-			MVChatRoomMemberMode mode = ([action unsignedIntegerValue] & 0x7FFF);
-			BOOL removeMode = (([action unsignedIntegerValue] & (1 << 16)) == (1 << 16));
-
-			if (removeMode) [room removeMode:mode forMemberUser:user];
-			else [room setMode:mode forMemberUser:user];
-		} else if ([action isEqual:@"ban"]) {
-			MVChatUser *wildcardUser = [MVChatUser wildcardUserWithNicknameMask:nil andHostMask:[NSString stringWithFormat:@"*@%@", user.address]];
-			[room addBanForUser:wildcardUser];
-		} else if ([action isEqual:@"kick"]) {
-			[room kickOutMemberUser:user forReason:nil];
-		}
-	}
+	});
 }
 
 #pragma mark -

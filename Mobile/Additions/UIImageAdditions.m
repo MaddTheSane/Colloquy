@@ -1,6 +1,18 @@
 #import "UIImageAdditions.h"
 
 @implementation UIImage (UIImageAdditions)
++ (UIImage *) patternImageWithColor:(UIColor *) color {
+	UIImage *image = nil;
+	UIGraphicsBeginImageContext(CGSizeMake(3., 3.)); {
+		CGContextRef contextRef = UIGraphicsGetCurrentContext();
+		CGContextSetFillColorWithColor(contextRef, color.CGColor);
+		CGContextFillRect(contextRef, CGRectMake(0., 0., 3., 3.));
+		image = UIGraphicsGetImageFromCurrentImageContext();
+	} UIGraphicsEndImageContext();
+
+	return [image resizableImageWithCapInsets:UIEdgeInsetsMake(1., 1., 1., 1.)];
+}
+
 - (UIImage *) resizeToSize:(CGSize) size {
 	CGFloat scale = [UIScreen mainScreen].scale;
 	size.width *= scale;
@@ -9,14 +21,18 @@
 	@synchronized(self) {
 		CGImageRef imageRef = self.CGImage;
 
+		CGBitmapInfo alphaInfo = kCGBitmapAlphaInfoMask;
+
 #if TARGET_IPHONE_SIMULATOR
-		CGImageAlphaInfo alphaInfo = kCGImageAlphaNoneSkipLast;
+		alphaInfo |= kCGImageAlphaNoneSkipLast;
 #else
-		CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(imageRef);
+		alphaInfo |= CGImageGetAlphaInfo(imageRef);
 #endif
 
-		if (alphaInfo == kCGImageAlphaNone)
-            alphaInfo = kCGImageAlphaNoneSkipLast;
+		if ((alphaInfo & kCGImageAlphaNone) == kCGImageAlphaNone) {
+			alphaInfo ^= kCGImageAlphaNone;
+            alphaInfo &= kCGImageAlphaNoneSkipLast;
+		}
 
 		static CGColorSpaceRef colorSpaceInfo = NULL;
 		if (!colorSpaceInfo)
@@ -41,7 +57,7 @@
 		CGContextRelease(bitmap);
 		CGImageRelease(newImageRef);
 
-		return [result autorelease];
+		return result;
 	}
 }
 

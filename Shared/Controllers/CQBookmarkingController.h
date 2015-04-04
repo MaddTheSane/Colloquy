@@ -1,11 +1,12 @@
 extern NSString *const CQBookmarkingDidSaveLinkNotification;
 extern NSString *const CQBookmarkingDidNotSaveLinkNotification;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, CQBookmarkingError) {
 	CQBookmarkingErrorGeneric,
 	CQBookmarkingErrorAuthorization,
-	CQBookmarkingErrorServer
-} CQBookmarkingError;
+	CQBookmarkingErrorServer,
+	CQBookmarkingErrorInvalidLink
+};
 
 extern NSString *const CQBookmarkingErrorDomain;
 
@@ -13,11 +14,13 @@ extern NSString *const CQBookmarkingErrorDomain;
 @required
 + (NSString *) serviceName;
 
+@optional
+// required for everything except SafariService
 + (NSInteger) authenticationErrorStatusCode;
 
 + (void) bookmarkLink:(NSString *) link;
 
-@optional
+// +authorize is only used for Pocket
 + (void) authorize;
 + (void) setUsername:(NSString *) username password:(NSString *) password;
 @end
@@ -25,5 +28,6 @@ extern NSString *const CQBookmarkingErrorDomain;
 @interface CQBookmarkingController : NSObject
 + (Class <CQBookmarking>) activeService;
 
++ (void) handleBookmarkingOfLink:(NSString *) link;
 + (void) handleBookmarkingResponse:(NSURLResponse *) response withData:(NSData *) data forLink:(NSString *) link;
 @end

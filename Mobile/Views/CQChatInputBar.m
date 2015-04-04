@@ -2,54 +2,79 @@
 
 #import "CQTextCompletionView.h"
 
+#import "UIColorAdditions.h"
+#import "NSNotificationAdditions.h"
+
 #define CompletionsCaptureKeyboardDelay 0.5
 
-#define CQLineHeight 22.
-#define CQInactiveLineHeight 44.
-#define CQMaxLineHeight 84.
-
 static BOOL hardwareKeyboard;
-
-#if ENABLE(SECRETS)
-@interface UIKeyboardImpl : UIView
-+ (UIKeyboardImpl *) activeInstance;
-- (void) takeTextInputTraitsFromDelegate;
-- (void) takeTextInputTraitsFrom:(id <UITextInputTraits>) object;
-- (void) updateReturnKey:(BOOL) update;
-@end
-
-#pragma mark -
-
-@interface UITextField (UITextFieldPrivate)
-@property (nonatomic) NSRange selectionRange;
-- (BOOL) hasMarkedText;
-@end
-#endif
+static BOOL boldText;
+static BOOL underlineText;
+static BOOL italicText;
+static UIColor *foregroundColor;
+static UIColor *backgroundColor;
+static NSString *const CQChatInputBarDefaultsChanged = @"CQChatInputBarDefaultsChanged";
 
 #pragma mark -
 
 @interface CQChatInputBar (CQChatInputBarPrivate)
+@property (readonly) BOOL _hasMarkedText;
+
 - (void) _moveCaretToOffset:(NSUInteger) offset;
-- (BOOL) _hasMarkedText;
 - (void) _updateTextTraits;
 @end
 
 #pragma mark -
 
 @implementation CQChatInputBar
-- (void) _commonInitialization {
-	CGRect frame = self.bounds;
+@synthesize delegate = _delegate;
 
-	_backgroundView = [[UIToolbar alloc] initWithFrame:frame];
-	_backgroundView.userInteractionEnabled = NO;
-	_backgroundView.tintColor = [UIColor lightGrayColor];
++ (void) initialize {
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
+
+		[self userDefaultsChanged];
+	});
+}
+
++ (void) userDefaultsChanged {
+	boldText = [[NSUserDefaults standardUserDefaults] boolForKey:@"CQChatStyleBoldText"];
+	underlineText = [[NSUserDefaults standardUserDefaults] boolForKey:@"CQChatStyleUnderlineText"];
+	italicText = [[NSUserDefaults standardUserDefaults] boolForKey:@"CQChatStyleItalicText"];
+
+	foregroundColor = [UIColor colorFromName:[[NSUserDefaults standardUserDefaults] objectForKey:@"CQChatStyleForegroundTextColor"]];
+	backgroundColor = [UIColor colorFromName:[[NSUserDefaults standardUserDefaults] objectForKey:@"CQChatStyleBackgroundTextColor"]];
+
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[[NSNotificationCenter chatCenter] postNotificationName:CQChatInputBarDefaultsChanged object:nil];
+	});
+}
+
+- (void) _commonInitialization {
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_resetTextAttributes) name:CQChatInputBarDefaultsChanged object:nil];
+	CGRect frame = self.bounds;
+	frame.size.height += 1;
+
+	self.backgroundColor = [UIColor clearColor];
+
+	_backgroundView = [[UIInputView alloc] initWithFrame:frame inputViewStyle:UIInputViewStyleKeyboard];
+	_backgroundView.tintColor = [UIColor colorWithWhite:(247. / 255.) alpha:1.];
+
+	_topLineView = [[UIView alloc] initWithFrame:CGRectZero];
+	_topLineView.backgroundColor = [UIColor colorWithWhite:(172. / 255.) alpha:1.];
 	_backgroundView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
 
 	[self addSubview:_backgroundView];
+	[self addSubview:_topLineView];
 
-	_inputView = [[UITextView alloc] initWithFrame:CGRectMake(6., 7., frame.size.width - 12., frame.size.height - 14.)];
+	if ([UIDevice currentDevice].isRetina)
+		frame = CGRectMake(6.5, 6.5, frame.size.width - 12., frame.size.height - 12.);
+	else frame = CGRectMake(6., 7., frame.size.width - 12., frame.size.height - 12.);
+
+	_inputView = [[UITextView alloc] initWithFrame:frame];
 	_inputView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
-	_inputView.contentSize = CGSizeMake(230., 20.);
+	_inputView.contentSize = CGSizeMake(230., self._lineHeight);
 	_inputView.dataDetectorTypes = UIDataDetectorTypeNone;
 	_inputView.returnKeyType = UIReturnKeySend;
 	_inputView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
@@ -60,23 +85,20 @@ static BOOL hardwareKeyboard;
 	_inputView.textColor = [UIColor blackColor];
 	_inputView.scrollEnabled = NO;
 
-	_overlayBackgroundView = [[UIImageView alloc] initWithImage:nil];
-	_overlayBackgroundView.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
-	_overlayBackgroundView.userInteractionEnabled = YES;
+	_inputView.layer.borderColor = [UIColor colorWithRed:(200. / 255.) green:(200. / 255.) blue:(205. / 255.) alpha:1.].CGColor;
+	if ([UIDevice currentDevice].isRetina)
+		_inputView.layer.borderWidth = .5;
+	else _inputView.layer.borderWidth = 1.;
+	_inputView.layer.backgroundColor = [UIColor colorWithWhite:(250. / 255.) alpha:1.].CGColor;
+	_inputView.layer.cornerRadius = 5.;
+	[self addSubview:_inputView];
 
-	_overlayBackgroundViewPiece = [[UIImageView alloc] initWithImage:nil];
-	_overlayBackgroundViewPiece.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth);
-
-	[_overlayBackgroundView addSubview:_inputView];
-
-	[self addSubview:_overlayBackgroundView];
-	[self addSubview:_overlayBackgroundViewPiece];
+	[self _resetTextAttributes];
 
 	_autocomplete = YES;
 
 #if ENABLE(SECRETS)
 	_inputView.autocorrectionType = UITextAutocorrectionTypeDefault;
-	_autocorrect = YES;
 #else
 	_inputView.autocorrectionType = UITextAutocorrectionTypeNo;
 	_autocorrect = NO;
@@ -86,22 +108,18 @@ static BOOL hardwareKeyboard;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
-	_animationDuration = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;
-
-	_accessoryButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+	_accessoryButton = [UIButton buttonWithType:UIButtonTypeCustom];
 
 	[_accessoryButton addTarget:self action:@selector(accessoryButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 
 	[self addSubview:_accessoryButton];
-
-	[self _resetTextViewHeight];
 
 	_accessoryImages = [[NSMutableDictionary alloc] init];
 }
 
 #pragma mark -
 
-- (id) initWithFrame:(CGRect) frame {
+- (instancetype) initWithFrame:(CGRect) frame {
 	if (!(self = [super initWithFrame:frame]))
 		return nil;
 
@@ -110,7 +128,7 @@ static BOOL hardwareKeyboard;
 	return self;
 }
 
-- (id) initWithCoder:(NSCoder *) coder {
+- (instancetype) initWithCoder:(NSCoder *) coder {
 	if (!(self = [super initWithCoder:coder]))
 		return nil;
 
@@ -120,41 +138,37 @@ static BOOL hardwareKeyboard;
 }
 
 - (void) dealloc {
+	[[NSNotificationCenter chatCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	_inputView.delegate = nil;
 	_completionView.delegate = nil;
-
-	[_inputView release];
-	[_completionView release];
-	[_completions release];
-	[_backgroundView release];
-	[_accessoryButton release];
-	[_overlayBackgroundView release];
-	[_overlayBackgroundViewPiece release];
-
-	[super dealloc];
 }
 
 #pragma mark -
 
 - (BOOL) canBecomeFirstResponder {
+	[super canBecomeFirstResponder];
 	return [_inputView canBecomeFirstResponder];
 }
 
 - (BOOL) becomeFirstResponder {
+	[super becomeFirstResponder];
 	return [_inputView becomeFirstResponder];
 }
 
 - (BOOL) canResignFirstResponder {
+	[super canResignFirstResponder];
 	return [_inputView canResignFirstResponder];
 }
 
 - (BOOL) resignFirstResponder {
+	[super resignFirstResponder];
 	return [_inputView resignFirstResponder];
 }
 
 - (BOOL) isFirstResponder {
+	[super isFirstResponder];
 	return [_inputView isFirstResponder];
 }
 
@@ -192,12 +206,6 @@ static BOOL hardwareKeyboard;
 	_inputView.autocapitalizationType = autocapitalizationType;
 }
 
-@synthesize autocomplete = _autocomplete;
-
-@synthesize spaceCyclesCompletions = _spaceCyclesCompletions;
-
-@synthesize autocorrect = _autocorrect;
-
 #if !ENABLE(SECRETS)
 - (void) setAutocorrect:(BOOL) autocorrect {
 	// Do nothing, autocorrection can't be enabled if we don't use secrets, since it would
@@ -209,17 +217,25 @@ static BOOL hardwareKeyboard;
 	return _inputView.selectedRange;
 }
 
-- (void) setHeight:(CGFloat) height {
-	BOOL shouldSetHeight = YES;
-	if (delegate && [delegate respondsToSelector:@selector(chatInputBar:shouldChangeHeightBy:)])
-		shouldSetHeight = [delegate chatInputBar:self shouldChangeHeightBy:(self.frame.size.height - height)];
+- (void) setHeight:(CGFloat) height numberOfLines:(NSUInteger) numberOfLines {
+	if (height == CGRectGetHeight(self.frame))
+		return;
 
-	if (shouldSetHeight)
+	__strong __typeof__((_delegate)) strongDelegate = _delegate;
+	BOOL shouldSetHeight = YES;
+	if (strongDelegate && [strongDelegate respondsToSelector:@selector(chatInputBar:shouldChangeHeightBy:)])
+		shouldSetHeight = [strongDelegate chatInputBar:self shouldChangeHeightBy:(self.frame.size.height - height)];
+
+	if (shouldSetHeight) {
 		self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, height);
 
-	_shouldAnimateLayout = NO;
+		[self setNeedsLayout];
+		[self layoutIfNeeded];
 
-	[self layoutSubviews];
+		// Work around iOS 7 bug where the input view frame doesn't update right away after being set, causing text to be clipped.
+		_inputView.frame = _inputView.frame;
+		_inputView.contentSize = CGSizeMake(floorf((_inputView.frame.size.width - (_inputView.frame.origin.x * 2))), ((numberOfLines + 1) * self._lineHeight));
+	}
 }
 
 - (UIColor *) tintColor {
@@ -227,21 +243,41 @@ static BOOL hardwareKeyboard;
 }
 
 - (void) setTintColor:(UIColor *) color {
-	if (!color)
-		color = [UIColor lightGrayColor];
-	if ([color isEqual:[UIColor blackColor]]) {
-		_inputView.keyboardAppearance = UIKeyboardAppearanceAlert;
-		_overlayBackgroundView.image = [[UIImage imageNamed:@"textFieldDark.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 20, 22, 20)];
-		_overlayBackgroundViewPiece.image = [[UIImage imageNamed:@"textFieldDarkPiece.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(22., 1., 22., 1.)];
-	} else {
-		_inputView.keyboardAppearance = UIKeyboardAppearanceDefault;
-		_overlayBackgroundView.image = [[UIImage imageNamed:@"textField.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(22, 20, 22, 20)];
-		_overlayBackgroundViewPiece.image = [[UIImage imageNamed:@"textFieldPiece.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(22., 1., 22., 1.)];
+	if (!color) {
+		color = [UIColor colorWithWhite:(247. / 255.) alpha:1.];
+	} else if ([color isEqual:[UIColor blackColor]]) {
+		color = [UIColor colorWithWhite:(43. / 255.) alpha:1.];
 	}
-	_backgroundView.tintColor = color;
 
-	if (!_previousContentHeight)
-		_previousContentHeight = _inputView.contentSize.height;
+	if ([color isEqual:[UIColor blackColor]] || [color isEqual:[UIColor colorWithWhite:(43. / 255.) alpha:1.]]) {
+		_inputView.keyboardAppearance = UIKeyboardAppearanceDark;
+		_backgroundView.backgroundColor = [UIColor colorWithWhite:(43. / 255.) alpha:1.];
+	} else {
+		_inputView.keyboardAppearance = UIKeyboardAppearanceLight;
+		_backgroundView.backgroundColor = [UIColor colorWithWhite:(247. / 255.) alpha:1.];
+	}
+
+	self.backgroundColor = color;
+}
+
+- (UIFont *) font {
+	return _inputView.font;
+}
+
+- (void) setFont:(UIFont *) font {
+	if (font.pointSize > .0) {
+		UIFontDescriptorSymbolicTraits symbolicTraits = font.fontDescriptor.symbolicTraits;
+		if (italicText) symbolicTraits |= UIFontDescriptorTraitItalic;
+		else if (symbolicTraits & UIFontDescriptorTraitItalic) symbolicTraits ^= UIFontDescriptorTraitItalic;
+
+		if (boldText) symbolicTraits |= UIFontDescriptorTraitBold;
+		else if (symbolicTraits & UIFontDescriptorTraitBold) symbolicTraits ^= UIFontDescriptorTraitBold;
+
+		UIFontDescriptor *fontDescriptor = [font.fontDescriptor fontDescriptorWithSymbolicTraits:symbolicTraits];
+		_inputView.font = [UIFont fontWithDescriptor:fontDescriptor size:-1];
+	}
+
+	[self _resetTextViewHeight];
 }
 
 #pragma mark -
@@ -262,10 +298,11 @@ static BOOL hardwareKeyboard;
 }
 
 - (void) showCompletionsForText:(NSString *) text inRange:(NSRange) range {
-	if (![delegate respondsToSelector:@selector(chatInputBar:completionsForWordWithPrefix:inRange:)])
+	__strong __typeof__((_delegate)) strongDelegate = _delegate;
+	if (![strongDelegate respondsToSelector:@selector(chatInputBar:completionsForWordWithPrefix:inRange:)])
 		return;
 
-	NSArray *completions = [delegate chatInputBar:self completionsForWordWithPrefix:text inRange:range];
+	NSArray *completions = [strongDelegate chatInputBar:self completionsForWordWithPrefix:text inRange:range];
 	if (completions.count)
 		[self showCompletions:completions forText:text inRange:range];
 	else [self hideCompletions];
@@ -280,9 +317,7 @@ static BOOL hardwareKeyboard;
 
 	_completionRange = NSMakeRange(NSNotFound, 0);
 
-	id old = _completions;
 	_completions = nil;
-	[old release];
 
 	_completionView.hidden = YES;
 	_completionView.completions = nil;
@@ -317,7 +352,7 @@ static BOOL hardwareKeyboard;
 
 	NSArray *completions = _completions;
 	NSString *prefixText = [text substringToIndex:_completionRange.location];
-	CGSize textSize = [prefixText sizeWithFont:_inputView.font];
+	CGSize textSize = [prefixText sizeWithAttributes:@{ NSFontAttributeName: _inputView.font }];
 
 	CGRect inputFrame = [self convertRect:_inputView.frame toView:self.superview];
 
@@ -352,9 +387,7 @@ retry:
 - (void) showCompletions:(NSArray *) completions forText:(NSString *) text inRange:(NSRange) textRange {
 	_completionRange = textRange;
 
-	id old = _completions;
-	_completions = [completions retain];
-	[old release];
+	_completions = completions;
 
 	_inputView.returnKeyType = UIReturnKeySend;
 
@@ -372,9 +405,37 @@ retry:
 
 #pragma mark -
 
+- (void) updateTextViewContentSize {
+	if (_inputView.hasText && _inputView.text.length) {
+		CGSize lineSize = [@"a" sizeWithAttributes:@{ NSFontAttributeName: _inputView.font }];
+
+		NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+		paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+
+		CGFloat availableWidth = _inputView.contentSize.width - 5.;
+		CGSize suggestedTextSize = [_inputView.text boundingRectWithSize:CGSizeMake(availableWidth, 90000) options:(NSStringDrawingOptions)NSStringDrawingUsesLineFragmentOrigin attributes:@{
+			NSFontAttributeName: _inputView.font,
+			NSParagraphStyleAttributeName: paragraphStyle
+		} context:nil].size;
+
+		CGFloat numberOfLines = roundf(suggestedTextSize.height / lineSize.height);
+		CGFloat contentHeight = fminf((self._inactiveLineHeight + ((numberOfLines - 1) * self._lineHeight)), self._maxLineHeight);
+
+		if (contentHeight < self._maxLineHeight)
+			_inputView.scrollEnabled = NO;
+		else _inputView.scrollEnabled = YES;
+		[self setHeight:contentHeight numberOfLines:(numberOfLines - 1)];
+	} else {
+		[self _resetTextViewHeight];
+	}
+}
+
+#pragma mark -
+
 - (void) accessoryButtonPressed:(id) sender {
-	if (delegate && [delegate respondsToSelector:@selector(chatInputBarAccessoryButtonPressed:)])
-		[delegate chatInputBarAccessoryButtonPressed:self];
+	__strong __typeof__((_delegate)) strongDelegate = _delegate;
+	if (strongDelegate && [strongDelegate respondsToSelector:@selector(chatInputBarAccessoryButtonPressed:)])
+		[strongDelegate chatInputBarAccessoryButtonPressed:self];
 }
 
 #pragma mark -
@@ -387,7 +448,6 @@ retry:
 
 	[self _updateImagesForResponderState];
 
-	_shouldAnimateLayout = NO;
 	[self setNeedsLayout];
 }
 
@@ -399,48 +459,55 @@ retry:
 
 	[self _updateImagesForResponderState];
 
-	_shouldAnimateLayout = NO;
 	[self setNeedsLayout];
 }
 
-@synthesize delegate;
+- (void) scrollViewDidScroll:(UIScrollView *) scrollView {
+	scrollView.contentOffset = CGPointMake(0.0, fmaxf(scrollView.contentInset.top, scrollView.contentOffset.y));
+}
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *) textView {
-	if ([delegate respondsToSelector:@selector(chatInputBarShouldBeginEditing:)])
-		return [delegate chatInputBarShouldBeginEditing:self];
+	textView.contentInset = UIEdgeInsetsMake(-4., 2., 0., 0.);
+
+	__strong __typeof__((_delegate)) strongDelegate = _delegate;
+	if ([strongDelegate respondsToSelector:@selector(chatInputBarShouldBeginEditing:)])
+		return [strongDelegate chatInputBarShouldBeginEditing:self];
 	return YES;
 }
 
 - (void) textViewDidBeginEditing:(UITextView *) textView {
-	if ([delegate respondsToSelector:@selector(chatInputBarDidBeginEditing:)])
-		[delegate chatInputBarDidBeginEditing:self];
+	__strong __typeof__((_delegate)) strongDelegate = _delegate;
+	if ([strongDelegate respondsToSelector:@selector(chatInputBarDidBeginEditing:)])
+		[strongDelegate chatInputBarDidBeginEditing:self];
 }
 
 - (BOOL) textViewShouldEndEditing:(UITextView *) textView {
-	if ([delegate respondsToSelector:@selector(chatInputBarShouldEndEditing:)])
-		return [delegate chatInputBarShouldEndEditing:self];
+	__strong __typeof__((_delegate)) strongDelegate = _delegate;
+	if ([strongDelegate respondsToSelector:@selector(chatInputBarShouldEndEditing:)])
+		return [strongDelegate chatInputBarShouldEndEditing:self];
 	return YES;
 }
 
 - (void) textViewDidEndEditing:(UITextView *) textView {
-	if ([delegate respondsToSelector:@selector(chatInputBarDidEndEditing:)])
-		[delegate chatInputBarDidEndEditing:self];
+	textView.contentInset = UIEdgeInsetsMake(-4., 2., 0., 0.);
+
+	__strong __typeof__((_delegate)) strongDelegate = _delegate;
+	if ([strongDelegate respondsToSelector:@selector(chatInputBarDidEndEditing:)])
+		[strongDelegate chatInputBarDidEndEditing:self];
 	[self hideCompletions];
 }
 
 - (BOOL) textViewShouldReturn:(UITextView *) textView {
 	if (_completionCapturedKeyboard && self.showingCompletions) {
-		[_completionView retain];
-
 		if (_completionView.selectedCompletion != NSNotFound)
-			[self textCompletionView:_completionView didSelectCompletion:[_completionView.completions objectAtIndex:_completionView.selectedCompletion]];
+			[self textCompletionView:_completionView didSelectCompletion:_completionView.completions[_completionView.selectedCompletion]];
 		else [self hideCompletions];
 
-		[_completionView release];
 		return YES;
 	}
 
-	if (![delegate respondsToSelector:@selector(chatInputBar:sendText:)])
+	__strong __typeof__((_delegate)) strongDelegate = _delegate;
+	if (![strongDelegate respondsToSelector:@selector(chatInputBar:sendText:)])
 		return NO;
 
 	if (!_inputView.text.length)
@@ -453,125 +520,130 @@ retry:
 }
 
 - (BOOL) textView:(UITextView *) textView shouldChangeTextInRange:(NSRange) range replacementText:(NSString *) string {
-	if ([string isEqualToString:@"\n"]) {
-		[self textViewShouldReturn:textView];
+	@synchronized(textView) {
+		__strong __typeof__((_delegate)) strongDelegate = _delegate;
 
-		return NO;
-	}
+		if ([string isEqualToString:@"\n"]) {
+			[self textViewShouldReturn:textView];
 
-	if ([string isEqualToString:@"\t"]) {
-		hardwareKeyboard = YES;
-
-		if ([delegate respondsToSelector:@selector(chatInputBarShouldIndent:)] && ![delegate chatInputBarShouldIndent:self])
 			return NO;
-	}
-
-	if (_autocapitalizeNextLetter) {
-		_autocapitalizeNextLetter = NO;
-		_inputView.autocapitalizationType = _defaultAutocapitalizationType;
-		[self _updateTextTraits];
-	}
-
-	if (![delegate respondsToSelector:@selector(chatInputBar:shouldAutocorrectWordWithPrefix:)] && ![delegate respondsToSelector:@selector(chatInputBar:completionsForWordWithPrefix:)])
-		return YES;
-
-	if (_spaceCyclesCompletions && _completionCapturedKeyboard && self.showingCompletions && [string isEqualToString:@" "] && !_completionView.closeSelected) {
-		if (_completionView.selectedCompletion != NSNotFound)
-			++_completionView.selectedCompletion;
-		else _completionView.selectedCompletion = 0;
-		return NO;
-	}
-
-	_completionCapturedKeyboard = NO;
-
-	NSString *text = _inputView.text;
-	BOOL replaceManually = NO;
-	if (_spaceCyclesCompletions && self.showingCompletions && _completionView.selectedCompletion != NSNotFound && !range.length && ![string isEqualToString:@" "]) {
-		replaceManually = YES;
-		text = [_inputView.text stringByReplacingCharactersInRange:NSMakeRange(range.location, 0) withString:@" "];
-		++range.location;
-	}
-
-	NSRange wordRange = {0, range.location + string.length};
-	text = [text stringByReplacingCharactersInRange:range withString:string];
-
-	for (NSInteger i = (range.location + string.length - 1); i >= 0; --i) {
-		if ([text characterAtIndex:i] == ' ') {
-			wordRange.location = i + 1;
-			wordRange.length = ((range.location + string.length) - wordRange.location);
-			break;
 		}
+
+		if ([string isEqualToString:@"\t"]) {
+			hardwareKeyboard = YES;
+
+			if ([strongDelegate respondsToSelector:@selector(chatInputBarShouldIndent:)] && ![strongDelegate chatInputBarShouldIndent:self])
+				return NO;
+		}
+
+		if (_autocapitalizeNextLetter) {
+			_autocapitalizeNextLetter = NO;
+			_inputView.autocapitalizationType = _defaultAutocapitalizationType;
+			[self _updateTextTraits];
+		}
+
+		if (![strongDelegate respondsToSelector:@selector(chatInputBar:shouldAutocorrectWordWithPrefix:)] && ![strongDelegate respondsToSelector:@selector(chatInputBar:completionsForWordWithPrefix:)])
+			return YES;
+
+		if (_spaceCyclesCompletions && _completionCapturedKeyboard && self.showingCompletions && [string isEqualToString:@" "] && !_completionView.closeSelected) {
+			if (_completionView.selectedCompletion != NSNotFound)
+				++_completionView.selectedCompletion;
+			else _completionView.selectedCompletion = 0;
+			return NO;
+		}
+
+		_completionCapturedKeyboard = NO;
+
+		NSString *text = _inputView.text;
+		BOOL replaceManually = NO;
+		if (_spaceCyclesCompletions && self.showingCompletions && _completionView.selectedCompletion != NSNotFound && !range.length && ![string isEqualToString:@" "]) {
+			replaceManually = YES;
+			text = [_inputView.text stringByReplacingCharactersInRange:NSMakeRange(range.location, 0) withString:@" "];
+			++range.location;
+		}
+
+		NSRange wordRange = {0, range.location + string.length};
+		text = [text stringByReplacingCharactersInRange:range withString:string];
+
+		for (NSInteger i = (range.location + string.length - 1); i >= 0; --i) {
+			if (i > (NSInteger)text.length) {
+				wordRange.length = 0;
+				break;
+			}
+
+			if ([text characterAtIndex:i] == ' ') {
+				wordRange.location = i + 1;
+				wordRange.length = ((range.location + string.length) - wordRange.location);
+				break;
+			}
+		}
+
+		if (!wordRange.length)
+			_disableCompletionUntilNextWord = NO;
+
+		NSString *word = [[text substringWithRange:wordRange] copy];
+		NSArray *completions = nil;
+		BOOL canShowCompletionForCurrentWord = textView.text.length;
+		if (canShowCompletionForCurrentWord) {
+			if (!((range.location + range.length) == textView.text.length)) { // if we're in the middle of a line, only show completions if the next letter is a space
+				NSUInteger idx = (range.location + range.length);
+				if (textView.text.length > idx) {
+					unichar character = [textView.text characterAtIndex:idx];
+					canShowCompletionForCurrentWord = [[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:character];
+				}
+			} else canShowCompletionForCurrentWord = YES; // if we are at the end of the line, we can show completions since there's nothing else after it
+		} else canShowCompletionForCurrentWord = YES; // if we don't have any text, we can maybe show completions although we probably won't (not enough context yet)
+
+		if (_autocomplete && canShowCompletionForCurrentWord && !_disableCompletionUntilNextWord && word.length && ![self _hasMarkedText] && [strongDelegate respondsToSelector:@selector(chatInputBar:completionsForWordWithPrefix:inRange:)]) {
+			@synchronized(strongDelegate) {
+				completions = [strongDelegate chatInputBar:self completionsForWordWithPrefix:word inRange:wordRange];
+			}
+			if (completions.count)
+				[self showCompletions:completions forText:text inRange:wordRange];
+			 else [self hideCompletions];
+		} else [self hideCompletions];
+
+		word = [text substringWithRange:wordRange];
+
+		UITextAutocorrectionType newAutocorrectionType = UITextAutocorrectionTypeDefault;
+		if (!_autocorrect || completions.count || ([strongDelegate respondsToSelector:@selector(chatInputBar:shouldAutocorrectWordWithPrefix:)] && ![strongDelegate chatInputBar:self shouldAutocorrectWordWithPrefix:word]))
+			newAutocorrectionType = UITextAutocorrectionTypeNo;
+
+		if (newAutocorrectionType != _inputView.autocorrectionType) {
+			_inputView.autocorrectionType = newAutocorrectionType;
+			[self _updateTextTraits];
+		}
+
+		if (replaceManually) {
+			_inputView.text = text;
+			[self _moveCaretToOffset:(range.location + string.length)];
+			return NO;
+		}
+
+		return YES;
 	}
-
-	if (!wordRange.length)
-		_disableCompletionUntilNextWord = NO;
-
-	NSString *word = [text substringWithRange:wordRange];
-	NSArray *completions = nil;
-	BOOL canShowCompletionForCurrentWord = textView.text.length;
-	if (canShowCompletionForCurrentWord) {
-		if (!((range.location + range.length) == textView.text.length)) // if we're in the middle of a line, only show completions if the next letter is a space
-			canShowCompletionForCurrentWord = [[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:[textView.text characterAtIndex:(range.location + range.length)]];
-		else canShowCompletionForCurrentWord = YES; // if we are at the end of the line, we can show completions since there's nothing else after it
-	} else canShowCompletionForCurrentWord = YES; // if we don't have any text, we can maybe show completions although we probably won't (not enough context yet)
-
-	if (_autocomplete && canShowCompletionForCurrentWord && !_disableCompletionUntilNextWord && word.length && ![self _hasMarkedText] && [delegate respondsToSelector:@selector(chatInputBar:completionsForWordWithPrefix:inRange:)]) {
-		completions = [delegate chatInputBar:self completionsForWordWithPrefix:word inRange:wordRange];
-		if (completions.count)
-			[self showCompletions:completions forText:text inRange:wordRange];
-		 else [self hideCompletions];
-	} else [self hideCompletions];
-
-	word = [text substringWithRange:wordRange];
-
-	UITextAutocorrectionType newAutocorrectionType = UITextAutocorrectionTypeDefault;
-	if (!_autocorrect || completions.count || ([delegate respondsToSelector:@selector(chatInputBar:shouldAutocorrectWordWithPrefix:)] && ![delegate chatInputBar:self shouldAutocorrectWordWithPrefix:word]))
-		newAutocorrectionType = UITextAutocorrectionTypeNo;
-
-	if (newAutocorrectionType != _inputView.autocorrectionType) {
-		_inputView.autocorrectionType = newAutocorrectionType;
-		[self _updateTextTraits];
-	}
-
-	if (replaceManually) {
-		_inputView.text = text;
-		[self _moveCaretToOffset:(range.location + string.length)];
-		return NO;
-	}
-
-	return YES;
 }
 
 - (void) textViewDidChange:(UITextView *) textView {
-	CGFloat contentHeight = textView.contentSize.height - textView.font.pointSize + 2.;
+	[self updateTextViewContentSize];
+	[self _updateImagesForResponderState];
 
-	if (contentHeight == _previousContentHeight)
-		return;
+	if (!textView.text.length)
+		[self _resetTextAttributes];
 
-	if (textView.hasText) {
-		if (contentHeight <= CQMaxLineHeight) {
-			CGFloat newHeight = fminf(contentHeight + CQLineHeight, CQMaxLineHeight);
-			self.height = newHeight;
-
-			if (_previousContentHeight > CQMaxLineHeight) {
-				textView.scrollEnabled = NO;
-			} else if (newHeight == CQMaxLineHeight) {
-				textView.scrollEnabled = YES;
-			}
-
-			contentHeight = newHeight;
-		}
-	} else {
-		[self _resetTextViewHeight];
-	}
-
-	_previousContentHeight = contentHeight;
+	__strong __typeof__((_delegate)) strongDelegate = _delegate;
+	if ([strongDelegate respondsToSelector:@selector(chatInputBarTextDidChange:)])
+		[strongDelegate chatInputBarTextDidChange:self];
 }
 
 - (void) textViewDidChangeSelection:(UITextView *) textView {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideCompletions) object:nil];
 
 	[self performSelector:@selector(hideCompletions) withObject:nil afterDelay:0.5];
+
+	__strong __typeof__((_delegate)) strongDelegate = _delegate;
+	if ([strongDelegate respondsToSelector:@selector(chatInputBarDidChangeSelection:)])
+		[strongDelegate chatInputBarDidChangeSelection:self];
 }
 
 #pragma mark -
@@ -611,16 +683,14 @@ retry:
 - (void) layoutSubviews {
 	[super layoutSubviews];
 
-	if (_shouldAnimateLayout) {
-		[UIView setAnimationCurve:_animationCurve];
-		[UIView setAnimationDuration:_animationDuration];
-		[UIView beginAnimations:nil context:NULL];
-	}
+	_backgroundView.frame = self.bounds;
 
+	if ([UIDevice currentDevice].isRetina)
+		_topLineView.frame = CGRectMake(0., 0., CGRectGetWidth(_backgroundView.frame), .5);
+	else _topLineView.frame = CGRectMake(0., 0., CGRectGetWidth(_backgroundView.frame), 1.);
 #define ButtonMargin 6.5
 #define ButtonWidth 18.
-	CGRect frame = _backgroundView.frame;
-	frame.origin.y = 1.;
+	__block CGRect frame = _backgroundView.frame;
 	if ([UIDevice currentDevice].isRetina)
 		frame.size.width -= (ButtonWidth + ButtonMargin);
 	else frame.size.width -= (ButtonWidth + floorf(ButtonMargin));
@@ -630,35 +700,38 @@ retry:
 	frame.size.width = CGRectGetWidth(self.frame) - CGRectGetMinX(frame);
 	_overlayBackgroundViewPiece.frame = frame;
 
-#define ImageBorderInset 10.
-	frame = _inputView.frame;
-	frame.origin.y = ImageBorderInset;
-	frame.size.width = _backgroundView.frame.size.width - (frame.origin.x * 2);
-	frame.size.height = _backgroundView.frame.size.height - (ImageBorderInset * 2);
-	if ([UIDevice currentDevice].isRetina)
-		frame.size.width -= (ButtonWidth + ButtonMargin);
-	else frame.size.width -= (ButtonWidth + floorf(ButtonMargin));
-	_inputView.frame = frame;
+	[UIView animateWithDuration:_animationDuration delay:.0 options:(_animationCurve << 16) animations:^{
+		frame = self.bounds;
+		if ([UIDevice currentDevice].isRetina)
+			frame = CGRectMake(6.5, 6.5, frame.size.width - 12., frame.size.height - 12.);
+		else frame = CGRectMake(6., 7., frame.size.width - 12., frame.size.height - 12.);
 
-	frame = _accessoryButton.frame;
-	if ([UIDevice currentDevice].isRetina)
-		frame.origin.x = CGRectGetMaxX(_inputView.frame) + ButtonMargin;
-	else frame.origin.x = CGRectGetMaxX(_inputView.frame) + floorf(ButtonMargin);
-	frame.origin.y = (ButtonMargin * 2);
-	frame.size.width = ButtonWidth;
-	frame.size.height = ButtonWidth;
+		frame.size.width = _backgroundView.frame.size.width - (frame.origin.x * 2);
+		if ([UIDevice currentDevice].isRetina)
+			frame.size.width -= (ButtonWidth + ButtonMargin);
+		else frame.size.width -= (ButtonWidth + floorf(ButtonMargin));
 
-	_accessoryButton.frame = frame;
-#undef ImageBorderInset
+		frame.size.height = (self.frame.size.height - (17));
+		frame.origin.y = (self.frame.size.height - frame.size.height) / 2.;
+		_inputView.frame = frame;
+
+		[UIView performWithoutAnimation:^{
+			frame = _accessoryButton.frame;
+			if ([UIDevice currentDevice].isRetina)
+				frame.origin.x = CGRectGetMaxX(_inputView.frame) + ButtonMargin;
+			else frame.origin.x = CGRectGetMaxX(_inputView.frame) + floorf(ButtonMargin);
+			frame.origin.y = (ButtonMargin * 2);
+			frame.size.width = ButtonWidth;
+			frame.size.height = ButtonWidth;
+
+			_accessoryButton.frame = frame;
+		}];
+	} completion:NULL];
+
 #undef ButtonWidth
 #undef ButtonMargin
 
-	if (_shouldAnimateLayout)
-		[UIView commitAnimations];
-
 	_animationDuration = [UIApplication sharedApplication].statusBarOrientationAnimationDuration;
-
-	_shouldAnimateLayout = YES;
 }
 
 #pragma mark -
@@ -674,13 +747,16 @@ retry:
 }
 
 - (void) _updateTextTraits {
+	if ([UIDevice currentDevice].isSystemEight)
+		return;
+
 #if ENABLE(SECRETS)
 	static Class keyboardClass;
 	if (!keyboardClass) keyboardClass = NSClassFromString(@"UIKeyboardImpl");
 
 	NSAssert(keyboardClass, @"UIKeyboardImpl class does not exist.");
 
-	UIKeyboardImpl *keyboard = [keyboardClass performPrivateSelector:@"activeInstance"];
+	__strong id keyboard = [keyboardClass performPrivateSelector:@"activeInstance"];
 	if (!keyboard)
 		return;
 
@@ -692,54 +768,116 @@ retry:
 	if (!takeTextInputTraitsFromSelector)
 		takeTextInputTraitsFromSelector = NSSelectorFromString(@"takeTextInputTraitsFrom:");
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+
 	NSAssert([keyboard respondsToSelector:takeTextInputTraitsFromDelegateSelector] || [keyboard respondsToSelector:takeTextInputTraitsFromSelector], @"UIKeyboardImpl does not respond to takeTextInputTraitsFromDelegate or takeTextInputTraitsFrom:.");
 	if ([keyboard respondsToSelector:takeTextInputTraitsFromDelegateSelector])
 		[keyboard performSelector:takeTextInputTraitsFromDelegateSelector];
 	else if ([keyboard respondsToSelector:takeTextInputTraitsFromSelector])
 		[keyboard performSelector:takeTextInputTraitsFromSelector withObject:_inputView];
 
-	[keyboard performPrivateSelector:@"updateReturnKey:" withBoolean:YES];
+#pragma clang diagnostic pop
 #endif
 }
 
 - (void) _sendText {
-	// Resign and become first responder to accept any pending auto-correction.
-	[_inputView resignFirstResponder];
-	[_inputView becomeFirstResponder];
+	@synchronized(_inputView) {
+		// Resign and become first responder to accept any pending auto-correction.
+		[_inputView resignFirstResponder];
+		[_inputView becomeFirstResponder];
 
-	NSString *text = _inputView.text;
-	text = [text stringBySubstitutingEmojiForEmoticons];
+		MVChatString *text = _inputView.attributedText;
+		if (!text) text = [[NSAttributedString alloc] initWithString:_inputView.text attributes:@{ NSFontAttributeName: _inputView.font }];
+//		text = [text stringBySubstitutingEmojiForEmoticons];
 
-	if (![delegate chatInputBar:self sendText:text])
-		return;
+		__strong __typeof__((_delegate)) strongDelegate = _delegate;
+		if (![strongDelegate chatInputBar:self sendText:text])
+			return;
 
-	_disableCompletionUntilNextWord = NO;
-	_completionCapturedKeyboard = NO;
+		_disableCompletionUntilNextWord = NO;
+		_completionCapturedKeyboard = NO;
 
-	_inputView.text = @"";
-	_inputView.autocorrectionType = (_autocorrect ? UITextAutocorrectionTypeDefault : UITextAutocorrectionTypeNo);
+		_inputView.text = @"";
+		_inputView.autocorrectionType = (_autocorrect ? UITextAutocorrectionTypeDefault : UITextAutocorrectionTypeNo);
 
-	[self hideCompletions];
-	[self _resetTextViewHeight];
+		[self hideCompletions];
+		[self _resetTextViewHeight];
+		[self _resetTextAttributes];
+	}
 }
 
 - (void) _resetTextViewHeight {
-	self.height = CQInactiveLineHeight;
-	_inputView.contentOffset = CGPointMake(0., 7.);
-	_inputView.contentInset = UIEdgeInsetsMake(-4., 0., 5., 0.);
+	[self setHeight:self._inactiveLineHeight numberOfLines:0];
+
 	_inputView.scrollEnabled = NO;
+}
+
+- (void) _resetTextAttributes {
+	if (_textNeedsClearing) {
+		_textNeedsClearing = NO;
+		return;
+	}
+
+	self.font = self.font; // recalculate bold/italic settings
+
+	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
+	attributes[NSFontAttributeName] = self.font;
+	attributes[NSUnderlineStyleAttributeName] = (underlineText ? @(NSUnderlineStyleSingle) : @(NSUnderlineStyleNone));
+	if (foregroundColor) attributes[NSForegroundColorAttributeName] = foregroundColor;
+	if (backgroundColor) attributes[NSBackgroundColorAttributeName] = backgroundColor;
+
+	NSMutableAttributedString *attributedString = [_inputView.attributedText mutableCopy];
+	_textNeedsClearing = NO;
+	if (!attributedString.length) {
+		_textNeedsClearing = YES;
+		attributedString = [[NSMutableAttributedString alloc] initWithString:(_inputView.text.length ? _inputView.text : @" ")];
+	}
+
+	[attributedString setAttributes:attributes range:NSMakeRange(0, attributedString.length)];
+
+	_inputView.attributedText = attributedString;
+
+	if (_textNeedsClearing)
+		_inputView.text = @"";
 }
 
 #pragma mark -
 
 - (void) _updateImagesForResponderState {
-	UIImage *defaultImage = _accessoryImages[@(_responderState)][@(UIControlStateNormal)];
+	CQChatInputBarResponderState activeResponderState = _responderState;
+	if (!_inputView.hasText)
+	{
+		activeResponderState = CQChatInputBarNotResponder;
+	}
+
+	UIImage *defaultImage = _accessoryImages[@(activeResponderState)][@(UIControlStateNormal)];
 	if (defaultImage)
 		[_accessoryButton setImage:defaultImage forState:UIControlStateNormal];
 
-	UIImage *pressedImage = _accessoryImages[@(_responderState)][@(UIControlStateHighlighted)];
+	UIImage *pressedImage = _accessoryImages[@(activeResponderState)][@(UIControlStateHighlighted)];
 	if (pressedImage)
 		[_accessoryButton setImage:pressedImage forState:UIControlStateHighlighted];
 	else [_accessoryButton setImage:nil forState:UIControlStateHighlighted];
+}
+
+#pragma mark -
+
+#define CQLineHeight 22.
+#define CQInactiveLineHeight 44.
+#define CQMaxLineHeight 84.
+
+- (CGFloat) _lineHeight {
+	if (!_inputView.font)
+		return CQLineHeight;
+	return fmaxf(CQLineHeight, [@"Jy" sizeWithAttributes:@{ NSFontAttributeName: _inputView.font }].height);
+}
+
+- (CGFloat) _inactiveLineHeight {
+	return fmax(self._lineHeight * 2, CQInactiveLineHeight);
+}
+
+- (CGFloat) _maxLineHeight {
+	return fmax(self._lineHeight * 4, CQMaxLineHeight);
 }
 @end
