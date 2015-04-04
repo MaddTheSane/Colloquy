@@ -26,6 +26,10 @@
 #import <objc/objc-runtime.h>
 #import <expat.h>
 
+@interface NSObject (private)
++(id) constructElement:(XMLQName*)qname withAttributes:(NSMutableDictionary*)atts withDefaultURI:(NSString*)default_uri;
+@end
+
 @interface BufferParser : NSObject <XMLElementStreamListener>
 {
     BOOL _finished;
@@ -193,8 +197,7 @@ static NSMutableArray* G_FACTORY;
     NSEnumerator* e = [G_FACTORY objectEnumerator];
     while ((cur = [e nextObject]))
     {
-        XMLElement* result = objc_msgSend(cur, @selector(constructElement:withAttributes:withDefaultURI:),
-                                          qname, atts, defaultURI);
+		XMLElement* result = [cur constructElement:qname withAttributes:atts withDefaultURI:defaultURI];
         if (result != nil)
             return result;
     }
