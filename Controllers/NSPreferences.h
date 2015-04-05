@@ -10,7 +10,7 @@
 - (void) initializeFromDefaults;
 - (void) willBeDisplayed;
 - (void) saveChanges;
-- (BOOL) hasChangesPending;
+@property (readonly) BOOL hasChangesPending;
 - (NSImage *) imageForPreferenceNamed:(NSString *) name;
 - (NSBox *) viewForPreferenceNamed:(NSString *) name;
 @end
@@ -49,9 +49,9 @@
 - (int) showModalPreferencesPanelForOwner:(id) owner;
 - (int) showModalPreferencesPanel;
 
-- (void) ok:(id) sender;
-- (void) cancel:(id) sender;
-- (void) apply:(id) sender;
+- (IBAction) ok:(id) sender;
+- (IBAction) cancel:(id) sender;
+- (IBAction) apply:(id) sender;
 
 - (NSString *) windowTitle;
 - (BOOL) usesButtons;
@@ -79,7 +79,6 @@
 - (void) initializeFromDefaults;
 - (void) didChange;
 
-- (NSSize) minSize;
-- (void) setMinSize:(NSSize) size;
-- (BOOL) isResizable;
+@property NSSize minSize;
+@property (readonly, getter=isResizable) BOOL resizable;
 @end

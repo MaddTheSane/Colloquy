@@ -308,7 +308,6 @@
 		92C70D131A5E88CE00080E45 /* person.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D0B1A5E88CE00080E45 /* person.pdf */; };
 		92C70D141A5E88CE00080E45 /* admin.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D0C1A5E88CE00080E45 /* admin.pdf */; };
 		92C70D151A5E88CE00080E45 /* op.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D0D1A5E88CE00080E45 /* op.pdf */; };
-		92C70D161A5E88CE00080E45 /* room.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D0E1A5E88CE00080E45 /* room.pdf */; };
 		92C70D171A5E88CE00080E45 /* founder.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D0F1A5E88CE00080E45 /* founder.pdf */; };
 		92C70D181A5E88CE00080E45 /* voice.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D101A5E88CE00080E45 /* voice.pdf */; };
 		92C70D191A5E88CE00080E45 /* super-op.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D111A5E88CE00080E45 /* super-op.pdf */; };
@@ -1188,7 +1187,6 @@
 		089C166AFE841209C02AAC07 /* Massinova Menu Extra */ = {
 			isa = PBXGroup;
 			children = (
-				92A711941A4A5166009E80F0 /* SecurityInterface.framework */,
 				1C0A18110FC676A90022823E /* AGRegex.xcodeproj */,
 				0A60C15F0630D96D00DC6280 /* Chat Core.xcodeproj */,
 				F50B0A9F0170C89301A84BDE /* Sources & Headers */,
@@ -1207,6 +1205,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				92A711941A4A5166009E80F0 /* SecurityInterface.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 				1C397390082D4ADA00DCF3CF /* IOKit.framework */,
 				F51F91F103796FCD01A35792 /* Security.framework */,
@@ -2223,7 +2222,6 @@
 				1CB2CD3F052DDC560094AAA4 /* joinRoom.png in Resources */,
 				1CB2CD4A052DDC560094AAA4 /* actionWidget.png in Resources */,
 				1CB2CD4B052DDC560094AAA4 /* actionWidgetPressed.png in Resources */,
-				92C70D161A5E88CE00080E45 /* room.pdf in Resources */,
 				1CB2CD4E052DDC560094AAA4 /* viewAlert.png in Resources */,
 				1CB2CD50052DDC560094AAA4 /* template.html in Resources */,
 				1CB2CD52052DDC560094AAA4 /* Generic.icns in Resources */,
