@@ -11,13 +11,21 @@
  * This is the *only* header file that should be used to access 
  * functionality in the core bridge.
  *
+ * WARNING: this file is not part of the public interface of PyObjC and
+ * might change or be removed without warning or regard for backward
+ * compatibility.
  */
 
 #include "Python.h"
 #include <objc/objc.h>
 
 #import <Foundation/Foundation.h>
+
 #include "pyobjc-compat.h"
+
+
+
+
 
 #import <Foundation/NSException.h>
 

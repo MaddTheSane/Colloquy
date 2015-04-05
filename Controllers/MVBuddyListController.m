@@ -37,13 +37,13 @@ static MVBuddyListController *sharedInstance = nil;
 
 - (id) initWithWindowNibName:(NSString *) windowNibName {
 	if( ( self = [super initWithWindowNibName:@"MVBuddyList"] ) ) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _buddyOnline: ) name:JVBuddyCameOnlineNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _buddyOffline: ) name:JVBuddyWentOfflineNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _buddyChanged: ) name:JVBuddyUserCameOnlineNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _buddyChanged: ) name:JVBuddyUserWentOfflineNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _buddyChanged: ) name:JVBuddyActiveUserChangedNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _buddyChanged: ) name:JVBuddyUserStatusChangedNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _buddyChanged: ) name:JVBuddyUserIdleTimeUpdatedNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _buddyOnline: ) name:JVBuddyCameOnlineNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _buddyOffline: ) name:JVBuddyWentOfflineNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _buddyChanged: ) name:JVBuddyUserCameOnlineNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _buddyChanged: ) name:JVBuddyUserWentOfflineNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _buddyChanged: ) name:JVBuddyActiveUserChangedNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _buddyChanged: ) name:JVBuddyUserStatusChangedNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _buddyChanged: ) name:JVBuddyUserIdleTimeUpdatedNotification object:nil];
 
 		_onlineBuddies = [[NSMutableSet allocWithZone:nil] initWithCapacity:20];
 		_buddyList = [[NSMutableSet allocWithZone:nil] initWithCapacity:40];
@@ -66,7 +66,7 @@ static MVBuddyListController *sharedInstance = nil;
 - (void) dealloc {
 	[self save];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter chatCenter] removeObserver:self];
 	if( self == sharedInstance ) {
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector( _sortBuddiesAnimated: ) object:nil];
 		sharedInstance = nil;
@@ -560,11 +560,8 @@ static MVBuddyListController *sharedInstance = nil;
 		if( _showIcons ) {
 			JVBuddy *buddy = _buddyOrder[row];
 			NSImage *ret = [buddy picture];
-			if( ! ret ) ret = [[NSImage imageNamed:@"largePerson"] copy];
-			if( [ret size].width > 32 || [ret size].height > 32 ) {
-				[ret setScalesWhenResized:YES];
-				[ret setSize:NSMakeSize( 32., 32. )];
-			}
+			if( ! ret ) ret = [[NSImage imageNamed:@"person"] copy];
+			[ret setSize:NSMakeSize( 32., 32. )];
 
 			return ret;
 		}
@@ -899,8 +896,8 @@ static MVBuddyListController *sharedInstance = nil;
 	context[@"description"] = [NSString stringWithFormat:NSLocalizedString( @"Your buddy %@ is now online.", "available buddy bubble text" ), [buddy displayName]];
 
 	NSImage *icon = [buddy picture];
-	if( ! icon ) icon = [NSImage imageNamed:@"largePerson"];
-	context[@"image"] = icon;
+	if( ! icon ) icon = [NSImage imageNamed:@"person"];
+	[context setObject:icon forKey:@"image"];
 
 	[[JVNotificationController defaultController] performNotification:@"JVChatBuddyOnline" withContextInfo:context];
 }
@@ -922,8 +919,8 @@ static MVBuddyListController *sharedInstance = nil;
 		context[@"description"] = [NSString stringWithFormat:NSLocalizedString( @"Your buddy %@ is now offline.", "unavailable buddy bubble text" ), [buddy displayName]];
 
 		NSImage *icon = [buddy picture];
-		if( ! icon ) icon = [NSImage imageNamed:@"largePerson"];
-		context[@"image"] = icon;
+		if( ! icon ) icon = [NSImage imageNamed:@"person"];
+		[context setObject:icon forKey:@"image"];
 
 		[[JVNotificationController defaultController] performNotification:@"JVChatBuddyOffline" withContextInfo:context];
 	}

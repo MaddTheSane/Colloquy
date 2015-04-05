@@ -10,13 +10,13 @@
 #pragma mark -
 
 static void silc_client_file_monitor( SilcClient client, SilcClientConnection conn, SilcClientMonitorStatus status, SilcClientFileError error, SilcUInt64 offset, SilcUInt64 filesize, SilcClientEntry client_entry, SilcUInt32 session_id, const char *filepath, void *context ) {
-	MVFileTransfer *transfer = context;
+	MVFileTransfer *transfer = (__bridge MVFileTransfer *)(context);
 
 	switch ( status ) {
 		case SILC_CLIENT_FILE_MONITOR_KEY_AGREEMENT:
 			[transfer _setStatus:MVFileTransferNormalStatus];
 
-			[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVFileTransferStartedNotification object:transfer];
+			[[NSNotificationCenter chatCenter] postNotificationOnMainThreadWithName:MVFileTransferStartedNotification object:transfer];
 
 			[transfer _setStartDate:[NSDate date]];
 			break;
@@ -28,7 +28,7 @@ static void silc_client_file_monitor( SilcClient client, SilcClientConnection co
 
 			if( filesize == offset ) {
 				 [transfer _setStatus:MVFileTransferDoneStatus];
-				 [[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVFileTransferFinishedNotification object:transfer];
+				 [[NSNotificationCenter chatCenter] postNotificationOnMainThreadWithName:MVFileTransferFinishedNotification object:transfer];
 			}
 
 			break;
@@ -42,7 +42,7 @@ static void silc_client_file_monitor( SilcClient client, SilcClientConnection co
 
 		case SILC_CLIENT_FILE_MONITOR_GET:
 		case SILC_CLIENT_FILE_MONITOR_PUT:
-			[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVFileTransferDataTransferredNotification object:transfer];
+			[[NSNotificationCenter chatCenter] postNotificationOnMainThreadWithName:MVFileTransferDataTransferredNotification object:transfer];
 			break;
 	}
 }
@@ -57,16 +57,12 @@ static void silc_client_file_monitor( SilcClient client, SilcClientConnection co
 			NSDictionary *info = [[NSDictionary allocWithZone:nil] initWithObjectsAndKeys:@"The file transfer terminated unexpectedly.", NSLocalizedDescriptionKey, nil];
 			NSError *error = [[NSError allocWithZone:nil] initWithDomain:MVFileTransferErrorDomain code:MVFileTransferUnexpectedlyEndedError userInfo:info];
 			[self performSelectorOnMainThread:@selector( _postError: ) withObject:error waitUntilDone:NO];
-			[error release];
-			[info release];
 		}	break;
 
 		case SILC_CLIENT_FILE_ALREADY_STARTED: {
 			NSDictionary *info = [[NSDictionary allocWithZone:nil] initWithObjectsAndKeys:@"The file %@ is already being offerend to %@.", NSLocalizedDescriptionKey, nil];
 			NSError *error = [[NSError allocWithZone:nil] initWithDomain:MVFileTransferErrorDomain code:MVFileTransferAlreadyExistsError userInfo:info];
 			[self performSelectorOnMainThread:@selector( _postError: ) withObject:error waitUntilDone:NO];
-			[error release];
-			[info release];
 		}	break;
 
 		case SILC_CLIENT_FILE_NO_SUCH_FILE:
@@ -74,16 +70,12 @@ static void silc_client_file_monitor( SilcClient client, SilcClientConnection co
 			NSDictionary *info = [[NSDictionary allocWithZone:nil] initWithObjectsAndKeys:@"The file %@ could not be created, please make sure you have write permissions in the %@ folder.", NSLocalizedDescriptionKey, nil];
 			NSError *error = [[NSError allocWithZone:nil] initWithDomain:MVFileTransferErrorDomain code:MVFileTransferFileCreationError userInfo:info];
 			[self performSelectorOnMainThread:@selector( _postError: ) withObject:error waitUntilDone:NO];
-			[error release];
-			[info release];
 		}	break;
 
 		case SILC_CLIENT_FILE_KEY_AGREEMENT_FAILED: {
 			NSDictionary *info = [[NSDictionary allocWithZone:nil] initWithObjectsAndKeys:@"Key agreement failed. Either your key was rejected by the other user or some other error happend during key negotiation.", NSLocalizedDescriptionKey, nil];
 			NSError *error = [[NSError allocWithZone:nil] initWithDomain:MVFileTransferErrorDomain code:MVFileTransferKeyAgreementError userInfo:info];
 			[self performSelectorOnMainThread:@selector( _postError: ) withObject:error waitUntilDone:NO];
-			[error release];
-			[info release];
 		}	break;
 
 		case SILC_CLIENT_FILE_OK:
@@ -102,7 +94,7 @@ static void silc_client_file_monitor( SilcClient client, SilcClientConnection co
 + (id) transferWithSourceFile:(NSString *) path toUser:(MVChatUser *) user passively:(BOOL) passive {
 	NSURL *url = [NSURL URLWithString:@"http://colloquy.info/ip.php"];
 	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:3.];
-	NSMutableData *result = [[[NSURLConnection sendSynchronousRequest:request returningResponse:NULL error:NULL] mutableCopy] autorelease];
+	NSMutableData *result = [[NSURLConnection sendSynchronousRequest:request returningResponse:NULL error:NULL] mutableCopy];
 	[result appendBytes:"\0" length:1];
 
 	MVSILCUploadFileTransfer *transfer = [[MVSILCUploadFileTransfer allocWithZone:nil] initWithSessionID:0 toUser:user];
@@ -115,10 +107,9 @@ static void silc_client_file_monitor( SilcClient client, SilcClientConnection co
 		SilcClientEntry client = silc_client_get_client_by_id( [[user connection] _silcClient], [[user connection] _silcConn], clientID );
 		if( client ) {
 			SilcUInt32 sessionid;
-			SilcClientFileError error = silc_client_file_send( [[user connection] _silcClient], [[user connection] _silcConn], silc_client_file_monitor, transfer, [result bytes], 0, passive, client, [path fileSystemRepresentation], &sessionid);
+			SilcClientFileError error = silc_client_file_send( [[user connection] _silcClient], [[user connection] _silcConn], silc_client_file_monitor, (__bridge void *)transfer, [result bytes], 0, passive, client, [path fileSystemRepresentation], &sessionid);
 			if( error != SILC_CLIENT_FILE_OK ) {
 				[transfer _silcPostError:error];
-				[transfer release];
 				SilcUnlock( [[user connection] _silcClient] );
 				return nil;
 			}
@@ -128,12 +119,11 @@ static void silc_client_file_monitor( SilcClient client, SilcClientConnection co
 
 		SilcUnlock( [[user connection] _silcClient] );
 	} else {
-		[transfer release];
 
 		return nil;
 	}
 
-	return [transfer autorelease];
+	return transfer;
 }
 
 #pragma mark -

@@ -1,11 +1,10 @@
 @interface UIDevice (UIDeviceColloquyAdditions)
 @property (nonatomic, readonly) NSString *modelIdentifier;
 
-- (BOOL) isSystemSeven;
+@property (getter=isSystemEight, readonly) BOOL systemEight;
 
-- (BOOL) isPhoneModel;
-- (BOOL) isPodModel;
-- (BOOL) isPadModel;
+@property (getter=isPhoneModel, readonly) BOOL phoneModel;
+@property (getter=isPadModel, readonly) BOOL padModel;
 
-- (BOOL) isRetina;
+@property (getter=isRetina, readonly) BOOL retina;
 @end

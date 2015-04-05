@@ -2,13 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "screencastSelected.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "screencastSelected@2x.png"
+      "filename" : "screencastSelected.pdf"
     }
   ],
   "info" : {

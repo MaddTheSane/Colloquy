@@ -295,8 +295,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/../../build/Development\\\"",
-					/Users/cwbetts/makestuff/Colloquy/build/Development,
+					"$(BUILT_PRODUCTS_DIR)",
 				);
 				GCC_PREFIX_HEADER = ../../Basic.pch;
 				HEADER_SEARCH_PATHS = (
@@ -309,6 +308,10 @@
 					../../Shared/Models,
 				);
 				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "AppleScript Support";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -343,8 +346,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/../../build/Development\\\"",
-					/Users/cwbetts/makestuff/Colloquy/build/Development,
+					"$(BUILT_PRODUCTS_DIR)",
 				);
 				GCC_PREFIX_HEADER = ../../Basic.pch;
 				HEADER_SEARCH_PATHS = (
@@ -357,7 +359,10 @@
 					../../Shared/Models,
 				);
 				INFOPLIST_FILE = Info.plist;
-				LLVM_LTO = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "AppleScript Support";
 				WRAPPER_EXTENSION = plugin;
 			};

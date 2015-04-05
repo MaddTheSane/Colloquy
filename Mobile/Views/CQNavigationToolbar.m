@@ -10,7 +10,7 @@
 @end
 
 @implementation CQNavigationToolbar
-- (id) initWithFrame:(CGRect) frame {
+- (instancetype) initWithFrame:(CGRect) frame {
 	if (!(self = [super initWithFrame:frame]))
 		return nil;
 
@@ -19,7 +19,7 @@
 	return self;
 }
 
-- (id) initWithCoder:(NSCoder *) coder {
+- (instancetype) initWithCoder:(NSCoder *) coder {
 	if (!(self = [super initWithCoder:coder]))
 		return nil;
 
@@ -29,9 +29,6 @@
 }
 
 - (void) cq_commonInitialization {
-	if (![UIDevice currentDevice].isSystemSeven)
-		return;
-
 	self.backgroundColor = [UIColor colorWithWhite:(248. / 244.) alpha:1.];
 
 	_bottomLineView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pixel-172.png"]];
@@ -43,9 +40,6 @@
 
 - (void) layoutSubviews {
 	[super layoutSubviews];
-
-	if (![UIDevice currentDevice].isSystemSeven)
-		return;
 
 	for (UIView *view in self.subviews) {
 		CGRect frame = view.frame;

@@ -2,13 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "tableCellCheck.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "tableCellCheck@2x.png"
+      "filename" : "tableCellCheck.pdf"
     }
   ],
   "info" : {

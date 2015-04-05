@@ -1,7 +1,7 @@
 #import "CQTableViewController.h"
 
 @implementation CQTableViewController
-- (id) initWithStyle:(UITableViewStyle) style {
+- (instancetype) initWithStyle:(UITableViewStyle) style {
 	return (self = [super initWithStyle:style]);
 }
 
@@ -17,6 +17,7 @@
 #pragma mark -
 
 - (void) viewDidLoad {
+	[super viewDidLoad];
 	[self.tableView performSelectorOnMainThread:@selector(hideEmptyCells) withObject:nil waitUntilDone:YES];
 }
 

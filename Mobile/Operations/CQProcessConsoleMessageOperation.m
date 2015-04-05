@@ -14,7 +14,7 @@ static NSRegularExpression *numericRegularExpression;
 	});
 }
 
-- (id) initWithMessage:(NSString *) message outbound:(BOOL) outbound {
+- (instancetype) initWithMessage:(NSString *) message outbound:(BOOL) outbound {
 	NSParameterAssert(message != nil);
 
 	if (!(self = [self init]))
@@ -105,8 +105,9 @@ static NSRegularExpression *numericRegularExpression;
 		_processedMessage[@"messagePlain"] = strippedMessage;
 	}
 
-	if (_target && _action)
-		[_target performSelectorOnMainThread:_action withObject:self waitUntilDone:NO];
+	__strong __typeof__((_target)) strongTarget = _target;
+	if (strongTarget && _action)
+		[strongTarget performSelectorOnMainThread:_action withObject:self waitUntilDone:NO];
 
 }
 @end

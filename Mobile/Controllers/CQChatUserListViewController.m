@@ -17,6 +17,14 @@ static NSString *membersFilteredCountFormat;
 
 #define UserIdleTime 600
 
+static unsigned long userStatus(MVChatUser *user, MVChatRoom *room) {
+	unsigned long modes = [room modesForMemberUser:user];
+
+	if (user.serverOperator)
+		return (MVChatRoomMemberFounderMode * 2);
+	return modes;
+}
+
 @interface CQChatUserListViewController ()
 @property (atomic, strong) NSMutableArray *users;
 @property (atomic, strong) NSMutableArray *matchedUsers;
@@ -28,7 +36,7 @@ static NSString *membersFilteredCountFormat;
 	membersFilteredCountFormat = NSLocalizedString(@"Members (%u of %u)", @"Members with filtered count view title");
 }
 
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super initWithStyle:UITableViewStylePlain]))
 		return nil;
 
@@ -110,26 +118,34 @@ static NSString *membersFilteredCountFormat;
 #pragma mark -
 
 - (NSUInteger) _indexForInsertedMatchUser:(MVChatUser *) user withOriginalIndex:(NSUInteger) index {
-	NSInteger matchesIndex = NSNotFound;
-	@synchronized(self) {
-		for (NSInteger i = (index - 1); i >= 0; --i) {
-			MVChatUser *currentUser = self.users[i];
-			matchesIndex = [self.matchedUsers indexOfObjectIdenticalTo:currentUser];
-			if (matchesIndex != NSNotFound)
-				break;
-		}
+	unsigned long insertionUserStatus = userStatus(user, _room);
+	NSArray *matchedUsers = [self.matchedUsers copy];
+
+	for (NSUInteger i = 0; i < matchedUsers.count; i++) {
+		MVChatUser *matchedUser = matchedUsers[i];
+
+		unsigned long matchedUserStatus = userStatus(matchedUser, _room);
+		if (matchedUserStatus > insertionUserStatus)
+			continue;
+
+		NSComparisonResult comparison = [user.displayName caseInsensitiveCompare:matchedUser.displayName];
+		if (comparison == NSOrderedDescending)
+			continue;
+		if (comparison == NSOrderedSame)
+			continue;
+		return i;
 	}
 
-	if (matchesIndex == NSNotFound)
-		matchesIndex = -1;
-
-	return ++matchesIndex;
+	return matchedUsers.count;
 }
 
 - (NSUInteger) _indexForRemovedMatchUser:(MVChatUser *) user {
-	@synchronized(self) {
-		return [self.matchedUsers indexOfObjectIdenticalTo:user];
+	NSArray *matchedUsers = [self.matchedUsers copy];
+	for (NSUInteger i = 0; i < matchedUsers.count; i++) {
+		if (user == matchedUsers[i])
+			return i;
 	}
+	return NSNotFound;
 }
 
 - (void) _moveUser:(MVChatUser *) user atIndex:(NSUInteger) fromIndex toIndex:(NSUInteger) toIndex withAnimation:(UITableViewRowAnimation) animation {
@@ -141,20 +157,17 @@ static NSString *membersFilteredCountFormat;
 		[self.users removeObjectAtIndex:fromIndex];
 		[self.users insertObject:user atIndex:toIndex];
 
-		if (toIndex > fromIndex)
-			--toIndex;
-
 		if (!_currentSearchString.length || [user.nickname hasCaseInsensitiveSubstring:_currentSearchString]) {
-			NSInteger insertionMatchesIndex = [self _indexForInsertedMatchUser:user withOriginalIndex:fromIndex];
 			NSInteger removalMatchesIndex = [self _indexForRemovedMatchUser:user];
-
-			if (insertionMatchesIndex > removalMatchesIndex)
-				--insertionMatchesIndex;
-
 			[self.matchedUsers removeObjectAtIndex:removalMatchesIndex];
+
+			NSInteger insertionMatchesIndex = [self _indexForInsertedMatchUser:user withOriginalIndex:fromIndex];
 			[self.matchedUsers insertObject:user atIndex:insertionMatchesIndex];
 
-			[self.tableView moveRowAtIndexPath:[NSIndexPath indexPathForRow:removalMatchesIndex inSection:0] toIndexPath:[NSIndexPath indexPathForRow:insertionMatchesIndex inSection:0]];
+			if (insertionMatchesIndex != removalMatchesIndex) {
+				[self.tableView moveRowAtIndexPath:[NSIndexPath indexPathForRow:removalMatchesIndex inSection:0] toIndexPath:[NSIndexPath indexPathForRow:insertionMatchesIndex inSection:0]];
+				[self.tableView reloadRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:removalMatchesIndex inSection:0], [NSIndexPath indexPathForRow:insertionMatchesIndex inSection:0] ] withRowAnimation:UITableViewRowAnimationFade];
+			} else [self.tableView reloadRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:insertionMatchesIndex inSection:0] ] withRowAnimation:UITableViewRowAnimationFade];
 		}
 	}
 }
@@ -196,7 +209,6 @@ static NSString *membersFilteredCountFormat;
 			NSArray *indexPaths = @[[NSIndexPath indexPathForRow:matchesIndex inSection:0]];
 			[self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:animation];
 		}
-
 		if (self.users.count == self.matchedUsers.count)
 			self.title = [NSString stringWithFormat:membersSingleCountFormat, self.users.count];
 		else self.title = [NSString stringWithFormat:membersFilteredCountFormat, self.matchedUsers.count, self.users.count];
@@ -208,9 +220,7 @@ static NSString *membersFilteredCountFormat;
 - (void) insertUser:(MVChatUser *) user atIndex:(NSUInteger) index {
 	BOOL searchBarFocused = [_searchController isActive];
 
-	[self.tableView beginUpdates];
 	[self _insertUser:user atIndex:index withAnimation:UITableViewRowAnimationLeft];
-	[self.tableView endUpdates];
 
 	if (searchBarFocused)
 		[_searchController setActive:YES animated:YES];
@@ -234,15 +244,11 @@ static NSString *membersFilteredCountFormat;
 		if (newMatchesIndex > oldMatchesIndex)
 			--newMatchesIndex;
 
-		[self.tableView beginUpdates];
-
 		if (oldMatchesIndex == newMatchesIndex) {
 			[self _moveUser:user atIndex:oldIndex toIndex:newIndex withAnimation:UITableViewRowAnimationFade];
 		} else {
 			[self _moveUser:user atIndex:oldIndex toIndex:newIndex withAnimation:(newIndex > oldIndex ? UITableViewRowAnimationBottom : UITableViewRowAnimationTop)];
 		}
-
-		[self.tableView endUpdates];
 
 		if (searchBarFocused)
 			[_searchController setActive:YES animated:YES];
@@ -252,9 +258,7 @@ static NSString *membersFilteredCountFormat;
 - (void) removeUserAtIndex:(NSUInteger) index {
 	BOOL searchBarFocused = [_searchController isActive];
 
-	[self.tableView beginUpdates];
 	[self _removeUserAtIndex:index withAnimation:UITableViewRowAnimationRight];
-	[self.tableView endUpdates];
 
 	if (searchBarFocused)
 		[_searchController setActive:YES animated:YES];
@@ -375,12 +379,21 @@ static NSString *membersFilteredCountFormat;
 
 #pragma mark -
 
+- (void) viewWillTransitionToSize:(CGSize) size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>) coordinator {
+	[super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+	if ([[UIDevice currentDevice] isPadModel])
+		[self resizeForViewInPopoverUsingTableView:self.tableView];
+}
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation) toInterfaceOrientation duration:(NSTimeInterval) duration {
 	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 
 	if ([[UIDevice currentDevice] isPadModel])
 		[self resizeForViewInPopoverUsingTableView:self.tableView];
 }
+#endif
 
 #pragma mark -
 
@@ -442,9 +455,10 @@ static NSString *membersFilteredCountFormat;
 	@synchronized(self) {
 		MVChatUser *user = self.matchedUsers[indexPath.row];
 
+		__strong __typeof__((_chatUserDelegate)) chatUserDelegate = _chatUserDelegate;
 		BOOL shouldPresentInformation = YES;
-		if (_chatUserDelegate && [_chatUserDelegate respondsToSelector:@selector(chatUserListViewController:shouldPresentInformationForUser:)])
-			shouldPresentInformation = [_chatUserDelegate chatUserListViewController:self shouldPresentInformationForUser:user];
+		if (chatUserDelegate && [chatUserDelegate respondsToSelector:@selector(chatUserListViewController:shouldPresentInformationForUser:)])
+			shouldPresentInformation = [chatUserDelegate chatUserListViewController:self shouldPresentInformationForUser:user];
 
 		if (shouldPresentInformation) {
 			UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -459,8 +473,8 @@ static NSString *membersFilteredCountFormat;
 			[tableView deselectRowAtIndexPath:indexPath animated:NO];
 		}
 
-		if (_chatUserDelegate && [_chatUserDelegate respondsToSelector:@selector(chatUserListViewController:didSelectUser:)])
-			[_chatUserDelegate chatUserListViewController:self didSelectUser:user];
+		if (chatUserDelegate && [chatUserDelegate respondsToSelector:@selector(chatUserListViewController:didSelectUser:)])
+			[chatUserDelegate chatUserListViewController:self didSelectUser:user];
 	}
 }
 

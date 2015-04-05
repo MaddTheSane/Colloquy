@@ -7,7 +7,7 @@
 #import <ChatCore/MVChatUser.h>
 
 @implementation CQChatTableCell
-- (id) initWithStyle:(UITableViewCellStyle) style reuseIdentifier:(NSString *) reuseIdentifier {
+- (instancetype) initWithStyle:(UITableViewCellStyle) style reuseIdentifier:(NSString *) reuseIdentifier {
 	if (!(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]))
 		return nil;
 
@@ -165,13 +165,8 @@
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
 	label.font = [UIFont systemFontOfSize:14.];
 	label.backgroundColor = [UIColor clearColor];
-	if ([UIDevice currentDevice].isSystemSeven)
-		label.textColor = [UIColor colorWithWhite:(150. / 255.) alpha:1.];
-	else {
-		label.textColor = [UIColor colorWithWhite:0.4 alpha:1.];
-		label.highlightedTextColor = [UIColor whiteColor];
-	}
-	label.alpha = (animated ? 0. : (_available || [UIDevice currentDevice].isSystemSeven ? 1. : 0.5));
+	label.textColor = [UIColor colorWithWhite:(150. / 255.) alpha:1.];
+	label.alpha = (animated ? 0. : (_available ? 1. : 0.5));
 	label.text = labelText;
 
 	[self.contentView addSubview:label];
@@ -181,7 +176,7 @@
 
 	if (animated) {
 		[UIView animateWithDuration:.35 delay:0. options:UIViewAnimationOptionCurveEaseIn animations:^{
-			label.alpha = (_available || [UIDevice currentDevice].isSystemSeven ? 1. : 0.5);
+			label.alpha = (_available ? 1. : 0.5);
 		} completion:^(BOOL finished) {
 			_animating = NO;
 

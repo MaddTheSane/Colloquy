@@ -61,9 +61,9 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 		id specifier = [[NSPropertySpecifier alloc] initWithContainerClassDescription:classDescription containerSpecifier:[self objectSpecifier] key:@"transcript"];
 		[_transcript setObjectSpecifier:specifier];
 
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _updateStylesMenu ) name:JVStylesScannedNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _updateStylesMenu ) name:JVNewStyleVariantAddedNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _updateEmoticonsMenu ) name:JVEmoticonSetsScannedNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _updateStylesMenu ) name:JVStylesScannedNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _updateStylesMenu ) name:JVNewStyleVariantAddedNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _updateEmoticonsMenu ) name:JVEmoticonSetsScannedNotification object:nil];
 	}
 
 	return self;
@@ -96,7 +96,7 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 	[display setScrollbackLimit:1000];
 	[display setBodyTemplate:@"transcript"];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _didSwitchStyles: ) name:JVStyleViewDidChangeStylesNotification object:display];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _didSwitchStyles: ) name:JVStyleViewDidChangeStylesNotification object:display];
 
 	if( ! [self style] ) {
 		JVStyle *style = [JVStyle defaultStyle];
@@ -109,7 +109,8 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 }
 
 - (void) dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[[NSNotificationCenter chatCenter] removeObserver:self];
 
 	[display setUIDelegate:nil];
 	[display setResourceLoadDelegate:nil];
@@ -125,7 +126,6 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 	_searchQuery = nil;
 	_searchQueryRegex = nil;
 	_windowController = nil;
-
 }
 
 - (NSString *) description {
@@ -505,7 +505,6 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 
 		NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString( @"Style", "choose style toolbar item menu representation title" ) action:NULL keyEquivalent:@""];
 		NSImage *icon = [[NSImage imageNamed:@"chooseStyle"] copy];
-		[icon setScalesWhenResized:YES];
 		[icon setSize:NSMakeSize( 16., 16. )];
 		[menuItem setImage:icon];
 		[menuItem setSubmenu:_styleMenu];
@@ -534,7 +533,6 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 
 			NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString( @"Emoticons", "choose emoticons toolbar item menu representation title" ) action:NULL keyEquivalent:@""];
 			NSImage *icon = [image copy];
-			[icon setScalesWhenResized:YES];
 			[icon setSize:NSMakeSize( 16., 16. )];
 			[menuItem setImage:icon];
 			[menuItem setSubmenu:_emoticonMenu];

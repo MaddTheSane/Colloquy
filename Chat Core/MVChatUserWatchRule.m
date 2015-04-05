@@ -12,7 +12,7 @@ NSString *MVChatUserWatchRuleMatchedNotification = @"MVChatUserWatchRuleMatchedN
 NSString *MVChatUserWatchRuleRemovedMatchedUserNotification = @"MVChatUserWatchRuleRemovedMatchedUserNotification";
 
 @implementation MVChatUserWatchRule
-- (id) initWithDictionaryRepresentation:(NSDictionary *) dictionary {
+- (instancetype) initWithDictionaryRepresentation:(NSDictionary *) dictionary {
 	if( ( self = [super init] ) ) {
 		[self setUsername:dictionary[@"username"]];
 		[self setNickname:dictionary[@"nickname"]];
@@ -24,18 +24,6 @@ NSString *MVChatUserWatchRuleRemovedMatchedUserNotification = @"MVChatUserWatchR
 	}
 
 	return self;
-}
-
-- (void) dealloc {
-	[_matchedChatUsers release];
-	[_nickname release];
-	[_realName release];
-	[_username release];
-	[_address release];
-	[_publicKey release];
-	[_applicableServerDomains release];
-
-	[super dealloc];
 }
 
 - (id) copyWithZone:(NSZone *) zone {
@@ -66,7 +54,7 @@ NSString *MVChatUserWatchRuleRemovedMatchedUserNotification = @"MVChatUserWatchR
 	if( _publicKey ) dictionary[@"publicKey"] = _publicKey;
 	if( _interim ) dictionary[@"interim"] = @(_interim);
 	if( _applicableServerDomains ) dictionary[@"applicableServerDomains"] = _applicableServerDomains;
-	return [dictionary autorelease];
+	return dictionary;
 }
 
 - (BOOL) isEqual:(id) object {
@@ -144,7 +132,7 @@ NSString *MVChatUserWatchRuleRemovedMatchedUserNotification = @"MVChatUserWatchR
 	@synchronized( _matchedChatUsers ) {
 		if( ! [_matchedChatUsers containsObject:user] ) {
 			[_matchedChatUsers addObject:user];
-			[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVChatUserWatchRuleMatchedNotification object:self userInfo:@{@"user": user}];
+			[[NSNotificationCenter chatCenter] postNotificationOnMainThreadWithName:MVChatUserWatchRuleMatchedNotification object:self userInfo:@{ @"user": user }];
 		}
 	}
 
@@ -160,22 +148,18 @@ NSString *MVChatUserWatchRuleRemovedMatchedUserNotification = @"MVChatUserWatchR
 - (void) removeMatchedUser:(MVChatUser *) user {
 	@synchronized( _matchedChatUsers ) {
 		if( [_matchedChatUsers containsObject:user] ) {
-			[user retain];
 			[_matchedChatUsers removeObject:user];
-			[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVChatUserWatchRuleRemovedMatchedUserNotification object:self userInfo:@{@"user": user}];
-			[user release];
+			[[NSNotificationCenter chatCenter] postNotificationOnMainThreadWithName:MVChatUserWatchRuleRemovedMatchedUserNotification object:self userInfo:@{ @"user": user }];
 		}
 	}
 }
 
 - (void) removeMatchedUsersForConnection:(MVChatConnection *) connection {
 	@synchronized( _matchedChatUsers ) {
-		for( MVChatUser *user in [[_matchedChatUsers copy] autorelease] ) {
+		for( MVChatUser *user in [_matchedChatUsers copy] ) {
 			if( [[user connection] isEqual:connection] ) {
-				[user retain];
 				[_matchedChatUsers removeObject:user];
-				[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVChatUserWatchRuleRemovedMatchedUserNotification object:self userInfo:@{@"user": user}];
-				[user release];
+				[[NSNotificationCenter chatCenter] postNotificationOnMainThreadWithName:MVChatUserWatchRuleRemovedMatchedUserNotification object:self userInfo:@{ @"user": user }];
 			}
 		}
 	}

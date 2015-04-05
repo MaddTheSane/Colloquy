@@ -132,7 +132,7 @@ static JVNotificationController *sharedInstance = nil;
 			GROWL_NOTIFICATION_STICKY: eventPrefs[@"keepBubbleOnScreen"]};
 		[GrowlApplicationBridge notifyWithDictionary:notification];
 	} else if( NSAppKitVersionNumber10_8 > floor( NSAppKitVersionNumber ) ) {
-		if( ( bubble = _bubbles[context[@"coalesceKey"]] ) ) {
+		if( ( bubble = [_bubbles objectForKey:[context objectForKey:@"coalesceKey"]] ) ) {
 			[(id)bubble setTitle:title];
 			[(id)bubble setText:description];
 			[(id)bubble setIcon:icon];

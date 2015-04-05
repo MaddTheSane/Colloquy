@@ -135,7 +135,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 		_firstMessage = YES;
 		_newMessageCount = 0;
 		_newHighlightMessageCount = 0;
-		[[NSApp delegate] updateDockTile];
+		[(MVApplicationController *)[NSApp delegate] updateDockTile];
 		_cantSendMessages = NO;
 		_isActive = NO;
 		_forceSplitViewPosition = YES;
@@ -235,15 +235,15 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 
 
 			if( ! [target isKindOfClass:[MVDirectChatConnection class]] ) {
-				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _didConnect: ) name:MVChatConnectionDidConnectNotification object:[self connection]];
-				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _didDisconnect: ) name:MVChatConnectionDidDisconnectNotification object:[self connection]];
-				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _awayStatusChanged: ) name:MVChatConnectionSelfAwayStatusChangedNotification object:[self connection]];
-				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _errorOccurred: ) name:MVChatConnectionErrorNotification object:[self connection]];
+				[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _didConnect: ) name:MVChatConnectionDidConnectNotification object:[self connection]];
+				[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _didDisconnect: ) name:MVChatConnectionDidDisconnectNotification object:[self connection]];
+				[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _awayStatusChanged: ) name:MVChatConnectionSelfAwayStatusChangedNotification object:[self connection]];
+				[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _errorOccurred: ) name:MVChatConnectionErrorNotification object:[self connection]];
 			}
 
 			if( [target isKindOfClass:[MVChatUser class]] ) {
-				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_userNicknameDidChange:) name:MVChatUserNicknameChangedNotification object:_target];
-				[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_userStatusChanged:) name:MVChatUserStatusChangedNotification object:_target];
+				[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_userNicknameDidChange:) name:MVChatUserNicknameChangedNotification object:_target];
+				[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_userStatusChanged:) name:MVChatUserStatusChangedNotification object:_target];
 
 				_watchRule = [[MVChatUserWatchRule alloc] init];
 				[_watchRule setNickname:[target nickname]];
@@ -264,11 +264,11 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 	JVEmoticonSet *emoticon = nil;
 
 	if( [[self target] isKindOfClass:[MVDirectChatConnection class]] ) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _refreshIcon: ) name:MVDirectChatConnectionDidConnectNotification object:[self target]];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _refreshIcon: ) name:MVDirectChatConnectionDidDisconnectNotification object:[self target]];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _refreshIcon: ) name:MVDirectChatConnectionDidConnectNotification object:[self target]];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _refreshIcon: ) name:MVDirectChatConnectionDidDisconnectNotification object:[self target]];
 	} else {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _refreshIcon: ) name:MVChatConnectionDidConnectNotification object:[self connection]];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _refreshIcon: ) name:MVChatConnectionDidDisconnectNotification object:[self connection]];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _refreshIcon: ) name:MVChatConnectionDidConnectNotification object:[self connection]];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _refreshIcon: ) name:MVChatConnectionDidDisconnectNotification object:[self connection]];
 	}
 
 	if( [self preferenceForKey:@"style"] ) {
@@ -297,8 +297,6 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 	[send setAllowsUndo:YES];
 	[send setUsesRuler:NO];
 	[send setDelegate:self];
-	[send setContinuousSpellCheckingEnabled:[[NSUserDefaults standardUserDefaults] boolForKey:@"JVChatSpellChecking"]];
-	[send setUsesSystemCompleteOnTab:[[NSUserDefaults standardUserDefaults] boolForKey:@"JVUsePantherTextCompleteOnTab"]];
 	[send reset:nil];
 
 	if( [[NSUserDefaults standardUserDefaults] boolForKey:@"JVChatInputAutoResizes"] )
@@ -306,14 +304,13 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 }
 
 - (void) dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[[NSNotificationCenter chatCenter] removeObserver:self];
 
 	if( _watchRule ) [[self connection] removeChatUserWatchRule:_watchRule];
 
-
 	for( id alert in _waitingAlerts )
 		NSReleaseAlertPanel( alert );
-
 
 	_target = nil;
 	_sendHistory = nil;
@@ -322,7 +319,6 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 	_settings = nil;
 	_encodingMenu = nil;
 	_spillEncodingMenu = nil;
-
 }
 
 #pragma mark -
@@ -498,7 +494,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 	if( _isActive && [[[self view] window] isKeyWindow] ) {
 		_newMessageCount = 0;
 		_newHighlightMessageCount = 0;
-		[[NSApp delegate] updateDockTile];
+		[(MVApplicationController *)[NSApp delegate] updateDockTile];
 		return nil;
 	}
 
@@ -521,7 +517,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 - (void) didUnselect {
 	_newMessageCount = 0;
 	_newHighlightMessageCount = 0;
-	[[NSApp delegate] updateDockTile];
+	[(MVApplicationController *)[NSApp delegate] updateDockTile];
 	_isActive = NO;
 	[super didUnselect];
 }
@@ -529,7 +525,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 - (void) willSelect {
 	_newMessageCount = 0;
 	_newHighlightMessageCount = 0;
-	[[NSApp delegate] updateDockTile];
+	[(MVApplicationController *)[NSApp delegate] updateDockTile];
 }
 
 - (void) didSelect {
@@ -539,7 +535,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 
 	_newMessageCount = 0;
 	_newHighlightMessageCount = 0;
-	[[NSApp delegate] updateDockTile];
+	[(MVApplicationController *)[NSApp delegate] updateDockTile];
 	_isActive = YES;
 
 	[super didSelect];
@@ -733,7 +729,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 	JVChatEvent *newEvent = [[self transcript] appendEvent:event];
 	[display appendChatTranscriptElement:newEvent];
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:JVChatEventMessageWasProcessedNotification object:self userInfo:@{@"event": newEvent}];
+	[[NSNotificationCenter chatCenter] postNotificationName:JVChatEventMessageWasProcessedNotification object:self userInfo:[NSDictionary dictionaryWithObject:newEvent forKey:@"event"]];
 
 	if( ! [[[_windowController window] representedFilename] length] )
 		[self _refreshWindowFileProxy];
@@ -773,6 +769,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 	}
 
 	JVMutableChatMessage *cmessage = [[JVMutableChatMessage alloc] initWithText:messageString sender:user];
+	if (msgAttributes[@"time"]) [cmessage setDate:msgAttributes[@"time"]];
 	[cmessage setMessageIdentifier:identifier];
 	[cmessage setAttributes:msgAttributes];
 	[cmessage setAction:[msgAttributes[@"action"] boolValue]];
@@ -831,7 +828,6 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 				[cmessage setHighlighted:YES];
 			}
 		}
-
 	}
 
 	[self processIncomingMessage:cmessage];
@@ -870,7 +866,6 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 		[[self transcript] setElementLimit:( [display scrollbackLimit] * 2 )];
 
 	JVChatMessage *newMessage = [[self transcript] appendMessage:cmessage];
-
 	if( [display appendChatMessage:newMessage] ) {
 		if( [cmessage isHighlighted] ) [display markScrollbarForMessage:newMessage];
 		[self quickSearchMatchMessage:newMessage];
@@ -890,7 +885,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 		}
 	}
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:JVChatMessageWasProcessedNotification object:self userInfo:@{@"message": newMessage}];
+	[[NSNotificationCenter chatCenter] postNotificationName:JVChatMessageWasProcessedNotification object:self userInfo:[NSDictionary dictionaryWithObject:newMessage forKey:@"message"]];
 
 	[self _setCurrentMessage:nil];
 
@@ -899,7 +894,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 	if( ! [[[_windowController window] representedFilename] length] )
 		[self _refreshWindowFileProxy];
 
-	[[NSApp delegate] updateDockTile];
+	[(MVApplicationController *)[NSApp delegate] updateDockTile];
 }
 
 - (void) processIncomingMessage:(JVMutableChatMessage *) message {
@@ -1010,7 +1005,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 
 - (IBAction) send:(id) sender {
 	NSTextStorage *subMsg = nil;
-	BOOL action = NO;
+	__block BOOL action = NO;
 	NSRange range;
 
 	// allow commands to be passed to plugins if we arn't connected, allow commands to pass to plugins and server if we are just out of the room
@@ -1095,7 +1090,6 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 
 					if ([actionVerbs containsObject:word])
 						action = YES;
-
 				}
 
 				if( [subMsg length] ) {
@@ -1420,6 +1414,10 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 
 	// Commit the changes
 	[[[send superview] superview] setFrame:sendFrame];
+	sendFrame = [send frame];
+	sendFrame.size.width = newFrame.size.width;
+	[send setFrame:sendFrame];
+
 	[display setFrame:webFrame];
 }
 

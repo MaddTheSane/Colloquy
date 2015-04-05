@@ -2,12 +2,10 @@
 
 extern NSString *CQColloquyApplicationDidRecieveDeviceTokenNotification;
 
-@interface CQColloquyApplication : UIApplication <UIApplicationDelegate, UITabBarControllerDelegate, UISplitViewControllerDelegate, UIAlertViewDelegate> {
+@interface CQColloquyApplication : UIApplication <UIApplicationDelegate, UISplitViewControllerDelegate, UIAlertViewDelegate> {
 	@protected
 	UIWindow *_mainWindow;
 	UIViewController *_mainViewController;
-	UIPopoverController *_connectionsPopoverController;
-	UIBarButtonItem *_connectionsBarButtonItem;
 	UIPopoverController *_colloquiesPopoverController;
 	UIBarButtonItem *_colloquiesBarButtonItem;
 	UIToolbar *_toolbar;
@@ -18,7 +16,9 @@ extern NSString *CQColloquyApplicationDidRecieveDeviceTokenNotification;
 	UIActionSheet *_visibleActionSheet;
 	NSNumber *_oldSwipeOrientationValue;
 	BOOL _userDefaultsChanged;
+	UIAlertController *_alertController;
 }
+
 + (CQColloquyApplication *) sharedApplication;
 
 - (void) showHelp:(id) sender;
@@ -43,11 +43,11 @@ extern NSString *CQColloquyApplicationDidRecieveDeviceTokenNotification;
 - (void) presentModalViewController:(UIViewController *) modalViewController animated:(BOOL) animated singly:(BOOL) singly;
 - (void) dismissModalViewControllerAnimated:(BOOL) animated;
 
-- (BOOL) areNotificationBadgesAllowed;
-- (BOOL) areNotificationSoundsAllowed;
-- (BOOL) areNotificationAlertsAllowed;
+@property (readonly) BOOL areNotificationBadgesAllowed;
+@property (readonly) BOOL areNotificationSoundsAllowed;
+@property (readonly) BOOL areNotificationAlertsAllowed;
 
-- (void) registerForRemoteNotifications;
+- (void) registerForPushNotifications;
 
 @property (nonatomic, readonly) NSDate *launchDate;
 @property (nonatomic, strong) NSDate *resumeDate;
@@ -58,4 +58,6 @@ extern NSString *CQColloquyApplicationDidRecieveDeviceTokenNotification;
 @property (nonatomic, readonly) NSString *deviceToken;
 @property (nonatomic, readonly) NSArray *highlightWords;
 @property (nonatomic, readonly) UIColor *tintColor;
+
+@property (readonly, strong) UISplitViewController *splitViewController;
 @end

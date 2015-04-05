@@ -4,16 +4,17 @@
 #import "CQIgnoreRulesController.h"
 
 #import "NSDateAdditions.h"
+#import "NSNotificationAdditions.h"
 #import "NSStringAdditions.h"
 #import "RegexKitLite.h"
 
 #import <ChatCore/MVChatUser.h>
 
-typedef enum {
+typedef NS_ENUM(NSInteger, CQMentionLinkService) {
 	CQMentionLinkServiceNone,
 	CQMentionLinkServiceTwitter,
 	CQMentionLinkServiceAppDotNet
-} CQMentionLinkService;
+};
 
 NSString *const CQInlineGIFImageKey = @"CQInlineGIFImageKey";
 
@@ -68,18 +69,18 @@ static NSString *timestampFormat;
 
 	userDefaultsInitialized = YES;
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
 
 	[self userDefaultsChanged];
 }
 
-- (id) initWithMessageData:(NSData *) messageData {
+- (instancetype) initWithMessageData:(NSData *) messageData {
 	if (messageData)
 		return [self initWithMessageInfo:@{@"message": messageData}];
 	return [self initWithMessageInfo:@{}];
 }
 
-- (id) initWithMessageInfo:(NSDictionary *) messageInfo {
+- (instancetype) initWithMessageInfo:(NSDictionary *) messageInfo {
 	NSParameterAssert(messageInfo != nil);
 
 	if (!(self = [self init]))
@@ -344,9 +345,10 @@ static void applyFunctionToTextInMutableHTMLString(NSMutableString *html, NSRang
 		_processedMessage[@"message"] = messageString;
 	if (timestampEveryMessage) {
 		NSString *timestamp = nil;
+		NSDate *time = _message[@"time"] ?: [NSDate date];
 		if (timestampFormat.length)
-			timestamp = [NSDate formattedStringWithDate:[NSDate date] dateFormat:timestampFormat];
-		else timestamp = [NSDate formattedShortTimeStringForDate:[NSDate date]];
+			timestamp = [NSDate formattedStringWithDate:time dateFormat:timestampFormat];
+		else timestamp = [NSDate formattedShortTimeStringForDate:time];
 		timestamp = [timestamp stringByEncodingXMLSpecialCharactersAsEntities];
 
 		_processedMessage[@"timestamp"] = timestamp;
@@ -360,8 +362,8 @@ static void applyFunctionToTextInMutableHTMLString(NSMutableString *html, NSRang
 	if (highlighted)
 		_processedMessage[@"highlighted"] = @(YES);
 
-
-	if (_target && _action)
-		[_target performSelectorOnMainThread:_action withObject:self waitUntilDone:NO];
+	__strong __typeof__((_target)) strongTarget = _target;
+	if (strongTarget && _action)
+		[strongTarget performSelectorOnMainThread:_action withObject:self waitUntilDone:NO];
 }
 @end

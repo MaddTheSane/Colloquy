@@ -1,7 +1,7 @@
 #import "MVDelegateLogger.h"
 
 @implementation MVDelegateLogger
-- (id) initWithDelegate:(id <MVLoggingDelegate>) delegate {
+- (instancetype) initWithDelegate:(id <MVLoggingDelegate>) delegate {
 	if (!(self = [super init]))
 		return nil;
 
@@ -11,7 +11,8 @@
 }
 
 - (void) logMessage:(DDLogMessage *) logMessage {
-	[_delegate delegateLogger:self socketTrafficDidOccur:logMessage->logMsg context:(uintptr_t)logMessage->logContext];
+	__strong __typeof__((_delegate)) delegate = _delegate;
+	[delegate delegateLogger:self socketTrafficDidOccur:logMessage->logMsg context:(int)logMessage->logContext];
 }
 
 - (NSString *) loggerName {

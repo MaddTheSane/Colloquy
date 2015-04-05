@@ -35,32 +35,31 @@ XMLQName* JABBER_IQ_VERSION_QN;
 XMLQName* JABBER_IQ_LAST_QN;
 XMLQName* JABBER_CLIENTCAP_QN;
 
-@interface Jabber : NSObject 
+@interface Jabber : NSObject
 {}
 @end
 
 @implementation Jabber
 +(void) load
-{
-	@autoreleasepool {
-		// Setup QNames
-		JABBER_IQ_QN = [XMLQName construct:@"iq" withURI:@"jabber:client"];
-		JABBER_MESSAGE_QN = [XMLQName construct:@"message" withURI:@"jabber:client"];
-		JABBER_PRESENCE_QN = [XMLQName construct:@"presence" withURI:@"jabber:client"];
-		JABBER_STREAM_QN = [XMLQName construct:@"stream" withURI:@"http://etherx.jabber.org/streams"];
-		JABBER_X_EVENT_QN = [XMLQName construct:@"x" withURI:@"jabber:x:event"];
-		JABBER_TYPE_ATTRIB_QN = [XMLQName construct:@"type" withURI:@"jabber:client"];
-		
-		JABBER_X_SIGNED_QN = QNAME(@"jabber:x:signed", @"x");
-		JABBER_IQ_VERSION_QN = QNAME(@"jabber:iq:version", @"query");
-		JABBER_IQ_LAST_QN = QNAME(@"jabber:iq:last", @"query");
-		JABBER_CLIENTCAP_QN = QNAME(@"http://jabber.org/protocols/caps", @"c");
-		
-		// Register packet classes
-		[XMLElementStream registerElementFactory:[JabberPresence class]];
-		[XMLElementStream registerElementFactory:[JabberMessage class]];
-		[XMLElementStream registerElementFactory:[JabberSubscriptionRequest class]];
-	}
+{ @autoreleasepool {
+    // Setup QNames
+    JABBER_IQ_QN = [XMLQName construct:@"iq" withURI:@"jabber:client"];
+    JABBER_MESSAGE_QN = [XMLQName construct:@"message" withURI:@"jabber:client"];
+    JABBER_PRESENCE_QN = [XMLQName construct:@"presence" withURI:@"jabber:client"];
+    JABBER_STREAM_QN = [XMLQName construct:@"stream" withURI:@"http://etherx.jabber.org/streams"];
+    JABBER_X_EVENT_QN = [XMLQName construct:@"x" withURI:@"jabber:x:event"];
+    JABBER_TYPE_ATTRIB_QN = [XMLQName construct:@"type" withURI:@"jabber:client"];
+
+    JABBER_X_SIGNED_QN = QNAME(@"jabber:x:signed", @"x");
+    JABBER_IQ_VERSION_QN = QNAME(@"jabber:iq:version", @"query");
+    JABBER_IQ_LAST_QN = QNAME(@"jabber:iq:last", @"query");
+    JABBER_CLIENTCAP_QN = QNAME(@"http://jabber.org/protocols/caps", @"c");
+
+    // Register packet classes
+    [XMLElementStream registerElementFactory:[JabberPresence class]];
+    [XMLElementStream registerElementFactory:[JabberMessage class]];
+    [XMLElementStream registerElementFactory:[JabberSubscriptionRequest class]];
+}
 }
 
 

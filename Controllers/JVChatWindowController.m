@@ -118,11 +118,12 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 
 	[self _refreshList];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_favoritesListDidUpdate:) name:MVFavoritesListDidUpdateNotification object:nil];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_favoritesListDidUpdate:) name:MVFavoritesListDidUpdateNotification object:nil];
 }
 
 - (void) dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[[NSNotificationCenter chatCenter] removeObserver:self];
 
 	if( [self isWindowLoaded] ) {
 		[[self window] setDelegate:nil];
@@ -142,7 +143,6 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 	_identifier = nil;
 	_settings = nil;
 	_showDelayed = NO;
-
 }
 
 #pragma mark -
@@ -495,6 +495,13 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 }
 
 #pragma mark -
+
+- (id <JVChatViewController>) chatViewControllerForIdentifier:(NSString *) identifier {
+	for( id <JVChatViewController> controller in _views )
+		if( [[controller identifier] isEqualToString:identifier] )
+			return controller;
+	return nil;
+}
 
 - (NSArray *) chatViewControllersForConnection:(MVChatConnection *) connection {
 	NSParameterAssert( connection != nil );
@@ -849,7 +856,6 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 
 	if( [org size].width > maxSideSize || [org size].height > maxSideSize ) {
 		NSImage *ret = [[item icon] copyWithZone:nil];
-		[ret setScalesWhenResized:YES];
 		[ret setSize:NSMakeSize( maxSideSize, maxSideSize )];
 		org = ret;
 	}
@@ -881,18 +887,19 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 
 	[[JVInspectorController sharedInspector] inspectObject:[self objectToInspect]];
 
-	if( [item conformsToProtocol:@protocol( JVChatViewController )] && item != (id) _activeViewController )
-		[self _refreshWindow];
+	if( [item conformsToProtocol:@protocol( JVChatViewController )] && item != (id) _activeViewController ) {
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_refreshWindow) object:nil];
+		[self performSelector:@selector(_refreshWindow) withObject:nil afterDelay:0.];
+	}
 
 	[self _deferRefreshSelectionMenu];
 }
 
 - (BOOL) outlineView:(NSOutlineView *) outlineView writeItems:(NSArray *) items toPasteboard:(NSPasteboard *) board {
 	id item = [items lastObject];
-	NSData *data = [NSData dataWithBytes:&item length:sizeof( &item )];
 	if( ! [item conformsToProtocol:@protocol( JVChatViewController )] ) return NO;
-	[board declareTypes:@[JVChatViewPboardType] owner:self];
-	[board setData:data forType:JVChatViewPboardType];
+	[board declareTypes:[NSArray arrayWithObjects:JVChatViewPboardType, nil] owner:self];
+	[board setString:[item identifier] forType:JVChatViewPboardType];
 	return YES;
 }
 
@@ -927,10 +934,9 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 				[item handleDraggedFile:file];
 
 		return YES;
-	} else if( [board availableTypeFromArray:@[JVChatViewPboardType]] ) {
-		NSData *pointerData = [board dataForType:JVChatViewPboardType];
-		id <JVChatViewController> dragedController = nil;
-		[pointerData getBytes:&dragedController];
+	} else if( [board availableTypeFromArray:[NSArray arrayWithObject:JVChatViewPboardType]] ) {
+		NSString *identifierString = [board stringForType:JVChatViewPboardType];
+		id <JVChatViewController> dragedController = [self chatViewControllerForIdentifier:identifierString];
 
 		if( [_views containsObject:dragedController] ) {
 			if( index != NSOutlineViewDropOnItemIndex && index >= (int) [_views indexOfObjectIdenticalTo:dragedController] ) index--;
@@ -939,7 +945,8 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 			[[dragedController windowController] removeChatViewController:dragedController];
 		}
 
-		if( index == NSOutlineViewDropOnItemIndex ) [self addChatViewController:dragedController];
+		if( index == NSOutlineViewDropOnItemIndex )
+			[[dragedController windowController] addChatViewController:dragedController];
 		else [self insertChatViewController:dragedController atIndex:index];
 
 		return YES;

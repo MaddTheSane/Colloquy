@@ -54,7 +54,7 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 
 #pragma mark -
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_attributes = [[NSMutableDictionary alloc] initWithCapacity:2];
 		_memberUsers = [[NSMutableSet alloc] initWithCapacity:100];
@@ -71,22 +71,6 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 - (void) dealloc {
 	[_connection _removeKnownRoom:self];
 	[_connection _removeJoinedRoom:self];
-
-	[_name release];
-	[_uniqueIdentifier release];
-	[_dateJoined release];
-	[_dateParted release];
-	[_topic release];
-	[_topicAuthor release];
-	[_dateTopicChanged release];
-	[_attributes release];
-	[_memberUsers release];
-	[_bannedUsers release];
-	[_modeAttributes release];
-	[_memberModes release];
-	[_disciplineMemberModes release];
-
-	[super dealloc];
 }
 
 #pragma mark -
@@ -187,6 +171,18 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 	return _dateParted;
 }
 
+- (NSDate *) mostRecentUserActivity {
+	return _mostRecentUserActivity;
+}
+
+- (void) requestRecentActivity {
+	// subclass this method, don't call super
+}
+
+- (void) persistLastActivityDate {
+	// subclass this method, don't call super
+}
+
 #pragma mark -
 
 - (NSStringEncoding) encoding {
@@ -204,7 +200,7 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 }
 
 - (void) sendMessage:(MVChatString *) message withEncoding:(NSStringEncoding) encoding asAction:(BOOL) action {
-	[self sendMessage:message withEncoding:encoding withAttributes:@{@"action": @(action)}];
+	[self sendMessage:message withEncoding:encoding withAttributes:@{ @"action": @(action) }];
 }
 
 - (void) sendMessage:(MVChatString *) message withEncoding:(NSStringEncoding) encoding withAttributes:(NSDictionary *) attributes {
@@ -296,9 +292,8 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 		else [_attributes removeObjectForKey:key];
 	}
 
-	NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:key, @"attribute", nil];
-	[[NSNotificationCenter defaultCenter] postNotificationOnMainThreadWithName:MVChatRoomAttributeUpdatedNotification object:self userInfo:info];
-	[info release];
+	NSDictionary *info = @{ @"attribute": key };
+	[[NSNotificationCenter chatCenter] postNotificationOnMainThreadWithName:MVChatRoomAttributeUpdatedNotification object:self userInfo:info];
 }
 
 #pragma mark -
@@ -373,7 +368,7 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 				[users addObject:user];
 	}
 
-	return [users autorelease];
+	return users;
 }
 
 - (NSSet *) memberUsersWithNickname:(NSString *) nickname {
@@ -385,7 +380,7 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 				[users addObject:user];
 	}
 
-	return [users autorelease];
+	return users;
 }
 
 - (NSSet *) memberUsersWithFingerprint:(NSString *) fingerprint {
@@ -397,7 +392,7 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 				[users addObject:user];
 	}
 
-	return [users autorelease];
+	return users;
 }
 
 - (MVChatUser *) memberUserWithUniqueIdentifier:(id) identifier {
@@ -529,6 +524,7 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 - (void) _addMemberUser:(MVChatUser *) user {
 	@synchronized( _memberUsers ) {
 		[_memberUsers addObject:user];
+		user.roomCount++;
 	}
 }
 
@@ -537,6 +533,7 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 		[_memberModes removeObjectForKey:[user uniqueIdentifier]];
 	} @synchronized( _memberUsers ) {
 		[_memberUsers removeObject:user];
+		user.roomCount--;
 	} @synchronized( _disciplineMemberModes) {
 		[_disciplineMemberModes removeObjectForKey:[user uniqueIdentifier]];
 	}
@@ -546,6 +543,8 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 	@synchronized( _memberModes ) {
 		[_memberModes removeAllObjects];
 	} @synchronized( _memberUsers ) {
+		for (MVChatUser *user in _memberUsers)
+			user.roomCount--;
 		[_memberUsers removeAllObjects];
 	} @synchronized( _disciplineMemberModes) {
 		[_disciplineMemberModes removeAllObjects];
@@ -620,15 +619,15 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 - (void) _setMode:(MVChatRoomMode) mode withAttribute:(id) attribute {
 	_modes |= mode;
 	@synchronized( _modeAttributes ) {
-		if( attribute ) _modeAttributes[[NSNumber numberWithUnsignedLong:mode]] = attribute;
-		else [_modeAttributes removeObjectForKey:[NSNumber numberWithUnsignedLong:mode]];
+		if( attribute ) _modeAttributes[@(mode)] = attribute;
+		else [_modeAttributes removeObjectForKey:@(mode)];
 	}
 }
 
 - (void) _removeMode:(MVChatRoomMode) mode {
 	@synchronized( _modeAttributes ) {
 		_modes &= ~mode;
-		[_modeAttributes removeObjectForKey:[NSNumber numberWithUnsignedLong:mode]];
+		[_modeAttributes removeObjectForKey:@(mode)];
 	}
 }
 
@@ -656,20 +655,18 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 
 - (void) _updateMemberUser:(MVChatUser *) user fromOldUniqueIdentifier:(id) identifier {
 	@synchronized( _memberModes ) {
-		NSNumber *userModes = [_memberModes[identifier] retain];
+		NSNumber *userModes = _memberModes[identifier];
 		if( userModes ) {
 			[_memberModes removeObjectForKey:identifier];
 			_memberModes[[user uniqueIdentifier]] = userModes;
-			[userModes release];
 		}
 	}
 
 	@synchronized( _disciplineMemberModes ) {
-		NSNumber *userModes = [_disciplineMemberModes[identifier] retain];
+		NSNumber *userModes = _disciplineMemberModes[identifier];
 		if( userModes ) {
 			[_disciplineMemberModes removeObjectForKey:identifier];
 			_disciplineMemberModes[[user uniqueIdentifier]] = userModes;
-			[userModes release];
 		}
 	}
 }
@@ -692,7 +689,7 @@ NSString *MVChatRoomAttributeUpdatedNotification = @"MVChatRoomAttributeUpdatedN
 - (NSScriptObjectSpecifier *) objectSpecifier {
 	id classDescription = [NSClassDescription classDescriptionForClass:[MVChatConnection class]];
 	NSScriptObjectSpecifier *container = [[self connection] objectSpecifier];
-	return [[[NSUniqueIDSpecifier alloc] initWithContainerClassDescription:classDescription containerSpecifier:container key:@"joinedChatRoomsArray" uniqueID:[self scriptUniqueIdentifier]] autorelease];
+	return [[NSUniqueIDSpecifier alloc] initWithContainerClassDescription:classDescription containerSpecifier:container key:@"joinedChatRoomsArray" uniqueID:[self scriptUniqueIdentifier]];
 }
 
 #pragma mark -

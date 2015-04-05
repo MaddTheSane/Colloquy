@@ -7,7 +7,6 @@
 @class CQChatRoomController;
 @class CQConnectionEditViewController;
 @class CQConnectionsNavigationController;
-@class CQConnectionsViewController;
 @class CQDirectChatController;
 @class CQIgnoreRulesController;
 @class KAIgnoreRule;
@@ -25,6 +24,7 @@ extern NSString *CQConnectionsControllerRemovedBouncerSettingsNotification;
 
 @interface CQConnectionsController : NSObject <UIActionSheetDelegate, UIAlertViewDelegate, CQBouncerConnectionDelegate> {
 	@protected
+	NSMapTable *_connectionToErrorToAlertMap;
 	CQConnectionsNavigationController *_connectionsNavigationController;
 	NSMutableSet *_connections;
 	NSMutableArray *_directConnections;
@@ -40,6 +40,7 @@ extern NSString *CQConnectionsControllerRemovedBouncerSettingsNotification;
 	NSTimeInterval _allowedBackgroundTime;
 	NSMutableSet *_automaticallySetConnectionAwayStatus;
 	BOOL _shouldLogRawMessagesToConsole;
+	NSMapTable *_activityTokens;
 }
 + (CQConnectionsController *) defaultController;
 
@@ -58,7 +59,7 @@ extern NSString *CQConnectionsControllerRemovedBouncerSettingsNotification;
 
 - (BOOL) handleOpenURL:(NSURL *) url;
 
-- (void) showNewConnectionPrompt:(id) sender;
+- (void) showNewConnectionPromptFromPoint:(CGPoint) point;
 - (void) showBouncerCreationView:(id) sender;
 - (void) showConnectionCreationView:(id) sender;
 - (void) showConnectionCreationViewForURL:(NSURL *) url;

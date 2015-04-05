@@ -3,6 +3,7 @@
 #import "CQChatRoomInfoTableCell.h"
 #import "CQConnectionsController.h"
 #import "CQProcessChatMessageOperation.h"
+#import "NSNotificationAdditions.h"
 #import "NSStringAdditions.h"
 
 #import <ChatCore/MVChatConnection.h>
@@ -26,12 +27,12 @@ static BOOL showFullRoomNames;
 
 	userDefaultsInitialized = YES;
 
-	[[NSNotificationCenter defaultCenter] addObserver:[CQChatRoomListViewController class] selector:@selector(userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
+	[[NSNotificationCenter chatCenter] addObserver:[CQChatRoomListViewController class] selector:@selector(userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
 
 	[self userDefaultsChanged];
 }
 
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
 		return nil;
 
@@ -71,11 +72,11 @@ static BOOL showFullRoomNames;
 #pragma mark -
 
 - (void) setConnection:(MVChatConnection *) connection {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:MVChatConnectionChatRoomListUpdatedNotification object:_connection];
+	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatConnectionChatRoomListUpdatedNotification object:_connection];
 
 	_connection = connection;
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_roomListUpdated:) name:MVChatConnectionChatRoomListUpdatedNotification object:connection];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_roomListUpdated:) name:MVChatConnectionChatRoomListUpdatedNotification object:connection];
 
 	[connection connectAppropriately];
 	[connection fetchChatRoomList];
@@ -263,8 +264,9 @@ static BOOL showFullRoomNames;
 
 	[tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
 
-	if (!_target || [_target respondsToSelector:_action])
-		[[UIApplication sharedApplication] sendAction:_action to:_target from:self forEvent:nil];
+	__strong __typeof__((_target)) strongTarget = _target;
+	if (!strongTarget || [strongTarget respondsToSelector:_action])
+		[[UIApplication sharedApplication] sendAction:_action to:strongTarget from:self forEvent:nil];
 }
 
 - (BOOL) tableView:(UITableView *) tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *) indexPath {

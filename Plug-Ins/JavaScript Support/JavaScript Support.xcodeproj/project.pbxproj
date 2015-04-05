@@ -309,7 +309,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../build/Development\"",
+					"$(BUILT_PRODUCTS_DIR)",
 				);
 				GCC_PREFIX_HEADER = ../../Basic.pch;
 				HEADER_SEARCH_PATHS = (
@@ -334,7 +334,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../build/Development\"",
+					"$(BUILT_PRODUCTS_DIR)",
 				);
 				GCC_PREFIX_HEADER = ../../Basic.pch;
 				HEADER_SEARCH_PATHS = (

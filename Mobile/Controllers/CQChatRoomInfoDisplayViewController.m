@@ -11,6 +11,8 @@
 #import <ChatCore/MVChatRoom.h>
 #import <ChatCore/MVChatUser.h>
 
+#import "NSNotificationAdditions.h"
+
 enum {
 	CQChatRoomInfoModes,
 	CQChatRoomInfoTopic,
@@ -35,7 +37,7 @@ enum {
 @end
 
 @implementation CQChatRoomInfoDisplayViewController
-- (id) initWithRoom:(MVChatRoom *) room {
+- (instancetype) initWithRoom:(MVChatRoom *) room {
 	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
 		return nil;
 
@@ -49,12 +51,16 @@ enum {
 
 	_segmentedControl = [[UISegmentedControl alloc] initWithItems:items];
 	_segmentedControl.backgroundColor = [UIColor clearColor];
-	_segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
 	_segmentedControl.selectedSegmentIndex = CQChatRoomInfoModes;
 
 	[_segmentedControl addTarget:self action:@selector(_segmentSelected:) forControlEvents:UIControlEventValueChanged];
 
 	return self;
+}
+
+- (void) dealloc {
+	[[NSNotificationCenter chatCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark -
@@ -72,14 +78,12 @@ enum {
 	[self _refreshBanList:nil];
 	[self _segmentSelected:_segmentedControl];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_memberModeChanged:) name:MVChatRoomUserModeChangedNotification object:_room];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_roomModesChanged:) name:MVChatRoomModesChangedNotification object:_room];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_refreshBanList:) name:MVChatRoomBannedUsersSyncedNotification object:_room];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_topicChanged:) name:MVChatRoomTopicChangedNotification object:_room];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_memberModeChanged:) name:MVChatRoomUserModeChangedNotification object:_room];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_roomModesChanged:) name:MVChatRoomModesChangedNotification object:_room];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_refreshBanList:) name:MVChatRoomBannedUsersSyncedNotification object:_room];
+	[[NSNotificationCenter chatCenter] addObserver:self selector:@selector(_topicChanged:) name:MVChatRoomTopicChangedNotification object:_room];
 
-	if ([UIDevice currentDevice].isSystemSeven)
-		_segmentedControl.frame = CGRectInset(self.navigationController.toolbar.bounds, 20., 5.);
-	else _segmentedControl.frame = CGRectInset(self.navigationController.toolbar.bounds, 5., 5.);
+	_segmentedControl.frame = CGRectInset(self.navigationController.toolbar.bounds, 20., 5.);
 	_segmentedControl.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
 }
 
@@ -300,8 +304,11 @@ enum {
 		[textView resignFirstResponder];
 
 		NSString *currentTopic = [[NSString alloc] initWithData:_room.topic encoding:_room.encoding];;
-		if (![currentTopic isEqualToString:textView.text])
-			[_room changeTopic:textView.text];
+		if (![currentTopic isEqualToString:textView.text]) {
+			NSAttributedString *attributedText = textView.attributedText;
+			if (!attributedText) attributedText = [[NSAttributedString alloc] initWithString:textView.text attributes:@{ NSFontAttributeName: textView.font }];
+			[_room changeTopic:attributedText];
+		}
 
 		return NO;
 	}

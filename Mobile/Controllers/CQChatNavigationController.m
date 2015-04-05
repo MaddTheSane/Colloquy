@@ -5,21 +5,16 @@
 #import "CQColloquyApplication.h"
 
 @implementation CQChatNavigationController
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super init]))
 		return nil;
 
 	self.title = NSLocalizedString(@"Colloquies", @"Colloquies tab title");
-	self.tabBarItem.image = [UIImage imageNamed:@"colloquies.png"];
-
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_userDefaultsChanged) name:CQSettingsDidChangeNotification object:nil];
 
 	return self;
 }
 
 - (void) dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
 	self.delegate = nil;
 }
 
@@ -33,12 +28,10 @@
 		[self pushViewController:_chatListViewController animated:NO];
 
 		self.delegate = self;
-
-		if (![UIDevice currentDevice].isSystemSeven)
-			self.navigationBar.tintColor = [CQColloquyApplication sharedApplication].tintColor;
 	}
 
-	[[CQChatController defaultController] showPendingChatControllerAnimated:NO];
+	if (![UIDevice currentDevice].isSystemEight)
+		[[CQChatController defaultController] showPendingChatControllerAnimated:NO];
 }
 
 #pragma mark -
@@ -78,13 +71,5 @@
 
 - (void) _showNextChatController {
 	[[CQChatController defaultController] showPendingChatControllerAnimated:YES];
-}
-
-- (void) _userDefaultsChanged {
-	if (![NSThread isMainThread])
-		return;
-
-	if (![UIDevice currentDevice].isSystemSeven)
-		self.navigationBar.tintColor = [CQColloquyApplication sharedApplication].tintColor;
 }
 @end

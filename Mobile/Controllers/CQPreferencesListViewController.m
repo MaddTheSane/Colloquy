@@ -3,6 +3,8 @@
 #import "CQPreferencesListChannelEditViewController.h"
 #import "CQPreferencesTextViewController.h"
 
+#import "UIFontAdditions.h"
+
 #import <AVFoundation/AVFoundation.h>
 
 enum {
@@ -10,7 +12,7 @@ enum {
 };
 
 @implementation CQPreferencesListViewController
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super initWithStyle:UITableViewStyleGrouped]))
 		return nil;
 
@@ -83,8 +85,9 @@ enum {
 	if (_editingViewController || !_pendingChanges || (!_action && !self.preferencesListBlock))
 		return;
 
-	if (!_target || [_target respondsToSelector:_action])
-		if ([[UIApplication sharedApplication] sendAction:_action to:_target from:self forEvent:nil])
+	__strong __typeof__((_target)) strongTarget = _target;
+	if (!strongTarget || [strongTarget respondsToSelector:_action])
+		if ([[UIApplication sharedApplication] sendAction:_action to:strongTarget from:self forEvent:nil])
 			_pendingChanges = NO;
 
 	if (self.preferencesListBlock) {
@@ -209,8 +212,9 @@ enum {
 		[self.tableView performSelector:@selector(reloadData) withObject:nil afterDelay:0.25];
 	}
 
-	if (!editing && _pendingChanges && _action && (!_target || [_target respondsToSelector:_action]))
-		if ([[UIApplication sharedApplication] sendAction:_action to:_target from:self forEvent:nil])
+	__strong __typeof__((_target)) strongTarget = _target;
+	if (!editing && _pendingChanges && _action && (!strongTarget || [strongTarget respondsToSelector:_action]))
+		if ([[UIApplication sharedApplication] sendAction:_action to:strongTarget from:self forEvent:nil])
 			_pendingChanges = NO;
 
 	if (self.preferencesListBlock) {
@@ -250,8 +254,6 @@ enum {
 		cell.imageView.image = nil;
 	} else {
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		if (![UIDevice currentDevice].isSystemSeven)
-			cell.textLabel.textColor = [UIColor lightGrayColor];
 		cell.textLabel.text = _noItemsLabelText;
 		cell.imageView.image = nil;
 	}
@@ -304,6 +306,19 @@ enum {
 		cell.accessoryView = [self accessoryViewForAccessoryType:accessoryType];
 		cell.textLabel.textColor = [UIColor colorWithRed:(50. / 255.) green:(79. / 255.) blue:(133. / 255.) alpha:1.];
 
+		if (self.listType == CQPreferencesListTypeFont) {
+			UIFont *font = [UIFont fontWithName:self.values[indexPath.row] size:12.];
+			if ((!font || [font.familyName hasCaseInsensitiveSubstring:@"Helvetica"]) && [[UIFont cq_availableRemoteFontNames] containsObject:self.values[indexPath.row]])
+			{
+				__weak __typeof__((self)) weakSelf = self;
+				[UIFont cq_loadFontWithName:self.values[indexPath.row] withCompletionHandler:^(NSString *fontName, UIFont *font) {
+					__strong __typeof__((weakSelf)) strongSelf = weakSelf;
+					[strongSelf.tableView beginUpdates];
+					[strongSelf.tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
+					[strongSelf.tableView endUpdates];
+				}];
+			}
+		}
 		// If the accessory type isn't custom, the accessory view will refresh right away. Otherwise, we help it out a bit.
 		if (previouslySelectedAccessoryType < CQTableViewCellAccessoryPlay) {
 			[tableView beginUpdates];
@@ -394,7 +409,7 @@ enum {
 
 - (void) _previewAudioAlertAtIndex:(NSUInteger) index {
 	NSString *item = _items[index];
-	NSString *path = [[NSBundle mainBundle] pathForResource:item ofType:@"aiff"];
+	NSString *path = [[NSBundle mainBundle] pathForResource:[item description] ofType:@"aiff"];
 	if (!path)
 		return;
 

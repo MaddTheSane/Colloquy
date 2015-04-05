@@ -8,11 +8,11 @@
 
 #import "CQIntroductoryGIFFrameOperation.h"
 
-typedef enum {
+typedef NS_ENUM(NSInteger, CQParseResult) {
 	CQParseResultUnknown,
 	CQParseResultNotAnimated,
 	CQParseResultAnimated
-} CQParseResult;
+};
 
 enum {
 	// Positions from the start of the GIF
@@ -64,7 +64,7 @@ static const NSUInteger GIFMinimumLZWCodeSizeBlockLengthIdentifierLength = 1;
 @synthesize introductoryFrameImage = _introductoryFrameImage;
 @synthesize introductoryFrameImageData = _introductoryFrameImageData;
 
-- (id) initWithURL:(NSURL *) url {
+- (instancetype) initWithURL:(NSURL *) url {
 	NSParameterAssert(url);
 
 	if (!(self = [super init]))
@@ -73,11 +73,6 @@ static const NSUInteger GIFMinimumLZWCodeSizeBlockLengthIdentifierLength = 1;
 	_url = [url copy];
 
 	return self;
-}
-
-- (id) init {
-	NSAssert(NO, @"The designated initializer for %@ is -initWithURL:.", NSStringFromClass([self class]));
-	return nil;
 }
 
 #pragma mark -
@@ -104,8 +99,6 @@ static const NSUInteger GIFMinimumLZWCodeSizeBlockLengthIdentifierLength = 1;
 	if (_started)
 		return;
 
-	[super start];
-
 	[self main];
 }
 
@@ -118,7 +111,7 @@ static const NSUInteger GIFMinimumLZWCodeSizeBlockLengthIdentifierLength = 1;
 	[super main];
 
 	if (_url.isFileURL) {
-		_data = [NSData dataWithContentsOfURL:_url];
+		_data = [[NSData dataWithContentsOfURL:_url] mutableCopy];
 
 		[self _downloadingAnimatedGIF];
 		[self finish];

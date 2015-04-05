@@ -30,8 +30,8 @@
 		_collapsed = YES;
 		_needsRefresh = NO;
 
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _connectionChange: ) name:MVChatConnectionDidConnectNotification object:nil];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _connectionChange: ) name:MVChatConnectionDidDisconnectNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _connectionChange: ) name:MVChatConnectionDidConnectNotification object:nil];
+		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _connectionChange: ) name:MVChatConnectionDidDisconnectNotification object:nil];
 	}
 	return self;
 }
@@ -56,7 +56,7 @@
 	[roomsTable setDelegate:nil];
 	[roomsTable setDataSource:nil];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter chatCenter] removeObserver:self];
 
 
 	_connection = nil;
@@ -73,7 +73,7 @@
 	[roomsTable accessibilitySetOverrideValue:NSLocalizedString(@"Chat rooms", "VoiceOver title for chat rooms table") forAttribute:NSAccessibilityDescriptionAttribute];
 
 	theColumn = [roomsTable tableColumnWithIdentifier:@"members"];
-	[[theColumn headerCell] setImage:[NSImage imageNamed:@"personHeader"]];
+	[[theColumn headerCell] setImage:[NSImage imageNamed:@"person"]];
 	[[theColumn headerCell] accessibilitySetOverrideValue:NSLocalizedString(@"Participants", "VoiceOver title for number of connected users in chat room browser table") forAttribute:NSAccessibilityDescriptionAttribute];
 
 	[self tableView:roomsTable didClickTableColumn:[roomsTable tableColumnWithIdentifier:_sortColumn]];
@@ -238,7 +238,7 @@
 - (void) setConnection:(MVChatConnection *) connection {
 	if( _connection ) {
 		[self _stopFetch];
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:_connection];
+		[[NSNotificationCenter chatCenter] removeObserver:self name:nil object:_connection];
 	}
 
 	_connection = connection;
@@ -246,7 +246,9 @@
 	if( _connection && ! _collapsed )
 		[self _startFetch];
 
-	if( _connection ) [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( _needToRefreshResults: ) name:MVChatConnectionChatRoomListUpdatedNotification object:_connection];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		if( _connection ) [[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _needToRefreshResults: ) name:MVChatConnectionChatRoomListUpdatedNotification object:_connection];
+	});
 
 	_roomResults = [_connection chatRoomListResults];
 
@@ -417,14 +419,14 @@ static NSComparisonResult sortByRoomNameDescending( NSString *room1, NSString *r
 
 static NSComparisonResult sortByNumberOfMembersAscending( NSString *room1, NSString *room2, void *context ) {
 	NSDictionary *info = (__bridge NSDictionary *)(context);
-	NSComparisonResult res = [(NSNumber *)info[room1][@"users"] compare:info[room2][@"users"]];
+	NSComparisonResult res = [(NSNumber *)[info[room1] objectForKey:@"users"] compare:[info[room2] objectForKey:@"users"]];
 	if( res != NSOrderedSame ) return res;
 	return [room1 caseInsensitiveCompare:room2];
 }
 
 static NSComparisonResult sortByNumberOfMembersDescending( NSString *room1, NSString *room2, void *context ) {
 	NSDictionary *info = (__bridge NSDictionary *)(context);
-	NSComparisonResult res = [(NSNumber *)info[room2][@"users"] compare:info[room1][@"users"]];
+	NSComparisonResult res = [(NSNumber *)[info[room2] objectForKey:@"users"] compare:[info[room1] objectForKey:@"users"]];
 	if( res != NSOrderedSame ) return res;
 	return [room1 caseInsensitiveCompare:room2];
 }
