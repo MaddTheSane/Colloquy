@@ -201,10 +201,6 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 
 #pragma mark -
 
-- (MVChatUser *) activeUser {
-	return _activeUser;
-}
-
 - (void) setActiveUser:(MVChatUser *) user {
 	if( [_activeUser isEqual:user] )
 		return;
@@ -300,10 +296,6 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 	return nil;
 }
 
-- (void) setPicture:(NSImage *) picture {
-	_picture = [picture copyWithZone:nil];
-}
-
 #pragma mark -
 
 - (NSString *) compositeName {
@@ -353,23 +345,11 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 	return nil;
 }
 
-- (NSString *) speechVoice {
-	return _speechVoice;
-}
-
 - (NSString *) uniqueIdentifier {
 	return _uniqueIdentifier;
 }
 
 #pragma mark -
-
-- (void) setFirstName:(NSString *) name {
-	_firstName = [name copyWithZone:nil];
-}
-
-- (void) setLastName:(NSString *) name {
-	_lastName = [name copyWithZone:nil];
-}
 
 - (void) setPrimaryEmail:(NSString *) email {
 	_primaryEmail = [email copyWithZone:nil];
@@ -379,19 +359,9 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 	_givenNickname = [name copyWithZone:nil];
 }
 
-- (void) setSpeechVoice:(NSString *) voice {
-	_speechVoice = [voice copyWithZone:nil];
-}
-
 #pragma mark -
 
-- (ABPerson *) addressBookPersonRecord {
-	return _person;
-}
-
-- (void) setAddressBookPersonRecord:(ABPerson *) record {
-	_person = record;
-}
+@synthesize addressBookPersonRecord = _person;
 
 - (void) editInAddressBook {
 	if( ! _person ) return;
