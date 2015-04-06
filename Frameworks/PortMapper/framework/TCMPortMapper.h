@@ -29,17 +29,17 @@ extern NSString * const TCMNATPMPPortMapProtocol;
 extern NSString * const TCMUPNPPortMapProtocol;  
 extern NSString * const TCMNoPortMapProtocol;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, TCMPortMappingStatus) {
     TCMPortMappingStatusUnmapped = 0,
     TCMPortMappingStatusTrying   = 1,
     TCMPortMappingStatusMapped   = 2
-} TCMPortMappingStatus;
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, TCMPortMappingTransportProtocol) {
     TCMPortMappingTransportProtocolUDP  = 1,
     TCMPortMappingTransportProtocolTCP  = 2,
     TCMPortMappingTransportProtocolBoth = 3
-} TCMPortMappingTransportProtocol;
+};
 
 
 @interface TCMPortMapping : NSObject {

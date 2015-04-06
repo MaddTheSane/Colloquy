@@ -28,6 +28,7 @@
 #import <CFNetwork/CFNetwork.h>
 #endif
 
+#import "RunOnMainThread.h"
 
 #define JVQueueWaitBeforeConnected 120.
 #define JVPingServerInterval 120.
@@ -358,7 +359,9 @@ NSString *const MVIRCChatConnectionZNCPluginPlaybackFeature = @"MVIRCChatConnect
 }
 
 - (void) disconnectWithReason:(MVChatString *) reason {
-	[self performSelectorOnMainThread:@selector( cancelPendingReconnectAttempts ) withObject:nil waitUntilDone:YES];
+	RunOnMainThreadSync(^{
+		[self cancelPendingReconnectAttempts];
+	});
 
 	if( _status == MVChatConnectionConnectedStatus ) {
 		_userDisconnected = YES;
@@ -825,8 +828,11 @@ NSString *const MVIRCChatConnectionZNCPluginPlaybackFeature = @"MVIRCChatConnect
 	NSString *server = (_bouncer != MVChatConnectionNoBouncer && _bouncerServer.length ? _bouncerServer : _server);
 	unsigned short serverPort = (_bouncer != MVChatConnectionNoBouncer ? (_bouncerServerPort ? _bouncerServerPort : 6667) : _serverPort);
 
-	if( ! [_chatConnection connectToHost:server onPort:serverPort error:NULL] )
-		[self performSelectorOnMainThread:@selector( _didNotConnect ) withObject:nil waitUntilDone:NO];
+	if( ! [_chatConnection connectToHost:server onPort:serverPort error:NULL] ) {
+		RunOnMainThreadSync(^{
+			[self _didNotConnect];
+		});
+	}
 	else [self _resetSendQueueInterval];
 }
 
@@ -842,8 +848,11 @@ NSString *const MVIRCChatConnectionZNCPluginPlaybackFeature = @"MVIRCChatConnect
 	MVAssertMainThreadRequired();
 
 	if( _status == MVChatConnectionServerDisconnectedStatus ) {
-		if( ABS( [_lastConnectAttempt timeIntervalSinceNow] ) > 300. )
-			[self performSelector:@selector( connect ) withObject:nil afterDelay:5.];
+		if( ABS( [_lastConnectAttempt timeIntervalSinceNow] ) > 300. ) {
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				[self connect];
+			});
+		}
 		[self scheduleReconnectAttempt];
 	}
 
@@ -910,12 +919,17 @@ NSString *const MVIRCChatConnectionZNCPluginPlaybackFeature = @"MVIRCChatConnect
 	});
 
 	if( _status == MVChatConnectionConnectingStatus ) {
-		if( !_lastError )
-			[self performSelectorOnMainThread:@selector( _didNotConnect ) withObject:nil waitUntilDone:NO];
+		if( !_lastError ) {
+			RunOnMainThreadAsync(^{
+				[self _didNotConnect];
+			});
+		}
 	} else {
 		if( _lastError && !_userDisconnected )
 			_status = MVChatConnectionServerDisconnectedStatus;
-		[self performSelectorOnMainThread:@selector( _didDisconnect ) withObject:nil waitUntilDone:NO];
+		RunOnMainThreadAsync(^{
+			[self _didDisconnect];
+		});
 	}
 
 	@synchronized( _knownUsers ) {
@@ -4258,7 +4272,9 @@ end:
 		if( ! [topic isKindOfClass:[NSData class]] ) topic = nil;
 
 		NSMutableDictionary *info = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@(users), @"users", [NSDate date], @"cached", room, @"room", topic, @"topic", nil];
-		[self performSelectorOnMainThread:@selector( _addRoomToCache: ) withObject:info waitUntilDone:NO];
+		RunOnMainThreadAsync(^{
+			[self _addRoomToCache:info];
+		});
 	}
 }
 

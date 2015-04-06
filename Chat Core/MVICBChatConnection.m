@@ -48,6 +48,7 @@
 #import "MVUtilities.h"
 #import "NSStringAdditions.h"
 #import "NSNotificationAdditions.h"
+#import "RunOnMainThread.h"
 
 #pragma mark Prototypes for auxiliary functions
 
@@ -547,8 +548,9 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	NSError *error = [NSError errorWithDomain:MVChatConnectionErrorDomain
 	                          code:MVChatConnectionProtocolError
 							  userInfo:userInfo];
-	[self performSelectorOnMainThread:@selector( _postError: )
-		  withObject:error waitUntilDone:NO];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self _postError:error];
+	});
 }
 
 #pragma mark Rooms handling
@@ -830,8 +832,9 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	NSParameterAssert( fields );
 	NSParameterAssert( fields.count == 0 );
 
-	[self performSelectorOnMainThread:@selector( disconnect )
-          withObject:nil waitUntilDone:NO];
+	RunOnMainThreadAsync(^{
+		[self disconnect];
+	});
 }
 
 - (void) stcErrorPacket:(NSArray *) fields {
@@ -845,8 +848,9 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 		NSError *error = [NSError errorWithDomain:MVChatConnectionErrorDomain
 					 			  code:MVChatConnectionCantSendToRoomError
 								  userInfo:@{@"room": _room}];
-		[self performSelectorOnMainThread:@selector( _postError: )
-			  withObject:error waitUntilDone:NO];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self _postError:error];
+		});
 	} else if( [message compare:@"Nickname already in use."] == 0 ) {
 		if( _loggedIn ) {
 			// XXX
@@ -854,20 +858,23 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 			NSError *error = [NSError errorWithDomain:MVChatConnectionErrorDomain
 									  code:MVChatConnectionErroneusNicknameError
 									  userInfo:@{@"nickname": _nickname}];
-			[self performSelectorOnMainThread:@selector( _postError: )
-				  withObject:error waitUntilDone:NO];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self _postError:error];
+			});
 
 			// The server will probably send us an exit packet, but let's be
 			// sure to disconnect ourselves.
-			[self performSelectorOnMainThread:@selector( disconnect )
-		          withObject:nil waitUntilDone:NO];
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[self disconnect];
+			});
 		}
 	} else if( [message compare:@"You are out of bricks."] == 0 ) {
 		NSError *error = [NSError errorWithDomain:MVChatConnectionErrorDomain
 						          code:MVChatConnectionOutOfBricksError
 								  userInfo:nil];
-		[self performSelectorOnMainThread:@selector( _postError: )
-		      withObject:error waitUntilDone:NO];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self _postError:error];
+		});
 	} else if( [message compare:@"You aren't the moderator."] == 0 ) {
 		// XXX
 	} else if( hasSubstring( message, @" is not in the database.", &r ) ) {
@@ -896,8 +903,9 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 	NSParameterAssert( fields );
 	NSParameterAssert( fields.count == 0 );
 
-	[self performSelectorOnMainThread:@selector( _didConnect )
-		  withObject:nil waitUntilDone:NO];
+	RunOnMainThreadAsync(^{
+		[self _didConnect];
+	});
 
 	_loggedIn = YES;
 

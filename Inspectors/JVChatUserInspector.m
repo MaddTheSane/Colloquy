@@ -3,6 +3,7 @@
 #import "JVBuddy.h"
 #import "MVFileTransferController.h"
 #import "NSDateAdditions.h"
+#import "RunOnMainThread.h"
 
 @implementation JVDirectChatPanel (JVDirectChatPanelInspection)
 - (id <JVInspector>) inspector {
@@ -131,7 +132,9 @@
 - (oneway void) lookupAddress {
 	@autoreleasepool {
 		NSString *ip = [[NSHost hostWithName:[_user address]] address];
-		[self performSelectorOnMainThread:@selector( gotAddress: ) withObject:ip waitUntilDone:YES];
+		RunOnMainThreadSync(^{
+			[self gotAddress:ip];
+		});
 	}
 }
 

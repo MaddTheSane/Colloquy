@@ -9,7 +9,6 @@
 #import "MVConnectionsController.h"
 #import "MVFileTransferController.h"
 #import "MVTableView.h"
-
 #import "MVApplicationController.h"
 
 static MVBuddyListController *sharedInstance = nil;

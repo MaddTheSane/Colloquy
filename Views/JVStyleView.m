@@ -5,6 +5,7 @@
 #import "JVStyle.h"
 #import "JVEmoticonSet.h"
 #import "NSDateAdditions.h"
+#import "RunOnMainThread.h"
 
 #import <objc/objc-runtime.h>
 
@@ -831,15 +832,23 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 
 			if( [self style] != style ) goto quickEnd;
 			if( result ) {
-				[self performSelectorOnMainThread:@selector( _prependMessages: ) withObject:result waitUntilDone:YES];
+				RunOnMainThreadSync(^{
+					[self _prependMessages:result];
+				});
 			}
 		}
 
 		_switchingStyles = NO;
-		[self performSelectorOnMainThread:@selector( markScrollbarForMessages: ) withObject:highlightedMsgs waitUntilDone:YES];
+		{
+		RunOnMainThreadSync(^{
+			[self markScrollbarForMessages:highlightedMsgs];
+		});
+		}
 
 quickEnd:
-		[self performSelectorOnMainThread:@selector( _switchingStyleFinished: ) withObject:nil waitUntilDone:YES];
+		RunOnMainThreadSync(^{
+			[self _switchingStyleFinished:nil];
+		});
 
 		NSNotification *note = [NSNotification notificationWithName:JVStyleViewDidChangeStylesNotification object:self userInfo:nil];
 		[[NSNotificationCenter chatCenter] postNotificationOnMainThread:note];

@@ -876,6 +876,7 @@
 		55B0EF3918CE3E250000E4CA /* libxslt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxslt.dylib; path = usr/lib/libxslt.dylib; sourceTree = SDKROOT; };
 		55B0EF4E18CE40DA0000E4CA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55B0EF5018CE40DA0000E4CA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/schema.strings; sourceTree = "<group>"; };
+		55B748191AD2E957001459F7 /* RunOnMainThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RunOnMainThread.h; path = Additions/RunOnMainThread.h; sourceTree = "<group>"; };
 		55C8A2D0180735D100A7BB42 /* Colloquy Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Colloquy Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C8A2D6180735D100A7BB42 /* Colloquy Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Colloquy Tests-Info.plist"; sourceTree = "<group>"; };
 		55C8A2D8180735D100A7BB42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1707,6 +1708,7 @@
 				1C4671E306D7759100071DC6 /* NSTextStorageAdditions.h */,
 				1CD4BD9405AA309A00F72EE6 /* NSURLAdditions.m */,
 				1CD4BD9305AA309A00F72EE6 /* NSURLAdditions.h */,
+				55B748191AD2E957001459F7 /* RunOnMainThread.h */,
 			);
 			indentWidth = 4;
 			name = "Other Sources & Additions";
@@ -3120,7 +3122,10 @@
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
 				GCC_PREFIX_HEADER = Colloquy.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2";
+				HEADER_SEARCH_PATHS = (
+					"${SDK_DIR}/usr/include/libxml2",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				OTHER_CFLAGS = (
 					"-fconstant-cfstrings",
@@ -3198,7 +3203,10 @@
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
 				GCC_PREFIX_HEADER = Colloquy.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2";
+				HEADER_SEARCH_PATHS = (
+					"${SDK_DIR}/usr/include/libxml2",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				OTHER_CFLAGS = (
 					"-fconstant-cfstrings",

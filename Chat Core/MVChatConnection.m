@@ -535,7 +535,9 @@ static void reachabilityCallback( SCNetworkReachabilityRef target, SCNetworkConn
 	if( ! [connection isWaitingToReconnect] || [connection status] != MVChatConnectionServerDisconnectedStatus )
 		return;
 
-	[connection performSelector:@selector(connect) withObject:nil afterDelay:3.];
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[connection connect];
+	});
 }
 
 - (void) setServer:(NSString *) server {
@@ -1259,7 +1261,9 @@ static void reachabilityCallback( SCNetworkReachabilityRef target, SCNetworkConn
 	if( _roomListDirty ) return; // already queued to send notification
 	_roomListDirty = YES;
 
-	[self performSelector:@selector( _sendRoomListUpdatedNotification ) withObject:nil afterDelay:( 1. / 3. )];
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)( NSEC_PER_SEC / 3)), dispatch_get_main_queue(), ^{
+		[self _sendRoomListUpdatedNotification];
+	});
 }
 
 - (void) _sendRoomListUpdatedNotification {

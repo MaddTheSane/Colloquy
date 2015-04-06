@@ -16,6 +16,8 @@
 #import "NSAttributedStringAdditions.h"
 #endif
 
+#import "RunOnMainThread.h"
+
 static SilcPKCS silcPkcs;
 static SilcPublicKey silcPublicKey;
 static SilcPrivateKey silcPrivateKey;
@@ -568,7 +570,9 @@ static void silc_command_reply( SilcClient client, SilcClientConnection conn, Si
 		NSData *t = [[NSData allocWithZone:nil] initWithBytes:channel_topic length:strlen( channel_topic )];
 		NSMutableDictionary *info = [[NSMutableDictionary allocWithZone:nil] initWithObjectsAndKeys:@(user_count), @"users", t, @"topic", [NSDate date], @"cached", r, @"room", nil];
 
-		[self performSelectorOnMainThread:@selector( _addRoomToCache: ) withObject:info waitUntilDone:NO];
+		RunOnMainThreadAsync(^{
+			[self _addRoomToCache:info];
+		});
 	}	break;
 	case SILC_COMMAND_TOPIC:
 		break;
@@ -665,7 +669,9 @@ static void silc_connected( SilcClient client, SilcClientConnection conn, SilcCl
 		SilcUnlock( [self _silcClient] );
 
 		// we need to wait for this to complete, otherwise sendRawMessage will queue the commands again
-		[self performSelectorOnMainThread:@selector( _didConnect ) withObject:nil waitUntilDone:YES];
+		RunOnMainThreadSync(^{
+			[self _didConnect];
+		});
 
 		SilcLock( [self _silcClient] );
 
@@ -679,7 +685,9 @@ static void silc_connected( SilcClient client, SilcClientConnection conn, SilcCl
 		silc_client_close_connection( client, conn );
 		[self _stopSilcRunloop];
 		[self _setSilcConn:NULL];
-		[self performSelectorOnMainThread:@selector( _didNotConnect ) withObject:nil waitUntilDone:NO];
+		RunOnMainThreadAsync(^{
+			[self _didNotConnect];
+		});
 	}
 }
 
@@ -687,7 +695,9 @@ static void silc_disconnected( SilcClient client, SilcClientConnection conn, Sil
 	MVSILCChatConnection *self = (__bridge MVSILCChatConnection *)(conn -> context);
 	[self _stopSilcRunloop];
 	[self _setSilcConn:NULL];
-	[self performSelectorOnMainThread:@selector( _didDisconnect ) withObject:nil waitUntilDone:NO];
+	RunOnMainThreadAsync(^{
+		[self _didDisconnect];
+	});
 }
 
 static void silc_get_auth_method_callback( SilcClient client, SilcClientConnection conn, SilcAuthMethod auth_method, void *context ) {
@@ -1152,7 +1162,7 @@ static SilcClientOperations silcClientOps = {
 
 	if( alwaysAccept ) {
 		NSData *pk = dictionary[@"pk"];
-		NSString *filename = [self _publicKeyFilename:[dictionary[@"connType"] unsignedLongValue] andPublicKey:(unsigned char *)[pk bytes] withLen:pk.length usingSilcConn:conn];
+		NSString *filename = [self _publicKeyFilename:(SilcSocketType)[dictionary[@"connType"] unsignedLongValue] andPublicKey:(unsigned char *)[pk bytes] withLen:pk.length usingSilcConn:conn];
 		silc_pkcs_save_public_key_data( [filename fileSystemRepresentation], (unsigned char *)[pk bytes], pk.length, SILC_PKCS_FILE_PEM);
 	}
 }

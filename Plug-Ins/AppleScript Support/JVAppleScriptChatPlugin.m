@@ -39,14 +39,15 @@
 #pragma mark -
 
 @interface NSString (NSStringFourCharCode)
-- (unsigned long) fourCharCode;
+- (OSType) fourCharCode;
 @end
 
 #pragma mark -
 
 @implementation NSString (NSStringFourCharCode)
-- (unsigned long) fourCharCode {
-	unsigned long ret = 0, length = [self length];
+- (OSType) fourCharCode {
+	OSType ret = 0;
+	NSUInteger length = [self length];
 
 	if( length >= 1 ) ret |= ( [self characterAtIndex:0] & 0x00ff ) << 24;
 	else ret |= ' ' << 24;
@@ -97,7 +98,9 @@
 
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( checkForModifications: ) name:NSApplicationWillBecomeActiveNotification object:[NSApplication sharedApplication]];
 
-		[self performSelector:@selector( idle ) withObject:nil afterDelay:0.];
+		dispatch_async(dispatch_get_current_queue(), ^{
+			[self idle];
+		});
 	}
 	return self;
 }
@@ -138,18 +141,6 @@
 
 #pragma mark -
 
-- (NSAppleScript *) script {
-	return _script;
-}
-
-- (void) setScript:(NSAppleScript *) script {
-	id old = _script;
-	_script = [script retain];
-	[old release];
-}
-
-#pragma mark -
-
 - (void) reloadFromDisk {
 	NSString *filePath = [self scriptFilePath];
 
@@ -162,7 +153,9 @@
 	[_doseNotRespond removeAllObjects];
 
 	[self performSelector:@selector( load )];
-	[self performSelector:@selector( idle ) withObject:nil afterDelay:0.];
+	dispatch_async(dispatch_get_current_queue(), ^{
+		[self idle];
+	});
 }
 
 #pragma mark -
@@ -185,7 +178,7 @@
 
 #pragma mark -
 
-- (id) callScriptHandler:(unsigned long) handler withArguments:(NSDictionary *) arguments forSelector:(SEL) selector {
+- (id) callScriptHandler:(OSType) handler withArguments:(NSDictionary *) arguments forSelector:(SEL) selector {
 	if( ! _script ) return nil;
 
 	int pid = [[NSProcessInfo processInfo] processIdentifier];
@@ -257,7 +250,9 @@
 			id old = _modDate;
 			_modDate = [[NSDate date] retain];
 			[old release];
-			[self performSelector:@selector( promptForReload ) withObject:nil afterDelay:0.];
+			dispatch_async(dispatch_get_current_queue(), ^{
+				[self promptForReload];
+			});
 		}
 	}
 }

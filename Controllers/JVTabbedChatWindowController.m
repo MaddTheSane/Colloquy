@@ -2,8 +2,10 @@
 #import "JVTabbedChatWindowController.h"
 #import "AICustomTabsView.h"
 #import "JVChatTabItem.h"
+#import "MVApplicationController.h"
 
-@interface JVChatWindowController (JVChatWindowControllerPrivate)
+//JVChatWindowControllerPrivate
+@interface JVChatWindowController ()
 - (void) _claimMenuCommands;
 - (void) _resignMenuCommands;
 - (void) _deferRefreshSelectionMenu;
@@ -17,7 +19,8 @@
 
 #pragma mark -
 
-@interface JVTabbedChatWindowController (JVTabbedChatWindowControllerPrivate)
+//JVTabbedChatWindowControllerPrivate
+@interface JVTabbedChatWindowController ()
 - (void) _supressTabBarHiding:(BOOL) supress;
 - (void) _resizeTabBarTimer:(NSTimer *) inTimer;
 - (BOOL) _resizeTabBarAbsolute:(BOOL) absolute;
@@ -224,7 +227,7 @@
 	[[JVChatController defaultController] disposeViewController:[(JVChatTabItem *)tabViewItem chatViewController]];
 }
 
-- (void) customTabView:(AICustomTabsView *) view didMoveTabViewItem:(NSTabViewItem *) tabViewItem toCustomTabView:(AICustomTabsView *) destTabView index:(int) index screenPoint:(NSPoint) screenPoint {
+- (void) customTabView:(AICustomTabsView *) view didMoveTabViewItem:(NSTabViewItem *) tabViewItem toCustomTabView:(AICustomTabsView *) destTabView index:(NSInteger) index screenPoint:(NSPoint) screenPoint {
 	id <JVChatViewController> chatController = [(JVChatTabItem *)tabViewItem chatViewController];
 	id oldWindowController = [chatController windowController];
 	id newWindowController = [[destTabView window] windowController];

@@ -29,19 +29,19 @@
 static  NSImage			*tabBackground = nil;
 static  NSImage			*tabDivider = nil;
 
-@interface AICustomTabsView (PRIVATE)
+@interface AICustomTabsView ()
 - (id)initWithFrame:(NSRect)frameRect;
 
 //Positioning
 - (void)arrangeTabs;
 - (void)smoothlyArrangeTabs;
-- (void)smoothlyArrangeTabsWithGapOfWidth:(int)width atIndex:(int)index;
+- (void)smoothlyArrangeTabsWithGapOfWidth:(NSInteger)width atIndex:(NSInteger)index;
 - (void)_arrangeCellTimer:(NSTimer *)inTimer;
 - (BOOL)_arrangeCellsAbsolute:(BOOL)absolute;
 
 //Dragging
 - (NSArray *)acceptableDragTypes;
-- (NSPoint)_dropPointForTabOfWidth:(int)dragTabWidth hoveredAtScreenPoint:(NSPoint)inPoint dropIndex:(NSInteger *)outIndex;
+- (NSPoint)_dropPointForTabOfWidth:(NSInteger)dragTabWidth hoveredAtScreenPoint:(NSPoint)inPoint dropIndex:(NSInteger *)outIndex;
 - (BOOL)allowsTabRearranging;
 
 //Tab Data Access (Guarded)
@@ -54,6 +54,16 @@ static  NSImage			*tabDivider = nil;
 @end
 
 @implementation AICustomTabsView
+
+- (NSArray*)tabCellArray
+{
+	return tabCellArray;
+}
+
+- (void)removeTabCell:(AICustomTabCell *)inCell
+{
+	//Currently a no-op
+}
 
 //Create a new custom tab view
 + (id)customTabViewWithFrame:(NSRect)frameRect
@@ -103,17 +113,14 @@ static  NSImage			*tabDivider = nil;
 //Configure ------------------------------------------------------------------------------------------------------------
 #pragma mark Configure
 //Set our delegate
-- (void)setDelegate:(id)inDelegate
+@synthesize delegate;
+- (void)setDelegate:(id<AICustomTabsViewDelegate>)inDelegate
 {
     delegate = inDelegate;
 
     //Update our accepted drag types
     [self unregisterDraggedTypes];
     [self registerForDraggedTypes:[self acceptableDragTypes]];
-}
-- (id)delegate
-{
-    return(delegate);
 }
 
 //Does removing the last tab of a window cause that window to hide?
@@ -172,7 +179,7 @@ static  NSImage			*tabDivider = nil;
 }
 
 //Move a tab
-- (void)moveTab:(NSTabViewItem *)tabViewItem toIndex:(int)index
+- (void)moveTab:(NSTabViewItem *)tabViewItem toIndex:(NSInteger)index
 {
 	[self moveTab:tabViewItem toIndex:index selectTab:NO animate:YES];
 }
@@ -210,7 +217,7 @@ static  NSImage			*tabDivider = nil;
 }
 
 //Reposition a tab
-- (void)moveTab:(NSTabViewItem *)tabViewItem toIndex:(int)index selectTab:(BOOL)shouldSelect animate:(BOOL)animate
+- (void)moveTab:(NSTabViewItem *)tabViewItem toIndex:(NSInteger)index selectTab:(BOOL)shouldSelect animate:(BOOL)animate
 {
 	//Ignore the move request if the tab is already at the proper index
 	if([tabView indexOfTabViewItem:tabViewItem] != index){
@@ -220,8 +227,8 @@ static  NSImage			*tabDivider = nil;
 		if(tabViewItem == [tabView selectedTabViewItem]) shouldSelect = YES;
 
 		//Move the tab cell
-		int	currentIndex = [tabCellArray indexOfObject:tabCell];
-		int	newIndex = index;
+		NSInteger	currentIndex = [tabCellArray indexOfObject:tabCell];
+		NSInteger	newIndex = index;
 
 		//Account for shifting
 		if(currentIndex < newIndex) newIndex--;
@@ -393,7 +400,7 @@ static  NSImage			*tabDivider = nil;
 }
 
 //Slowly move our tabs to make a gap
-- (void)smoothlyArrangeTabsWithGapOfWidth:(int)width atIndex:(int)index
+- (void)smoothlyArrangeTabsWithGapOfWidth:(NSInteger)width atIndex:(NSInteger)index
 {
 	tabGapWidth = width;
 	tabGapIndex = index;
@@ -424,7 +431,7 @@ static  NSImage			*tabDivider = nil;
     int				xLocation;
     BOOL			finished = YES;
     int				tabExtraWidth;
-    int				totalTabWidth;
+    NSInteger		totalTabWidth;
     int				reducedWidth = 0;
     int				reduceThreshold = 1000000;
 
@@ -774,7 +781,7 @@ static NSRect AIConstrainRectWidth(NSRect rect, float left, float right)
     NSDragOperation	operation = NSDragOperationNone;
 
     if(type && [type isEqualToString:TAB_CELL_IDENTIFIER]){ //Dragging a tab
-		int			draggedCellWidth = [[AICustomTabDragging sharedInstance] sizeOfDraggedCell].width;
+		NSInteger	draggedCellWidth = [[AICustomTabDragging sharedInstance] sizeOfDraggedCell].width;
 		NSInteger	dropIndex;
 
 		//Snap the hovered tab to it's drop location, and slide our tabs out of the way to make room
@@ -820,13 +827,13 @@ static NSRect AIConstrainRectWidth(NSRect rect, float left, float right)
 //Determines the correct drop index for a hovered tab, and returns the desired screen location and index for it
 //We ignore frame origins in here, since they are being slid all around and relying on them will cause jiggyness.
 //Instead, we step through each cell and use only it's width.
-- (NSPoint)_dropPointForTabOfWidth:(int)dragTabWidth hoveredAtScreenPoint:(NSPoint)inPoint dropIndex:(NSInteger *)outIndex
+- (NSPoint)_dropPointForTabOfWidth:(NSInteger)dragTabWidth hoveredAtScreenPoint:(NSPoint)inPoint dropIndex:(NSInteger *)outIndex
 {
 	if(allowsTabRearranging){
 		NSEnumerator 	*enumerator;
 		AICustomTabCell	*tabCell;
-		float			lastLocation = CUSTOM_TABS_INDENT;
-		unsigned 		hoverIndex = 0;
+		CGFloat			lastLocation = CUSTOM_TABS_INDENT;
+		NSUInteger 		hoverIndex = 0;
 
 		//Figure out where the user is hovering the tabcell item
 		enumerator = [tabCellArray objectEnumerator];
@@ -849,7 +856,7 @@ static NSRect AIConstrainRectWidth(NSRect rect, float left, float right)
 		int					hover;
 
 		//If dragging is disallowed, ask our delegate where this tab should go
-		unsigned desiredIndex = [delegate customTabView:self indexForInsertingTabViewItem:tabViewItem];
+		NSUInteger desiredIndex = [delegate customTabView:self indexForInsertingTabViewItem:tabViewItem];
 		if(outIndex) *outIndex = desiredIndex;
 
 		//Position the hover tab
