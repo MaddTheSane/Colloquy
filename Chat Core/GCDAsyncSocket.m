@@ -506,7 +506,7 @@ enum GCDAsyncSocketConfig
 	{
 		// Read a specific length of data
 		
-		return (readLength - bytesDone);
+		return MIN(bytesAvailable, (readLength - bytesDone));
 		
 		// No need to avoid resizing the buffer.
 		// If the user provided their own buffer,
