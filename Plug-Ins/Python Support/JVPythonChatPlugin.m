@@ -28,6 +28,8 @@ static PyObject *LoadArbitraryPythonModule( const char *name, const char *direct
 NSString *JVPythonErrorDomain = @"JVPythonErrorDomain";
 
 @implementation JVPythonChatPlugin
+@synthesize scriptFilePath = _path;
+
 + (void) initialize {
 	static BOOL tooLate = NO;
 	if( ! tooLate ) {

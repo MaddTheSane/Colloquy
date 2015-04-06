@@ -33,7 +33,7 @@
 - (NSAppleEventDescriptor *) descriptorByTranslatingObject:(id) object ofType:(id) type inSuite:(id) suite;
 - (id) objectByTranslatingDescriptor:(NSAppleEventDescriptor *) descriptor toType:(id) type inSuite:(id) suite;
 - (void) registerTranslator:(id) translator selector:(SEL) selector toTranslateFromClass:(Class) class;
-- (void) registerTranslator:(id) translator selector:(SEL) selector toTranslateFromDescriptorType:(unsigned int) type;
+- (void) registerTranslator:(id) translator selector:(SEL) selector toTranslateFromDescriptorType:(OSType) type;
 @end
 
 #pragma mark -
@@ -46,19 +46,7 @@
 
 @implementation NSString (NSStringFourCharCode)
 - (OSType) fourCharCode {
-	OSType ret = 0;
-	NSUInteger length = [self length];
-
-	if( length >= 1 ) ret |= ( [self characterAtIndex:0] & 0x00ff ) << 24;
-	else ret |= ' ' << 24;
-	if( length >= 2 ) ret |= ( [self characterAtIndex:1] & 0x00ff ) << 16;
-	else ret |= ' ' << 16;
-	if( length >= 3 ) ret |= ( [self characterAtIndex:2] & 0x00ff ) << 8;
-	else ret |= ' ' << 8;
-	if( length >= 4 ) ret |= ( [self characterAtIndex:3] & 0x00ff );
-	else ret |= ' ';
-
-	return ret;
+	return UTGetOSTypeFromString((CFStringRef)self);
 }
 @end
 
@@ -79,6 +67,8 @@
 #pragma mark -
 
 @implementation JVAppleScriptChatPlugin
+@synthesize scriptFilePath = _path;
+
 - (id) initWithManager:(MVChatPluginManager *) manager {
 	if( ( self = [self init] ) ) {
 		_manager = manager;
@@ -166,18 +156,6 @@
 
 #pragma mark -
 
-- (NSString *) scriptFilePath {
-	return _path;
-}
-
-- (void) setScriptFilePath:(NSString *) path {
-	id old = _path;
-	_path = [path copyWithZone:[self zone]];
-	[old release];
-}
-
-#pragma mark -
-
 - (id) callScriptHandler:(OSType) handler withArguments:(NSDictionary *) arguments forSelector:(SEL) selector {
 	if( ! _script ) return nil;
 
@@ -185,13 +163,10 @@
 	NSAppleEventDescriptor *targetAddress = [NSAppleEventDescriptor descriptorWithDescriptorType:typeKernelProcessID bytes:&pid length:sizeof( pid )];
 	NSAppleEventDescriptor *event = [NSAppleEventDescriptor appleEventWithEventClass:'cplG' eventID:handler targetDescriptor:targetAddress returnID:kAutoGenerateReturnID transactionID:kAnyTransactionID];
 
-	NSEnumerator *enumerator = [arguments objectEnumerator];
-	NSEnumerator *kenumerator = [arguments keyEnumerator];
 	NSAppleEventDescriptor *descriptor = nil;
-	NSString *key = nil;
-	id value = nil;
 
-	while( ( key = [kenumerator nextObject] ) && ( value = [enumerator nextObject] ) ) {
+	for (NSString *key in arguments) {
+		id value = arguments[key];
 		NSScriptObjectSpecifier *specifier = nil;
 		if( [value isKindOfClass:[NSScriptObjectSpecifier class]] ) specifier = value;
 		else specifier = [value objectSpecifier];
@@ -439,7 +414,6 @@
 					}
 					
 					if( [mitem image] && ! NSEqualSizes( size, NSZeroSize ) ) {
-						[[mitem image] setScalesWhenResized:YES];
 						[[mitem image] setSize:size];
 					}
 				} else if( [iconPath isKindOfClass:[NSArray class]] && [(NSArray *)iconPath count] == 3 ) {

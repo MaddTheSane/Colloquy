@@ -19,7 +19,7 @@ extern NSString *JVJavaScriptErrorDomain;
 - (id) initWithScriptAtPath:(NSString *) path withManager:(MVChatPluginManager *) manager;
 
 - (MVChatPluginManager *) pluginManager;
-- (NSString *) scriptFilePath;
+@property (readonly, copy) NSString *scriptFilePath;
 - (void) reloadFromDisk;
 
 - (void) setupScriptGlobalsForWebView:(WebView *) webView;

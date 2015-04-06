@@ -89,25 +89,25 @@
 			isa = PBXGroup;
 			children = (
 				92823D0416900FA8000EC36E /* Colloquy (Old).xcodeproj */,
-				9295C95C16782FF1009F9014 /* ChatCore.framework */,
 				1C415F6A0B35126500239EB3 /* Template.js */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				1C9AE940086A59CF008ED7AD /* Configurations */,
-				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
+				089C1671FE841209C02AAC07 /* Frameworks */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
 			);
 			name = "FScript Plugin";
 			sourceTree = "<group>";
 		};
-		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
+		089C1671FE841209C02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9295C95C16782FF1009F9014 /* ChatCore.framework */,
 				9295C8501675E158009F9014 /* WebKit.framework */,
 				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
 				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
 			);
-			name = "Frameworks and Libraries";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		089C167CFE841241C02AAC07 /* Resources */ = {

@@ -42,6 +42,9 @@ static NSString *JVToolbarCompileItemIdentifier = @"JVToolbarCompileItem";
 #pragma mark -
 
 @implementation JVAppleScriptEditorPanel
+@synthesize contents;
+@synthesize editor;
+
 + (NSDictionary *) uncompiledScriptAttributes {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
 	NSFont *font = [NSFont fontWithName:@"Courier" size:12.];

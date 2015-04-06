@@ -15,7 +15,7 @@ extern NSString *JVPythonErrorDomain;
 - (id) initWithScriptAtPath:(NSString *) path withManager:(MVChatPluginManager *) manager;
 
 - (MVChatPluginManager *) pluginManager;
-- (NSString *) scriptFilePath;
+@property (readonly, copy) NSString *scriptFilePath;
 - (void) reloadFromDisk;
 
 - (BOOL) reportErrorIfNeededInFunction:(NSString *) functionName;

@@ -15,7 +15,7 @@ extern NSString *JVFScriptErrorDomain;
 
 - (MVChatPluginManager *) pluginManager;
 - (FSInterpreter *) scriptInterpreter;
-- (NSString *) scriptFilePath;
+@property (readonly, copy) NSString *scriptFilePath;
 - (void) reloadFromDisk;
 - (void) inspectVariableNamed:(NSString *) variableName;
 
