@@ -223,7 +223,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0630;
 			};
 			buildConfigurationList = 1C7F306F0855489300D41FB0 /* Build configuration list for PBXProject "F-Script Support" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -329,7 +329,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1C7F306C0855489300D41FB0 /* Development */ = {
+		1C7F306C0855489300D41FB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Colloquy.app/Contents/MacOS/Colloquy";
@@ -351,7 +351,7 @@
 				PRODUCT_NAME = "F-Script Support";
 				WRAPPER_EXTENSION = plugin;
 			};
-			name = Development;
+			name = Debug;
 		};
 		1C7F306E0855489300D41FB0 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -378,7 +378,7 @@
 			};
 			name = Release;
 		};
-		1C7F30700855489300D41FB0 /* Development */ = {
+		1C7F30700855489300D41FB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C9AE943086A59F5008ED7AD /* Common Settings.xcconfig */;
 			buildSettings = {
@@ -387,14 +387,17 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SYMROOT = ../../build;
 			};
-			name = Development;
+			name = Debug;
 		};
 		1C7F30720855489300D41FB0 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -405,7 +408,9 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -420,20 +425,20 @@
 		1C7F306B0855489300D41FB0 /* Build configuration list for PBXNativeTarget "F-Script Support Plugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1C7F306C0855489300D41FB0 /* Development */,
+				1C7F306C0855489300D41FB0 /* Debug */,
 				1C7F306E0855489300D41FB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		1C7F306F0855489300D41FB0 /* Build configuration list for PBXProject "F-Script Support" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1C7F30700855489300D41FB0 /* Development */,
+				1C7F30700855489300D41FB0 /* Debug */,
 				1C7F30720855489300D41FB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

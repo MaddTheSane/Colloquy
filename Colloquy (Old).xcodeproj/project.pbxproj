@@ -3092,7 +3092,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1C041A660854E97700A5A5BA /* Development */ = {
+		1C041A660854E97700A5A5BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Colloquy.app/Contents/MacOS/Colloquy";
@@ -3106,9 +3106,9 @@
 				PRODUCT_NAME = "Standard Commands";
 				WRAPPER_EXTENSION = plugin;
 			};
-			name = Development;
+			name = Debug;
 		};
-		1C041A6A0854E97700A5A5BA /* Development */ = {
+		1C041A6A0854E97700A5A5BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Colloquy;
@@ -3122,7 +3122,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2";
 				INFOPLIST_FILE = Resources/Info.plist;
-				LLVM_LTO = YES;
 				OTHER_CFLAGS = (
 					"-fconstant-cfstrings",
 					"-Wno-arc-performSelector-leaks",
@@ -3130,9 +3129,9 @@
 				PRODUCT_NAME = Colloquy;
 				WRAPPER_EXTENSION = app;
 			};
-			name = Development;
+			name = Debug;
 		};
-		1C041A6E0854E97700A5A5BA /* Development */ = {
+		1C041A6E0854E97700A5A5BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -3142,9 +3141,9 @@
 				PRODUCT_NAME = Colloquy;
 				WRAPPER_EXTENSION = mdimporter;
 			};
-			name = Development;
+			name = Debug;
 		};
-		1C041A720854E97700A5A5BA /* Development */ = {
+		1C041A720854E97700A5A5BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89FB4EDC12FAABBB00668905 /* Less Common Settings.xcconfig */;
 			buildSettings = {
@@ -3169,7 +3168,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SYMROOT = build;
 			};
-			name = Development;
+			name = Debug;
 		};
 		1C041DC90855377900A5A5BA /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -3201,7 +3200,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2";
 				INFOPLIST_FILE = Resources/Info.plist;
-				LLVM_LTO = YES;
 				OTHER_CFLAGS = (
 					"-fconstant-cfstrings",
 					"-Wno-arc-performSelector-leaks",
@@ -3285,7 +3283,7 @@
 			};
 			name = Release;
 		};
-		55C8A2E0180735D200A7BB42 /* Development */ = {
+		55C8A2E0180735D200A7BB42 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -3322,7 +3320,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
-			name = Development;
+			name = Debug;
 		};
 		9295C92616782ECB009F9014 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -3332,13 +3330,13 @@
 			};
 			name = Release;
 		};
-		9295C92716782ECB009F9014 /* Development */ = {
+		9295C92716782ECB009F9014 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
-			name = Development;
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -3347,7 +3345,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1C041DC90855377900A5A5BA /* Release */,
-				1C041A660854E97700A5A5BA /* Development */,
+				1C041A660854E97700A5A5BA /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3356,7 +3354,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1C041DCA0855377900A5A5BA /* Release */,
-				1C041A6A0854E97700A5A5BA /* Development */,
+				1C041A6A0854E97700A5A5BA /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3365,7 +3363,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1C041DCB0855377900A5A5BA /* Release */,
-				1C041A6E0854E97700A5A5BA /* Development */,
+				1C041A6E0854E97700A5A5BA /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3374,7 +3372,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1C041DCC0855377900A5A5BA /* Release */,
-				1C041A720854E97700A5A5BA /* Development */,
+				1C041A720854E97700A5A5BA /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3383,7 +3381,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55C8A2DF180735D200A7BB42 /* Release */,
-				55C8A2E0180735D200A7BB42 /* Development */,
+				55C8A2E0180735D200A7BB42 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3392,7 +3390,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9295C92616782ECB009F9014 /* Release */,
-				9295C92716782ECB009F9014 /* Development */,
+				9295C92716782ECB009F9014 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

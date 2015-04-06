@@ -302,7 +302,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1C7F306C0855489300D41FB0 /* Development */ = {
+		1C7F306C0855489300D41FB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Colloquy.app/Contents/MacOS/Colloquy";
@@ -325,7 +325,7 @@
 				PRODUCT_NAME = "JavaScript Support";
 				WRAPPER_EXTENSION = plugin;
 			};
-			name = Development;
+			name = Debug;
 		};
 		1C7F306E0855489300D41FB0 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -353,7 +353,7 @@
 			};
 			name = Release;
 		};
-		1C7F30700855489300D41FB0 /* Development */ = {
+		1C7F30700855489300D41FB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C9AE943086A59F5008ED7AD /* Common Settings.xcconfig */;
 			buildSettings = {
@@ -372,7 +372,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SYMROOT = ../../build;
 			};
-			name = Development;
+			name = Debug;
 		};
 		1C7F30720855489300D41FB0 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -399,20 +399,20 @@
 		1C7F306B0855489300D41FB0 /* Build configuration list for PBXNativeTarget "JavaScript Support Plugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1C7F306C0855489300D41FB0 /* Development */,
+				1C7F306C0855489300D41FB0 /* Debug */,
 				1C7F306E0855489300D41FB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		1C7F306F0855489300D41FB0 /* Build configuration list for PBXProject "JavaScript Support" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1C7F30700855489300D41FB0 /* Development */,
+				1C7F30700855489300D41FB0 /* Debug */,
 				1C7F30720855489300D41FB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -252,8 +252,8 @@
 		1C9C14170B50B3AB005F9F28 /* MVDirectChatConnectionPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVDirectChatConnectionPrivate.h; path = "Chat Core/MVDirectChatConnectionPrivate.h"; sourceTree = "<group>"; };
 		1C9FFB130FA1958300748177 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
 		1CB643D40C84F1EF00B79FB0 /* MVChatString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MVChatString.h; path = "Chat Core/MVChatString.h"; sourceTree = "<group>"; };
-		1CCA517E0598AFBA00F0A4CD /* ChatCore.scriptSuite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = ChatCore.scriptSuite; path = Resources/ChatCore.scriptSuite; sourceTree = "<group>"; };
-		1CCA517F0598AFBA00F0A4CD /* ChatCore.scriptTerminology */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = ChatCore.scriptTerminology; path = Resources/ChatCore.scriptTerminology; sourceTree = "<group>"; };
+		1CCA517E0598AFBA00F0A4CD /* ChatCore.scriptSuite */ = {isa = PBXFileReference; explicitFileType = text.plist.scriptSuite; fileEncoding = 4; name = ChatCore.scriptSuite; path = Resources/ChatCore.scriptSuite; sourceTree = "<group>"; };
+		1CCA517F0598AFBA00F0A4CD /* ChatCore.scriptTerminology */ = {isa = PBXFileReference; explicitFileType = text.plist.scriptTerminology; fileEncoding = 4; name = ChatCore.scriptTerminology; path = Resources/ChatCore.scriptTerminology; sourceTree = "<group>"; };
 		1CCB3C3705228EFD000001C8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		1CD020B205759347000F93B4 /* NSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = NSStringAdditions.h; path = Additions/NSStringAdditions.h; sourceTree = "<group>"; };
 		1CD020B305759347000F93B4 /* NSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = NSStringAdditions.m; path = Additions/NSStringAdditions.m; sourceTree = "<group>"; };
@@ -947,7 +947,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1C041DDC08553AD200A5A5BA /* Development */ = {
+		1C041DDC08553AD200A5A5BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -980,9 +980,9 @@
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
-			name = Development;
+			name = Debug;
 		};
-		1C041DE008553AD200A5A5BA /* Development */ = {
+		1C041DE008553AD200A5A5BA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89FB4F2512FAAC6800668905 /* Less Common Settings.xcconfig */;
 			buildSettings = {
@@ -1009,7 +1009,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SYMROOT = build;
 			};
-			name = Development;
+			name = Debug;
 		};
 		1C7F2DB408553C1900D41FB0 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1123,7 +1123,7 @@
 			};
 			name = Release;
 		};
-		92417D95149C019A0009B06E /* Development */ = {
+		92417D95149C019A0009B06E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DYLIB_COMPATIBILITY_VERSION = 2;
@@ -1172,7 +1172,7 @@
 				);
 				WRAPPER_EXTENSION = a;
 			};
-			name = Development;
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1181,28 +1181,28 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1C7F2DB408553C1900D41FB0 /* Release */,
-				1C041DDC08553AD200A5A5BA /* Development */,
+				1C041DDC08553AD200A5A5BA /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		1C041DDE08553AD200A5A5BA /* Build configuration list for PBXProject "Chat Core" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1C7F2DB508553C1900D41FB0 /* Release */,
-				1C041DE008553AD200A5A5BA /* Development */,
+				1C041DE008553AD200A5A5BA /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		92417D93149C019A0009B06E /* Build configuration list for PBXNativeTarget "Chat Core (Static Library)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				92417D94149C019A0009B06E /* Release */,
-				92417D95149C019A0009B06E /* Development */,
+				92417D95149C019A0009B06E /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

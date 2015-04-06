@@ -465,7 +465,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		1DEB91AE08733DA50010E9CD /* Development */ = {
+		1DEB91AE08733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -481,9 +481,9 @@
 				SYMROOT = ../../build;
 				WRAPPER_EXTENSION = framework;
 			};
-			name = Development;
+			name = Debug;
 		};
-		1DEB91B208733DA50010E9CD /* Development */ = {
+		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DDF45C0C0BD5CF0E0050911E /* Common Settings.xcconfig */;
 			buildSettings = {
@@ -503,7 +503,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SYMROOT = ../../build;
 			};
-			name = Development;
+			name = Debug;
 		};
 		DDF45C080BD5CEF40050911E /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -548,20 +548,20 @@
 		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "Acid" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91AE08733DA50010E9CD /* Development */,
+				1DEB91AE08733DA50010E9CD /* Debug */,
 				DDF45C090BD5CEF40050911E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Acid" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91B208733DA50010E9CD /* Development */,
+				1DEB91B208733DA50010E9CD /* Debug */,
 				DDF45C080BD5CEF40050911E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

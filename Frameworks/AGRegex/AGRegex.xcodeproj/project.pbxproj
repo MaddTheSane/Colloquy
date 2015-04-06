@@ -382,7 +382,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1C3260050865DDF000357DB1 /* Development */ = {
+		1C3260050865DDF000357DB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -407,9 +407,9 @@
 				VALID_ARCHS = "x86_64 i386 ppc ppc7400 ppc970";
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		1C6A0C320865E09C009EE6D2 /* Development */ = {
+		1C6A0C320865E09C009EE6D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -434,9 +434,9 @@
 				SYMROOT = ../../build;
 				WRAPPER_EXTENSION = framework;
 			};
-			name = Development;
+			name = Debug;
 		};
-		1C6A0C480865E09C009EE6D2 /* Development */ = {
+		1C6A0C480865E09C009EE6D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
@@ -460,7 +460,7 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
-			name = Development;
+			name = Debug;
 		};
 		1C9AED4F086B1909008ED7AD /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -549,29 +549,29 @@
 		1C3260040865DDF000357DB1 /* Build configuration list for PBXProject "AGRegex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1C3260050865DDF000357DB1 /* Development */,
+				1C3260050865DDF000357DB1 /* Debug */,
 				1C9AED51086B1909008ED7AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		1C6A0C310865E09C009EE6D2 /* Build configuration list for PBXNativeTarget "AGRegex (Framework)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1C6A0C320865E09C009EE6D2 /* Development */,
+				1C6A0C320865E09C009EE6D2 /* Debug */,
 				1C9AED4F086B1909008ED7AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		1C6A0C470865E09C009EE6D2 /* Build configuration list for PBXNativeTarget "RegexTest (Application)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1C6A0C480865E09C009EE6D2 /* Development */,
+				1C6A0C480865E09C009EE6D2 /* Debug */,
 				1C9AED50086B1909008ED7AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

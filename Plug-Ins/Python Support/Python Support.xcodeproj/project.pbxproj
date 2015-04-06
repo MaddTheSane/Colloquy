@@ -140,24 +140,6 @@
 			tabWidth = 4;
 			usesTabs = 1;
 		};
-		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C2EC59E8185E11F9008797B7 /* libpython2.7.dylib */,
-				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
-			);
-			name = "Linked Frameworks";
-			sourceTree = "<group>";
-		};
-		1058C7AEFEA557BF11CA2CBB /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				089C1672FE841209C02AAC07 /* Foundation.framework */,
-				089C167FFE841241C02AAC07 /* AppKit.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,7 +313,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1C7F306C0855489300D41FB0 /* Development */ = {
+		1C7F306C0855489300D41FB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Colloquy.app/Contents/MacOS/Colloquy";
@@ -359,7 +341,7 @@
 				PRODUCT_NAME = "Python Support";
 				WRAPPER_EXTENSION = plugin;
 			};
-			name = Development;
+			name = Debug;
 		};
 		1C7F306E0855489300D41FB0 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -391,7 +373,7 @@
 			};
 			name = Release;
 		};
-		1C7F30700855489300D41FB0 /* Development */ = {
+		1C7F30700855489300D41FB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C9AE943086A59F5008ED7AD /* Common Settings.xcconfig */;
 			buildSettings = {
@@ -411,7 +393,7 @@
 				SDKROOT = macosx;
 				SYMROOT = ../../build;
 			};
-			name = Development;
+			name = Debug;
 		};
 		1C7F30720855489300D41FB0 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -439,20 +421,20 @@
 		1C7F306B0855489300D41FB0 /* Build configuration list for PBXNativeTarget "Python Support Plugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1C7F306C0855489300D41FB0 /* Development */,
+				1C7F306C0855489300D41FB0 /* Debug */,
 				1C7F306E0855489300D41FB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 		1C7F306F0855489300D41FB0 /* Build configuration list for PBXProject "Python Support" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1C7F30700855489300D41FB0 /* Development */,
+				1C7F30700855489300D41FB0 /* Debug */,
 				1C7F30720855489300D41FB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
