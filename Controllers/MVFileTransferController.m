@@ -58,9 +58,9 @@ NSString *MVReadableTime( NSTimeInterval date, BOOL longFormat ) {
 
 @interface MVFileTransferController (MVFileTransferControllerPrivate)
 - (void) _updateProgress:(id) sender;
-- (void) _incomingFileSheetDidEnd:(NSWindow *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo;
-- (void) _incomingFileSavePanelDidEnd:(NSSavePanel *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo;
-- (void) _downloadFileSavePanelDidEnd:(NSSavePanel *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo;
+- (void) _incomingFileSheetDidEnd:(NSWindow *) sheet returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo;
+- (void) _incomingFileSavePanelDidEnd:(NSSavePanel *) sheet returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo;
+- (void) _downloadFileSavePanelDidEnd:(NSSavePanel *) sheet returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo;
 - (NSMutableDictionary *) _infoForTransferAtIndex:(NSUInteger) index;
 - (void) _startUpdateTimerIfNeeded;
 - (void) _stopUpdateTimerIfFinished;
@@ -298,11 +298,9 @@ NSString *MVReadableTime( NSTimeInterval date, BOOL longFormat ) {
 	[[NSPasteboard generalPasteboard] setPropertyList:array forType:NSFilenamesPboardType];
 	[[NSPasteboard generalPasteboard] setString:string forType:NSStringPboardType];
 }
-@end
 
 #pragma mark -
 
-@implementation MVFileTransferController (MVFileTransferControllerDelegate)
 #pragma mark Table View Support
 - (NSInteger) numberOfRowsInTableView:(NSTableView *) view {
 	return [_transferStorage count];
@@ -541,11 +539,9 @@ NSString *MVReadableTime( NSTimeInterval date, BOOL longFormat ) {
 		}
 	}
 }
-@end
 
 #pragma mark -
 
-@implementation MVFileTransferController (MVFileTransferControllerPrivate)
 #pragma mark ChatCore File Transfer Support
 - (void) _fileTransferError:(NSNotification *) notification {
 	[currentFiles reloadData];
@@ -606,7 +602,7 @@ NSString *MVReadableTime( NSTimeInterval date, BOOL longFormat ) {
 	}
 }
 
-- (void) _incomingFileSheetDidEnd:(NSWindow *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo {
+- (void) _incomingFileSheetDidEnd:(NSWindow *) sheet returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo {
 	MVDownloadFileTransfer *transfer = (__bridge MVDownloadFileTransfer *)contextInfo;
 
 	if( returnCode == NSOKButton ) {
@@ -627,7 +623,7 @@ NSString *MVReadableTime( NSTimeInterval date, BOOL longFormat ) {
 	} else [transfer reject];
 }
 
-- (void) _incomingFileSavePanelDidEnd:(NSSavePanel *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo {
+- (void) _incomingFileSavePanelDidEnd:(NSSavePanel *) sheet returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo {
 	MVDownloadFileTransfer *transfer = (__bridge MVDownloadFileTransfer *)contextInfo;
 	[sheet setDelegate:nil];
 
@@ -669,7 +665,7 @@ NSString *MVReadableTime( NSTimeInterval date, BOOL longFormat ) {
 #pragma mark -
 #pragma mark URL Web Download Support
 
-- (void) _downloadFileSavePanelDidEnd:(NSSavePanel *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo {
+- (void) _downloadFileSavePanelDidEnd:(NSSavePanel *) sheet returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo {
 	WebDownload *download = (__bridge WebDownload *)contextInfo;
 	[sheet setDelegate:nil];
 

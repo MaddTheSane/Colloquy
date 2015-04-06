@@ -1,9 +1,9 @@
 #import "KABubbleWindowView.h"
 
 static void KABubbleShadeInterpolate( void *info, CGFloat const *inData, CGFloat *outData ) {
-	static float dark[4] = { .69412, .83147, .96078, .95 };
-	static float light[4] = { .93725, .96863, .99216, .95 };
-	float a = inData[0];
+	static CGFloat dark[4] = { .69412, .83147, .96078, .95 };
+	static CGFloat light[4] = { .93725, .96863, .99216, .95 };
+	CGFloat a = inData[0];
 	NSUInteger i = 0;
 
 	for( i = 0; i < 4; i++ )
@@ -13,14 +13,6 @@ static void KABubbleShadeInterpolate( void *info, CGFloat const *inData, CGFloat
 #pragma mark -
 
 @implementation KABubbleWindowView
-- (void) dealloc {
-
-	_icon = nil;
-	_title = nil;
-	_text = nil;
-	_target = nil;
-
-}
 
 - (void) drawRect:(NSRect) rect {
 	[[NSColor clearColor] set];

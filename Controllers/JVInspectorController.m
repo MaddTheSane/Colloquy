@@ -165,11 +165,9 @@ static NSMutableSet *inspectors = nil;
 	if( ! _locked )
 		[self _inspectWindow:[notification object]];
 }
-@end
 
 #pragma mark -
 
-@implementation JVInspectorController (JVInspectionControllerPrivate)
 - (void) _loadInspector {
 	NSView *view = [_inspector view];
 

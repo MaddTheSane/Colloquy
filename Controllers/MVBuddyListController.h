@@ -7,14 +7,14 @@
 @class ABPeoplePickerController;
 @class MVChatConnection;
 
-typedef enum {
+typedef NS_ENUM(OSType, MVBuddyListSortOrder) {
 	MVAvailabilitySortOrder = 'avlY',
 	MVFirstNameSortOrder = 'fSnM',
 	MVLastNameSortOrder = 'lSnM',
 	MVServerSortOrder = 'serV'
-} MVBuddyListSortOrder;
+};
 
-@interface MVBuddyListController : NSWindowController <JVInspectionDelegator> {
+@interface MVBuddyListController : NSWindowController <JVInspectionDelegator, NSTableViewDataSource> {
 	@private
 	IBOutlet MVTableView *buddies;
 	IBOutlet NSButton *sendMessageButton;
@@ -46,7 +46,7 @@ typedef enum {
 	BOOL _showOfflineBuddies;
 	MVBuddyListSortOrder _sortOrder;
 
-	float _animationPosition;
+	CGFloat _animationPosition;
 	NSMutableArray *_oldPositions;
 	BOOL _viewingTop;
 	BOOL _needsToAnimate;

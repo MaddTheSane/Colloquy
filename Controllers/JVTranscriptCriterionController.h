@@ -1,13 +1,13 @@
 #import "JVChatWindowController.h"
 
-typedef enum JVTranscriptCriterionFormat { // cooresponds to the nib tab view identifiers
+typedef NS_ENUM(NSInteger, JVTranscriptCriterionFormat) { // cooresponds to the nib tab view identifiers
 	JVTranscriptTextCriterionFormat = 1,
 	JVTranscriptDateCriterionFormat,
 	JVTranscriptBooleanCriterionFormat,
 	JVTranscriptListCriterionFormat
-} JVTranscriptCriterionFormat;
+};
 
-typedef enum JVTranscriptCriterionKind { // corresponds to the nib menu tags
+typedef NS_ENUM(NSInteger, JVTranscriptCriterionKind) { // corresponds to the nib menu tags
 	JVTranscriptMessageBodyCriterionKind = 1,
 	JVTranscriptSenderNameCriterionKind,
 	JVTranscriptDateReceivedCriterionKind,
@@ -32,9 +32,9 @@ typedef enum JVTranscriptCriterionKind { // corresponds to the nib menu tags
 	JVTranscriptSourceNameCriterionKind,
 	JVTranscriptSourceServerAddressCriterionKind,
 	JVTranscriptEveryMessageCriterionKind
-} JVTranscriptCriterionKind;
+};
 
-typedef enum JVTranscriptCriterionOperation { // corresponds to the nib menu tags
+typedef NS_ENUM(NSInteger, JVTranscriptCriterionOperation) { // corresponds to the nib menu tags
 	JVTranscriptNoCriterionOperation = 0,
 	JVTranscriptTextMatchCriterionOperation = 1,
 	JVTranscriptTextDoesNotMatchCriterionOperation,
@@ -46,9 +46,9 @@ typedef enum JVTranscriptCriterionOperation { // corresponds to the nib menu tag
 	JVTranscriptIsLessThanCriterionOperation,
 	JVTranscriptIsGreaterThanCriterionOperation,
 	JVTranscriptIsNotEqualCriterionOperation
-} JVTranscriptCriterionOperation;
+};
 
-typedef enum JVTranscriptCriterionQueryUnits { // corresponds to the nib menu tags
+typedef NS_ENUM(NSInteger, JVTranscriptCriterionQueryUnits) { // corresponds to the nib menu tags
 	JVTranscriptNoCriterionQueryUnits = 0,
 	JVTranscriptSecondCriterionQueryUnits = 1,
 	JVTranscriptMinuteCriterionQueryUnits,
@@ -56,7 +56,7 @@ typedef enum JVTranscriptCriterionQueryUnits { // corresponds to the nib menu ta
 	JVTranscriptDayCriterionQueryUnits,
 	JVTranscriptWeekCriterionQueryUnits,
 	JVTranscriptMonthCriterionQueryUnits
-} JVTranscriptCriterionQueryUnits;
+};
 
 @class JVChatMessage;
 

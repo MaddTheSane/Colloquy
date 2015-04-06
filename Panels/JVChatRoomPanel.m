@@ -31,6 +31,7 @@ NSString *const MVFavoritesListDidUpdateNotification = @"MVFavoritesListDidUpdat
 - (void) _didConnect:(NSNotification *) notification;
 - (void) _didDisconnect:(NSNotification *) notification;
 - (void) _didSwitchStyles:(NSNotification *) notification;
+- (void) toggleNotifications:(id) sender;
 @end
 
 #pragma mark -
@@ -740,11 +741,8 @@ NSString *const MVFavoritesListDidUpdateNotification = @"MVFavoritesListDidUpdat
 	[list addObject:JVToolbarQuickSearchItemIdentifier];
 	return list;
 }
-@end
 
 #pragma mark -
-
-@implementation JVChatRoomPanel (JVChatRoomPrivate)
 
 - (void) _didDisconnect:(NSNotification *) notification {
 	_kickedFromRoom = NO;

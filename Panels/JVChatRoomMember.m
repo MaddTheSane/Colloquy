@@ -274,7 +274,7 @@
 
 - (NSString *) title {
 	if( [self isLocalUser] ) {
-		JVBuddyName nameStyle = [[NSUserDefaults standardUserDefaults] integerForKey:@"JVChatSelfNameStyle"];
+		JVBuddyName nameStyle = (JVBuddyName)[[NSUserDefaults standardUserDefaults] integerForKey:@"JVChatSelfNameStyle"];
 		if( nameStyle == JVBuddyFullName )
 			return [self _selfCompositeName];
 		if( nameStyle == JVBuddyGivenNickname )
@@ -690,11 +690,9 @@
 
 	[super setValue:value forUndefinedKey:key];
 }
-@end
 
 #pragma mark -
 
-@implementation JVChatRoomMember (JVChatMemberPrivate)
 - (void) _detach {
 	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatUserInformationUpdatedNotification object:_user];
 	[[NSNotificationCenter chatCenter] removeObserver:self name:MVChatUserStatusChangedNotification object:_user];

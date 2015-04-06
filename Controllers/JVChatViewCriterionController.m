@@ -68,7 +68,7 @@
 #pragma mark -
 
 - (void) awakeFromNib {
-	[tabView selectTabViewItemWithIdentifier:[NSString stringWithFormat:@"%d", [self format]]];
+	[tabView selectTabViewItemWithIdentifier:[NSString stringWithFormat:@"%ld", (long)[self format]]];
 
 	if( [self format] == JVChatViewTextCriterionFormat ) {
 		[textKindButton selectItemAtIndex:[textKindButton indexOfItemWithTag:[self kind]]];
@@ -107,7 +107,7 @@
 	if( format != _format ) {
 		_format = format;
 
-		[tabView selectTabViewItemWithIdentifier:[NSString stringWithFormat:@"%d", format]];
+		[tabView selectTabViewItemWithIdentifier:[NSString stringWithFormat:@"%ld", (long)format]];
 
 		if( [self format] == JVChatViewTextCriterionFormat ) {
 			[textKindButton selectItemAtIndex:[textKindButton indexOfItemWithTag:[self kind]]];

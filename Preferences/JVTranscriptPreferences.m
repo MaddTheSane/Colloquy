@@ -1,7 +1,7 @@
 #import "JVTranscriptPreferences.h"
 
 @interface JVTranscriptPreferences (Private)
-- (void) saveDownloadsOpenPanelDidEnd:(NSOpenPanel *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo;
+- (void) saveDownloadsOpenPanelDidEnd:(NSOpenPanel *) sheet returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo;
 @end
 
 @implementation JVTranscriptPreferences
@@ -55,7 +55,7 @@
 	}
 }
 
-- (void) saveDownloadsOpenPanelDidEnd:(NSOpenPanel *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo {
+- (void) saveDownloadsOpenPanelDidEnd:(NSOpenPanel *) sheet returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo {
 	if( returnCode == NSOKButton ) {
 		NSMenuItem *menuItem = [transcriptFolder itemAtIndex:[transcriptFolder indexOfItemWithTag:2]];
 		NSImage *icon = [[NSWorkspace sharedWorkspace] iconForFile:[[sheet directoryURL] path]];

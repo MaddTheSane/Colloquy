@@ -89,7 +89,7 @@
 	return defaultRect;
 }
 
-- (NSRect) originalRectOfRow:(int) row {
+- (NSRect) originalRectOfRow:(NSInteger) row {
 	return [super rectOfRow:row];
 }
 

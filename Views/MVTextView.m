@@ -281,16 +281,6 @@
 
 #pragma mark -
 
-- (void) setUsesSystemCompleteOnTab:(BOOL) use {
-	_usesSystemCompleteOnTab = use;
-}
-
-- (BOOL) usesSystemCompleteOnTab {
-	return _usesSystemCompleteOnTab;
-}
-
-#pragma mark -
-
 - (BOOL) autocompleteWithSuffix:(BOOL) suffix {
 	if( [self usesSystemCompleteOnTab] ) {
 		[self complete:nil];

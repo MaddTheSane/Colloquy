@@ -182,7 +182,9 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 	[self setFrameLoadDelegate:self];
 	if( [self respondsToSelector:@selector(setProhibitsMainFrameScrolling:)] )
 		[self setProhibitsMainFrameScrolling:YES];
-	[self performSelector:@selector( _reallyAwakeFromNib ) withObject:nil afterDelay:0.];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self _reallyAwakeFromNib];
+	});
 }
 
 - (void) dealloc {
@@ -466,7 +468,7 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 		if( replaceElement ) _requiresFullMessage = NO; // a full message was assumed, but we can do a consecutive one
 	}
 
-	unsigned consecutiveOffset = [message consecutiveOffset];
+	NSUInteger consecutiveOffset = [message consecutiveOffset];
 	NSString *result = nil;
 
 	if( _requiresFullMessage && consecutiveOffset > 0 ) {
@@ -727,11 +729,9 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 - (void) scrollToEndOfDocument:(id) sender {
 	[self scrollToBottom];
 }
-@end
 
 #pragma mark -
 
-@implementation JVStyleView (JVStyleViewPrivate)
 - (void) _checkForTransparantStyle {
 	DOMCSSStyleDeclaration *style = [self computedStyleForElement:_body pseudoElement:nil];
 	DOMCSSValue *value = [style getPropertyCSSValue:@"background-color"];
@@ -858,8 +858,8 @@ quickEnd:
 - (void) _appendMessage:(NSString *) message {
 	if( ! _body ) return;
 
-	unsigned messageCount = [self _visibleMessageCount] + 1;
-	unsigned scrollbackLimit = [self scrollbackLimit];
+	NSUInteger messageCount = [self _visibleMessageCount] + 1;
+	NSUInteger scrollbackLimit = [self scrollbackLimit];
 	JVMarkedScroller *scroller = [self verticalMarkedScroller];
 	BOOL consecutive = ( [message rangeOfString:@"<?message type=\"consecutive\"?>"].location != NSNotFound );
 	if( ! consecutive ) consecutive = ( [message rangeOfString:@"<?message type=\"subsequent\"?>"].location != NSNotFound );

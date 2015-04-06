@@ -248,7 +248,7 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 	const char *string = [xml UTF8String];
 	if( ! string ) return nil;
 
-	xmlDoc *doc = xmlParseMemory( string, strlen( string ) );
+	xmlDoc *doc = xmlParseMemory( string, (int)strlen( string ) );
 	if( ! doc ) return nil;
 
 	NSString *result = [self transformXMLDocument:doc withParameters:parameters];
@@ -501,11 +501,9 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 - (NSString *) description {
 	return [self identifier];
 }
-@end
 
 #pragma mark -
 
-@implementation JVStyle (JVStylePrivate)
 + (const char **) _xsltParamArrayWithDictionary:(NSDictionary *) dictionary {
 	const char **temp = NULL, **ret = NULL;
 

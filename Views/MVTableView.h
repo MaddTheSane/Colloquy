@@ -1,3 +1,5 @@
+#import <Cocoa/Cocoa.h>
+
 @interface MVTableView : NSTableView {
 	NSUInteger autosaveTableColumnHighlight:1;
 	NSUInteger dataSourceDragImageForRows:1;
@@ -9,10 +11,9 @@
 + (NSImage *) ascendingSortIndicator;
 + (NSImage *) descendingSortIndicator;
 
-- (BOOL) autosaveTableColumnHighlight;
-- (void) setAutosaveTableColumnHighlight:(BOOL) flag;
+@property BOOL autosaveTableColumnHighlight;
 
-- (NSRect) originalRectOfRow:(int) row;
+- (NSRect) originalRectOfRow:(NSInteger) row;
 @end
 
 @protocol MVTableViewDataSource

@@ -96,11 +96,4 @@
 	[[NSFontManager sharedFontManager] orderFrontFontPanel:nil];
 }
 
-- (void) setShowPointSize:(BOOL) show {
-	_showPointSize = show;
-}
-
-- (void) setShowFontFace:(BOOL) show {
-	_showFontFace = show;
-}
 @end

@@ -1,21 +1,21 @@
 #import "JVChatWindowController.h"
 
-typedef enum JVChatViewCriterionFormat { // cooresponds to the nib tab view identifiers
+typedef NS_ENUM(NSInteger, JVChatViewCriterionFormat) { // cooresponds to the nib tab view identifiers
 	JVChatViewTextCriterionFormat = 1,
 	JVChatViewBooleanCriterionFormat,
 	JVChatViewListCriterionFormat
-} JVChatViewCriterionFormat;
+};
 
-typedef enum JVChatViewCriterionKind { // corresponds to the nib menu tags
+typedef NS_ENUM(NSInteger, JVChatViewCriterionKind) { // corresponds to the nib menu tags
 	JVChatViewTitleCriterionKind = 1,
 	JVChatViewTypeCriterionKind,
 	JVChatViewConnectionAddressCriterionKind,
 	JVChatViewConnectionTypeCriterionKind,
 	JVChatViewOpenMethodCriterionKind,
 	JVChatViewEveryPanelCriterionKind
-} JVChatViewCriterionKind;
+};
 
-typedef enum JVChatViewCriterionOperation { // corresponds to the nib menu tags
+typedef NS_ENUM(NSInteger, JVChatViewCriterionOperation) { // corresponds to the nib menu tags
 	JVChatViewNoCriterionOperation = 0,
 	JVChatViewTextMatchCriterionOperation = 1,
 	JVChatViewTextDoesNotMatchCriterionOperation,
@@ -27,7 +27,7 @@ typedef enum JVChatViewCriterionOperation { // corresponds to the nib menu tags
 	JVChatViewIsLessThanCriterionOperation,
 	JVChatViewIsGreaterThanCriterionOperation,
 	JVChatViewIsNotEqualCriterionOperation
-} JVChatViewCriterionOperation;
+};
 
 @interface JVChatViewCriterionController : NSObject <NSCopying, NSMutableCopying, NSCoding> {
 	@private
@@ -61,16 +61,10 @@ typedef enum JVChatViewCriterionOperation { // corresponds to the nib menu tags
 
 - (NSView *) view;
 
-- (JVChatViewCriterionFormat) format;
-
-- (JVChatViewCriterionKind) kind;
-- (void) setKind:(JVChatViewCriterionKind) kind;
-
-- (JVChatViewCriterionOperation) operation;
-- (void) setOperation:(JVChatViewCriterionOperation) operation;
-
-- (id) query;
-- (void) setQuery:(id) query;
+@property (readonly) JVChatViewCriterionFormat format;
+@property JVChatViewCriterionKind kind;
+@property JVChatViewCriterionOperation operation;
+@property (strong) id query;
 
 - (IBAction) selectCriterionKind:(id) sender;
 - (IBAction) selectCriterionOperation:(id) sender;

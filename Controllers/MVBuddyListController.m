@@ -10,6 +10,8 @@
 #import "MVFileTransferController.h"
 #import "MVTableView.h"
 
+#import "MVApplicationController.h"
+
 static MVBuddyListController *sharedInstance = nil;
 
 @interface MVBuddyListController (MVBuddyListControllerPrivate)
@@ -19,6 +21,16 @@ static MVBuddyListController *sharedInstance = nil;
 - (void) _setBuddiesNeedSortAnimated;
 - (void) _sortBuddiesAnimated:(id) sender;
 - (NSMenu *) _menuForBuddy:(JVBuddy *) buddy;
+@end
+
+#pragma mark -
+
+@implementation JVBuddy (JVBuddyObjectSpecifier)
+- (NSScriptObjectSpecifier *) objectSpecifier {
+	id classDescription = [NSClassDescription classDescriptionForClass:[MVBuddyListController class]];
+	NSScriptObjectSpecifier *container = [[MVBuddyListController sharedBuddyList] objectSpecifier];
+	return [[NSUniqueIDSpecifier alloc] initWithContainerClassDescription:classDescription containerSpecifier:container key:@"buddies" uniqueID:[self uniqueIdentifier]];
+}
 @end
 
 #pragma mark -
@@ -51,13 +63,13 @@ static MVBuddyListController *sharedInstance = nil;
 
 		[self _loadBuddyList];
 
-		[JVBuddy setPreferredName:[[NSUserDefaults standardUserDefaults] integerForKey:@"JVChatBuddyNameStyle"]];
+		[JVBuddy setPreferredName:(OSType)[[NSUserDefaults standardUserDefaults] integerForKey:@"JVChatBuddyNameStyle"]];
 
 		[self setShowIcons:[[NSUserDefaults standardUserDefaults] boolForKey:@"JVChatBuddyListShowIcons"]];
 		[self setShowFullNames:[[NSUserDefaults standardUserDefaults] boolForKey:@"JVChatBuddyListShowFullNames"]];
 		[self setShowNicknameAndServer:[[NSUserDefaults standardUserDefaults] boolForKey:@"JVChatBuddyListShowNicknameAndServer"]];
 		[self setShowOfflineBuddies:[[NSUserDefaults standardUserDefaults] boolForKey:@"JVChatBuddyListShowOfflineBuddies"]];
-		[self setSortOrder:[[NSUserDefaults standardUserDefaults] integerForKey:@"JVChatBuddyListSortOrder"]];
+		[self setSortOrder:(OSType)[[NSUserDefaults standardUserDefaults] integerForKey:@"JVChatBuddyListSortOrder"]];
 	}
 
 	return self;
@@ -71,15 +83,6 @@ static MVBuddyListController *sharedInstance = nil;
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector( _sortBuddiesAnimated: ) object:nil];
 		sharedInstance = nil;
 	}
-
-
-	_onlineBuddies = nil;
-	_buddyList = nil;
-	_buddyOrder = nil;
-	_oldPositions = nil;
-	_addPerson = nil;
-	_addServers = nil;
-
 }
 
 - (void) windowDidLoad {
@@ -520,11 +523,9 @@ static MVBuddyListController *sharedInstance = nil;
 	}
 	return YES;
 }
-@end
 
 #pragma mark -
 
-@implementation MVBuddyListController (MVBuddyListControllerDelegate)
 - (void) clear:(id) sender {
 	if( [buddies selectedRow] == -1 ) return;
 	JVBuddy *buddy = _buddyOrder[[buddies selectedRow]];
@@ -761,19 +762,19 @@ static MVBuddyListController *sharedInstance = nil;
 #define curveFunction(t,p) ( pow( 1 - pow( ( 1 - t ), p ), ( p ? ( 1 / p ) : 0. ) ) )
 #define easeFunction(t) ( ( sin( ( t * M_PI ) - M_PI_2 ) + 1. ) / 2. )
 
-- (NSRect) tableView:(MVTableView *) tableView rectOfRow:(int) row defaultRect:(NSRect) defaultRect {
+- (NSRect) tableView:(MVTableView *) tableView rectOfRow:(NSInteger) row defaultRect:(NSRect) defaultRect {
 	if( _animating ) {
 		NSInteger oldPosition = [_oldPositions[row] intValue];
 		NSRect oldR = [tableView originalRectOfRow:oldPosition];
 		NSRect newR = [tableView originalRectOfRow:row];
 
-		float t = _animationPosition;
+		CGFloat t = _animationPosition;
 
-		unsigned count = [_buddyOrder count];
-		float rowPos = ( (float) row / (float) count );
-		float rowPosAdjusted = _viewingTop ? ( 1. - rowPos ) : rowPos;
-		float curve = 0.3;
-		float p = rowPosAdjusted * ( curve * 2. ) + 1. - curve;
+		NSUInteger count = [_buddyOrder count];
+		CGFloat rowPos = ( (float) row / (float) count );
+		CGFloat rowPosAdjusted = _viewingTop ? ( 1. - rowPos ) : rowPos;
+		CGFloat curve = 0.3;
+		CGFloat p = rowPosAdjusted * ( curve * 2. ) + 1. - curve;
 
 		t = curveFunction( t, p );
 		t = easeFunction( t );
@@ -781,11 +782,9 @@ static MVBuddyListController *sharedInstance = nil;
 		return NSMakeRect( NSMinX( oldR ) + ( t * ( NSMinX( newR ) - NSMinX( oldR ) ) ), NSMinY( oldR ) + ( t * ( NSMinY( newR ) - NSMinY( oldR ) ) ), NSWidth( newR ), NSHeight( newR ) );
 	} else return defaultRect;
 }
-@end
 
 #pragma mark -
 
-@implementation MVBuddyListController (MVBuddyListControllerPrivate)
 - (void) _animateStep:(NSTimer *) timer {
 	static NSDate *start = nil;
 	if( ! _animationPosition ) {
@@ -1023,21 +1022,9 @@ static MVBuddyListController *sharedInstance = nil;
 
 	return menu;
 }
-@end
 
 #pragma mark -
 
-@implementation JVBuddy (JVBuddyObjectSpecifier)
-- (NSScriptObjectSpecifier *) objectSpecifier {
-	id classDescription = [NSClassDescription classDescriptionForClass:[MVBuddyListController class]];
-	NSScriptObjectSpecifier *container = [[MVBuddyListController sharedBuddyList] objectSpecifier];
-	return [[NSUniqueIDSpecifier alloc] initWithContainerClassDescription:classDescription containerSpecifier:container key:@"buddies" uniqueID:[self uniqueIdentifier]];
-}
-@end
-
-#pragma mark -
-
-@implementation MVBuddyListController (MVBuddyListControllerScripting)
 - (MVChatConnection *) valueInBuddiesAtIndex:(NSUInteger) index {
 	return _buddyOrder[index];
 }

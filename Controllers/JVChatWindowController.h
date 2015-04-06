@@ -25,8 +25,7 @@ extern NSString *JVChatViewPboardType;
 	BOOL _reloadingData;
 	BOOL _closing;
 }
-- (NSString *) identifier;
-- (void) setIdentifier:(NSString *) identifier;
+@property (copy) NSString *identifier;
 
 - (NSString *) userDefaultsPreferencesKey;
 - (void) setPreference:(id) value forKey:(NSString *) key;
@@ -92,9 +91,8 @@ extern NSString *JVChatViewPboardType;
 - (NSString *) toolbarIdentifier;
 - (NSString *) windowTitle;
 - (NSString *) identifier;
-@end
 
-@interface NSObject (JVChatViewControllerOptional)
+@optional
 - (void) willSelect;
 - (void) didSelect;
 
@@ -121,9 +119,8 @@ extern NSString *JVChatViewPboardType;
 - (id <JVChatListItem>) parent;
 - (NSImage *) icon;
 - (NSString *) title;
-@end
 
-@interface NSObject (JVChatListItemOptional)
+@optional
 - (BOOL) acceptsDraggedFileOfType:(NSString *) type;
 - (void) handleDraggedFile:(NSString *) path;
 - (IBAction) doubleClicked:(id) sender;

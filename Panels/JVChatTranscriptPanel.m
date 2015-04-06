@@ -46,8 +46,8 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 - (BOOL) _usingSpecificEmoticons;
 @end
 
-@interface JVChatTranscriptPanel (Private)
-- (void) savePanelDidEnd:(NSSavePanel *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo;
+@interface JVChatTranscriptPanel ()
+- (void) savePanelDidEnd:(NSSavePanel *) sheet returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo;
 @end
 
 #pragma mark -
@@ -117,15 +117,6 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 	[display setDownloadDelegate:nil];
 	[display setFrameLoadDelegate:nil];
 	[display setPolicyDelegate:nil];
-
-
-	contents = nil;
-	_styleMenu = nil;
-	_emoticonMenu = nil;
-	_transcript = nil;
-	_searchQuery = nil;
-	_searchQueryRegex = nil;
-	_windowController = nil;
 }
 
 - (NSString *) description {
@@ -346,7 +337,7 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 	}];
 }
 
-- (void) savePanelDidEnd:(NSSavePanel *) sheet returnCode:(int) returnCode contextInfo:(void *) contextInfo {
+- (void) savePanelDidEnd:(NSSavePanel *) sheet returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo {
 	if( returnCode == NSOKButton ) {
 		[[self transcript] writeToURL:[sheet URL] atomically:YES];
 		[[NSFileManager defaultManager] setAttributes:@{NSFileExtensionHidden: @([sheet isExtensionHidden])} ofItemAtPath:[[sheet URL] absoluteString] error:nil];
@@ -755,12 +746,10 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 	[[sender window] setShowsResizeIndicator:resizable];
 	[[[sender window] standardWindowButton:NSWindowZoomButton] setEnabled:resizable];
 }
-@end
 
 #pragma mark -
 #pragma mark Style Support
 
-@implementation JVChatTranscriptPanel (JVChatTranscriptPrivate)
 - (void) _refreshWindowFileProxy {
 	if(	[[self windowController] activeChatViewController] != self ) return;
 	if( ! [[NSFileManager defaultManager] fileExistsAtPath:[[self transcript] filePath]] ) {

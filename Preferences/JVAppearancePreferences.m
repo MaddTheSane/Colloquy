@@ -120,16 +120,16 @@
 
 - (IBAction) changeBaseFontSize:(id) sender {
 	NSInteger size = [sender intValue];
-	[baseFontSize setIntValue:size];
-	[baseFontSizeStepper setIntValue:size];
-	[[preview preferences] setDefaultFontSize:size];
+	[baseFontSize setIntegerValue:size];
+	[baseFontSizeStepper setIntegerValue:size];
+	[[preview preferences] setDefaultFontSize:(int)size];
 }
 
 - (IBAction) changeMinimumFontSize:(id) sender {
 	NSInteger size = [sender intValue];
-	[minimumFontSize setIntValue:size];
-	[minimumFontSizeStepper setIntValue:size];
-	[[preview preferences] setMinimumFontSize:size];
+	[minimumFontSize setIntegerValue:size];
+	[minimumFontSizeStepper setIntegerValue:size];
+	[[preview preferences] setMinimumFontSize:(int)size];
 }
 
 - (IBAction) changeDefaultChatStyle:(id) sender {

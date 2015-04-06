@@ -357,7 +357,7 @@ static NSMenu *smartTranscriptMenu = nil;
 	NSParameterAssert( panel != nil );
 
 	if( [panel respondsToSelector:@selector( willDispose )] )
-		[(NSObject *)panel willDispose];
+		[(id<JVChatViewController>)panel willDispose];
 
 	[[panel windowController] removeChatViewController:panel];
 	[_chatControllers removeObject:panel];
@@ -392,7 +392,7 @@ static NSMenu *smartTranscriptMenu = nil;
 	NSParameterAssert( controller != nil );
 
 	if( [controller respondsToSelector:@selector( willDispose )] )
-		[(NSObject *)controller willDispose];
+		[(id<JVChatViewController>)controller willDispose];
 
 	[[controller windowController] removeChatViewController:controller];
 
@@ -449,11 +449,9 @@ static NSMenu *smartTranscriptMenu = nil;
 
 	return ignoreResult;
 }
-@end
 
 #pragma mark -
 
-@implementation JVChatController (JVChatControllerPrivate)
 - (void) _joinedRoom:(NSNotification *) notification {
 	MVChatRoom *rm = [notification object];
 	if( ! [[MVConnectionsController defaultController] managesConnection:[rm connection]] ) return;
@@ -1077,7 +1075,7 @@ static NSMenu *smartTranscriptMenu = nil;
 
 			// Accept backwards ranges gracefully
 			if( endIndex < startIndex ) {
-				unsigned temp = endIndex;
+				NSUInteger temp = endIndex;
 				endIndex = startIndex;
 				startIndex = temp;
 			}

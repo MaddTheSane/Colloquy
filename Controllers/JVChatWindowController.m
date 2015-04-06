@@ -8,6 +8,7 @@
 #import "JVDirectChatPanel.h"
 #import "JVDetailCell.h"
 #import "MVMenuButton.h"
+#import "MVApplicationController.h"
 
 typedef enum {
 	JVChatViewOrganizationTypeDefault = 0,
@@ -307,8 +308,8 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 }
 
 - (IBAction) selectNextPanel:(id) sender {
-	unsigned currentIndex = [_views indexOfObject:_activeViewController];
-	unsigned index = 0;
+	NSUInteger currentIndex = [_views indexOfObject:_activeViewController];
+	NSUInteger index = 0;
 
 	if( currentIndex + 1 < [_views count] ) index = ( currentIndex + 1 );
 	else index = 0;
@@ -317,8 +318,8 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 }
 
 - (IBAction) selectNextActivePanel:(id) sender {
-	unsigned currentIndex = [_views indexOfObject:_activeViewController];
-	unsigned index = currentIndex;
+	NSUInteger currentIndex = [_views indexOfObject:_activeViewController];
+	NSUInteger index = currentIndex;
 	BOOL done = NO;
 
 	do {
@@ -674,11 +675,9 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 
 	return YES;
 }
-@end
 
 #pragma mark -
 
-@implementation JVChatWindowController (JVChatWindowControllerDelegate)
 - (NSSize) drawerWillResizeContents:(NSDrawer *) drawer toSize:(NSSize) contentSize {
 	[self setPreference:NSStringFromSize( contentSize ) forKey:@"drawer size"];
 	return contentSize;
@@ -969,11 +968,9 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 	if( [item respondsToSelector:@selector( setPreference:forKey: )] )
 		[(id)item setPreference:@YES forKey:@"expanded"];
 }
-@end
 
 #pragma mark -
 
-@implementation JVChatWindowController (JVChatWindowControllerPrivate)
 - (void) _claimMenuCommands {
 	NSMenuItem *closeItem = [[[[[NSApplication sharedApplication] mainMenu] itemAtIndex:1] submenu] itemWithTag:1];
 	[closeItem setKeyEquivalentModifierMask:NSCommandKeyMask];
@@ -1070,9 +1067,9 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 	if( ( [item conformsToProtocol:@protocol( JVChatViewController )] && item != (id) _activeViewController ) || ( ! _activeViewController && [[item parent] conformsToProtocol:@protocol( JVChatViewController )] && ( item = [item parent] ) ) ) {
 		id lastActive = _activeViewController;
 		if( [_activeViewController respondsToSelector:@selector( willUnselect )] )
-			[(NSObject *)_activeViewController willUnselect];
+			[(id<JVChatViewController>)_activeViewController willUnselect];
 		if( [item respondsToSelector:@selector( willSelect )] )
-			[(NSObject *)item willSelect];
+			[(id<JVChatViewController>)item willSelect];
 
 		_activeViewController = item;
 
@@ -1082,9 +1079,9 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 		[self _refreshToolbar];
 
 		if( [lastActive respondsToSelector:@selector( didUnselect )] )
-			[(NSObject *)lastActive didUnselect];
+			[(id<JVChatViewController>)lastActive didUnselect];
 		if( [_activeViewController respondsToSelector:@selector( didSelect )] )
-			[(NSObject *)_activeViewController didSelect];
+			[(id<JVChatViewController>)_activeViewController didSelect];
 	} else if( ! [_views count] || ! _activeViewController ) {
 		NSView *placeHolder = [[NSView alloc] initWithFrame:[[[self window] contentView] frame]];
 		[[self window] setContentView:placeHolder];
@@ -1220,7 +1217,7 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 	[[self windowController] addChatViewController:view];
 }
 
-- (void) insertInChatViews:(id <JVChatViewController>) view atIndex:(int) index {
+- (void) insertInChatViews:(id <JVChatViewController>) view atIndex:(NSInteger) index {
 	if( ! [[self windowController] isKindOfClass:[JVChatWindowController class]] ) return;
 	[[self windowController] insertChatViewController:view atIndex:index];
 }
@@ -1524,7 +1521,7 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 
 			// Accept backwards ranges gracefully
 			if( endIndex < startIndex ) {
-				unsigned temp = endIndex;
+				NSUInteger temp = endIndex;
 				endIndex = startIndex;
 				startIndex = temp;
 			}
@@ -1578,7 +1575,7 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 
 			id baseObject = [baseSpec objectsByEvaluatingWithContainers:self];
 			if( [baseObject isKindOfClass:[NSArray class]] ) {
-				unsigned baseCount = [(NSArray *)baseObject count];
+				NSUInteger baseCount = [(NSArray *)baseObject count];
 				if( baseCount ) {
 					if( relPos == NSRelativeBefore ) baseObject = baseObject[0];
 					else baseObject = baseObject[( baseCount - 1 )];

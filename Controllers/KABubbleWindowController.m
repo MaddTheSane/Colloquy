@@ -138,33 +138,7 @@ static NSUInteger bubbleWindowDepth = 0;
 
 #pragma mark -
 
-- (BOOL) automaticallyFadesOut {
-	return _autoFadeOut;
-}
-
-- (void) setAutomaticallyFadesOut:(BOOL) autoFade {
-	_autoFadeOut = autoFade;
-}
-
-#pragma mark -
-
-- (id) target {
-	return _target;
-}
-
-- (void) setTarget:(id) object {
-	_target = object;
-}
-
-#pragma mark -
-
-- (SEL) action {
-	return _action;
-}
-
-- (void) setAction:(SEL) selector {
-	_action = selector;
-}
+@synthesize automaticallyFadesOut = _autoFadeOut;
 
 #pragma mark -
 
@@ -174,16 +148,6 @@ static NSUInteger bubbleWindowDepth = 0;
 
 - (void) setRepresentedObject:(id) object {
 	_representedObject = object;
-}
-
-#pragma mark -
-
-- (id) delegate {
-	return _delegate;
-}
-
-- (void) setDelegate:(id) delegate {
-	_delegate = delegate;
 }
 
 #pragma mark -

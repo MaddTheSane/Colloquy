@@ -116,6 +116,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 - (void) _refreshWindowFileProxy;
 - (void) _changeEmoticonsMenuSelection;
 - (void) _didSwitchStyles:(NSNotification *) notification;
+- (void) _openAppearancePreferences:(id) sender;
 @end
 
 #pragma mark -
@@ -1554,11 +1555,9 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 
 	return ret;
 }
-@end
 
 #pragma mark -
 
-@implementation JVDirectChatPanel (JVDirectChatPrivate)
 - (NSString *) _selfCompositeName {
 	ABPerson *_person = [[ABAddressBook sharedAddressBook] me];
 	NSString *firstName = [_person valueForProperty:kABFirstNameProperty];

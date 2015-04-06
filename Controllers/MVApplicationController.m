@@ -49,7 +49,7 @@ NSString *JVMachineStoppedIdlingNotification = @"JVMachineStoppedIdlingNotificat
 static BOOL applicationIsTerminating = NO;
 
 @interface MVApplicationController (Private)
-- (void) openDocumentPanelDidEnd:(NSOpenPanel *) panel returnCode:(int) returnCode contextInfo:(void *) contextInfo;
+- (void) openDocumentPanelDidEnd:(NSOpenPanel *) panel returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo;
 @end
 
 @implementation MVApplicationController
@@ -271,10 +271,10 @@ static BOOL applicationIsTerminating = NO;
 	}];
 }
 
-- (void) openDocumentPanelDidEnd:(NSOpenPanel *) panel returnCode:(int) returnCode contextInfo:(void *) contextInfo {
+- (void) openDocumentPanelDidEnd:(NSOpenPanel *) panel returnCode:(NSInteger) returnCode contextInfo:(void *) contextInfo {
 	NSString *filename = [[panel URL] path];
 	NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filename error:nil];
-	if( returnCode == NSOKButton && [[NSFileManager defaultManager] isReadableFileAtPath:filename] && ( [[filename pathExtension] caseInsensitiveCompare:@"colloquyTranscript"] == NSOrderedSame || ( [attributes[NSFileHFSTypeCode] unsignedLongValue] == 'coTr' && [attributes[NSFileHFSCreatorCode] unsignedLongValue] == 'coRC' ) ) ) {
+	if( returnCode == NSOKButton && [[NSFileManager defaultManager] isReadableFileAtPath:filename] && ( [[filename pathExtension] caseInsensitiveCompare:@"colloquyTranscript"] == NSOrderedSame || ( [attributes[NSFileHFSTypeCode] unsignedIntValue] == 'coTr' && [attributes[NSFileHFSCreatorCode] unsignedIntValue] == 'coRC' ) ) ) {
 		[[JVChatController defaultController] chatViewControllerForTranscript:filename];
 	}
 }

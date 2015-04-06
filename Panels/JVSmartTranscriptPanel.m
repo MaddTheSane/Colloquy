@@ -48,7 +48,7 @@ static NSString *JVToolbarRuleSettingsItemIdentifier = @"JVToolbarRuleSettingsIt
 		settings[@"rules"] = [coder decodeObjectForKey:@"rules"];
 		settings[@"title"] = [coder decodeObjectForKey:@"title"];
 		settings[@"ignoreCase"] = @([coder decodeBoolForKey:@"ignoreCase"]);
-		settings[@"operation"] = @([coder decodeIntForKey:@"operation"]);
+		settings[@"operation"] = @([coder decodeIntegerForKey:@"operation"]);
 		return [self initWithSettings:settings];
 	} else [NSException raise:NSInvalidArchiveOperationException format:@"Only supports NSKeyedArchiver coders"];
 	return nil;
@@ -58,7 +58,7 @@ static NSString *JVToolbarRuleSettingsItemIdentifier = @"JVToolbarRuleSettingsIt
 	if( [coder allowsKeyedCoding] ) {
 		[coder encodeObject:[self rules] forKey:@"rules"];
 		[coder encodeObject:[self title] forKey:@"title"];
-		[coder encodeInt:_operation forKey:@"operation"];
+		[coder encodeInteger:_operation forKey:@"operation"];
 		[coder encodeBool:_ignoreCase forKey:@"ignoreCase"];
 	} else [NSException raise:NSInvalidArchiveOperationException format:@"Only supports NSKeyedArchiver coders"];
 }
@@ -68,12 +68,6 @@ static NSString *JVToolbarRuleSettingsItemIdentifier = @"JVToolbarRuleSettingsIt
 
 	[subviewTableView setDataSource:nil];
 	[subviewTableView setDelegate:nil];
-
-
-	_rules = nil;
-	_editingRules = nil;
-	_title = nil;
-
 }
 
 - (void) awakeFromNib {
@@ -445,11 +439,9 @@ static NSString *JVToolbarRuleSettingsItemIdentifier = @"JVToolbarRuleSettingsIt
 	[list addObject:JVToolbarClearScrollbackItemIdentifier];
 	return list;
 }
-@end
 
 #pragma mark -
 
-@implementation JVSmartTranscriptPanel (JVSmartTranscriptPanelPrivate)
 - (void) _messageDisplayed:(NSNotification *) notification {
 	JVChatMessage *origMessage = [notification userInfo][@"message"];
 	[self matchMessage:origMessage fromView:[notification object]];

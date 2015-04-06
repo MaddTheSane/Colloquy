@@ -22,7 +22,7 @@
 
 - (NSMutableArray *) rules;
 
-- (NSUInteger) newMessagesWaiting;
+@property (readonly) NSUInteger newMessagesWaiting;
 - (void) matchMessage:(JVChatMessage *) message fromView:(id <JVChatViewController>) view;
 
 - (IBAction) editSettings:(id) sender;

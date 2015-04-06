@@ -213,13 +213,4 @@ NSString *JVColorWellCellColorDidChangeNotification = @"JVColorWellCellColorDidC
 	[self setColor:[NSColor colorWithCSSAttributeValue:string]];
 }
 
-#pragma mark -
-
-- (void) setShowsWebValue:(BOOL) web {
-	_showsWebValue = web;
-}
-
-- (BOOL) showsWebValue {
-	return _showsWebValue;
-}
 @end
