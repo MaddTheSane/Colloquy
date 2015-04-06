@@ -21,28 +21,27 @@ extern NSString *JVChatTranscriptUpdatedNotification;
 	unsigned long long _previousLogOffset;
 	NSUInteger _elementLimit;
 }
-+ (id) chatTranscript;
-+ (id) chatTranscriptWithChatTranscript:(JVChatTranscript *) transcript;
-+ (id) chatTranscriptWithElements:(NSArray *) elements;
-+ (id) chatTranscriptWithContentsOfFile:(NSString *) path;
-+ (id) chatTranscriptWithContentsOfURL:(NSURL *) url;
++ (instancetype) chatTranscript;
++ (instancetype) chatTranscriptWithChatTranscript:(JVChatTranscript *) transcript;
++ (instancetype) chatTranscriptWithElements:(NSArray *) elements;
++ (instancetype) chatTranscriptWithContentsOfFile:(NSString *) path;
++ (instancetype) chatTranscriptWithContentsOfURL:(NSURL *) url;
 
-- (id) init;
-- (id) initWithChatTranscript:(JVChatTranscript *) transcript;
-- (id) initWithElements:(NSArray *) elements;
-- (id) initWithContentsOfFile:(NSString *) path;
-- (id) initWithContentsOfURL:(NSURL *) url;
+- (instancetype) init;
+- (instancetype) initWithChatTranscript:(JVChatTranscript *) transcript;
+- (instancetype) initWithElements:(NSArray *) elements;
+- (instancetype) initWithContentsOfFile:(NSString *) path;
+- (instancetype) initWithContentsOfURL:(NSURL *) url;
 
 - (/* xmlDoc */ void *) document;
 
-- (BOOL) isEmpty;
+@property (readonly, getter=isEmpty) BOOL empty;
 - (NSUInteger) elementCount;
 - (NSUInteger) sessionCount;
 - (NSUInteger) messageCount;
 - (NSUInteger) eventCount;
 
-- (void) setElementLimit:(NSUInteger) limit;
-- (NSUInteger) elementLimit;
+@property NSUInteger elementLimit;
 
 - (NSArray *) elements;
 - (NSArray *) elementsInRange:(NSRange) range;
@@ -82,13 +81,11 @@ extern NSString *JVChatTranscriptUpdatedNotification;
 
 - (JVChatEvent *) appendEvent:(JVChatEvent *) event;
 
-- (NSString *) filePath;
-- (void) setFilePath:(NSString *) filePath;
+@property (copy) NSString *filePath;
 
 - (NSCalendarDate *) dateBegan;
 
-- (NSURL *) source;
-- (void) setSource:(NSURL *) source;
+@property (strong) NSURL *source;
 
 - (BOOL) automaticallyWritesChangesToFile;
 - (void) setAutomaticallyWritesChangesToFile:(BOOL) option;

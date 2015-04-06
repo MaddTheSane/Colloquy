@@ -1,6 +1,8 @@
 #import "JVBuddy.h"
 #import "MVConnectionsController.h"
 
+#import <AddressBook/AddressBook.h>
+
 NSString *JVBuddyCameOnlineNotification = @"JVBuddyCameOnlineNotification";
 NSString *JVBuddyWentOfflineNotification = @"JVBuddyWentOfflineNotification";
 
@@ -13,7 +15,11 @@ NSString *JVBuddyActiveUserChangedNotification = @"JVBuddyActiveUserChangedNotif
 
 static JVBuddyName _mainPreferredName = JVBuddyFullName;
 
-@implementation JVBuddy
+@implementation JVBuddy {
+	NSMutableArray *_rules;
+	NSMutableSet *_users;
+}
+
 + (JVBuddyName) preferredName {
 	return _mainPreferredName;
 }
@@ -345,20 +351,6 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 	return nil;
 }
 
-- (NSString *) uniqueIdentifier {
-	return _uniqueIdentifier;
-}
-
-#pragma mark -
-
-- (void) setPrimaryEmail:(NSString *) email {
-	_primaryEmail = [email copyWithZone:nil];
-}
-
-- (void) setGivenNickname:(NSString *) name {
-	_givenNickname = [name copyWithZone:nil];
-}
-
 #pragma mark -
 
 @synthesize addressBookPersonRecord = _person;
@@ -456,11 +448,9 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 	NSString *name2 = [[buddy activeUser] nickname];
 	return [name1 caseInsensitiveCompare:name2];
 }
-@end
 
 #pragma mark -
 
-@implementation JVBuddy (JVBuddyPrivate)
 - (void) _addUser:(MVChatUser *) user {
 	if( [_users containsObject:user] )
 		return;

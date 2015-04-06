@@ -16,19 +16,7 @@ typedef enum {
 	JVBuddyFullName = 0x2
 } JVBuddyName;
 
-@interface JVBuddy : NSObject {
-	ABPerson *_person;
-	NSMutableArray *_rules;
-	NSMutableSet *_users;
-	MVChatUser *_activeUser;
-	NSImage *_picture;
-	NSString *_firstName;
-	NSString *_lastName;
-	NSString *_primaryEmail;
-	NSString *_givenNickname;
-	NSString *_speechVoice;
-	NSString *_uniqueIdentifier;
-}
+@interface JVBuddy : NSObject
 + (JVBuddyName) preferredName;
 + (void) setPreferredName:(JVBuddyName) preferred;
 
@@ -51,12 +39,12 @@ typedef enum {
 
 @property (readonly) NSTimeInterval idleTime;
 
-- (NSString *) displayName;
-- (NSString *) nickname;
+@property (readonly, copy) NSString *displayName;
+@property (readonly, copy) NSString *nickname;
 
-- (NSSet *) users;
+@property (readonly, copy) NSSet *users;
 
-- (NSArray *) watchRules;
+@property (readonly, copy) NSArray *watchRules;
 - (void) addWatchRule:(MVChatUserWatchRule *) rule;
 - (void) removeWatchRule:(MVChatUserWatchRule *) rule;
 

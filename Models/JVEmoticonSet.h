@@ -7,15 +7,15 @@ extern NSString *JVEmoticonSetsScannedNotification;
 }
 + (void) scanForEmoticonSets;
 + (NSSet *) emoticonSets;
-+ (id) emoticonSetWithIdentifier:(NSString *) identifier;
-+ (id) newWithBundle:(NSBundle *) bundle;
++ (instancetype) emoticonSetWithIdentifier:(NSString *) identifier;
++ (instancetype) newWithBundle:(NSBundle *) bundle;
 
-+ (id) textOnlyEmoticonSet;
++ (instancetype) textOnlyEmoticonSet;
 
-- (id) initWithBundle:(NSBundle *) bundle;
+- (instancetype) initWithBundle:(NSBundle *) bundle;
 
 - (void) unlink;
-- (BOOL) isCompliant;
+@property (readonly, getter=isCompliant) BOOL compliant;
 
 - (void) performEmoticonSubstitution:(NSMutableAttributedString *) string;
 
@@ -23,7 +23,7 @@ extern NSString *JVEmoticonSetsScannedNotification;
 - (NSString *) identifier;
 
 - (NSComparisonResult) compare:(JVEmoticonSet *) style;
-- (NSString *) displayName;
+@property (readonly, copy) NSString *displayName;
 
 - (NSDictionary *) emoticonMappings;
 - (NSArray *) emoticonMenuItems;

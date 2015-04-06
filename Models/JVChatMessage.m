@@ -534,14 +534,30 @@
 	_highlighted = highlighted;
 }
 
+- (BOOL) isAction {
+	return [super isAction];
+}
+
+- (BOOL) isHighlighted {
+	return [super isHighlighted];
+}
+
 - (void) setIgnoreStatus:(JVIgnoreMatchResult) ignoreStatus {
 	[self _setNode:NULL];
 	_ignoreStatus = ignoreStatus;
 }
 
+- (JVIgnoreMatchResult)ignoreStatus {
+	return [super ignoreStatus];
+}
+
 - (void) setType:(JVChatMessageType) type {
 	[self _setNode:NULL];
 	_type = type;
+}
+
+- (JVChatMessageType)type {
+	return [super type];
 }
 
 #pragma mark -

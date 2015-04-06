@@ -262,9 +262,17 @@
 	_date = [date copyWithZone:nil];
 }
 
+- (NSDate *)date {
+	return [super date];
+}
+
 - (void) setName:(NSString *) name {
 	[self _setNode:NULL];
 	_name = [name copyWithZone:nil];
+}
+
+- (NSString *)name {
+	return [super name];
 }
 
 #pragma mark -

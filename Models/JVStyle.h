@@ -48,16 +48,13 @@ extern NSString *JVStyleVariantChangedNotification;
 - (NSArray *) variantStyleSheetNames;
 - (NSArray *) userVariantStyleSheetNames;
 - (BOOL) isUserVariantName:(NSString *) name;
-- (NSString *) defaultVariantName;
-- (void) setDefaultVariantName:(NSString *) name;
+@property (copy, nonatomic) NSString *defaultVariantName;
 
-- (JVEmoticonSet *) defaultEmoticonSet;
-- (void) setDefaultEmoticonSet:(JVEmoticonSet *) emoticons;
+@property (strong) JVEmoticonSet *defaultEmoticonSet;
 
 - (NSArray *) styleSheetOptions;
 
-- (void) setMainParameters:(NSDictionary *) parameters;
-- (NSDictionary *) mainParameters;
+@property (copy) NSDictionary *mainParameters;
 
 - (NSURL *) baseLocation;
 - (NSURL *) mainStyleSheetLocation;

@@ -20,8 +20,8 @@
 - (JVChatTranscript *) transcript;
 - (NSString *) eventIdentifier;
 
-- (NSDate *) date;
-- (NSString *) name;
+@property (readonly, strong) NSDate *date;
+@property (readonly, copy) NSString *name;
 
 - (NSTextStorage *) message;
 - (NSString *) messageAsPlainText;
@@ -31,11 +31,11 @@
 @end
 
 @interface JVMutableChatEvent : JVChatEvent
-+ (id) chatEventWithName:(NSString *) name andMessage:(id) message;
-- (id) initWithName:(NSString *) name andMessage:(id) message;
++ (instancetype) chatEventWithName:(NSString *) name andMessage:(id) message;
+- (instancetype) initWithName:(NSString *) name andMessage:(id) message;
 
-- (void) setDate:(NSDate *) date;
-- (void) setName:(NSString *) name;
+@property (readwrite, strong) NSDate *date;
+@property (readwrite, copy) NSString *name;
 
 - (void) setMessage:(id) message;
 - (void) setMessageAsPlainText:(NSString *) message;

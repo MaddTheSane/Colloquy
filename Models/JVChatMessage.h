@@ -1,10 +1,10 @@
 #import "JVChatTranscript.h"
 #import "KAIgnoreRule.h"
 
-typedef enum _JVChatMessageType {
+typedef NS_ENUM(OSType, JVChatMessageType) {
 	JVChatMessageNormalType = 'noMt',
 	JVChatMessageNoticeType = 'nTMt'
-} JVChatMessageType;
+};
 
 @interface JVChatMessage : NSObject <NSMutableCopying, JVChatTranscriptElement> {
 	@public
@@ -53,10 +53,10 @@ typedef enum _JVChatMessageType {
 - (NSString *) bodyAsPlainText;
 - (NSString *) bodyAsHTML;
 
-- (BOOL) isAction;
-- (BOOL) isHighlighted;
-- (JVIgnoreMatchResult) ignoreStatus;
-- (JVChatMessageType) type;
+@property (readonly, getter=isAction) BOOL action;
+@property (readonly, getter=isHighlighted) BOOL highlighted;
+@property (readonly) JVIgnoreMatchResult ignoreStatus;
+@property (readonly) JVChatMessageType type;
 
 - (NSURL *) source;
 - (JVChatTranscript *) transcript;
@@ -73,22 +73,21 @@ typedef enum _JVChatMessageType {
 	@protected
 	id _sender;
 }
-+ (id) messageWithText:(id) body sender:(id) sender;
-- (id) initWithText:(id) body sender:(id) sender;
++ (instancetype) messageWithText:(id) body sender:(id) sender;
+- (instancetype) initWithText:(id) body sender:(id) sender;
 
 - (void) setDate:(NSDate *) date;
 
-- (id) sender;
-- (void) setSender:(id) sender;
+@property (strong) id sender;
 
 - (void) setBody:(id) message;
 - (void) setBodyAsPlainText:(NSString *) message;
 - (void) setBodyAsHTML:(NSString *) message;
 
-- (void) setAction:(BOOL) action;
-- (void) setHighlighted:(BOOL) highlighted;
-- (void) setIgnoreStatus:(JVIgnoreMatchResult) ignoreStatus;
-- (void) setType:(JVChatMessageType) type;
+@property (readwrite, getter=isAction) BOOL action;
+@property (readwrite, getter=isHighlighted) BOOL highlighted;
+@property (readwrite) JVIgnoreMatchResult ignoreStatus;
+@property (readwrite) JVChatMessageType type;
 
 - (void) setSource:(NSURL *) source;
 - (void) setMessageIdentifier:(NSString *) identifier;
