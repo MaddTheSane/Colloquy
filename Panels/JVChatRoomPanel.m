@@ -771,7 +771,7 @@ NSString *const MVFavoritesListDidUpdateNotification = @"MVFavoritesListDidUpdat
 	while( changedModes ) {
 		NSString *message = nil;
 		NSString *mode = nil;
-		id parameter = nil;
+		id parameter = [NSNull null];
 
 		if( changedModes & MVChatRoomPrivateMode ) {
 			changedModes &= ~MVChatRoomPrivateMode;

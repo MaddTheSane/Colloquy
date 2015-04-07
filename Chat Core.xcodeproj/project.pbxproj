@@ -82,11 +82,11 @@
 		899F4EFF12617870003B9D9A /* NSFileManagerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 899F4EFD12617870003B9D9A /* NSFileManagerAdditions.m */; };
 		922453BB1689057200BFF3FF /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 922453B91689057200BFF3FF /* GCDAsyncSocket.h */; };
 		922453BC1689057200BFF3FF /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 922453B91689057200BFF3FF /* GCDAsyncSocket.h */; };
-		922453BD1689057200BFF3FF /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 922453BA1689057200BFF3FF /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		922453BD1689057200BFF3FF /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 922453BA1689057200BFF3FF /* GCDAsyncSocket.m */; };
 		922453BE1689057200BFF3FF /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 922453BA1689057200BFF3FF /* GCDAsyncSocket.m */; };
 		922B1FF71692C42F002ECDFD /* DDLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 922B1FF31692C42F002ECDFD /* DDLog.h */; };
 		922B1FF81692C42F002ECDFD /* DDLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 922B1FF31692C42F002ECDFD /* DDLog.h */; };
-		922B1FF91692C42F002ECDFD /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 922B1FF41692C42F002ECDFD /* DDLog.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		922B1FF91692C42F002ECDFD /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 922B1FF41692C42F002ECDFD /* DDLog.m */; };
 		922B1FFA1692C42F002ECDFD /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 922B1FF41692C42F002ECDFD /* DDLog.m */; };
 		922B1FFB1692C42F002ECDFD /* MVDelegateLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 922B1FF51692C42F002ECDFD /* MVDelegateLogger.h */; };
 		922B1FFC1692C42F002ECDFD /* MVDelegateLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 922B1FF51692C42F002ECDFD /* MVDelegateLogger.h */; };

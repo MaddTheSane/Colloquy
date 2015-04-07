@@ -38,6 +38,7 @@ static NSUInteger bubbleWindowDepth = 0;
 	[panel setReleasedWhenClosed:YES];
 	[panel setDelegate:self];
 
+	if (self = [super initWithWindow:panel]) {
 	KABubbleWindowView *view = [[KABubbleWindowView alloc] initWithFrame:[panel frame]];
 	[view setTarget:self];
 	[view setAction:@selector( _bubbleClicked: )];
@@ -58,7 +59,8 @@ static NSUInteger bubbleWindowDepth = 0;
 	_action = NULL;
 	_animationTimer = nil;
 
-	return [super initWithWindow:panel];
+	}
+	return self;
 }
 
 //TODO: check this! dealloc will NEVER be called due to _self retaining self!

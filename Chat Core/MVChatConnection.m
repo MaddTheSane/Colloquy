@@ -1635,7 +1635,7 @@ static void reachabilityCallback( SCNetworkReachabilityRef target, SCNetworkConn
 					break;
 				default:
 				case MVChatNoMessageFormat:
-					cformat = nil;
+					cformat = @"";
 			}
 
 			NSDictionary *options = @{@"StringEncoding": @(realEncoding), @"FormatType": cformat};

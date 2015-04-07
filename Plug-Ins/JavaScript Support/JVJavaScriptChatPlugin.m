@@ -23,6 +23,10 @@
 #import <WebKit/WebKit.h>
 #import <objc/objc-runtime.h>
 
+@interface JVJavaScriptChatPlugin ()
+- (id) allocInstance:(NSString *) class NS_RETURNS_NOT_RETAINED;
+@end
+
 @interface NSWindow (NSWindowPrivate) // new Tiger private method
 - (void) _setContentHasShadow:(BOOL) shadow;
 @end

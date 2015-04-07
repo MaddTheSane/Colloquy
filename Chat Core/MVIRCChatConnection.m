@@ -3751,7 +3751,7 @@ end:
 		if( ! room || ! user ) return;
 
 		NSData *reason = ( parameters.count == 3 ? parameters[2] : nil );
-		if( ! [reason isKindOfClass:[NSData class]] ) reason = nil;
+		if( ! [reason isKindOfClass:[NSData class]] ) reason = [NSData data];
 		if( [user isLocalUser] ) {
 			[room _setDateParted:[NSDate date]];
 			[[NSNotificationCenter chatCenter] postNotificationOnMainThreadWithName:MVChatRoomKickedNotification object:room userInfo:@{@"byUser": sender, @"reason": reason}];

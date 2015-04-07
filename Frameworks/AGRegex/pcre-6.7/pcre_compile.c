@@ -3443,8 +3443,8 @@ for (;; ptr++)
 #ifdef SUPPORT_UCP
       else if (-c == ESC_P || -c == ESC_p)
         {
-        BOOL negated;
-        int pdata;
+        BOOL negated = FALSE;
+        int pdata = 0;
         int ptype = get_ucp(&ptr, &negated, &pdata, errorcodeptr);
         previous = code;
         *code++ = ((-c == ESC_p) != negated)? OP_PROP : OP_NOTPROP;

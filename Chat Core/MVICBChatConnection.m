@@ -558,6 +558,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 - (void) _joinChatRoomNamed:(NSString *) name
 		 withPassphrase:(NSString *) passphrase
 		 alreadyJoined:(BOOL) joined {
+	[name retain];
 	if( [name compare:[_room name] options:NSCaseInsensitiveSearch] != 0 ) {
 		if( ! joined ) {
 			[self ctsCommandGroup:[name retain]];
@@ -590,6 +591,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 			[self ctsCommandWho:name];
 		}
 	}
+	[name release];
 }
 
 #pragma mark Users handling
@@ -1186,6 +1188,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 
 		[name retain]; // XXX Needed to avoid a crash, but may cause a leak...
 		[self _joinChatRoomNamed:name withPassphrase:nil alreadyJoined:YES];
+		[name release];
 	}
 }
 
