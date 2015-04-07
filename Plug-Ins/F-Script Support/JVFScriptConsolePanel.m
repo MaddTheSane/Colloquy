@@ -5,7 +5,7 @@
 #import <FScript/FScript.h>
 
 @implementation JVFScriptConsolePanel
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_plugin = nil;
 		_icon = nil;
@@ -15,7 +15,7 @@
 	return self;
 }
 
-- (id) initWithFScriptChatPlugin:(JVFScriptChatPlugin *) plugin {
+- (instancetype) initWithFScriptChatPlugin:(JVFScriptChatPlugin *) plugin {
 	if( ( self = [self init] ) ) {
 		_plugin = [plugin retain];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( close: ) name:MVChatPluginManagerWillReloadPluginsNotification object:[plugin pluginManager]];

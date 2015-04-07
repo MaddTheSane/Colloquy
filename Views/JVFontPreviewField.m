@@ -1,7 +1,7 @@
 #import "JVFontPreviewField.h"
 
 @implementation JVFontPreviewField
-- (id) initWithCoder:(NSCoder *) coder {
+- (instancetype) initWithCoder:(NSCoder *) coder {
 	self = [super initWithCoder:coder];
 	if( [coder allowsKeyedCoding] ) {
 		_showPointSize = [coder decodeBoolForKey:@"showPointSize"];

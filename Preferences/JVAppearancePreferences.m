@@ -10,14 +10,13 @@
 #import <objc/objc-runtime.h>
 
 @interface WebView (WebViewPrivate) // WebKit 1.3 pending public API
-- (void) setDrawsBackground:(BOOL) draws;
-- (BOOL) drawsBackground;
+@property BOOL drawsBackground;
 @end
 
 #pragma mark -
 
 @implementation JVAppearancePreferences
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( colorWellDidChangeColor: ) name:JVColorWellCellColorDidChangeNotification object:nil];
 		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( updateChatStylesMenu ) name:JVStylesScannedNotification object:nil];

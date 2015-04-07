@@ -90,7 +90,7 @@
 
 #pragma mark -
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_ignoreStatus = JVNotIgnored;
 		_type = JVChatMessageNormalType;
@@ -383,7 +383,7 @@
 
 #pragma mark - Private functions
 
-- (id) initWithNode:(xmlNode *) node andTranscript:(JVChatTranscript *) transcript {
+- (instancetype) initWithNode:(xmlNode *) node andTranscript:(JVChatTranscript *) transcript {
 	if( ( self = [self init] ) ) {
 		_node = node;
 		_transcript = transcript; // weak reference
@@ -458,27 +458,27 @@
 		do {
 			if( subNode -> type == XML_ELEMENT_NODE && ! strcmp( "sender", (char *) subNode -> name ) ) {
 				xmlChar *prop = xmlNodeGetContent( subNode );
-				if( prop ) _senderName = [[NSString allocWithZone:nil] initWithUTF8String:(char *) prop];
+				if( prop ) _senderName = @((char *) prop);
 				else _senderName = nil;
 				xmlFree( prop );
 				
 				prop = xmlGetProp( subNode, (xmlChar *) "nickname" );
-				if( prop ) _senderNickname = [[NSString allocWithZone:nil] initWithUTF8String:(char *) prop];
+				if( prop ) _senderNickname = @((char *) prop);
 				else _senderNickname = nil;
 				xmlFree( prop );
 				
 				prop = xmlGetProp( subNode, (xmlChar *) "identifier" );
-				if( prop ) _senderIdentifier = [[NSString allocWithZone:nil] initWithUTF8String:(char *) prop];
+				if( prop ) _senderIdentifier = @((char *) prop);
 				else _senderIdentifier = nil;
 				xmlFree( prop );
 				
 				prop = xmlGetProp( subNode, (xmlChar *) "hostmask" );
-				if( prop ) _senderHostmask = [[NSString allocWithZone:nil] initWithUTF8String:(char *) prop];
+				if( prop ) _senderHostmask = @((char *) prop);
 				else _senderHostmask = nil;
 				xmlFree( prop );
 				
 				prop = xmlGetProp( subNode, (xmlChar *) "class" );
-				if( prop ) _senderClass = [[NSString allocWithZone:nil] initWithUTF8String:(char *) prop];
+				if( prop ) _senderClass = @((char *) prop);
 				else _senderClass = nil;
 				xmlFree( prop );
 				
@@ -532,13 +532,13 @@
 	}
 }
 
-+ (id) messageWithText:(id) body sender:(id) sender {
++ (instancetype) messageWithText:(id) body sender:(id) sender {
 	return [[self allocWithZone:nil] initWithText:body sender:sender];
 }
 
 #pragma mark -
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_loaded = YES;
 		_bodyLoaded = YES;
@@ -550,7 +550,7 @@
 	return self;
 }
 
-- (id) initWithText:(id) body sender:(id) sender {
+- (instancetype) initWithText:(id) body sender:(id) sender {
 	if( ( self = [self init] ) ) {
 		[self setBody:body];
 		self.sender = sender;

@@ -26,7 +26,7 @@
 	if( _uniqueIdentifier )
 		[_connection _removeKnownRoom:self];
 
-	_name = [[NSString allocWithZone:nil] initWithUTF8String:channelEntry -> channel_name];
+	_name = @(channelEntry -> channel_name);
 
 	unsigned char *identifier = silc_id_id2str( channelEntry -> id, SILC_ID_CHANNEL );
 	unsigned len = silc_id_get_len( channelEntry -> id, SILC_ID_CHANNEL );

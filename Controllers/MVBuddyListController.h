@@ -64,8 +64,8 @@ typedef NS_ENUM(OSType, MVBuddyListSortOrder) {
 - (void) addBuddy:(JVBuddy *) buddy;
 
 - (JVBuddy *) buddyForUser:(MVChatUser *) user;
-- (NSArray *) buddies;
-- (NSSet *) onlineBuddies;
+@property (readonly, copy) NSArray *buddies;
+@property (readonly, copy) NSSet *onlineBuddies;
 
 - (IBAction) showBuddyPickerSheet:(id) sender;
 - (IBAction) cancelBuddySelection:(id) sender;
@@ -82,24 +82,19 @@ typedef NS_ENUM(OSType, MVBuddyListSortOrder) {
 - (IBAction) messageSelectedBuddy:(id) sender;
 - (IBAction) sendFileToSelectedBuddy:(id) sender;
 
-- (void) setShowFullNames:(BOOL) flag;
-- (BOOL) showFullNames;
+@property BOOL showFullNames;
 - (IBAction) toggleShowFullNames:(id) sender;
 
-- (void) setShowNicknameAndServer:(BOOL) flag;
-- (BOOL) showNicknameAndServer;
+@property BOOL showNicknameAndServer;
 - (IBAction) toggleShowNicknameAndServer:(id) sender;
 
-- (void) setShowIcons:(BOOL) flag;
-- (BOOL) showIcons;
+@property BOOL showIcons;
 - (IBAction) toggleShowIcons:(id) sender;
 
-- (void) setShowOfflineBuddies:(BOOL) flag;
-- (BOOL) showOfflineBuddies;
+@property BOOL showOfflineBuddies;
 - (IBAction) toggleShowOfflineBuddies:(id) sender;
 
-- (void) setSortOrder:(MVBuddyListSortOrder) order;
-- (MVBuddyListSortOrder) sortOrder;
+@property MVBuddyListSortOrder sortOrder;
 - (IBAction) sortByAvailability:(id) sender;
 - (IBAction) sortByFirstName:(id) sender;
 - (IBAction) sortByLastName:(id) sender;

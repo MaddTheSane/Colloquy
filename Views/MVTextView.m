@@ -9,7 +9,7 @@
 #pragma mark -
 
 @implementation MVTextView
-- (id)initWithFrame:(NSRect)frameRect textContainer:(NSTextContainer *)aTextContainer {
+- (instancetype)initWithFrame:(NSRect)frameRect textContainer:(NSTextContainer *)aTextContainer {
 	if( (self = [super initWithFrame:frameRect textContainer:aTextContainer] ) )
 		defaultTypingAttributes = [[NSDictionary allocWithZone:nil] init];
 	return self;

@@ -9,10 +9,10 @@
 #import "NSColorAdditions.h"
 
 @interface NSTerminologyRegistry : NSObject // Private Foundation Class
-- (id) initWithSuiteName:(NSString *) name bundle:(NSBundle *) bundle;
-- (NSString *) suiteName;
-- (NSArray *) suiteNameArray;
-- (NSString *) suiteDescription;
+- (instancetype) initWithSuiteName:(NSString *) name bundle:(NSBundle *) bundle;
+@property (readonly, copy) NSString *suiteName;
+@property (readonly, copy) NSArray *suiteNameArray;
+@property (readonly, copy) NSString *suiteDescription;
 - (NSDictionary *) classTerminologyDictionary:(NSString *) className;
 - (NSDictionary *) commandTerminologyDictionary:(NSString *) commandName;
 - (NSDictionary *) enumerationTerminologyDictionary:(NSString *) enumName;
@@ -23,13 +23,13 @@
 
 @interface NSScriptObjectSpecifier (NSScriptObjectSpecifierPrivate) // Private Foundation Methods
 + (id) _objectSpecifierFromDescriptor:(NSAppleEventDescriptor *) descriptor inCommandConstructionContext:(id) context;
-- (NSAppleEventDescriptor *) _asDescriptor;
+@property (readonly, copy) NSAppleEventDescriptor *_asDescriptor;
 @end
 
 #pragma mark -
 
 @interface NSAEDescriptorTranslator : NSObject // Private Foundation Class
-+ (id) sharedAEDescriptorTranslator;
++ (NSAEDescriptorTranslator*) sharedAEDescriptorTranslator;
 - (NSAppleEventDescriptor *) descriptorByTranslatingObject:(id) object ofType:(id) type inSuite:(id) suite;
 - (id) objectByTranslatingDescriptor:(NSAppleEventDescriptor *) descriptor toType:(id) type inSuite:(id) suite;
 - (void) registerTranslator:(id) translator selector:(SEL) selector toTranslateFromClass:(Class) class;
@@ -39,7 +39,7 @@
 #pragma mark -
 
 @interface NSString (NSStringFourCharCode)
-- (OSType) fourCharCode;
+@property (readonly) OSType fourCharCode;
 @end
 
 #pragma mark -
@@ -69,7 +69,7 @@
 @implementation JVAppleScriptChatPlugin
 @synthesize scriptFilePath = _path;
 
-- (id) initWithManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithManager:(MVChatPluginManager *) manager {
 	if( ( self = [self init] ) ) {
 		_manager = manager;
 		_doseNotRespond = [[NSMutableSet set] retain];
@@ -80,7 +80,7 @@
 	return self;
 }
 
-- (id) initWithScript:(NSAppleScript *) script atPath:(NSString *) path withManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithScript:(NSAppleScript *) script atPath:(NSString *) path withManager:(MVChatPluginManager *) manager {
 	if( ( self = [self initWithManager:manager] ) ) {
 		_script = [script retain];
 		_path = [path copyWithZone:[self zone]];
@@ -95,7 +95,7 @@
 	return self;
 }
 
-- (id) initWithScriptAtPath:(NSString *) path withManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithScriptAtPath:(NSString *) path withManager:(MVChatPluginManager *) manager {
 	NSAppleScript *script = [[[NSAppleScript alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL] autorelease];
 	if( ! [script compileAndReturnError:NULL] ) {
 		[self release];

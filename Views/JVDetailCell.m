@@ -5,7 +5,7 @@
 @synthesize informationText = _infoText;
 @synthesize lineBreakMode = _lineBreakMode;
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_altImage = nil;
 		_statusImage = nil;

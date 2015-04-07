@@ -31,7 +31,7 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 
 #pragma mark -
 
-@interface JVChatTranscriptPanel (JVChatTranscriptPrivate)
+@interface JVChatTranscriptPanel ()
 - (void) _refreshWindowFileProxy;
 - (void) _refreshSearch;
 
@@ -40,10 +40,10 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 
 - (void) _changeEmoticonsMenuSelection;
 - (void) _updateEmoticonsMenu;
-- (NSMenu *) _emoticonsMenu;
+@property (readonly, copy) NSMenu *_emoticonsMenu;
 
-- (BOOL) _usingSpecificStyle;
-- (BOOL) _usingSpecificEmoticons;
+@property (readonly) BOOL _usingSpecificStyle;
+@property (readonly) BOOL _usingSpecificEmoticons;
 @end
 
 @interface JVChatTranscriptPanel ()
@@ -53,7 +53,7 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 #pragma mark -
 
 @implementation JVChatTranscriptPanel
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_transcript = [[JVChatTranscript allocWithZone:nil] init];
 
@@ -69,7 +69,7 @@ NSString *JVToolbarQuickSearchItemIdentifier = @"JVToolbarQuickSearchItem";
 	return self;
 }
 
-- (id) initWithTranscript:(NSString *) filename {
+- (instancetype) initWithTranscript:(NSString *) filename {
 	if( ( self = [self init] ) ) {
 		if( ! [[NSFileManager defaultManager] isReadableFileAtPath:filename] ) {
 			return nil;

@@ -39,7 +39,7 @@ NSString *JVPythonErrorDomain = @"JVPythonErrorDomain";
 	}
 }
 
-- (id) initWithManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithManager:(MVChatPluginManager *) manager {
 	if( ( self = [self init] ) ) {
 		_manager = manager;
 		_path = nil;
@@ -49,7 +49,7 @@ NSString *JVPythonErrorDomain = @"JVPythonErrorDomain";
 	return self;
 }
 
-- (id) initWithScriptAtPath:(NSString *) path withManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithScriptAtPath:(NSString *) path withManager:(MVChatPluginManager *) manager {
 	if( ( self = [self initWithManager:manager] ) ) {
 		_path = [path copyWithZone:[self zone]];
 		_uniqueModuleName = [[NSString locallyUniqueString] retain];

@@ -25,7 +25,7 @@ static NSUInteger bubbleWindowDepth = 0;
 	return ret;
 }
 
-- (id) init {
+- (instancetype) init {
 	NSPanel *panel = [[NSPanel alloc] initWithContentRect:NSMakeRect( 0., 0., 270., 65. ) styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
 	[panel setBecomesKeyOnlyIfNeeded:YES];
 	[panel setHidesOnDeactivate:NO];

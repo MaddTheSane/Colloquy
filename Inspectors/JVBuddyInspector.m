@@ -11,7 +11,7 @@
 #pragma mark -
 
 @implementation JVBuddyInspector
-- (id) initWithBuddy:(JVBuddy *) buddy {
+- (instancetype) initWithBuddy:(JVBuddy *) buddy {
 	if( ( self = [self init] ) )
 		_buddy = buddy;
 	return self;

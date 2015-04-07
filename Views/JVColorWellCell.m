@@ -32,11 +32,11 @@ NSString *JVColorWellCellColorDidChangeNotification = @"JVColorWellCellColorDidC
 
 #pragma mark -
 
-- (id) initTextCell:(NSString *) string {
+- (instancetype) initTextCell:(NSString *) string {
 	return [self initImageCell:nil];
 }
 
-- (id) initImageCell:(NSImage *) image {
+- (instancetype) initImageCell:(NSImage *) image {
 	static BOOL observingClose = NO;
 	if( ! observingClose ) {
 		[[NSNotificationCenter defaultCenter] addObserver:[self class] selector:@selector( colorPanelClosed: ) name:NSWindowWillCloseNotification object:[NSColorPanel sharedColorPanel]];

@@ -18,7 +18,7 @@ extern NSString *MVChatUserWatchRuleRemovedMatchedUserNotification;
 	BOOL _addressIsRegex;
 	BOOL _interim;
 }
-- (id) initWithDictionaryRepresentation:(NSDictionary *) dictionary;
+- (instancetype) initWithDictionaryRepresentation:(NSDictionary *) dictionary NS_DESIGNATED_INITIALIZER;
 - (NSDictionary *) dictionaryRepresentation;
 
 - (BOOL) isEqualToChatUserWatchRule:(MVChatUserWatchRule *) anotherRule;

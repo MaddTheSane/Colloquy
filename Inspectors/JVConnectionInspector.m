@@ -20,7 +20,7 @@
 #pragma mark -
 
 @implementation JVConnectionInspector
-- (id) initWithConnection:(MVChatConnection *) connection {
+- (instancetype) initWithConnection:(MVChatConnection *) connection {
 	if( ( self = [self init] ) )
 		_connection = connection;
 	return self;

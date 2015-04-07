@@ -66,7 +66,7 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 	return allStyles;
 }
 
-+ (id) styleWithIdentifier:(NSString *) identifier {
++ (instancetype) styleWithIdentifier:(NSString *) identifier {
 	for( JVStyle *style in allStyles )
 		if( [[style identifier] isEqualToString:identifier] )
 			return style;
@@ -94,7 +94,7 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 
 #pragma mark -
 
-+ (id) defaultStyle {
++ (JVStyle*) defaultStyle {
 	id ret = [self styleWithIdentifier:[[NSUserDefaults standardUserDefaults] objectForKey:@"JVChatDefaultStyle"]];
 	if( ! ret ) {
 		[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"JVChatDefaultStyle"];
@@ -116,7 +116,7 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 
 #pragma mark -
 
-- (id) initWithBundle:(NSBundle *) bundle {
+- (instancetype) initWithBundle:(NSBundle *) bundle {
 	if( ( self = [self init] ) ) {
 		if( ! bundle ) {
 			return nil;

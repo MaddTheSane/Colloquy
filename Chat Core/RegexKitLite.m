@@ -267,13 +267,12 @@ NSString * const RKLICURegexSubjectRangeErrorKey       = @"RKLICURegexSubjectRan
 NSString * const RKLICURegexSubjectStringErrorKey      = @"RKLICURegexSubjectString";
 
 // Used internally by rkl_userInfoDictionary to specify which arguments should be set in the NSError userInfo dictionary.
-enum {
+typedef NS_OPTIONS(NSUInteger, RKLUserInfoOptions) {
   RKLUserInfoNone                    = 0UL,
   RKLUserInfoSubjectRange            = 1UL << 0,
   RKLUserInfoReplacedCount           = 1UL << 1,
   RKLUserInfoRegexEnumerationOptions = 1UL << 2,
 };
-typedef NSUInteger RKLUserInfoOptions;
 
 ////////////
 #pragma mark -
@@ -302,7 +301,7 @@ enum {
   RKLUnlockedCacheSpinLock = 1UL << 1,
 };
 
-enum {
+typedef NS_OPTIONS(NSUInteger, RKLRegexOp) {
   RKLSplitOp                         = 1UL,
   RKLReplaceOp                       = 2UL,
   RKLRangeOp                         = 3UL,
@@ -315,13 +314,11 @@ enum {
   RKLReplaceMutable                  = 1UL << 4,
   RKLSubcapturesArray                = 1UL << 5,
 };
-typedef NSUInteger RKLRegexOp;
 
-enum {
+typedef NS_ENUM(NSUInteger, RKLBlockEnumerationOp) {
   RKLBlockEnumerationMatchOp   = 1UL,
   RKLBlockEnumerationReplaceOp = 2UL,
 };
-typedef NSUInteger RKLBlockEnumerationOp;
 
 typedef struct {
   RKL_STRONG_REF NSRange    * RKL_GC_VOLATILE ranges;
@@ -1807,12 +1804,12 @@ static id rkl_performEnumerationUsingBlock(id self, SEL _cmd,
   RKL_STRONG_REF void * RKL_GC_VOLATILE scratchBuffer[_RKL_SCRATCH_BUFFERS];
   NSUInteger     needToFreeBufferUniChar:1;
 }
-- (id)initWithRegex:(NSString *)initRegexString options:(RKLRegexOptions)initOptions string:(NSString *)initString range:(NSRange)initRange error:(NSError **)initError;
+- (instancetype)initWithRegex:(NSString *)initRegexString options:(RKLRegexOptions)initOptions string:(NSString *)initString range:(NSRange)initRange error:(NSError **)initError NS_DESIGNATED_INITIALIZER;
 @end
 
 @implementation RKLBlockEnumerationHelper
 
-- (id)initWithRegex:(NSString *)initRegexString options:(RKLRegexOptions)initOptions string:(NSString *)initString range:(NSRange)initRange error:(NSError **)initError
+- (instancetype)initWithRegex:(NSString *)initRegexString options:(RKLRegexOptions)initOptions string:(NSString *)initString range:(NSRange)initRange error:(NSError **)initError
 {
   volatile NSUInteger RKL_CLEANUP(rkl_cleanup_cacheSpinLockStatus) rkl_cacheSpinLockStatus = 0UL;
 

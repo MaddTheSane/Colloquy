@@ -38,6 +38,6 @@
 - (void) removeAllShadedAreas;
 
 @property (readonly) unsigned long long contentViewLength;
-- (CGFloat) scaleToContentView;
-- (CGFloat) shiftAmountToCenterAlign;
+@property (readonly) CGFloat scaleToContentView;
+@property (readonly) CGFloat shiftAmountToCenterAlign;
 @end

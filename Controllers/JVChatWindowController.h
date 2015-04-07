@@ -27,7 +27,7 @@ extern NSString *JVChatViewPboardType;
 }
 @property (copy) NSString *identifier;
 
-- (NSString *) userDefaultsPreferencesKey;
+@property (readonly, copy) NSString *userDefaultsPreferencesKey;
 - (void) setPreference:(id) value forKey:(NSString *) key;
 - (id) preferenceForKey:(NSString *) key;
 
@@ -45,10 +45,10 @@ extern NSString *JVChatViewPboardType;
 
 - (NSArray *) chatViewControllersForConnection:(MVChatConnection *) connection;
 - (NSArray *) chatViewControllersWithControllerClass:(Class) class;
-- (NSArray *) allChatViewControllers;
+@property (readonly, copy) NSArray *allChatViewControllers;
 
-- (id <JVChatViewController>) activeChatViewController;
-- (id <JVChatListItem>) selectedListItem;
+@property (readonly, strong) id<JVChatViewController> activeChatViewController;
+@property (readonly, strong) id<JVChatListItem> selectedListItem;
 
 - (IBAction) getInfo:(id) sender;
 
@@ -61,7 +61,7 @@ extern NSString *JVChatViewPboardType;
 - (IBAction) selectNextPanel:(id) sender;
 - (IBAction) selectNextActivePanel:(id) sender;
 
-- (NSToolbarItem *) toggleChatDrawerToolbarItem;
+@property (readonly, copy) NSToolbarItem *toggleChatDrawerToolbarItem;
 - (IBAction) toggleViewsDrawer:(id) sender;
 - (IBAction) openViewsDrawer:(id) sender;
 - (IBAction) closeViewsDrawer:(id) sender;
@@ -74,7 +74,7 @@ extern NSString *JVChatViewPboardType;
 @end
 
 @interface JVChatWindowController (JVChatWindowControllerScripting)
-- (NSNumber *) uniqueIdentifier;
+@property (readonly, copy) NSNumber *uniqueIdentifier;
 @end
 
 @protocol JVChatViewController <JVChatListItem>

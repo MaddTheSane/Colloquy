@@ -25,14 +25,13 @@
 
 + (AICustomTabDragging *)sharedInstance;
 - (void)dragTabCell:(AICustomTabCell *)inTabCell fromCustomTabsView:(AICustomTabsView *)sourceView withEvent:(NSEvent *)inEvent selectTab:(BOOL)shouldSelect;
-- (void)setDestinationTabView:(AICustomTabsView *)inDest;
 
-- (AICustomTabsView *)destinationTabView;
-- (AICustomTabsView *)sourceTabView;
+@property (strong) AICustomTabsView *destinationTabView;
+@property (readonly, strong) AICustomTabsView *sourceTabView;
 
 - (void)setDestinationHoverPoint:(NSPoint)inPoint;
-- (NSSize)sizeOfDraggedCell;
+@property (readonly) NSSize sizeOfDraggedCell;
 - (void)acceptDragIntoTabView:(AICustomTabsView *)destTabView atIndex:(NSInteger)destIndex;
-- (NSTabViewItem *)draggedTabViewItem;
+@property (readonly, strong) NSTabViewItem *draggedTabViewItem;
 
 @end

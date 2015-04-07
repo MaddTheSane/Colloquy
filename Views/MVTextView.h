@@ -16,7 +16,7 @@
 
 - (IBAction) reset:(id) sender;
 
-- (NSSize) minimumSizeForContent;
+@property (readonly) NSSize minimumSizeForContent;
 
 - (IBAction) bold:(id) sender;
 - (IBAction) italic:(id) sender;

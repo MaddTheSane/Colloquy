@@ -19,7 +19,7 @@
 @end
 
 @implementation JVMarkedScroller
-- (id) initWithFrame:(NSRect) frame {
+- (instancetype) initWithFrame:(NSRect) frame {
 	if( ( self = [super initWithFrame:frame] ) ) {
 		_marks = [NSMutableSet set];
 		_shades = [NSMutableArray array];

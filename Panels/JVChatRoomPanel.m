@@ -18,14 +18,14 @@ NSString *const MVFavoritesListDidUpdateNotification = @"MVFavoritesListDidUpdat
 
 @interface JVChatRoomPanel (JVChatRoomPrivate)
 - (void) _topicChanged:(id) sender;
-- (NSInteger) _roomIndexInFavoritesMenu;
+@property (readonly) NSInteger _roomIndexInFavoritesMenu;
 @end
 
 #pragma mark -
 
 @interface JVDirectChatPanel (JVDirectChatPrivate)
-- (NSString *) _selfCompositeName;
-- (NSString *) _selfStoredNickname;
+@property (readonly, copy) NSString *_selfCompositeName;
+@property (readonly, copy) NSString *_selfStoredNickname;
 - (NSMutableAttributedString *) _convertRawMessage:(NSData *) message;
 - (NSMutableAttributedString *) _convertRawMessage:(NSData *) message withBaseFont:(NSFont *) baseFont;
 - (void) _didConnect:(NSNotification *) notification;
@@ -37,15 +37,15 @@ NSString *const MVFavoritesListDidUpdateNotification = @"MVFavoritesListDidUpdat
 #pragma mark -
 
 @interface JVChatRoomMember (JVChatMemberPrivate)
-- (NSString *) _selfStoredNickname;
-- (NSString *) _selfCompositeName;
+@property (readonly, copy) NSString *_selfStoredNickname;
+@property (readonly, copy) NSString *_selfCompositeName;
 - (void) _detach;
 @end
 
 #pragma mark -
 
 @implementation JVChatRoomPanel
-- (id) initWithTarget:(id) target {
+- (instancetype) initWithTarget:(id) target {
 	if( ( self = [super initWithTarget:target] ) ) {
 		_sortedMembers = [[NSMutableArray allocWithZone:nil] initWithCapacity:100];
 		_preferredTabCompleteNicknames = [[NSMutableArray allocWithZone:nil] initWithCapacity:10];
@@ -340,15 +340,15 @@ NSString *const MVFavoritesListDidUpdateNotification = @"MVFavoritesListDidUpdat
 
 	if( [message ignoreStatus] == JVNotIgnored && [[message sender] respondsToSelector:@selector( isLocalUser )] && ! [[message sender] isLocalUser] ) {
 		NSMutableDictionary *context = [NSMutableDictionary dictionary];
-		[context setObject:[NSString stringWithFormat:NSLocalizedString( @"%@ Room Activity", "room activity bubble title" ), [self title]] forKey:@"title"];
-		if( [self newMessagesWaiting] == 1 ) [context setObject:[NSString stringWithFormat:NSLocalizedString( @"%@ has a message waiting\nfrom %@.", "new single room message bubble text" ), [self title], [member displayName]] forKey:@"title"];
-		else [context setObject:[NSString stringWithFormat:NSLocalizedString( @"%@ has %d messages waiting.\nLast from %@", "new room messages bubble text" ), [self title], [self newMessagesWaiting], [member displayName]] forKey:@"title"];
-		[context setObject:[NSString stringWithFormat:NSLocalizedString( @"%@", "room activity bubble message" ), [message bodyAsPlainText]] forKey:@"description"];
-		[context setObject:[NSImage imageNamed:@"room"] forKey:@"image"];
-		[context setObject:[[self windowTitle] stringByAppendingString:@"JVChatRoomActivity"] forKey:@"coalesceKey"];
-		[context setObject:self forKey:@"target"];
-		[context setObject:NSStringFromSelector( @selector( activate: ) ) forKey:@"action"];
-		[context setObject:[NSString stringWithFormat:@"%@ — %@: %@", [member displayName], self.target, [message bodyAsPlainText]] forKey:@"subtitle"];
+		context[@"title"] = [NSString stringWithFormat:NSLocalizedString( @"%@ Room Activity", "room activity bubble title" ), [self title]];
+		if( [self newMessagesWaiting] == 1 ) context[@"title"] = [NSString stringWithFormat:NSLocalizedString( @"%@ has a message waiting\nfrom %@.", "new single room message bubble text" ), [self title], [member displayName]];
+		else context[@"title"] = [NSString stringWithFormat:NSLocalizedString( @"%@ has %d messages waiting.\nLast from %@", "new room messages bubble text" ), [self title], [self newMessagesWaiting], [member displayName]];
+		context[@"description"] = [NSString stringWithFormat:NSLocalizedString( @"%@", "room activity bubble message" ), [message bodyAsPlainText]];
+		context[@"image"] = [NSImage imageNamed:@"room"];
+		context[@"coalesceKey"] = [[self windowTitle] stringByAppendingString:@"JVChatRoomActivity"];
+		context[@"target"] = self;
+		context[@"action"] = NSStringFromSelector( @selector( activate: ) );
+		context[@"subtitle"] = [NSString stringWithFormat:@"%@ — %@: %@", [member displayName], self.target, [message bodyAsPlainText]];
 		[self performNotification:@"JVChatRoomActivity" withContextInfo:context];
 	}
 
@@ -954,7 +954,7 @@ NSString *const MVFavoritesListDidUpdateNotification = @"MVFavoritesListDidUpdat
 	JVChatRoomMember *member = [self chatRoomMemberForUser:[notification object]];
 	if( ! member ) return;
 
-	NSString *oldNickname = [[notification userInfo] objectForKey:@"oldNickname"];
+	NSString *oldNickname = [notification userInfo][@"oldNickname"];
 
 	NSUInteger index = [_preferredTabCompleteNicknames indexOfObject:oldNickname];
 	if( index != NSNotFound ) _preferredTabCompleteNicknames[index] = [member nickname];

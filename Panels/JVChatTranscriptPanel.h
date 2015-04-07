@@ -30,7 +30,7 @@ extern NSString *JVToolbarQuickSearchItemIdentifier;
 	NSString *_searchQuery;
 	AGRegex *_searchQueryRegex;
 }
-- (id) initWithTranscript:(NSString *) filename;
+- (instancetype) initWithTranscript:(NSString *) filename;
 
 - (IBAction) changeStyle:(id) sender;
 - (void) setStyle:(JVStyle *) style withVariant:(NSString *) variant;
@@ -42,7 +42,7 @@ extern NSString *JVToolbarQuickSearchItemIdentifier;
 - (IBAction) changeEmoticons:(id) sender;
 @property (strong) JVEmoticonSet *emoticons;
 
-- (JVChatTranscript *) transcript;
+@property (readonly, strong) JVChatTranscript *transcript;
 - (void) jumpToMessage:(JVChatMessage *) message;
 
 - (IBAction) close:(id) sender;
@@ -53,7 +53,7 @@ extern NSString *JVToolbarQuickSearchItemIdentifier;
 
 @property (copy) NSString *searchQuery;
 
-- (JVStyleView *) display;
+@property (readonly, strong) JVStyleView *display;
 @end
 
 #pragma mark -

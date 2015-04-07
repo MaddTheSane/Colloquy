@@ -107,7 +107,7 @@ NSString *NSChatCTCPTwoFormatType = @"NSChatCTCPTwoFormatType";
 
 @implementation NSAttributedString (NSAttributedStringHTMLAdditions)
 #if SYSTEM(MAC)
-+ (id) attributedStringWithHTMLFragment:(NSString *) fragment baseURL:(NSURL *) url {
++ (instancetype) attributedStringWithHTMLFragment:(NSString *) fragment baseURL:(NSURL *) url {
 	NSParameterAssert( fragment != nil );
 
 	NSMutableDictionary *options = [[NSMutableDictionary allocWithZone:nil] initWithObjectsAndKeys:@(NSUTF8StringEncoding), NSCharacterEncodingDocumentOption, nil];
@@ -235,13 +235,13 @@ NSString *NSChatCTCPTwoFormatType = @"NSChatCTCPTwoFormatType";
 #pragma mark -
 
 #if SYSTEM(MAC)
-+ (id) attributedStringWithChatFormat:(NSData *) data options:(NSDictionary *) options {
++ (instancetype) attributedStringWithChatFormat:(NSData *) data options:(NSDictionary *) options {
 	return [[self allocWithZone:nil] initWithChatFormat:data options:options];
 }
 #endif
 
 #if SYSTEM(MAC)
-- (id) initWithChatFormat:(NSData *) data options:(NSDictionary *) options {
+- (instancetype) initWithChatFormat:(NSData *) data options:(NSDictionary *) options {
 	NSStringEncoding encoding = [options[@"StringEncoding"] unsignedLongValue];
 	if( ! encoding ) encoding = NSISOLatin1StringEncoding;
 
@@ -608,9 +608,9 @@ NSString *NSChatCTCPTwoFormatType = @"NSChatCTCPTwoFormatType";
 		id link = dict[NSLinkAttributeName];
 		BOOL bold = NO, italic = NO, underline = NO;
 #if SYSTEM(MAC)
-		NSFont *currentFont = [dict objectForKey:NSFontAttributeName];
-		NSColor *foregroundColor = [dict objectForKey:NSForegroundColorAttributeName];
-		NSColor *backgroundColor = [dict objectForKey:NSBackgroundColorAttributeName];
+		NSFont *currentFont = dict[NSFontAttributeName];
+		NSColor *foregroundColor = dict[NSForegroundColorAttributeName];
+		NSColor *backgroundColor = dict[NSBackgroundColorAttributeName];
 #else
 		UIFont *currentFont = dict[NSFontAttributeName];
 		UIColor *foregroundColor = dict[NSForegroundColorAttributeName];

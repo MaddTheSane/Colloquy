@@ -29,7 +29,7 @@
 	return _startDate;
 }
 
-- (id) initWithNode:(xmlNode *) node andTranscript:(JVChatTranscript *) transcript {
+- (instancetype) initWithNode:(xmlNode *) node andTranscript:(JVChatTranscript *) transcript {
 	if( ( self = [self init] ) ) {
 		_node = node;
 		_transcript = transcript; // weak reference

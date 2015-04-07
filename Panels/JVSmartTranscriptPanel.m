@@ -12,7 +12,7 @@
 static NSString *JVToolbarRuleSettingsItemIdentifier = @"JVToolbarRuleSettingsItem";
 
 @implementation JVSmartTranscriptPanel
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_operation = 1;
 		_newMessages = 0;
@@ -27,7 +27,7 @@ static NSString *JVToolbarRuleSettingsItemIdentifier = @"JVToolbarRuleSettingsIt
 	return self;
 }
 
-- (id) initWithSettings:(NSDictionary *) settings {
+- (instancetype) initWithSettings:(NSDictionary *) settings {
 	if( ( self = [self init] ) ) {
 		_settingsNibLoaded = [NSBundle loadNibNamed:@"JVSmartTranscriptFilterSheet" owner:self];
 
@@ -42,7 +42,7 @@ static NSString *JVToolbarRuleSettingsItemIdentifier = @"JVToolbarRuleSettingsIt
 	return self;
 }
 
-- (id) initWithCoder:(NSCoder *) coder {
+- (instancetype) initWithCoder:(NSCoder *) coder {
 	if( [coder allowsKeyedCoding] ) {
 		NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 		settings[@"rules"] = [coder decodeObjectForKey:@"rules"];

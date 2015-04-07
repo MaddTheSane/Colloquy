@@ -30,7 +30,7 @@
 #pragma mark -
 
 @implementation JVChatUserInspector
-- (id) initWithChatUser:(MVChatUser *) user {
+- (instancetype) initWithChatUser:(MVChatUser *) user {
 	if( ( self = [self init] ) )
 		_user = user;
 	return self;

@@ -275,15 +275,15 @@ static NSMutableAttributedString *parseXHTMLTreeNode( xmlNode *node, NSDictionar
 #pragma mark -
 
 @implementation NSAttributedString (NSAttributedStringXMLAdditions)
-+ (id) attributedStringWithXHTMLTree:(void *) node baseURL:(NSURL *) base defaultAttributes:(NSDictionary *) attributes {
++ (instancetype) attributedStringWithXHTMLTree:(void *) node baseURL:(NSURL *) base defaultAttributes:(NSDictionary *) attributes {
 	return [[[self alloc] initWithXHTMLTree:node baseURL:base defaultAttributes:attributes] autorelease];
 }
 
-+ (id) attributedStringWithXHTMLFragment:(NSString *) fragment baseURL:(NSURL *) base defaultAttributes:(NSDictionary *) attributes {
++ (instancetype) attributedStringWithXHTMLFragment:(NSString *) fragment baseURL:(NSURL *) base defaultAttributes:(NSDictionary *) attributes {
 	return [[[self alloc] initWithXHTMLFragment:fragment baseURL:base defaultAttributes:attributes] autorelease];
 }
 
-- (id) initWithXHTMLTree:(void *) node baseURL:(NSURL *) base defaultAttributes:(NSDictionary *) attributes {
+- (instancetype) initWithXHTMLTree:(void *) node baseURL:(NSURL *) base defaultAttributes:(NSDictionary *) attributes {
 	NSMutableDictionary *attrs = [NSMutableDictionary dictionaryWithDictionary:attributes];
 	if( ! attrs[NSFontAttributeName] )
 		attrs[NSFontAttributeName] = [NSFont userFontOfSize:12.];
@@ -291,7 +291,7 @@ static NSMutableAttributedString *parseXHTMLTreeNode( xmlNode *node, NSDictionar
 	return [self initWithAttributedString:ret];
 }
 
-- (id) initWithXHTMLFragment:(NSString *) fragment baseURL:(NSURL *) base defaultAttributes:(NSDictionary *) attributes {
+- (instancetype) initWithXHTMLFragment:(NSString *) fragment baseURL:(NSURL *) base defaultAttributes:(NSDictionary *) attributes {
 	const char *string = [[NSString stringWithFormat:@"<root>%@</root>", [fragment stringByStrippingIllegalXMLCharacters]] UTF8String];
 
 	if( string ) {

@@ -1638,14 +1638,14 @@ static void reachabilityCallback( SCNetworkReachabilityRef target, SCNetworkConn
 					cformat = nil;
 			}
 
-			NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:@(realEncoding), @"StringEncoding", cformat, @"FormatType", nil];
+			NSDictionary *options = @{@"StringEncoding": @(realEncoding), @"FormatType": cformat};
 			NSData *msgData = [realMessage chatFormatWithOptions:options];
 #elif USE(PLAIN_CHAT_STRING) || USE(HTML_CHAT_STRING)
 			NSData *msgData = [realMessage dataUsingEncoding:realEncoding];
 #endif
 
 			if( [target isKindOfClass:[MVChatRoom class]] ) {
-				NSDictionary *info = [[NSDictionary alloc] initWithObjectsAndKeys:[[(MVChatRoom *)target connection] localUser], @"user", msgData, @"message", [NSString locallyUniqueString], @"identifier", [NSNumber numberWithBool:realAction], @"action", nil];
+				NSDictionary *info = @{@"user": [[(MVChatRoom *)target connection] localUser], @"message": msgData, @"identifier": [NSString locallyUniqueString], @"action": @(realAction)};
 				[[NSNotificationCenter chatCenter] postNotificationName:MVChatRoomGotMessageNotification object:target userInfo:info];
 			} // we can't really echo a private message with our current notifications
 		}

@@ -12,9 +12,9 @@ extern NSString *JVPythonErrorDomain;
 	BOOL _firstLoad;
 	BOOL _errorShown;
 }
-- (id) initWithScriptAtPath:(NSString *) path withManager:(MVChatPluginManager *) manager;
+- (instancetype) initWithScriptAtPath:(NSString *) path withManager:(MVChatPluginManager *) manager;
 
-- (MVChatPluginManager *) pluginManager;
+@property (readonly, strong) MVChatPluginManager *pluginManager;
 @property (readonly, copy) NSString *scriptFilePath;
 - (void) reloadFromDisk;
 

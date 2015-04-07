@@ -98,7 +98,7 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 #pragma mark Class accessors
 
 + (NSArray *) defaultServerPorts {
-	id defaultPort = [NSNumber numberWithUnsignedShort:(unsigned short)7326];
+	id defaultPort = @((unsigned short)7326);
 	return @[defaultPort];
 }
 

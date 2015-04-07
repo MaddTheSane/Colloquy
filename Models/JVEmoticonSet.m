@@ -48,7 +48,7 @@ NSString *JVEmoticonSetsScannedNotification = @"JVEmoticonSetsScannedNotificatio
 	return allEmoticonSets;
 }
 
-+ (id) emoticonSetWithIdentifier:(NSString *) identifier {
++ (instancetype) emoticonSetWithIdentifier:(NSString *) identifier {
 	if( [identifier isEqualToString:@"cc.javelin.colloquy.emoticons.text-only"] )
 		return [self textOnlyEmoticonSet];
 
@@ -91,7 +91,7 @@ NSString *JVEmoticonSetsScannedNotification = @"JVEmoticonSetsScannedNotificatio
 
 #pragma mark -
 
-- (id) initWithBundle:(NSBundle *) bundle {
+- (instancetype) initWithBundle:(NSBundle *) bundle {
 	if( ! bundle ) {
 		return nil;
 	}

@@ -53,7 +53,7 @@ static BOOL applicationIsTerminating = NO;
 @end
 
 @implementation MVApplicationController
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		mach_port_t masterPort = 0;
 		IOMasterPort( MACH_PORT_NULL, &masterPort );
@@ -114,7 +114,7 @@ static BOOL applicationIsTerminating = NO;
 			// no longer idle
 
 			_isIdle = NO;
-			[[NSNotificationCenter chatCenter] postNotificationName:JVMachineStoppedIdlingNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:idle] forKey:@"idleTime"]];
+			[[NSNotificationCenter chatCenter] postNotificationName:JVMachineStoppedIdlingNotification object:self userInfo:@{@"idleTime": @(idle)}];
 
 			// reschedule the timer, to check for idle every 10 seconds
 			[_idleCheck invalidate];
@@ -126,7 +126,7 @@ static BOOL applicationIsTerminating = NO;
 			// we're now idle
 
 			_isIdle = YES;
-			[[NSNotificationCenter chatCenter] postNotificationName:JVMachineBecameIdleNotification object:self userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:idle] forKey:@"idleTime"]];
+			[[NSNotificationCenter chatCenter] postNotificationName:JVMachineBecameIdleNotification object:self userInfo:@{@"idleTime": @(idle)}];
 
 			// reschedule the timer, we will check every 2 seconds to catch the user's return quickly
 			[_idleCheck invalidate];

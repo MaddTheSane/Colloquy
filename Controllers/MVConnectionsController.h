@@ -91,8 +91,8 @@
 
 - (IBAction) userSelectionSelected:(id) sender;
 
-- (NSArray *) connections;
-- (NSArray *) connectedConnections;
+@property (readonly, copy) NSArray *connections;
+@property (readonly, copy) NSArray *connectedConnections;
 - (MVChatConnection *) connectionForServerAddress:(NSString *) address;
 - (NSArray *) connectionsForServerAddress:(NSString *) address;
 - (BOOL) managesConnection:(MVChatConnection *) connection;

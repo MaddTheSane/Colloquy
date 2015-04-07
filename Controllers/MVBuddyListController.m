@@ -46,7 +46,7 @@ static MVBuddyListController *sharedInstance = nil;
 
 #pragma mark -
 
-- (id) initWithWindowNibName:(NSString *) windowNibName {
+- (instancetype) initWithWindowNibName:(NSString *) windowNibName {
 	if( ( self = [super initWithWindowNibName:@"MVBuddyList"] ) ) {
 		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _buddyOnline: ) name:JVBuddyCameOnlineNotification object:nil];
 		[[NSNotificationCenter chatCenter] addObserver:self selector:@selector( _buddyOffline: ) name:JVBuddyWentOfflineNotification object:nil];
@@ -895,7 +895,7 @@ static MVBuddyListController *sharedInstance = nil;
 
 	NSImage *icon = [buddy picture];
 	if( ! icon ) icon = [NSImage imageNamed:@"person"];
-	[context setObject:icon forKey:@"image"];
+	context[@"image"] = icon;
 
 	[[JVNotificationController defaultController] performNotification:@"JVChatBuddyOnline" withContextInfo:context];
 }
@@ -918,7 +918,7 @@ static MVBuddyListController *sharedInstance = nil;
 
 		NSImage *icon = [buddy picture];
 		if( ! icon ) icon = [NSImage imageNamed:@"person"];
-		[context setObject:icon forKey:@"image"];
+		context[@"image"] = icon;
 
 		[[JVNotificationController defaultController] performNotification:@"JVChatBuddyOffline" withContextInfo:context];
 	}

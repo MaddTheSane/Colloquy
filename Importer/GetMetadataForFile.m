@@ -20,8 +20,8 @@ __private_extern @interface JVChatTranscriptMetadataExtractor : NSObject <NSXMLP
 @property (strong) NSMutableString *content;
 @property (strong) NSMutableSet *participants;
 
-- (id) initWithCapacity:(NSUInteger) capacity;
-- (NSDictionary *) metadataAttributes;
+- (instancetype) initWithCapacity:(NSUInteger) capacity NS_DESIGNATED_INITIALIZER;
+@property (readonly, copy) NSDictionary *metadataAttributes;
 @end
 
 @implementation JVChatTranscriptMetadataExtractor
@@ -29,7 +29,7 @@ __private_extern @interface JVChatTranscriptMetadataExtractor : NSObject <NSXMLP
 @synthesize content;
 @synthesize participants;
 
-- (id)initWithCapacity:(NSUInteger)capacity
+- (instancetype)initWithCapacity:(NSUInteger)capacity
 {
 	if (self = [super init]) {
 		self.content = [[NSMutableString alloc] initWithCapacity:capacity];

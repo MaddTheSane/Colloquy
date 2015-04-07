@@ -15,5 +15,5 @@
 @property (assign) IBOutlet NSTextView *editor;
 @property (readonly, retain) JVAppleScriptChatPlugin *plugin;
 
-- (id) initWithAppleScriptChatPlugin:(JVAppleScriptChatPlugin *) plugin;
+- (instancetype) initWithAppleScriptChatPlugin:(JVAppleScriptChatPlugin *) plugin;
 @end

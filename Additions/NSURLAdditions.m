@@ -1,7 +1,7 @@
 #import "NSURLAdditions.h"
 
 @implementation NSURL (NSURLAdditions)
-+ (id) URLWithInternetLocationFile:(NSString *) path {
++ (instancetype) URLWithInternetLocationFile:(NSString *) path {
 	const char *fileSystemPath = [[NSFileManager defaultManager] fileSystemRepresentationWithPath:path];
 
 	FSRef ref;

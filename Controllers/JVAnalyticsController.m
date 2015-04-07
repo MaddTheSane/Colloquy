@@ -135,7 +135,7 @@ static void generateUniqueMachineIdentifier() {
 	[[NSUserDefaults standardUserDefaults] setObject:uniqueMachineIdentifier forKey:@"JVUniqueMachineIdentifier"];
 }
 
-- (id) init {
+- (instancetype) init {
 	if (!(self = [super init]))
 		return nil;
 

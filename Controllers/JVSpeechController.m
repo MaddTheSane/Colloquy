@@ -9,7 +9,7 @@
 	return sharedSpeechController;
 }
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_speechQueue = [[NSMutableArray alloc] initWithCapacity:15];
 		_synthesizers = @[[[NSSpeechSynthesizer alloc] initWithVoice:nil], [[NSSpeechSynthesizer alloc] initWithVoice:nil], [[NSSpeechSynthesizer alloc] initWithVoice:nil]];

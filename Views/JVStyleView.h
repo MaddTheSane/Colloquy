@@ -74,14 +74,13 @@ extern NSString *JVStyleViewDidChangeStylesNotification;
 - (void) clearScrollbarMarks;
 - (void) clearScrollbarMarksWithIdentifier:(NSString *) identifier;
 
-- (JVMarkedScroller *) verticalMarkedScroller;
+@property (readonly, strong) JVMarkedScroller *verticalMarkedScroller;
 - (IBAction) jumpToMark:(id) sender;
 - (IBAction) jumpToPreviousHighlight:(id) sender;
 - (IBAction) jumpToNextHighlight:(id) sender;
 - (void) jumpToMessage:(JVChatMessage *) message;
 - (void) scrollToBottom;
-- (BOOL) scrolledNearBottom;
+@property (readonly) BOOL scrolledNearBottom;
 
-- (NSTextView *) nextTextView;
-- (void) setNextTextView:(NSTextView *) textView;
+@property (strong) NSTextView *nextTextView;
 @end

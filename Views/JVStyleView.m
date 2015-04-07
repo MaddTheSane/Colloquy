@@ -50,7 +50,7 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 #pragma mark -
 
 @interface DOMHTMLElement (DOMHTMLElementExtras)
-- (NSUInteger) childElementLength;
+@property (readonly) NSUInteger childElementLength;
 - (DOMNode *) childElementAtIndex:(NSUInteger) index;
 - (NSInteger) integerForDOMProperty:(NSString *) property;
 - (void) setInteger:(NSInteger) value forDOMProperty:(NSString *) property;
@@ -106,15 +106,15 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 
 #pragma mark -
 
-@interface JVStyleView (JVStyleViewPrivate)
+@interface JVStyleView ()
 - (void) _resetDisplay;
 - (void) _switchStyle;
 - (void) _appendMessage:(NSString *) message;
 - (void) _prependMessages:(NSString *) messages;
 - (void) _styleError;
 - (NSString *) _contentHTMLWithBody:(NSString *) html;
-- (NSURL *) _baseURL;
-- (NSUInteger) _visibleMessageCount;
+@property (readonly, copy) NSURL *_baseURL;
+@property (readonly) NSUInteger _visibleMessageCount;
 - (NSUInteger) _locationOfMessage:(JVChatMessage *) message;
 - (NSUInteger) _locationOfElementAtIndex:(NSUInteger) index;
 - (void) _setupMarkedScroller;
@@ -136,7 +136,7 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 
 #pragma mark -
 
-- (id) initWithCoder:(NSCoder *) coder {
+- (instancetype) initWithCoder:(NSCoder *) coder {
 	if( ( self = [super initWithCoder:coder] ) ) {
 		_switchingStyles = NO;
 		_forwarding = NO;

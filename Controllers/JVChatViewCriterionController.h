@@ -57,9 +57,9 @@ typedef NS_ENUM(NSInteger, JVChatViewCriterionOperation) { // corresponds to the
 
 	BOOL _changed;
 }
-+ (id) controller;
++ (instancetype) controller;
 
-- (NSView *) view;
+@property (readonly, strong) NSView *view;
 
 @property (readonly) JVChatViewCriterionFormat format;
 @property JVChatViewCriterionKind kind;
@@ -71,9 +71,9 @@ typedef NS_ENUM(NSInteger, JVChatViewCriterionOperation) { // corresponds to the
 - (IBAction) changeQuery:(id) sender;
 - (IBAction) noteOtherChanges:(id) sender;
 
-- (BOOL) changedSinceLastMatch;
+@property (readonly) BOOL changedSinceLastMatch;
 - (BOOL) matchChatView:(id <JVChatViewController>) chatView ignoringCase:(BOOL) ignoreCase;
 
-- (NSView *) firstKeyView;
-- (NSView *) lastKeyView;
+@property (readonly, strong) NSView *firstKeyView;
+@property (readonly, strong) NSView *lastKeyView;
 @end

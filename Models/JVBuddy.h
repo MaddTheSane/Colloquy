@@ -10,17 +10,17 @@ extern NSString *JVBuddyActiveUserChangedNotification;
 
 @class ABPerson;
 
-typedef enum {
+typedef NS_OPTIONS(unsigned int, JVBuddyName) {
 	JVBuddyActiveNickname = 0x0,
 	JVBuddyGivenNickname = 0x1,
 	JVBuddyFullName = 0x2
-} JVBuddyName;
+};
 
 @interface JVBuddy : NSObject
 + (JVBuddyName) preferredName;
 + (void) setPreferredName:(JVBuddyName) preferred;
 
-- (id) initWithDictionaryRepresentation:(NSDictionary *) dictionary;
+- (instancetype) initWithDictionaryRepresentation:(NSDictionary *) dictionary;
 - (NSDictionary *) dictionaryRepresentation;
 
 - (void) registerWithConnection:(MVChatConnection *) connection;

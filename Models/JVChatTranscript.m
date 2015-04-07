@@ -46,29 +46,29 @@ NSString *JVChatTranscriptUpdatedNotification = @"JVChatTranscriptUpdatedNotific
 #pragma mark -
 
 @implementation JVChatTranscript
-+ (id) chatTranscript {
++ (instancetype) chatTranscript {
 	return [[self alloc] init];
 }
 
-+ (id) chatTranscriptWithChatTranscript:(JVChatTranscript *) transcript {
++ (instancetype) chatTranscriptWithChatTranscript:(JVChatTranscript *) transcript {
 	return [[self alloc] initWithChatTranscript:transcript];
 }
 
-+ (id) chatTranscriptWithElements:(NSArray *) elements {
++ (instancetype) chatTranscriptWithElements:(NSArray *) elements {
 	return [[self alloc] initWithElements:elements];
 }
 
-+ (id) chatTranscriptWithContentsOfFile:(NSString *) path {
++ (instancetype) chatTranscriptWithContentsOfFile:(NSString *) path {
 	return [[self alloc] initWithContentsOfFile:path];
 }
 
-+ (id) chatTranscriptWithContentsOfURL:(NSURL *) url {
++ (instancetype) chatTranscriptWithContentsOfURL:(NSURL *) url {
 	return [[self alloc] initWithContentsOfURL:url];
 }
 
 #pragma mark -
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_filePath = nil;
 		_logFile = nil;
@@ -90,21 +90,21 @@ NSString *JVChatTranscriptUpdatedNotification = @"JVChatTranscriptUpdatedNotific
 	return self;
 }
 
-- (id) initWithChatTranscript:(JVChatTranscript *) transcript {
+- (instancetype) initWithChatTranscript:(JVChatTranscript *) transcript {
 	if( ( self = [self init] ) )
 		[self appendChatTranscript:transcript];
 
 	return self;
 }
 
-- (id) initWithElements:(NSArray *) elements {
+- (instancetype) initWithElements:(NSArray *) elements {
 	if( ( self = [self init] ) )
 		[self appendElements:elements];
 
 	return self;
 }
 
-- (id) initWithContentsOfFile:(NSString *) path {
+- (instancetype) initWithContentsOfFile:(NSString *) path {
 	if( ( self = [self init] ) ) {
 		path = [path stringByStandardizingPath];
 
@@ -122,7 +122,7 @@ NSString *JVChatTranscriptUpdatedNotification = @"JVChatTranscriptUpdatedNotific
 	return self;
 }
 
-- (id) initWithContentsOfURL:(NSURL *) url {
+- (instancetype) initWithContentsOfURL:(NSURL *) url {
 	if( ( self = [self init] ) ) {
 		NSData *contents = [NSData dataWithContentsOfURL:url];
 		if( ! contents || ! [contents length] ) {

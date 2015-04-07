@@ -1,7 +1,7 @@
 #import "JVSideSplitView.h"
 
 @implementation JVSideSplitView
-- (id) initWithCoder:(NSCoder *) decoder {
+- (instancetype) initWithCoder:(NSCoder *) decoder {
 	if( ( self = [super initWithCoder:decoder] ) )
 		_mainSubviewIndex = 1;
 	return self;

@@ -18,7 +18,7 @@
 #pragma mark -
 
 @implementation JVChatRoomBrowser
-- (id) initWithWindowNibName:(NSString *) windowNibName {
+- (instancetype) initWithWindowNibName:(NSString *) windowNibName {
 	if( ( self = [super initWithWindowNibName:@"JVChatRoomBrowser"] ) ) {
 		_self = self;
 		_connection = nil;
@@ -36,14 +36,14 @@
 	return self;
 }
 
-- (id) initWithConnection:(MVChatConnection *) connection {
+- (instancetype) initWithConnection:(MVChatConnection *) connection {
 	if( ( self = [self initWithWindowNibName:nil] ) ) {
 		[self setConnection:connection];
 	}
 	return self;
 }
 
-+ (id) chatRoomBrowserForConnection:(MVChatConnection *) connection {
++ (instancetype) chatRoomBrowserForConnection:(MVChatConnection *) connection {
 	return [[self alloc] initWithConnection:connection];
 }
 
@@ -411,14 +411,14 @@ static NSComparisonResult sortByRoomNameDescending( NSString *room1, NSString *r
 
 static NSComparisonResult sortByNumberOfMembersAscending( NSString *room1, NSString *room2, void *context ) {
 	NSDictionary *info = (__bridge NSDictionary *)(context);
-	NSComparisonResult res = [(NSNumber *)[info[room1] objectForKey:@"users"] compare:[info[room2] objectForKey:@"users"]];
+	NSComparisonResult res = [(NSNumber *)(info[room1])[@"users"] compare:(info[room2])[@"users"]];
 	if( res != NSOrderedSame ) return res;
 	return [room1 caseInsensitiveCompare:room2];
 }
 
 static NSComparisonResult sortByNumberOfMembersDescending( NSString *room1, NSString *room2, void *context ) {
 	NSDictionary *info = (__bridge NSDictionary *)(context);
-	NSComparisonResult res = [(NSNumber *)[info[room2] objectForKey:@"users"] compare:[info[room1] objectForKey:@"users"]];
+	NSComparisonResult res = [(NSNumber *)(info[room2])[@"users"] compare:(info[room1])[@"users"]];
 	if( res != NSOrderedSame ) return res;
 	return [room1 caseInsensitiveCompare:room2];
 }

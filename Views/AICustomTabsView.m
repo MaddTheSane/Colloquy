@@ -30,7 +30,7 @@ static  NSImage			*tabBackground = nil;
 static  NSImage			*tabDivider = nil;
 
 @interface AICustomTabsView ()
-- (id)initWithFrame:(NSRect)frameRect;
+- (instancetype)initWithFrame:(NSRect)frameRect;
 
 //Positioning
 - (void)arrangeTabs;
@@ -40,13 +40,12 @@ static  NSImage			*tabDivider = nil;
 - (BOOL)_arrangeCellsAbsolute:(BOOL)absolute;
 
 //Dragging
-- (NSArray *)acceptableDragTypes;
+@property (readonly, copy) NSArray *acceptableDragTypes;
 - (NSPoint)_dropPointForTabOfWidth:(NSInteger)dragTabWidth hoveredAtScreenPoint:(NSPoint)inPoint dropIndex:(NSInteger *)outIndex;
-- (BOOL)allowsTabRearranging;
 
 //Tab Data Access (Guarded)
 - (void)removeTabCell:(AICustomTabCell *)inCell;
-- (NSArray *)tabCellArray;
+@property (readonly, copy) NSArray *tabCellArray;
 
 //Cursor tracking
 - (void)startCursorTracking;
@@ -72,7 +71,7 @@ static  NSImage			*tabDivider = nil;
 }
 
 //init
-- (id)initWithFrame:(NSRect)frameRect
+- (instancetype)initWithFrame:(NSRect)frameRect
 {
     //Init
     if (!(self = [super initWithFrame:frameRect])) return nil;

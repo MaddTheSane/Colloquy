@@ -2,7 +2,8 @@
 #import "JVChatWindowController.h"
 
 @implementation JVChatTabItem
-- (id) initWithChatViewController:(id <JVChatViewController>) controller {
+@synthesize chatViewController = _controller;
+- (instancetype) initWithChatViewController:(id <JVChatViewController>) controller {
 	if( ( self = [super initWithIdentifier:[controller identifier]] ) ) {
 		_controller = controller;
 	}

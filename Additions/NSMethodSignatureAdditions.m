@@ -1,7 +1,7 @@
 #import "NSMethodSignatureAdditions.h"
 
 @implementation NSMethodSignature (NSMethodSignatureAdditions)
-+ (id) methodSignatureWithReturnAndArgumentTypes:(const char *) retType, ... {
++ (instancetype) methodSignatureWithReturnAndArgumentTypes:(const char *) retType, ... {
 	NSMutableString *types = [NSMutableString stringWithFormat:@"%s@:", retType];
 
 	char *type = NULL;

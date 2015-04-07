@@ -10,7 +10,7 @@
 
 @interface NSAlert (NSAlertLeopard)
 - (void) setShowsSuppressionButton:(BOOL) flag;
-- (NSButton *) suppressionButton;
+@property (readonly, strong) NSButton *suppressionButton;
 @end
 
 @interface NSFileManager (NSFileManagerLeopard)

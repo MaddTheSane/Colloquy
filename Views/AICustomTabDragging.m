@@ -29,7 +29,7 @@ static AICustomTabDragging *sharedTabDragInstance = nil;
 }
 
 //Init
-- (id)init
+- (instancetype)init
 {
 	if (!(self = [super init])) return nil;
 	_destinationOfLastDrag = nil;

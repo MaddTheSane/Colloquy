@@ -11,7 +11,7 @@
 #endif
 
 @implementation JVFScriptPluginLoader
-- (id) initWithManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithManager:(MVChatPluginManager *) manager {
 	if( ( self = [super init] ) ) {
 		_manager = manager;
 		_fscriptInstalled = ( NSClassFromString( @"FSInterpreter" ) ? YES : NO );

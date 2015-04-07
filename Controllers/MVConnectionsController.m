@@ -162,7 +162,7 @@ static NSMenu *favoritesMenu = nil;
 	return type;
 }
 
-- (id) initWithWindowNibName:(NSString *) windowNibName {
+- (instancetype) initWithWindowNibName:(NSString *) windowNibName {
 	if( ( self = [super initWithWindowNibName:@"MVConnections"] ) ) {
 		_bookmarks = nil;
 		_passConnection = nil;
@@ -1583,8 +1583,8 @@ static NSMenu *favoritesMenu = nil;
 
 	[chatErrorAlert setMessageText:errorTitle];
 	if( error.userInfo[@"errorLiteralReason"] )
-		[chatErrorAlert setInformativeText:[NSString stringWithFormat:NSLocalizedString( @"%@\n\nServer Details:\n%@", "error alert informative text with literal reason"), [[[notification userInfo] objectForKey:@"error"] localizedDescription], [[[[notification userInfo] objectForKey:@"error"] userInfo] objectForKey:@"errorLiteralReason"]]];
-	else [chatErrorAlert setInformativeText:[[[notification userInfo] objectForKey:@"error"] localizedDescription]];
+		[chatErrorAlert setInformativeText:[NSString stringWithFormat:NSLocalizedString( @"%@\n\nServer Details:\n%@", "error alert informative text with literal reason"), [[notification userInfo][@"error"] localizedDescription], [[notification userInfo][@"error"] userInfo][@"errorLiteralReason"]]];
+	else [chatErrorAlert setInformativeText:[[notification userInfo][@"error"] localizedDescription]];
 
 	[chatErrorAlert setAlertStyle:NSInformationalAlertStyle];
 

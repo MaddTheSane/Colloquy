@@ -4,14 +4,14 @@
 #import "JVChatTranscriptPanel.h"
 
 @interface JVChatTranscriptPanel (JVChatTranscriptPrivate)
-- (NSMenu *) _stylesMenu;
-- (NSMenu *) _emoticonsMenu;
+@property (readonly, copy) NSMenu *_stylesMenu;
+@property (readonly, copy) NSMenu *_emoticonsMenu;
 @end
 
 #pragma mark -
 
 @interface JVDirectChatPanel (JVDirectChatPrivate)
-- (NSMenu *) _encodingMenu;
+@property (readonly, copy) NSMenu *_encodingMenu;
 @end
 
 #pragma mark -
@@ -34,7 +34,7 @@
 #pragma mark -
 
 @implementation JVChatRoomInspector
-- (id) initWithRoom:(JVChatRoomPanel *) room {
+- (instancetype) initWithRoom:(JVChatRoomPanel *) room {
 	if( ( self = [self init] ) )
 		_room = room;
 	return self;

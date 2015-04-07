@@ -5,10 +5,10 @@ extern NSString *NSChatCTCPTwoFormatType;
 
 @interface NSAttributedString (NSAttributedStringHTMLAdditions)
 #if SYSTEM(MAC)
-+ (id) attributedStringWithHTMLFragment:(NSString *) fragment baseURL:(NSURL *) url;
++ (instancetype) attributedStringWithHTMLFragment:(NSString *) fragment baseURL:(NSURL *) url;
 
-+ (id) attributedStringWithChatFormat:(NSData *) data options:(NSDictionary *) options;
-- (id) initWithChatFormat:(NSData *) data options:(NSDictionary *) options;
++ (instancetype) attributedStringWithChatFormat:(NSData *) data options:(NSDictionary *) options;
+- (instancetype) initWithChatFormat:(NSData *) data options:(NSDictionary *) options;
 #endif
 
 - (NSString *) HTMLFormatWithOptions:(NSDictionary *) options;

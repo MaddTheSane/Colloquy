@@ -11,14 +11,14 @@ typedef NS_ENUM(OSType, JVIgnoreMatchResult) {
 	JVNotIgnored = 'noIg'
 };
 
-@interface KAIgnoreRule : NSObject {
+@interface KAIgnoreRule : NSObject<NSCoding>  {
 	NSRegularExpression *_userRegex;
 	NSRegularExpression *_maskRegex;
 	NSRegularExpression *_messageRegex;
 }
 
 + (instancetype) ruleForUser:(NSString *) user mask:(NSString *) mask message:(NSString *) message inRooms:(NSArray *) rooms isPermanent:(BOOL) permanent friendlyName:(NSString *) friendlyName;
-- (instancetype) initForUser:(NSString *) user mask:(NSString *) mask message:(NSString *) message inRooms:(NSArray *) rooms isPermanent:(BOOL) permanent friendlyName:(NSString *) friendlyName;
+- (instancetype) initForUser:(NSString *) user mask:(NSString *) mask message:(NSString *) message inRooms:(NSArray *) rooms isPermanent:(BOOL) permanent friendlyName:(NSString *) friendlyName NS_DESIGNATED_INITIALIZER;
 
 + (KAIgnoreRule *) ruleForUser:(NSString *) user message:(NSString *) message inRooms:(NSArray *) rooms isPermanent:(BOOL) permanent friendlyName:(NSString *) friendlyName;
 - (instancetype) initForUser:(NSString *) user message:(NSString *) message inRooms:(NSArray *) rooms isPermanent:(BOOL) permanent friendlyName:(NSString *) friendlyName;

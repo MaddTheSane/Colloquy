@@ -895,7 +895,7 @@ static char *dd_str_copy(const char *str)
 	if (function == NULL)
 		return nil;
 	else
-		return [[NSString alloc] initWithUTF8String:function];
+		return @(function);
 }
 
 - (void)dealloc

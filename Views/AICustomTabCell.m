@@ -40,9 +40,9 @@ static NSSize		rightCapSize;
 #define TAB_MIN_WIDTH			48      //(Could be used to) Enforce a mininum tab size safari style
 #define TAB_SELECTED_HIGHER     NO     	//Draw the selected tab higher?
 
-@interface AICustomTabCell (PRIVATE)
-- (id)initForTabViewItem:(NSTabViewItem<AICustomTabViewItem> *)inTabViewItem customTabsView:(AICustomTabsView *)inView;
-- (NSRect)_closeButtonRect;
+@interface AICustomTabCell ()
+- (instancetype)initForTabViewItem:(NSTabViewItem<AICustomTabViewItem> *)inTabViewItem customTabsView:(AICustomTabsView *)inView;
+@property (readonly) NSRect _closeButtonRect;
 @end
 
 @implementation AICustomTabCell
@@ -54,7 +54,7 @@ static NSSize		rightCapSize;
 }
 
 //init
-- (id)initForTabViewItem:(NSTabViewItem<AICustomTabViewItem> *)inTabViewItem customTabsView:(AICustomTabsView *)inView
+- (instancetype)initForTabViewItem:(NSTabViewItem<AICustomTabViewItem> *)inTabViewItem customTabsView:(AICustomTabsView *)inView
 {
     static BOOL haveLoadedImages = NO;
 

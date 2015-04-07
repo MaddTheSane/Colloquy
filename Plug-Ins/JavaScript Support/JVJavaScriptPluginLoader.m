@@ -9,7 +9,7 @@
 @end
 
 @implementation JVJavaScriptPluginLoader
-- (id) initWithManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithManager:(MVChatPluginManager *) manager {
 	if( ( self = [super init] ) ) {
 		[WebCoreStatistics setShouldPrintExceptions:[[NSUserDefaults standardUserDefaults] boolForKey:@"JVEnableJavaScriptDebugging"]];
 		_manager = manager;

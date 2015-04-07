@@ -72,7 +72,7 @@ static NSMenu *smartTranscriptMenu = nil;
 
 #pragma mark -
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_chatWindows = [[NSMutableSet allocWithZone:nil] initWithCapacity:5];
 		_chatControllers = [[NSMutableSet allocWithZone:nil] initWithCapacity:50];

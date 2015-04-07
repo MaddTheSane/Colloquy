@@ -12,11 +12,11 @@
 #pragma mark -
 
 @implementation JVSidebarChatWindowController
-- (id) init {
+- (instancetype) init {
 	return [self initWithWindowNibName:@"JVSidebarChatWindow"];
 }
 
-- (id) initWithWindowNibName:(NSString *) windowNibName {
+- (instancetype) initWithWindowNibName:(NSString *) windowNibName {
 	if( ( self = [super initWithWindowNibName:windowNibName] ) )
 		_forceSplitViewPosition = YES;
 	return self;

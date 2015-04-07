@@ -30,7 +30,7 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 
 #pragma mark -
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_rules = [[NSMutableArray allocWithZone:nil] initWithCapacity:5];
 		_users = [[NSMutableSet allocWithZone:nil] initWithCapacity:5];
@@ -43,7 +43,7 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 	return self;
 }
 
-- (id) initWithDictionaryRepresentation:(NSDictionary *) dictionary {
+- (instancetype) initWithDictionaryRepresentation:(NSDictionary *) dictionary {
 	if( ( self = [self init] ) ) {
 		NSData *data = dictionary[@"picture"];
 		if( [data isKindOfClass:[NSData class]] && [data length] )
@@ -447,7 +447,7 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 	if( [self status] != MVChatUserAvailableStatus && [self status] != MVChatUserAwayStatus )
 		[self setActiveUser:user];
 
-	[[NSNotificationCenter chatCenter] postNotificationName:JVBuddyUserCameOnlineNotification object:self userInfo:[NSDictionary dictionaryWithObject:user forKey:@"user"]];
+	[[NSNotificationCenter chatCenter] postNotificationName:JVBuddyUserCameOnlineNotification object:self userInfo:@{@"user": user}];
 
 	if( cameOnline )
 		[[NSNotificationCenter chatCenter] postNotificationName:JVBuddyCameOnlineNotification object:self userInfo:nil];
@@ -462,7 +462,7 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 	if( [[self activeUser] isEqualToChatUser:user] )
 		[self setActiveUser:[_users anyObject]];
 
-	[[NSNotificationCenter chatCenter] postNotificationName:JVBuddyUserWentOfflineNotification object:self userInfo:[NSDictionary dictionaryWithObject:user forKey:@"user"]];
+	[[NSNotificationCenter chatCenter] postNotificationName:JVBuddyUserWentOfflineNotification object:self userInfo:@{@"user": user}];
 
 	if( ! [_users count] )
 		[[NSNotificationCenter chatCenter] postNotificationName:JVBuddyWentOfflineNotification object:self userInfo:nil];
@@ -488,7 +488,7 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 		default: break;
 	}
 
-	[[NSNotificationCenter chatCenter] postNotificationName:JVBuddyUserStatusChangedNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:user, @"user", nil]];
+	[[NSNotificationCenter chatCenter] postNotificationName:JVBuddyUserStatusChangedNotification object:self userInfo:@{@"user": user}];
 }
 
 - (void) _registerWithConnection:(NSNotification *) notification {

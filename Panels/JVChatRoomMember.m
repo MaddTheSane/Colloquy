@@ -9,8 +9,8 @@
 #import "MVChatUserAdditions.h"
 
 @interface JVChatRoomMember (JVChatMemberPrivate)
-- (NSString *) _selfStoredNickname;
-- (NSString *) _selfCompositeName;
+@property (readonly, copy) NSString *_selfStoredNickname;
+@property (readonly, copy) NSString *_selfCompositeName;
 - (void) _detach;
 @end
 
@@ -32,7 +32,7 @@
 
 #pragma mark -
 
-- (id) initWithRoom:(JVChatRoomPanel *) room andUser:(MVChatUser *) user {
+- (instancetype) initWithRoom:(JVChatRoomPanel *) room andUser:(MVChatUser *) user {
 	if( ( self = [self init] ) ) {
 		_room = room; // prevent circular retain
 		_user = user;
@@ -46,7 +46,7 @@
 	return self;
 }
 
-- (id) initLocalMemberWithRoom:(JVChatRoomPanel *) room {
+- (instancetype) initLocalMemberWithRoom:(JVChatRoomPanel *) room {
 	return [self initWithRoom:room andUser:[[room connection] localUser]];
 }
 

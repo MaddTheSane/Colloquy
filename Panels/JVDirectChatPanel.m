@@ -100,8 +100,8 @@ NSString *JVChatMessageWasProcessedNotification = @"JVChatMessageWasProcessedNot
 NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasProcessedNotification";
 
 @interface JVDirectChatPanel (JVDirectChatPrivate) <ABImageClient, MVTextViewDelegate>
-- (NSString *) _selfCompositeName;
-- (NSString *) _selfStoredNickname;
+@property (readonly, copy) NSString *_selfCompositeName;
+@property (readonly, copy) NSString *_selfStoredNickname;
 - (void) _hyperlinkRoomNames:(NSMutableAttributedString *) message;
 - (NSMutableAttributedString *) _convertRawMessage:(NSData *) message;
 - (NSMutableAttributedString *) _convertRawMessage:(NSData *) message withBaseFont:(NSFont *) baseFont;
@@ -122,14 +122,14 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 #pragma mark -
 
 @interface JVStyleView (JVStyleViewPrivate)
-- (NSUInteger) _visibleMessageCount;
+@property (readonly) NSUInteger _visibleMessageCount;
 - (NSUInteger) _locationOfElementAtIndex:(NSUInteger) index;
 @end
 
 #pragma mark -
 
 @implementation JVDirectChatPanel
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		send = nil;
 		_target = nil;
@@ -157,7 +157,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 	return self;
 }
 
-- (id) initWithTarget:(id) target {
+- (instancetype) initWithTarget:(id) target {
 	if( ( self = [self init] ) ) {
 		_target = target;
 
@@ -722,7 +722,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 	JVChatEvent *newEvent = [[self transcript] appendEvent:event];
 	[display appendChatTranscriptElement:newEvent];
 
-	[[NSNotificationCenter chatCenter] postNotificationName:JVChatEventMessageWasProcessedNotification object:self userInfo:[NSDictionary dictionaryWithObject:newEvent forKey:@"event"]];
+	[[NSNotificationCenter chatCenter] postNotificationName:JVChatEventMessageWasProcessedNotification object:self userInfo:@{@"event": newEvent}];
 
 	if( ! [[[_windowController window] representedFilename] length] )
 		[self _refreshWindowFileProxy];
@@ -878,7 +878,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 		}
 	}
 
-	[[NSNotificationCenter chatCenter] postNotificationName:JVChatMessageWasProcessedNotification object:self userInfo:[NSDictionary dictionaryWithObject:newMessage forKey:@"message"]];
+	[[NSNotificationCenter chatCenter] postNotificationName:JVChatMessageWasProcessedNotification object:self userInfo:@{@"message": newMessage}];
 
 	[self _setCurrentMessage:nil];
 

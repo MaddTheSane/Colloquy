@@ -72,12 +72,12 @@
 - (void)redisplayTabForTabViewItem:(NSTabViewItem *)inTabViewItem;
 - (void)resizeTabForTabViewItem:(NSTabViewItem *)inTabViewItem;
 - (void)moveTab:(NSTabViewItem *)tabViewItem toIndex:(NSInteger)index;
-- (NSInteger)numberOfTabViewItems;
+@property (readonly) NSInteger numberOfTabViewItems;
 
 //Private
 - (void)rebuildTabCells;
 - (AICustomTabCell *)tabAtPoint:(NSPoint)clickLocation;
-- (int)totalWidthOfTabs;
+@property (readonly) int totalWidthOfTabs;
 - (void)moveTab:(NSTabViewItem *)tabViewItem toIndex:(NSInteger)index selectTab:(BOOL)shouldSelect animate:(BOOL)animate;
 //- (NSInteger)numberOfTabViewItems;
 - (void)closeTab:(AICustomTabCell *)tabCell;

@@ -3,5 +3,5 @@
 @interface JVChatSession : NSObject <JVChatTranscriptElement>
 - (/* xmlNode */ void *) node;
 @property (readonly, weak) JVChatTranscript *transcript;
-- (NSDate *) startDate;
+@property (readonly, copy) NSDate *startDate;
 @end

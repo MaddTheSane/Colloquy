@@ -187,7 +187,7 @@
 
 	MVChatUser *user = nil;
 	@synchronized( _knownUsers ) {
-		user = [_knownUsers objectForKey:[identifier completeID]];
+		user = _knownUsers[[identifier completeID]];
 		if( user ) return user;
 
 		user = [[MVXMPPChatUser allocWithZone:nil] initWithJabberID:identifier andConnection:self];
@@ -272,12 +272,12 @@
 
 - (void) outgoingPacket:(NSNotification *) notification {
 	NSString *string = [[NSString alloc] initWithData:[notification object] encoding:NSUTF8StringEncoding];
-	[[NSNotificationCenter chatCenter] postNotificationName:MVChatConnectionGotRawMessageNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:string, @"message", @YES, @"outbound", nil]];
+	[[NSNotificationCenter chatCenter] postNotificationName:MVChatConnectionGotRawMessageNotification object:self userInfo:@{@"message": string, @"outbound": @YES}];
 }
 
 - (void) incomingPacket:(NSNotification *) notification {
 	NSString *string = [[NSString alloc] initWithData:[notification object] encoding:NSUTF8StringEncoding];
-	[[NSNotificationCenter chatCenter] postNotificationName:MVChatConnectionGotRawMessageNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:string, @"message", @NO, @"outbound", nil]];
+	[[NSNotificationCenter chatCenter] postNotificationName:MVChatConnectionGotRawMessageNotification object:self userInfo:@{@"message": string, @"outbound": @NO}];
 }
 
 - (void) incomingMessage:(NSNotification *) notification {
@@ -309,8 +309,8 @@
 
 		NSMutableDictionary *msgAttributes = [[NSMutableDictionary allocWithZone:nil] init];
 		__unsafe_unretained NSMutableDictionary *unsafeMsgAttributes = msgAttributes;
-		[msgAttributes setObject:sender forKey:@"user"];
-		[msgAttributes setObject:msgData forKey:@"message"];
+		msgAttributes[@"user"] = sender;
+		msgAttributes[@"message"] = msgData;
 
 		NSMethodSignature *signature = [NSMethodSignature methodSignatureWithReturnAndArgumentTypes:@encode( void ), @encode( NSMutableData * ), @encode( MVChatUser * ), @encode( id ), @encode( NSMutableDictionary * ), nil];
 		NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
@@ -362,7 +362,7 @@
 
 	if ([[presence getAttribute:@"type"] isCaseInsensitiveEqualToString:@"unavailable"]) {
 		[room _removeMemberUser:user];
-		[[NSNotificationCenter chatCenter] postNotificationName:MVChatRoomUserPartedNotification object:room userInfo:[NSDictionary dictionaryWithObjectsAndKeys:user, @"user", nil]];
+		[[NSNotificationCenter chatCenter] postNotificationName:MVChatRoomUserPartedNotification object:room userInfo:@{@"user": user}];
 		return;
 	}
 

@@ -23,7 +23,7 @@ static JVNotificationController *sharedInstance = nil;
 
 #pragma mark -
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_bubbles = [NSMutableDictionary dictionary];
 		_sounds = [[NSMutableDictionary alloc] init];
@@ -128,7 +128,7 @@ static JVNotificationController *sharedInstance = nil;
 			GROWL_NOTIFICATION_STICKY: eventPrefs[@"keepBubbleOnScreen"]};
 		[GrowlApplicationBridge notifyWithDictionary:notification];
 	} else if( NSAppKitVersionNumber10_8 > floor( NSAppKitVersionNumber ) ) {
-		if( ( bubble = [_bubbles objectForKey:[context objectForKey:@"coalesceKey"]] ) ) {
+		if( ( bubble = _bubbles[context[@"coalesceKey"]] ) ) {
 			[(id)bubble setTitle:title];
 			[(id)bubble setText:description];
 			[(id)bubble setIcon:icon];

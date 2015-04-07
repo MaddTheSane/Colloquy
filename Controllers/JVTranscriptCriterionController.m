@@ -8,13 +8,13 @@
 #import "JVChatRoomPanel.h"
 
 @implementation JVTranscriptCriterionController
-+ (id) controller {
++ (instancetype) controller {
 	return [[self alloc] init];
 }
 
 #pragma mark -
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_query = @"";
 		_changed = NO;
@@ -27,7 +27,7 @@
 	return self;
 }
 
-- (id) initWithCoder:(NSCoder *) coder {
+- (instancetype) initWithCoder:(NSCoder *) coder {
 	if( [coder allowsKeyedCoding] ) {
 		self = [self init];
 		[self setKind:[coder decodeIntForKey:@"kind"]];

@@ -10,11 +10,11 @@
 #import "MVMenuButton.h"
 #import "MVApplicationController.h"
 
-typedef enum {
+typedef NS_ENUM(unsigned int, JVChatViewOrganizationType) {
 	JVChatViewOrganizationTypeDefault = 0,
 	JVChatViewOrganizationTypeAlphabetical,
 	JVChatViewOrganizationTypeByNetworkAndRoom,
-} JVChatViewOrganizationType;
+};
 
 NSString *JVToolbarToggleChatDrawerItemIdentifier = @"JVToolbarToggleChatDrawerItem";
 NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
@@ -22,7 +22,7 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 #pragma mark -
 
 @interface NSToolbar (NSToolbarPrivate)
-- (NSView *) _toolbarView;
+@property (readonly, strong) NSView *_toolbarView;
 @end
 
 #pragma mark -
@@ -56,11 +56,11 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 #pragma mark -
 
 @implementation JVChatWindowController
-- (id) init {
+- (instancetype) init {
 	return [self initWithWindowNibName:@"JVChatWindow"];
 }
 
-- (id) initWithWindowNibName:(NSString *) windowNibName {
+- (instancetype) initWithWindowNibName:(NSString *) windowNibName {
 	if( ( self = [super initWithWindowNibName:windowNibName] ) ) {
 		_views = [[NSMutableArray allocWithZone:nil] initWithCapacity:10];
 		_settings = [[NSMutableDictionary allocWithZone:nil] initWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:[self userDefaultsPreferencesKey]]];
@@ -892,7 +892,7 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 - (BOOL) outlineView:(NSOutlineView *) outlineView writeItems:(NSArray *) items toPasteboard:(NSPasteboard *) board {
 	id item = [items lastObject];
 	if( ! [item conformsToProtocol:@protocol( JVChatViewController )] ) return NO;
-	[board declareTypes:[NSArray arrayWithObjects:JVChatViewPboardType, nil] owner:self];
+	[board declareTypes:@[JVChatViewPboardType] owner:self];
 	[board setString:[item identifier] forType:JVChatViewPboardType];
 	return YES;
 }
@@ -928,7 +928,7 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 				[item handleDraggedFile:file];
 
 		return YES;
-	} else if( [board availableTypeFromArray:[NSArray arrayWithObject:JVChatViewPboardType]] ) {
+	} else if( [board availableTypeFromArray:@[JVChatViewPboardType]] ) {
 		NSString *identifierString = [board stringForType:JVChatViewPboardType];
 		id <JVChatViewController> dragedController = [self chatViewControllerForIdentifier:identifierString];
 

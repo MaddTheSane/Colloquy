@@ -19,17 +19,17 @@ extern NSString *JVEmoticonSetsScannedNotification;
 
 - (void) performEmoticonSubstitution:(NSMutableAttributedString *) string;
 
-- (NSBundle *) bundle;
-- (NSString *) identifier;
+@property (readonly, strong) NSBundle *bundle;
+@property (readonly, copy) NSString *identifier;
 
 - (NSComparisonResult) compare:(JVEmoticonSet *) style;
 @property (readonly, copy) NSString *displayName;
 
-- (NSDictionary *) emoticonMappings;
-- (NSArray *) emoticonMenuItems;
+@property (readonly, copy) NSDictionary *emoticonMappings;
+@property (readonly, copy) NSArray *emoticonMenuItems;
 
-- (NSURL *) baseLocation;
-- (NSURL *) styleSheetLocation;
+@property (readonly, copy) NSURL *baseLocation;
+@property (readonly, copy) NSURL *styleSheetLocation;
 
-- (NSString *) contentsOfStyleSheet;
+@property (readonly, copy) NSString *contentsOfStyleSheet;
 @end

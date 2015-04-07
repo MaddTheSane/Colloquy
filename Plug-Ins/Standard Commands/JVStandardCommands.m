@@ -23,13 +23,13 @@
 #pragma mark -
 
 @interface MVChatConnection (MVChatConnectionPrivate)
-- (NSCharacterSet *) _nicknamePrefixes;
+@property (readonly, copy) NSCharacterSet *_nicknamePrefixes;
 @end
 
 #pragma mark -
 
 @implementation JVStandardCommands
-- (id) initWithManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithManager:(MVChatPluginManager *) manager {
 	return [super init];
 }
 

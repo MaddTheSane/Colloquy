@@ -6153,7 +6153,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	}
 
 
-	BOOL shouldManuallyEvaluateTrust = [[tlsSettings objectForKey:GCDAsyncSocketManuallyEvaluateTrust] boolValue];
+	BOOL shouldManuallyEvaluateTrust = [tlsSettings[GCDAsyncSocketManuallyEvaluateTrust] boolValue];
 	if (shouldManuallyEvaluateTrust)
 	{
 		if (isServer)
@@ -6351,7 +6351,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	// 7. GCDAsyncSocketSSLSessionOptionSendOneByteRecord
 	
-	value = [tlsSettings objectForKey:GCDAsyncSocketSSLSessionOptionSendOneByteRecord];
+	value = tlsSettings[GCDAsyncSocketSSLSessionOptionSendOneByteRecord];
 	if ([value respondsToSelector:@selector(boolValue)])
 	{
 		status = SSLSetSessionOption(sslContext, kSSLSessionOptionSendOneByteRecord, [value boolValue]);
@@ -6432,7 +6432,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	#pragma clang diagnostic push
 	#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsAnyRoot];
+	value = tlsSettings[(NSString *)kCFStreamSSLAllowsAnyRoot];
 	#pragma clang diagnostic pop
 	if (value)
 	{
@@ -6447,7 +6447,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	#pragma clang diagnostic push
 	#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsExpiredRoots];
+	value = tlsSettings[(NSString *)kCFStreamSSLAllowsExpiredRoots];
 	#pragma clang diagnostic pop
 	if (value)
 	{
@@ -6462,7 +6462,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	#pragma clang diagnostic push
 	#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLValidatesCertificateChain];
+	value = tlsSettings[(NSString *)kCFStreamSSLValidatesCertificateChain];
 	#pragma clang diagnostic pop
 	if (value)
 	{
@@ -6477,7 +6477,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	#pragma clang diagnostic push
 	#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLAllowsExpiredCertificates];
+	value = tlsSettings[(NSString *)kCFStreamSSLAllowsExpiredCertificates];
 	#pragma clang diagnostic pop
 	if (value)
 	{
@@ -6492,7 +6492,7 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	#pragma clang diagnostic push
 	#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	value = [tlsSettings objectForKey:(NSString *)kCFStreamSSLLevel];
+	value = tlsSettings[(NSString *)kCFStreamSSLLevel];
 	#pragma clang diagnostic pop
 	if (value)
 	{

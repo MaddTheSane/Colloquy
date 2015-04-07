@@ -35,7 +35,7 @@
 
 	@synchronized( _transcript ) {
 		xmlChar *prop = xmlGetProp( (xmlNode *) _node, (xmlChar *) "name" );
-		_name = ( prop ? [[NSString allocWithZone:nil] initWithUTF8String:(char *) prop] : nil );
+		_name = ( prop ? @((char *) prop) : nil );
 		xmlFree( prop );
 
 		prop = xmlGetProp( (xmlNode *) _node, (xmlChar *) "occurred" );
@@ -234,7 +234,7 @@
 		
 		@synchronized( _transcript ) {
 			xmlChar *prop = xmlGetProp( (xmlNode *) _node, (xmlChar *) "id" );
-			_eventIdentifier = ( prop ? [[NSString allocWithZone:nil] initWithUTF8String:(char *) prop] : nil );
+			_eventIdentifier = ( prop ? @((char *) prop) : nil );
 			xmlFree( prop );
 		}
 	}
@@ -254,13 +254,13 @@
 @dynamic messageAsHTML;
 @dynamic messageAsPlainText;
 
-+ (id) chatEventWithName:(NSString *) name andMessage:(id) message {
++ (instancetype) chatEventWithName:(NSString *) name andMessage:(id) message {
 	return [[self alloc] initWithName:name andMessage:message];
 }
 
 #pragma mark -
 
-- (id) init {
+- (instancetype) init {
 	if( ( self = [super init] ) ) {
 		_loadedMessage = YES;
 		_loadedAttributes = YES;
@@ -272,7 +272,7 @@
 	return self;
 }
 
-- (id) initWithName:(NSString *) name andMessage:(id) message {
+- (instancetype) initWithName:(NSString *) name andMessage:(id) message {
 	if( ( self = [self init] ) ) {
 		[self setName:name];
 		[self setMessage:message];

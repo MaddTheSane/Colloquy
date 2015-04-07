@@ -12,7 +12,7 @@ static NSString *JVToolbarClearItemIdentifier = @"JVToolbarClearItem";
 @end
 
 @implementation JVChatConsolePanel
-- (id) initWithConnection:(MVChatConnection *) connection {
+- (instancetype) initWithConnection:(MVChatConnection *) connection {
 	if( ( self = [self init] ) ) {
 		_sendHistory = [NSMutableArray array];
 		[_sendHistory insertObject:[[NSAttributedString alloc] initWithString:@""] atIndex:0];

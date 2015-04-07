@@ -4,8 +4,7 @@
 #import "JVChatTabItem.h"
 #import "MVApplicationController.h"
 
-//JVChatWindowControllerPrivate
-@interface JVChatWindowController ()
+@interface JVChatWindowController (JVChatWindowControllerPrivate)
 - (void) _claimMenuCommands;
 - (void) _resignMenuCommands;
 - (void) _deferRefreshSelectionMenu;
@@ -29,11 +28,11 @@
 #pragma mark -
 
 @implementation JVTabbedChatWindowController
-- (id) init {
+- (instancetype) init {
 	return [self initWithWindowNibName:@"JVTabbedChatWindow"];
 }
 
-- (id) initWithWindowNibName:(NSString *) windowNibName {
+- (instancetype) initWithWindowNibName:(NSString *) windowNibName {
 	if( ( self = [super initWithWindowNibName:windowNibName] ) ) {
 		_tabItems = [NSMutableArray array];
 		_tabIsShowing = YES;

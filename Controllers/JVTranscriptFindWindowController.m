@@ -23,7 +23,7 @@ static JVTranscriptFindWindowController *sharedInstance = nil;
 
 #pragma mark -
 
-- (id) initWithWindowNibName:(NSString *) windowNibName {
+- (instancetype) initWithWindowNibName:(NSString *) windowNibName {
 	if( ( self = [super initWithWindowNibName:@"JVFind"] ) ) {
 		_rules = nil;
 		_results = nil;

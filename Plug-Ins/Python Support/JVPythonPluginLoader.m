@@ -5,7 +5,7 @@
 #import "pyobjc-api.h"
 
 @implementation JVPythonPluginLoader
-- (id) initWithManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithManager:(MVChatPluginManager *) manager {
 	if( ( self = [super init] ) ) {
 		_manager = manager;
 		_pyobjcInstalled = ( PyObjC_ImportAPI != NULL ? YES : NO );

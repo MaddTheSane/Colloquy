@@ -9,16 +9,16 @@
 NSString *JVFScriptErrorDomain = @"JVFScriptErrorDomain";
 
 @interface BlockStackElem : NSObject <NSCoding> {}
-- (Block *) block;
-- (NSString *) errorStr;
-- (int) firstCharIndex;
-- (int) lastCharIndex;
+@property (readonly, copy) Block *block;
+@property (readonly, copy) NSString *errorStr;
+@property (readonly) int firstCharIndex;
+@property (readonly) int lastCharIndex;
 @end
 
 #pragma mark -
 
 @implementation JVFScriptChatPlugin
-- (id) initWithManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithManager:(MVChatPluginManager *) manager {
 	if( ( self = [self init] ) ) {
 		_manager = manager;
 		_scriptInterpreter = nil;
@@ -29,7 +29,7 @@ NSString *JVFScriptErrorDomain = @"JVFScriptErrorDomain";
 	return self;
 }
 
-- (id) initWithScriptAtPath:(NSString *) path withManager:(MVChatPluginManager *) manager {
+- (instancetype) initWithScriptAtPath:(NSString *) path withManager:(MVChatPluginManager *) manager {
 	if( ( self = [self initWithManager:manager] ) ) {
 		_path = [path copyWithZone:[self zone]];
 		_scriptInterpreter = [[FSInterpreter interpreter] retain];
