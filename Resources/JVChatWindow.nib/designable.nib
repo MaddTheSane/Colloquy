@@ -51,11 +51,9 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{213, 107}</string>
 				<object class="NSView" key="NSWindowView" id="959977716">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<string key="NSFrameSize">{480, 381}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{213, 129}</string>
@@ -91,6 +89,7 @@
 										<string key="NSFrameSize">{188, 93}</string>
 										<reference key="NSSuperview" ref="479782516"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="349885458"/>
 										<bool key="NSEnabled">YES</bool>
 										<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 										<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -200,6 +199,7 @@
 								<string key="NSFrame">{{-30, 1}, {15, 93}}</string>
 								<reference key="NSSuperview" ref="568867199"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="479782516"/>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<string key="NSControlAction">_doScroller:</string>
 								<reference key="NSControlTarget" ref="568867199"/>
@@ -213,6 +213,7 @@
 								<string key="NSFrame">{{-100, -100}, {173, 15}}</string>
 								<reference key="NSSuperview" ref="568867199"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="887716095"/>
 								<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 								<string key="NSControlAction">_doScroller:</string>
 								<reference key="NSControlTarget" ref="568867199"/>
@@ -225,7 +226,7 @@
 						<string key="NSFrame">{{0, 25}, {190, 95}}</string>
 						<reference key="NSSuperview" ref="683481125"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="479782516"/>
+						<reference key="NSNextKeyView" ref="973554037"/>
 						<int key="NSsFlags">133650</int>
 						<reference key="NSVScroller" ref="887716095"/>
 						<reference key="NSHScroller" ref="973554037"/>
@@ -241,6 +242,7 @@
 						<string key="NSFrame">{{1, -1}, {28, 22}}</string>
 						<reference key="NSSuperview" ref="683481125"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="523034683"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="497056467">
 							<int key="NSCellFlags">67108864</int>
@@ -277,6 +279,7 @@
 						<string key="NSFrame">{{32, -1}, {28, 22}}</string>
 						<reference key="NSSuperview" ref="683481125"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="897250091"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="772024413">
 							<int key="NSCellFlags">67108864</int>
@@ -309,6 +312,7 @@
 						<string key="NSFrame">{{63, -1}, {22, 22}}</string>
 						<reference key="NSSuperview" ref="683481125"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="780727868">
 							<int key="NSCellFlags">67108864</int>
@@ -339,6 +343,7 @@
 				<string key="NSFrameSize">{190, 120}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView" ref="568867199"/>
 				<object class="NSMutableString" key="NSClassName">
 					<characters key="NS.bytes">NSView</characters>
 				</object>
@@ -593,7 +598,6 @@
 				<string key="233.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="234.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="240.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="241.CustomClassName">ASExtendedOutlineView</string>
 				<string key="241.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="242.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="289.CustomClassName">MVMenuButton</string>
@@ -630,6 +634,7 @@
 						<string key="selectNextPanel:">id</string>
 						<string key="selectPreviousActivePanel:">id</string>
 						<string key="selectPreviousPanel:">id</string>
+						<string key="toggleSmallDrawerIcons:">id</string>
 						<string key="toggleViewsDrawer:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -671,6 +676,10 @@
 						</object>
 						<object class="IBActionInfo" key="selectPreviousPanel:">
 							<string key="name">selectPreviousPanel:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleSmallDrawerIcons:">
+							<string key="name">toggleSmallDrawerIcons:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="toggleViewsDrawer:">

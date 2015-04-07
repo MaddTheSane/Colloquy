@@ -53,7 +53,7 @@
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<string key="NSWindowContentMinSize">{213, 107}</string>
 				<object class="NSView" key="NSWindowView" id="529374429">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSCustomView" id="1024375718">
@@ -61,7 +61,6 @@
 							<int key="NSvFlags">290</int>
 							<string key="NSFrameSize">{480, 25}</string>
 							<reference key="NSSuperview" ref="529374429"/>
-							<reference key="NSWindow"/>
 							<string key="NSClassName">AICustomTabsView</string>
 							<string key="NSExtension">NSView</string>
 						</object>
@@ -70,7 +69,6 @@
 							<int key="NSvFlags">274</int>
 							<string key="NSFrame">{{0, 25}, {480, 335}}</string>
 							<reference key="NSSuperview" ref="529374429"/>
-							<reference key="NSWindow"/>
 							<array class="NSMutableArray" key="NSTabViewItems">
 								<object class="NSTabViewItem" id="939783065">
 									<object class="NSMutableString" key="NSIdentifier">
@@ -81,7 +79,6 @@
 										<int key="NSvFlags">274</int>
 										<string key="NSFrameSize">{480, 335}</string>
 										<reference key="NSSuperview" ref="771851839"/>
-										<reference key="NSWindow"/>
 									</object>
 									<string key="NSLabel">Tab</string>
 									<object class="NSColor" key="NSColor">
@@ -110,8 +107,6 @@
 						</object>
 					</array>
 					<string key="NSFrameSize">{480, 360}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1057}}</string>
 				<string key="NSMinSize">{213, 129}</string>
@@ -715,7 +710,6 @@
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="27.CustomClassName">MVMenuButton</string>
 				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="28.CustomClassName">ASExtendedOutlineView</string>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="29.CustomClassName">MVMenuButton</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -772,6 +766,7 @@
 						<string key="selectNextPanel:">id</string>
 						<string key="selectPreviousActivePanel:">id</string>
 						<string key="selectPreviousPanel:">id</string>
+						<string key="toggleSmallDrawerIcons:">id</string>
 						<string key="toggleViewsDrawer:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -813,6 +808,10 @@
 						</object>
 						<object class="IBActionInfo" key="selectPreviousPanel:">
 							<string key="name">selectPreviousPanel:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleSmallDrawerIcons:">
+							<string key="name">toggleSmallDrawerIcons:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="toggleViewsDrawer:">
