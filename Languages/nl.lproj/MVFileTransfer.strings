@@ -1,0 +1,12 @@
+
+/* Class = "NSWindow"; title = "Bestandsoverdrachten"; ObjectID = "5"; */
+"5.title" = "Bestandsoverdrachten";
+
+/* Class = "NSTableColumn"; headerCell.title = "Gebruiker"; ObjectID = "32"; */
+"32.headerCell.title" = "Gebruiker";
+
+/* Class = "NSTableColumn"; headerCell.title = "Bestand"; ObjectID = "34"; */
+"34.headerCell.title" = "Bestand";
+
+/* Class = "NSTableColumn"; headerCell.title = "Grootte"; ObjectID = "44"; */
+"44.headerCell.title" = "Grootte";

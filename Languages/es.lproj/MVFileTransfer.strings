@@ -1,0 +1,12 @@
+
+/* Class = "NSWindow"; title = "Transferencias de Archivos"; ObjectID = "5"; */
+"5.title" = "Transferencias de Archivos";
+
+/* Class = "NSTableColumn"; headerCell.title = "Usuario"; ObjectID = "32"; */
+"32.headerCell.title" = "Usuario";
+
+/* Class = "NSTableColumn"; headerCell.title = "Archivo"; ObjectID = "34"; */
+"34.headerCell.title" = "Archivo";
+
+/* Class = "NSTableColumn"; headerCell.title = "Tamaño"; ObjectID = "44"; */
+"44.headerCell.title" = "Tamaño";
