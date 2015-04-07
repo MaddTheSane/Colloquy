@@ -40,15 +40,11 @@ static JVTranscriptFindWindowController *sharedInstance = nil;
 - (void) dealloc {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if( self == sharedInstance ) sharedInstance = nil;
+	//This will never get called:
+	//if( self == sharedInstance ) sharedInstance = nil;
 
 	[subviewTableView setDataSource:nil];
 	[subviewTableView setDelegate:nil];
-
-
-	_rules = nil;
-	_results = nil;
-
 }
 
 - (void) windowDidLoad {

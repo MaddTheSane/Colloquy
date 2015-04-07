@@ -191,18 +191,6 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 - (void) dealloc {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 	[[NSNotificationCenter chatCenter] removeObserver:self name:JVStyleVariantChangedNotification object:nil];
-
-	nextTextView = nil;
-	_transcript = nil;
-	_style = nil;
-	_styleVariant = nil;
-	_styleParameters = nil;
-	_emoticons = nil;
-	_mainDocument = nil;
-	_domDocument = nil;
-	_body = nil;
-	_bodyTemplate = nil;
-	_messagesToAppend = nil;
 }
 
 #pragma mark -

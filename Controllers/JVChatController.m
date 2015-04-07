@@ -102,13 +102,8 @@ static NSMenu *smartTranscriptMenu = nil;
 - (void) dealloc {
 	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self forKeyPath:@"values.JVChatWindowRuleSets"];
 	[[NSNotificationCenter chatCenter] removeObserver:self];
-	if( self == sharedInstance ) sharedInstance = nil;
-
-
-	_chatWindows = nil;
-	_chatControllers = nil;
-	_windowRuleSets = nil;
-
+	//This will never get called:
+	//if( self == sharedInstance ) sharedInstance = nil;
 }
 
 #pragma mark -

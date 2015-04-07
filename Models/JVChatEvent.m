@@ -7,19 +7,10 @@
 
 @implementation JVChatEvent
 - (void) dealloc {
-
-	_eventIdentifier = nil;
-	_date = nil;
-	_name = nil;
-	_message = nil;
-	_attributes = nil;
-
-	_transcript = nil; // weak reference
 	_node = NULL;
 
 	if( _doc ) xmlFreeDoc( _doc );
 	_doc = NULL;
-
 }
 
 #pragma mark -

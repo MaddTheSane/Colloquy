@@ -52,11 +52,6 @@
 
 - (void) dealloc {
 	[self _detach];
-
-
-	_room = nil;
-	_user = nil;
-
 }
 
 #pragma mark -

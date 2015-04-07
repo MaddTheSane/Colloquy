@@ -160,15 +160,8 @@ NSString *JVChatTranscriptUpdatedNotification = @"JVChatTranscriptUpdatedNotific
 }
 
 - (void) dealloc {
-
 	xmlFreeDoc( _xmlLog );
-
-	_objectSpecifier = nil;
-	_filePath = nil;
-	_logFile = nil;
-	_messages = nil;
 	_xmlLog = NULL;
-
 }
 
 #pragma mark -

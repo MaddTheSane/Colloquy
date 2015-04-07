@@ -35,9 +35,6 @@
 
 	[editRuleRooms setDataSource:nil];
 	[editRuleRooms setDelegate:nil];
-
-	_connection = nil;
-	_editingRooms = nil;
 }
 
 #pragma mark -

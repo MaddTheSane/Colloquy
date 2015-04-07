@@ -22,12 +22,6 @@
 
 	[identifiersTable setDataSource:nil];
 	[identifiersTable setDelegate:nil];
-
-
-	_buddy = nil;
-	_currentRule = nil;
-	_editDomains = nil;
-
 }
 
 #pragma mark -

@@ -9,10 +9,6 @@
 	return self;
 }
 
-- (void) dealloc {
-	_controller = nil;
-}
-
 - (id <JVChatViewController>) chatViewController {
 	return _controller;
 }

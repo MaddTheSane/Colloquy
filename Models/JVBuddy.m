@@ -95,20 +95,6 @@ static JVBuddyName _mainPreferredName = JVBuddyFullName;
 	[self unregisterWithConnections];
 
 	[[NSNotificationCenter chatCenter] removeObserver:self];
-
-
-	_person = nil;
-	_users = nil;
-	_rules = nil;
-	_activeUser = nil;
-	_picture = nil;
-	_firstName = nil;
-	_lastName = nil;
-	_primaryEmail = nil;
-	_givenNickname = nil;
-	_speechVoice = nil;
-	_uniqueIdentifier = nil;
-
 }
 
 #pragma mark -

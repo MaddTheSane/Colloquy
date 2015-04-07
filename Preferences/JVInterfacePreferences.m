@@ -17,11 +17,6 @@ static NSString *JVInterfacePreferencesWindowDragPboardType = @"JVInterfacePrefe
 
 	[ruleEditTable setDataSource:nil];
 	[ruleEditTable setDelegate:nil];
-
-
-	_windowSets = nil;
-	_editingRuleCriterion = nil;
-
 }
 
 #pragma mark -

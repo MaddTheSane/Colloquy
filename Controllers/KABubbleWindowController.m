@@ -61,6 +61,7 @@ static NSUInteger bubbleWindowDepth = 0;
 	return [super initWithWindow:panel];
 }
 
+//TODO: check this! dealloc will NEVER be called due to _self retaining self!
 - (void) dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 

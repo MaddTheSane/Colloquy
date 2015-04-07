@@ -77,8 +77,6 @@ static BOOL applicationIsTerminating = NO;
 		IOObjectRelease( _hidEntry );
 		_hidEntry = 0;
 	}
-
-
 }
 
 #pragma mark -

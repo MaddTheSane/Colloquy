@@ -45,9 +45,6 @@
 	[preview setDownloadDelegate:nil];
 	[preview setFrameLoadDelegate:nil];
 	[preview setPolicyDelegate:nil];
-
-	_style = nil;
-
 }
 
 - (NSString *) preferencesNibName {

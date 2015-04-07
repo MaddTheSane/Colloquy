@@ -146,7 +146,6 @@ NSString *JVStyleVariantChangedNotification = @"JVStyleVariantChangedNotificatio
 
 	[self _setBundle:nil]; // this will dealloc all other dependant objects
 	[self unlink];
-
 }
 
 #pragma mark -

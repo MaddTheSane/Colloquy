@@ -38,13 +38,6 @@
 
 - (void) dealloc {
 	[[NSNotificationCenter chatCenter] removeObserver:self];
-
-
-	_localTimeUpdated = nil;
-	_localTimeUpdateTimer = nil;
-	_updateTimer = nil;
-	_user = nil;
-
 }
 
 #pragma mark -

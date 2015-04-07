@@ -45,11 +45,6 @@
 
 	[banRules setDataSource:nil];
 	[banRules setDelegate:nil];
-
-
-	_room = nil;
-	_latestBanList = nil;
-
 }
 
 #pragma mark -

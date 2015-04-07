@@ -90,12 +90,6 @@ NSString *const MVFavoritesListDidUpdateNotification = @"MVFavoritesListDidUpdat
 
 	[_sortedMembers makeObjectsPerformSelector:@selector( _detach )];
 	[_nextMessageAlertMembers makeObjectsPerformSelector:@selector( _detach )];
-
-
-	_sortedMembers = nil;
-	_preferredTabCompleteNicknames = nil;
-	_nextMessageAlertMembers = nil;
-
 }
 
 #pragma mark -

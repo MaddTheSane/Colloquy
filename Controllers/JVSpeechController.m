@@ -21,13 +21,6 @@
 	return self;
 }
 
-- (void) dealloc {
-
-	_speechQueue = nil;
-	_synthesizers = nil;
-
-}
-
 - (void) startSpeakingString:(NSString *) string usingVoice:(NSString *) voice {
 
 	for( NSSpeechSynthesizer *synth in _synthesizers ) {

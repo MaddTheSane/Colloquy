@@ -15,14 +15,6 @@
 	return self;
 }
 
-- (void) dealloc {
-	defaultTypingAttributes = nil;
-
-	_lastCompletionMatch = nil;
-
-	_lastCompletionPrefix = nil;
-}
-
 #pragma mark -
 
 - (id <MVTextViewDelegate>)delegate {

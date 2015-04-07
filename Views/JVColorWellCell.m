@@ -82,9 +82,6 @@ NSString *JVColorWellCellColorDidChangeNotification = @"JVColorWellCellColorDidC
 	if( ! [colorWellCells count] ) {
 		colorWellCells = nil;
 	}
-
-	_color = nil;
-
 }
 
 #pragma mark -

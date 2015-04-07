@@ -39,14 +39,10 @@ static JVNotificationController *sharedInstance = nil;
 }
 
 - (void) dealloc {
-
 	[[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if( self == sharedInstance ) sharedInstance = nil;
-
-	_bubbles = nil;
-	_sounds = nil;
-
+	//This will never get called:
+	//if( self == sharedInstance ) sharedInstance = nil;
 }
 
 - (void) performNotification:(NSString *) identifier withContextInfo:(NSDictionary *) context {

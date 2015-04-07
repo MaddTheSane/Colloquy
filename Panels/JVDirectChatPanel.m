@@ -312,14 +312,6 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 
 	for( id alert in _waitingAlerts )
 		NSReleaseAlertPanel( alert );
-
-	_target = nil;
-	_sendHistory = nil;
-	_waitingAlerts = nil;
-	_waitingAlertNames = nil;
-	_settings = nil;
-	_encodingMenu = nil;
-	_spillEncodingMenu = nil;
 }
 
 #pragma mark -

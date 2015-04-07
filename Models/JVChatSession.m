@@ -2,14 +2,6 @@
 #import <libxml/tree.h>
 
 @implementation JVChatSession
-- (void) dealloc {
-	_startDate = nil;
-	_transcript = nil;
-	_node = NULL;
-}
-
-#pragma mark -
-
 - (void *) node {
 	return _node;
 }

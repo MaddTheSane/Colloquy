@@ -9,9 +9,12 @@ static MVKeyChain *sharedInstance = nil;
 	return ( sharedInstance ? sharedInstance : ( sharedInstance = [[self alloc] init] ) );
 }
 
+#if 0
 - (void) dealloc {
-	if( sharedInstance == self ) sharedInstance = nil;
+	//This will never get called:
+	//if( self == sharedInstance ) sharedInstance = nil;
 }
+#endif
 
 - (void) setGenericPassword:(NSString *) password forService:(NSString *) service account:(NSString *) account {
 	NSParameterAssert( service );

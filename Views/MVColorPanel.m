@@ -20,10 +20,6 @@
 	return self;
 }
 
-- (void) dealloc {
-	destination = nil;
-}
-
 - (void) _forceSendAction:(BOOL) action notification:(BOOL) notification firstResponder:(BOOL) firstResponder {
 	[super _forceSendAction:action notification:notification firstResponder:NO];
 

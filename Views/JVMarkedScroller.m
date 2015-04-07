@@ -30,13 +30,6 @@
 	return self;
 }
 
-- (void) dealloc {
-
-	_marks = nil;
-	_shades = nil;
-
-}
-
 #pragma mark -
 
 - (void) drawRect:(NSRect) rect {

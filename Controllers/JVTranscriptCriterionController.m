@@ -69,15 +69,6 @@
 	return [self copyWithZone:zone];
 }
 
-- (void) dealloc {
-
-	subview = nil;
-	kindMenu = nil;
-	expandedKindMenu = nil;
-	_query = nil;
-
-}
-
 #pragma mark -
 
 - (void) awakeFromNib {

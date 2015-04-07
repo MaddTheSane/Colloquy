@@ -79,12 +79,8 @@ static NSMutableSet *inspectors = nil;
 	_inspectorLoaded = NO;
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if( self == sharedInstance ) sharedInstance = nil;
-
-
-	_object = nil;
-	_inspector = nil;
-
+	//This will never get called:
+	//if( self == sharedInstance ) sharedInstance = nil;
 }
 
 #pragma mark -

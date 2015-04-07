@@ -138,11 +138,6 @@ NSString *JVChatViewPboardType = @"Colloquy Chat View v1.0 pasteboard type";
 	for( id <JVChatViewController> controller in _views )
 		[controller setWindowController:nil];
 
-
-	_activeViewController = nil;
-	_views = nil;
-	_identifier = nil;
-	_settings = nil;
 	_showDelayed = NO;
 }
 

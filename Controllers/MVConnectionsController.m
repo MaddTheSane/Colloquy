@@ -217,14 +217,8 @@ static NSMenu *favoritesMenu = nil;
 
 	[[NSNotificationCenter chatCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if( self == sharedInstance ) sharedInstance = nil;
-
-
-	_bookmarks = nil;
-	_joinRooms = nil;
-	_passConnection = nil;
-	_publicKeyRequestQueue = nil;
-
+	//This will never get called:
+	//if( self == sharedInstance ) sharedInstance = nil;
 }
 
 - (void) windowDidLoad {
