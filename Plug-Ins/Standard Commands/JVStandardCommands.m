@@ -12,14 +12,9 @@
 #import "JVEmoticonSet.h"
 #import <WebKit/WebKit.h>
 #import "JVStyleView.h"
+#import "JVConnectionInspector.h"
 
 #import <WebKit/WebKit.h>
-
-@interface MVChatConnection (MVChatConnectionInspection) <JVInspection>
-- (id <JVInspector>) inspector;
-@end
-
-#pragma mark -
 
 @interface JVChatTranscriptPanel (JVChatTranscriptPanelPrivate)
 - (void) _reloadCurrentStyle:(id) sender;
