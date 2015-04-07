@@ -1,13 +1,13 @@
-#import <libxml/tree.h>
-#import <libxslt/transform.h>
-#import <libxslt/xsltutils.h>
+#include <libxml/tree.h>
+#include <libxslt/transform.h>
+#include <libxslt/xsltutils.h>
 
 #import "JVStyle.h"
 #import "JVEmoticonSet.h"
 #import "JVChatMessage.h"
 #import "NSBundleAdditions.h"
 
-@interface JVStyle (JVStylePrivate)
+@interface JVStyle ()
 + (const char **) _xsltParamArrayWithDictionary:(NSDictionary *) dictionary;
 + (void) _freeXsltParamArray:(const char **) params;
 

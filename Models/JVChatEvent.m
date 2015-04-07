@@ -2,10 +2,25 @@
 #import "NSAttributedStringMoreAdditions.h"
 #import "NSDateAdditions.h"
 #import "JVChatRoomMember.h"
+#import "JVChatEvent_Private.h"
 
-#import <libxml/tree.h>
+#include <libxml/tree.h>
 
-@implementation JVChatEvent
+@implementation JVChatEvent {
+@protected
+	xmlNode *_node;
+	xmlDoc *_doc;
+	NSString *_eventIdentifier;
+	NSScriptObjectSpecifier *_objectSpecifier;
+	__weak JVChatTranscript *_transcript;
+	NSDate *_date;
+	NSString *_name;
+	NSTextStorage *_message;
+	NSDictionary *_attributes;
+	BOOL _loadedMessage;
+	BOOL _loadedAttributes;
+	BOOL _loadedSmall;
+}
 - (void) dealloc {
 	_node = NULL;
 
@@ -173,16 +188,6 @@
 
 #pragma mark -
 
-- (JVChatTranscript *) transcript {
-	return _transcript;
-}
-
-- (NSString *) eventIdentifier {
-	return _eventIdentifier;
-}
-
-#pragma mark -
-
 - (NSDate *) date {
 	[self loadSmall];
 	return _date;
@@ -215,6 +220,28 @@
 	[self loadAttributes];
 	return _attributes;
 }
+
+#pragma mark - private
+
+- (instancetype) initWithNode:(xmlNode *) node andTranscript:(JVChatTranscript *) transcript {
+	if( ( self = [self init] ) ) {
+		_node = node;
+		_transcript = transcript; // weak reference
+		
+		if( ! _node || node -> type != XML_ELEMENT_NODE ) {
+			return nil;
+		}
+		
+		@synchronized( _transcript ) {
+			xmlChar *prop = xmlGetProp( (xmlNode *) _node, (xmlChar *) "id" );
+			_eventIdentifier = ( prop ? [[NSString allocWithZone:nil] initWithUTF8String:(char *) prop] : nil );
+			xmlFree( prop );
+		}
+	}
+	
+	return self;
+}
+
 @end
 
 #pragma mark -

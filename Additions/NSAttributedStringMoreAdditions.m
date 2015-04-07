@@ -6,7 +6,7 @@
 
 #import "NSStringAdditions.h"
 
-#import <libxml/tree.h>
+#include <libxml/tree.h>
 
 static void setItalicOrObliqueFont( NSMutableDictionary *attrs ) {
 	NSFontManager *fm = [NSFontManager sharedFontManager];

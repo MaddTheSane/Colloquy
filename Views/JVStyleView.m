@@ -43,26 +43,6 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 
 #pragma mark -
 
-@interface DOMNode (DOMNodeLeopard)
-- (DOMNode *) insertBefore:(DOMNode *) newChild refChild:(DOMNode *) refChild;
-@end
-
-#pragma mark -
-
-@interface DOMElement (DOMElementLeopard)
-- (void) setAttribute:(NSString *) name value:(NSString *) value;
-@end
-
-#pragma mark -
-
-@interface DOMHTMLElement (DOMHTMLElementLeopard)
-- (int) offsetTop;
-- (int) offsetHeight;
-- (int) scrollHeight;
-@end
-
-#pragma mark -
-
 @interface NSScrollView (NSScrollViewWebKitPrivate)
 - (void) setAllowsHorizontalScrolling:(BOOL) allow;
 @end
@@ -109,14 +89,14 @@ NSString *JVStyleViewDidChangeStylesNotification = @"JVStyleViewDidChangeStylesN
 		return ((int(*)(id, SEL))objc_msgSend)(self, selector);
 	NSNumber *value = [self valueForKey:property];
 	if( [value isKindOfClass:[NSNumber class]] )
-		return [value intValue];
+		return [value integerValue];
 	return 0;
 }
 
 - (void) setInteger:(NSInteger) value forDOMProperty:(NSString *) property {
 	SEL selector = NSSelectorFromString( [@"set" stringByAppendingString:[property capitalizedString]] );
 	if( [self respondsToSelector:selector] ) {
-		((void(*)(id, SEL, int))objc_msgSend)(self, selector, value);
+		((void(*)(id, SEL, NSInteger))objc_msgSend)(self, selector, value);
 	} else {
 		NSNumber *number = @(value);
 		[self setValue:number forKey:property];

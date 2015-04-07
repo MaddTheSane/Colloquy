@@ -869,6 +869,10 @@
 		1CF79CBD07AC77E600696918 /* JVChatTranscript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JVChatTranscript.m; path = Models/JVChatTranscript.m; sourceTree = "<group>"; };
 		1CF8030C070C893500C9B54C /* libsilc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libsilc.framework; path = Frameworks/libsilc.framework; sourceTree = SOURCE_ROOT; };
 		1CF8030D070C893500C9B54C /* libsilcclient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libsilcclient.framework; path = Frameworks/libsilcclient.framework; sourceTree = SOURCE_ROOT; };
+		550C974B1AD44D5E00B590A6 /* JVChatEvent_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatEvent_Private.h; path = Models/JVChatEvent_Private.h; sourceTree = "<group>"; };
+		550C974E1AD4543200B590A6 /* JVChatSession_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatSession_Private.h; path = Models/JVChatSession_Private.h; sourceTree = "<group>"; };
+		550C974F1AD455BA00B590A6 /* JVChatMessage_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatMessage_Private.h; path = Models/JVChatMessage_Private.h; sourceTree = "<group>"; };
+		550C97501AD45A4800B590A6 /* JVChatTranscript_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatTranscript_Private.h; path = Models/JVChatTranscript_Private.h; sourceTree = "<group>"; };
 		5530388F171722A200652D45 /* GetMetadataForFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetMetadataForFile.h; sourceTree = "<group>"; };
 		55B0EF2D18CE34850000E4CA /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		55B0EF3518CE3DE10000E4CA /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -1556,12 +1560,16 @@
 				1C66913707BFA76D008400F7 /* JVEmoticonSet.h */,
 				1CF79CBD07AC77E600696918 /* JVChatTranscript.m */,
 				1CF79CBC07AC77E600696918 /* JVChatTranscript.h */,
+				550C97501AD45A4800B590A6 /* JVChatTranscript_Private.h */,
 				1C5EF36A07B45FBF004E66D3 /* JVChatSession.m */,
 				1C5EF36907B45FBF004E66D3 /* JVChatSession.h */,
+				550C974E1AD4543200B590A6 /* JVChatSession_Private.h */,
 				1CD733CA05A0E2470080F952 /* JVChatMessage.m */,
 				1CD733C905A0E2470080F952 /* JVChatMessage.h */,
+				550C974F1AD455BA00B590A6 /* JVChatMessage_Private.h */,
 				1C5EF35907B45C1F004E66D3 /* JVChatEvent.m */,
 				1C5EF35807B45C1F004E66D3 /* JVChatEvent.h */,
+				550C974B1AD44D5E00B590A6 /* JVChatEvent_Private.h */,
 				92823CF1168FFA0A000EC36E /* KAIgnoreRule.m */,
 				92823CF0168FFA0A000EC36E /* KAIgnoreRule.h */,
 				F551EE490209FB3301EE70DE /* MVKeyChain.m */,
