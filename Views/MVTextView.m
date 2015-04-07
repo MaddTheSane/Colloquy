@@ -1,7 +1,7 @@
 #import "MVTextView.h"
 #import "JVTranscriptFindWindowController.h"
 
-@interface MVTextView (MVTextViewPrivate)
+@interface MVTextView ()
 - (BOOL) checkKeyEvent:(NSEvent *) event;
 - (BOOL) triggerKeyEvent:(NSEvent *) event;
 @end

@@ -17,17 +17,17 @@
 }
 - (/* xmlNode */ void *) node;
 
-- (JVChatTranscript *) transcript;
-- (NSString *) eventIdentifier;
+@property (readonly, weak) JVChatTranscript *transcript;
+@property (readonly, copy) NSString *eventIdentifier;
 
 @property (readonly, strong) NSDate *date;
 @property (readonly, copy) NSString *name;
 
 - (NSTextStorage *) message;
-- (NSString *) messageAsPlainText;
-- (NSString *) messageAsHTML;
+@property (readonly, copy) NSString *messageAsPlainText;
+@property (readonly, copy) NSString *messageAsHTML;
 
-- (NSDictionary *) attributes;
+@property (readonly, copy) NSDictionary *attributes;
 @end
 
 @interface JVMutableChatEvent : JVChatEvent
@@ -38,10 +38,10 @@
 @property (readwrite, copy) NSString *name;
 
 - (void) setMessage:(id) message;
-- (void) setMessageAsPlainText:(NSString *) message;
-- (void) setMessageAsHTML:(NSString *) message;
+@property (readwrite, copy) NSString *messageAsPlainText;
+@property (readwrite, copy) NSString *messageAsHTML;
 
-- (void) setAttributes:(NSDictionary *) attributes;
+@property (readwrite, copy) NSDictionary *attributes;
 
-- (void) setEventIdentifier:(NSString *) identifier;
+@property (readwrite, copy) NSString *eventIdentifier;
 @end

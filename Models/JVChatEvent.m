@@ -220,6 +220,13 @@
 #pragma mark -
 
 @implementation JVMutableChatEvent
+@dynamic attributes;
+@dynamic eventIdentifier;
+@dynamic date;
+@dynamic name;
+@dynamic messageAsHTML;
+@dynamic messageAsPlainText;
+
 + (id) chatEventWithName:(NSString *) name andMessage:(id) message {
 	return [[self alloc] initWithName:name andMessage:message];
 }
@@ -254,17 +261,9 @@
 	_date = [date copyWithZone:nil];
 }
 
-- (NSDate *)date {
-	return [super date];
-}
-
 - (void) setName:(NSString *) name {
 	[self _setNode:NULL];
 	_name = [name copyWithZone:nil];
-}
-
-- (NSString *)name {
-	return [super name];
 }
 
 #pragma mark -
