@@ -384,7 +384,7 @@ NSString *MVReadableTime( NSTimeInterval date, BOOL longFormat ) {
 		[toolbarItem setPaletteLabel:NSLocalizedString( @"Stop Tranfser", "name for stop button in customize palette" )];
 
 		[toolbarItem setToolTip:NSLocalizedString( @"Stop File Tranfser", "stop button tooltip" )];
-		[toolbarItem setImage:[NSImage imageNamed:@"stop"]];
+		[toolbarItem setImage:[[NSWorkspace sharedWorkspace] iconForFileType: NSFileTypeForHFSTypeCode(kAlertStopIcon)]];
 
 		[toolbarItem setTarget:self];
 		[toolbarItem setAction:NULL];

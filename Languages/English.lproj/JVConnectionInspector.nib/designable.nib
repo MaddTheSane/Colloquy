@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1080</int>
+		<int key="IBDocument.SystemTarget">1090</int>
 		<string key="IBDocument.SystemVersion">14C1514</string>
 		<string key="IBDocument.InterfaceBuilderVersion">7528.3</string>
 		<string key="IBDocument.AppKitVersion">1344.72</string>
@@ -1637,7 +1637,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 												<int key="NSButtonFlags2">134</int>
 												<object class="NSCustomResource" key="NSNormalImage">
 													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">NSSmartBadgeTemplate</string>
+													<string key="NSResourceName">NSActionTemplate</string>
 												</object>
 												<string key="NSAlternateContents"/>
 												<string key="NSKeyEquivalent"/>
@@ -1727,7 +1727,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 											<int key="NSvFlags">256</int>
 											<string key="NSFrameSize">{254, 64}</string>
 											<reference key="NSSuperview" ref="726087775"/>
-											<reference key="NSNextKeyView" ref="656704891"/>
+											<reference key="NSNextKeyView" ref="90571597"/>
 											<bool key="NSEnabled">YES</bool>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<bool key="NSControlAllowsExpansionToolTips">YES</bool>
@@ -1820,7 +1820,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							</array>
 							<string key="NSFrame">{{38, 46}, {256, 66}}</string>
 							<reference key="NSSuperview" ref="979819164"/>
-							<reference key="NSNextKeyView" ref="90571597"/>
+							<reference key="NSNextKeyView" ref="726087775"/>
 							<int key="NSsFlags">133650</int>
 							<reference key="NSVScroller" ref="171923022"/>
 							<reference key="NSHScroller" ref="90571597"/>
@@ -4377,11 +4377,11 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NSActionTemplate">{14, 14}</string>
 			<string key="NSAddTemplate">{11, 11}</string>
 			<string key="NSMenuCheckmark">{12, 12}</string>
 			<string key="NSMenuMixedState">{10, 2}</string>
 			<string key="NSRemoveTemplate">{11, 11}</string>
-			<string key="NSSmartBadgeTemplate">{14, 14}</string>
 			<string key="NSSwitch">{15, 15}</string>
 			<string key="deleteWidgetPressed">{22, 22}</string>
 		</dictionary>

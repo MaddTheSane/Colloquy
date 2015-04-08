@@ -66,10 +66,8 @@ static NSSize		rightCapSize;
 		tabFrontMiddle = [NSImage imageNamed:@"aquaTabMiddle"];
 		tabFrontRight = [NSImage imageNamed:@"aquaTabRight"];
 
-		tabCloseFront = [NSImage imageNamed:@"aquaTabClose"];
-		tabCloseBack = [NSImage imageNamed:@"aquaTabCloseBack"];
-		tabCloseFrontPressed = [NSImage imageNamed:@"aquaTabClosePressed"];
-		tabCloseFrontRollover = [NSImage imageNamed:@"aquaTabCloseRollover"];
+		tabCloseFront = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate];
+		tabCloseBack = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate];
 
 		leftCapSize = [tabFrontLeft size];
 		rightCapSize = [tabFrontRight size];

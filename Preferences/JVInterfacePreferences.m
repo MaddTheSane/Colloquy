@@ -142,7 +142,7 @@ static NSString *JVInterfacePreferencesWindowDragPboardType = @"JVInterfacePrefe
 }
 
 - (NSImage *) iconForRules:(NSArray *) rules {
-	NSImage *icon = [NSImage imageNamed:@"gearSmall"];
+	NSImage *icon = [NSImage imageNamed:NSImageNameActionTemplate];
 	BOOL multipleType = NO;
 
 	for( JVChatViewCriterionController *rule in rules ) {
@@ -152,7 +152,7 @@ static NSString *JVInterfacePreferencesWindowDragPboardType = @"JVInterfacePrefe
 			else if( [[rule query] intValue] == 12 ) icon = [NSImage imageNamed:@"smartTranscriptTab"];
 			multipleType = YES;
 		} else if( multipleType && [rule kind] == JVChatViewTypeCriterionKind ) {
-			icon = [NSImage imageNamed:@"gearSmall"];
+			icon = [NSImage imageNamed:NSImageNameActionTemplate];
 			break;
 		}
 	}

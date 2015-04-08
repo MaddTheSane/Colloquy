@@ -12,6 +12,7 @@
 //#import "JVDirectChatPanel.h"
 #import <ChatCore/MVChatConnection.h>
 #import <ChatCore/MVChatRoom.h>
+#import <Carbon/Carbon.h>
 
 #import <SecurityInterface/SFCertificateTrustPanel.h>
 
@@ -1396,7 +1397,7 @@ static NSMenu *favoritesMenu = nil;
 		[toolbarItem setPaletteLabel:NSLocalizedString( @"Connection Info", "name for connection info button in customize palette" )];
 
 		[toolbarItem setToolTip:NSLocalizedString( @"Show connection info", "connection info button tooltip" )];
-		[toolbarItem setImage:[NSImage imageNamed:@"info"]];
+		[toolbarItem setImage:[NSImage imageNamed:NSImageNameInfo]];
 
 		[toolbarItem setTarget:self];
 		[toolbarItem setAction:NULL];
@@ -1414,7 +1415,7 @@ static NSMenu *favoritesMenu = nil;
 		[toolbarItem setPaletteLabel:NSLocalizedString( @"Delete Connection", "name for delete connection button in customize palette" )];
 
 		[toolbarItem setToolTip:NSLocalizedString( @"Delete Connection", "delete connection button tooltip" )];
-		[toolbarItem setImage:[NSImage imageNamed:@"delete"]];
+		[toolbarItem setImage:[[NSWorkspace sharedWorkspace] iconForFileType: NSFileTypeForHFSTypeCode(kToolbarDeleteIcon)]];
 
 		[toolbarItem setTarget:self];
 		[toolbarItem setAction:NULL];
