@@ -222,8 +222,6 @@
 		1CD02009057588CE000F93B4 /* buddyMessage.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FB4D1B0393F2D301000102 /* buddyMessage.png */; };
 		1CD0200A057588CF000F93B4 /* buddyInfo.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FB4D170393F0CC01000102 /* buddyInfo.png */; };
 		1CD0200B057588D0000F93B4 /* buddyInfoBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FB4D180393F0CC01000102 /* buddyInfoBlue.png */; };
-		1CD0200C057588D1000F93B4 /* buddyNew.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FB4D130393F09D01000102 /* buddyNew.png */; };
-		1CD0200D057588D1000F93B4 /* buddyNewBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FB4D140393F09D01000102 /* buddyNewBlue.png */; };
 		1CD0200E057588D2000F93B4 /* buddyOptions.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FB4D0F0393F04701000102 /* buddyOptions.png */; };
 		1CD0200F057588D3000F93B4 /* buddyOptionsBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = F5FB4D100393F04701000102 /* buddyOptionsBlue.png */; };
 		1CD0201005758A33000F93B4 /* MVBuddyList.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1CC7CAAE03C48E8B001C0D62 /* MVBuddyList.nib */; };
@@ -252,8 +250,6 @@
 		1CEE3F06057AEC0200AD6DE2 /* JVBuddy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CEE3F04057AEC0200AD6DE2 /* JVBuddy.m */; };
 		1CEEAB17095BD23500166A54 /* ChatCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEEAB16095BD23100166A54 /* ChatCore.framework */; };
 		1CEEAB1A095BD25500166A54 /* ChatCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEEAB16095BD23100166A54 /* ChatCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		1CF16CDF083ADE590037F222 /* deleteWidget.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF16CDB083ADE590037F222 /* deleteWidget.png */; };
-		1CF16CE0083ADE590037F222 /* deleteWidgetPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF16CDC083ADE590037F222 /* deleteWidgetPressed.png */; };
 		1CF16CE1083ADE590037F222 /* editWidget.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF16CDD083ADE590037F222 /* editWidget.png */; };
 		1CF16CE2083ADE590037F222 /* editWidgetPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CF16CDE083ADE590037F222 /* editWidgetPressed.png */; };
 		1CF16D11083ADECF0037F222 /* JVInterfacePreferences.nib in Resources */ = {isa = PBXBuildFile; fileRef = 1CF16D0F083ADECF0037F222 /* JVInterfacePreferences.nib */; };
@@ -270,6 +266,7 @@
 		1CF80310070C894100C9B54C /* libsilc.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1CF8030C070C893500C9B54C /* libsilc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1CF80311070C894100C9B54C /* libsilcclient.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 1CF8030D070C893500C9B54C /* libsilcclient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1CF803F1070C948000C9B54C /* NSURLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CD4BD9405AA309A00F72EE6 /* NSURLAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		558EF2371AEC356800619BDE /* Room Member Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 558EF2361AEC356800619BDE /* Room Member Icons.xcassets */; };
 		55B0EF3618CE3DE10000E4CA /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0EF3518CE3DE10000E4CA /* libxml2.dylib */; };
 		55B0EF3718CE3E040000E4CA /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0EF3518CE3DE10000E4CA /* libxml2.dylib */; };
 		55B0EF3A18CE3E250000E4CA /* libexslt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0EF3818CE3E250000E4CA /* libexslt.dylib */; };
@@ -279,6 +276,8 @@
 		55C8A2D9180735D100A7BB42 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55C8A2D7180735D100A7BB42 /* InfoPlist.strings */; };
 		55C8A2E41807361900A7BB42 /* JVChatWindowControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C59A91F09FDEBA3000682B8 /* JVChatWindowControllerTests.m */; };
 		55C8A2E51807391600A7BB42 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		55F42AC01AEC39A00085CA56 /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55B0EF2D18CE34850000E4CA /* AppIcon.xcassets */; };
+		55F42AC21AEC3A930085CA56 /* Shared Toolbar.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55F42AC11AEC3A930085CA56 /* Shared Toolbar.xcassets */; };
 		891E8467123F0AEF00EC3C0F /* NSCharacterSetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 891E8466123F0AEF00EC3C0F /* NSCharacterSetAdditions.m */; };
 		891EF3D1106426CB00CCEA35 /* PFMoveApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 891EF3D0106426CB00CCEA35 /* PFMoveApplicationController.m */; };
 		89EB91AA0F269BEF0028B3E3 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89EB91A90F269BEF0028B3E3 /* Sparkle.framework */; };
@@ -289,16 +288,6 @@
 		928FB03613EE64C700A0DF4B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 928FB03513EE64C700A0DF4B /* libicucore.dylib */; };
 		9295C85D1675E227009F9014 /* ChatCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEEAB16095BD23100166A54 /* ChatCore.framework */; };
 		92A711951A4A5166009E80F0 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A711941A4A5166009E80F0 /* SecurityInterface.framework */; };
-		92C70D091A5E87CF00080E45 /* room.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D081A5E87CF00080E45 /* room.pdf */; };
-		92C70D121A5E88CE00080E45 /* half-op.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D0A1A5E88CE00080E45 /* half-op.pdf */; };
-		92C70D131A5E88CE00080E45 /* person.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D0B1A5E88CE00080E45 /* person.pdf */; };
-		92C70D141A5E88CE00080E45 /* admin.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D0C1A5E88CE00080E45 /* admin.pdf */; };
-		92C70D151A5E88CE00080E45 /* op.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D0D1A5E88CE00080E45 /* op.pdf */; };
-		92C70D171A5E88CE00080E45 /* founder.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D0F1A5E88CE00080E45 /* founder.pdf */; };
-		92C70D181A5E88CE00080E45 /* voice.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D101A5E88CE00080E45 /* voice.pdf */; };
-		92C70D191A5E88CE00080E45 /* super-op.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D111A5E88CE00080E45 /* super-op.pdf */; };
-		92C70D1B1A5E898100080E45 /* console.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D1A1A5E898100080E45 /* console.pdf */; };
-		92C70D1D1A5E89A000080E45 /* messageUser.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 92C70D1C1A5E89A000080E45 /* messageUser.pdf */; };
 		CB66DEA20631F8160034F76E /* Keychain.png in Resources */ = {isa = PBXBuildFile; fileRef = CB66DEA00631F8160034F76E /* Keychain.png */; };
 		CB66DEA30631F8160034F76E /* Stickies.png in Resources */ = {isa = PBXBuildFile; fileRef = CB66DEA10631F8160034F76E /* Stickies.png */; };
 		CBF6855F08201B7300F498FB /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = CBF685340820190D00F498FB /* schema.xml */; };
@@ -828,8 +817,6 @@
 		1CEE3F03057AEC0200AD6DE2 /* JVBuddy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVBuddy.h; path = Models/JVBuddy.h; sourceTree = "<group>"; };
 		1CEE3F04057AEC0200AD6DE2 /* JVBuddy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JVBuddy.m; path = Models/JVBuddy.m; sourceTree = "<group>"; };
 		1CEF8F7B0A3AB7BB0054298A /* JavaScript Support.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "JavaScript Support.xcodeproj"; path = "Plug-Ins/JavaScript Support/JavaScript Support.xcodeproj"; sourceTree = "<group>"; };
-		1CF16CDB083ADE590037F222 /* deleteWidget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = deleteWidget.png; path = Resources/deleteWidget.png; sourceTree = SOURCE_ROOT; };
-		1CF16CDC083ADE590037F222 /* deleteWidgetPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = deleteWidgetPressed.png; path = Resources/deleteWidgetPressed.png; sourceTree = SOURCE_ROOT; };
 		1CF16CDD083ADE590037F222 /* editWidget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = editWidget.png; path = Resources/editWidget.png; sourceTree = SOURCE_ROOT; };
 		1CF16CDE083ADE590037F222 /* editWidgetPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = editWidgetPressed.png; path = Resources/editWidgetPressed.png; sourceTree = SOURCE_ROOT; };
 		1CF16D10083ADECF0037F222 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = Languages/English.lproj/JVInterfacePreferences.nib; sourceTree = "<group>"; };
@@ -850,6 +837,7 @@
 		550C974F1AD455BA00B590A6 /* JVChatMessage_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatMessage_Private.h; path = Models/JVChatMessage_Private.h; sourceTree = "<group>"; };
 		550C97501AD45A4800B590A6 /* JVChatTranscript_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JVChatTranscript_Private.h; path = Models/JVChatTranscript_Private.h; sourceTree = "<group>"; };
 		5530388F171722A200652D45 /* GetMetadataForFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetMetadataForFile.h; sourceTree = "<group>"; };
+		558EF2361AEC356800619BDE /* Room Member Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Room Member Icons.xcassets"; sourceTree = "<group>"; };
 		55B0EF2D18CE34850000E4CA /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		55B0EF3518CE3DE10000E4CA /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		55B0EF3818CE3E250000E4CA /* libexslt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexslt.dylib; path = usr/lib/libexslt.dylib; sourceTree = SDKROOT; };
@@ -860,6 +848,7 @@
 		55C8A2D0180735D100A7BB42 /* Colloquy Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Colloquy Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C8A2D6180735D100A7BB42 /* Colloquy Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Colloquy Tests-Info.plist"; sourceTree = "<group>"; };
 		55C8A2D8180735D100A7BB42 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55F42AC11AEC3A930085CA56 /* Shared Toolbar.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Shared Toolbar.xcassets"; sourceTree = "<group>"; };
 		891E8465123F0AEF00EC3C0F /* NSCharacterSetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSCharacterSetAdditions.h; path = Additions/NSCharacterSetAdditions.h; sourceTree = "<group>"; };
 		891E8466123F0AEF00EC3C0F /* NSCharacterSetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSCharacterSetAdditions.m; path = Additions/NSCharacterSetAdditions.m; sourceTree = "<group>"; };
 		891EF3D0106426CB00CCEA35 /* PFMoveApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFMoveApplicationController.m; path = Controllers/PFMoveApplicationController.m; sourceTree = "<group>"; };
@@ -888,17 +877,7 @@
 		928FB03513EE64C700A0DF4B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		9295C84E1675E10A009F9014 /* Colloquy.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; name = Colloquy.exp; path = ../Colloquy.exp; sourceTree = "<group>"; };
 		92A711941A4A5166009E80F0 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
-		92C70D081A5E87CF00080E45 /* room.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = room.pdf; sourceTree = "<group>"; };
-		92C70D0A1A5E88CE00080E45 /* half-op.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "half-op.pdf"; sourceTree = "<group>"; };
-		92C70D0B1A5E88CE00080E45 /* person.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = person.pdf; sourceTree = "<group>"; };
-		92C70D0C1A5E88CE00080E45 /* admin.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = admin.pdf; sourceTree = "<group>"; };
-		92C70D0D1A5E88CE00080E45 /* op.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = op.pdf; sourceTree = "<group>"; };
 		92C70D0E1A5E88CE00080E45 /* room.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = room.pdf; sourceTree = "<group>"; };
-		92C70D0F1A5E88CE00080E45 /* founder.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = founder.pdf; sourceTree = "<group>"; };
-		92C70D101A5E88CE00080E45 /* voice.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = voice.pdf; sourceTree = "<group>"; };
-		92C70D111A5E88CE00080E45 /* super-op.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "super-op.pdf"; sourceTree = "<group>"; };
-		92C70D1A1A5E898100080E45 /* console.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = console.pdf; sourceTree = "<group>"; };
-		92C70D1C1A5E89A000080E45 /* messageUser.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = messageUser.pdf; sourceTree = "<group>"; };
 		A1429C720901F57A00A7BEEE /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Languages/Italian.lproj/Colloquy.nib; sourceTree = "<group>"; };
 		A1429C730901F57A00A7BEEE /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Languages/Italian.lproj/JVAppearancePreferences.nib; sourceTree = "<group>"; };
 		A1429C740901F57A00A7BEEE /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Languages/Italian.lproj/JVBehaviorPreferences.nib; sourceTree = "<group>"; };
@@ -1095,8 +1074,6 @@
 		F5FB4CE60393C15601000102 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
 		F5FB4D0F0393F04701000102 /* buddyOptions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buddyOptions.png; path = "Resources/Palette Icons/buddyOptions.png"; sourceTree = SOURCE_ROOT; };
 		F5FB4D100393F04701000102 /* buddyOptionsBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buddyOptionsBlue.png; path = "Resources/Palette Icons/buddyOptionsBlue.png"; sourceTree = SOURCE_ROOT; };
-		F5FB4D130393F09D01000102 /* buddyNew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buddyNew.png; path = "Resources/Palette Icons/buddyNew.png"; sourceTree = SOURCE_ROOT; };
-		F5FB4D140393F09D01000102 /* buddyNewBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buddyNewBlue.png; path = "Resources/Palette Icons/buddyNewBlue.png"; sourceTree = SOURCE_ROOT; };
 		F5FB4D170393F0CC01000102 /* buddyInfo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buddyInfo.png; path = "Resources/Palette Icons/buddyInfo.png"; sourceTree = SOURCE_ROOT; };
 		F5FB4D180393F0CC01000102 /* buddyInfoBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buddyInfoBlue.png; path = "Resources/Palette Icons/buddyInfoBlue.png"; sourceTree = SOURCE_ROOT; };
 		F5FB4D1B0393F2D301000102 /* buddyMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buddyMessage.png; path = "Resources/Palette Icons/buddyMessage.png"; sourceTree = SOURCE_ROOT; };
@@ -1736,6 +1713,7 @@
 				F520458E01B1D37701EBB4B5 /* Sounds */,
 				F51F91D7037967CB01A35792 /* Chat.clr */,
 				1CEE3A4C0577E14500AD6DE2 /* Buddy List Icons */,
+				558EF2361AEC356800619BDE /* Room Member Icons.xcassets */,
 				F544999D018E46A501EE70DE /* Room Member Icons */,
 				F5ED0F46017CD77701EE70DE /* Toolbar Icons */,
 				1CBC6317054896CB009E59E1 /* Preference Icons */,
@@ -1791,7 +1769,6 @@
 		F52955590181EB5901EE70DE /* Misc. Icons */ = {
 			isa = PBXGroup;
 			children = (
-				92C70D081A5E87CF00080E45 /* room.pdf */,
 				1C9982AC0604BA1F006C6417 /* sound.png */,
 				1CA7CA6305FEC88500887614 /* activity.png */,
 				1CA7CA6405FEC88500887614 /* activityNew.png */,
@@ -1855,14 +1832,7 @@
 		F544999D018E46A501EE70DE /* Room Member Icons */ = {
 			isa = PBXGroup;
 			children = (
-				92C70D0A1A5E88CE00080E45 /* half-op.pdf */,
-				92C70D0B1A5E88CE00080E45 /* person.pdf */,
-				92C70D0C1A5E88CE00080E45 /* admin.pdf */,
-				92C70D0D1A5E88CE00080E45 /* op.pdf */,
 				92C70D0E1A5E88CE00080E45 /* room.pdf */,
-				92C70D0F1A5E88CE00080E45 /* founder.pdf */,
-				92C70D101A5E88CE00080E45 /* voice.pdf */,
-				92C70D111A5E88CE00080E45 /* super-op.pdf */,
 			);
 			name = "Room Member Icons";
 			sourceTree = "<group>";
@@ -1872,8 +1842,6 @@
 			children = (
 				1CBB23CD04EFE233000001C8 /* actionWidget.png */,
 				1CBB23CE04EFE233000001C8 /* actionWidgetPressed.png */,
-				1CF16CDB083ADE590037F222 /* deleteWidget.png */,
-				1CF16CDC083ADE590037F222 /* deleteWidgetPressed.png */,
 				1CF16CDD083ADE590037F222 /* editWidget.png */,
 				1CF16CDE083ADE590037F222 /* editWidgetPressed.png */,
 				1CD4BD9B05AA773800F72EE6 /* favorites.png */,
@@ -1884,8 +1852,6 @@
 				F5FB4D1C0393F2D301000102 /* buddyMessageBlue.png */,
 				F5FB4D170393F0CC01000102 /* buddyInfo.png */,
 				F5FB4D180393F0CC01000102 /* buddyInfoBlue.png */,
-				F5FB4D130393F09D01000102 /* buddyNew.png */,
-				F5FB4D140393F09D01000102 /* buddyNewBlue.png */,
 				F5FB4D0F0393F04701000102 /* buddyOptions.png */,
 				F5FB4D100393F04701000102 /* buddyOptionsBlue.png */,
 			);
@@ -1898,10 +1864,8 @@
 			children = (
 				1C05F4550828727D006FCB72 /* markDisplay.png */,
 				1CBECE5D050A8D21000001C8 /* chooseStyle.png */,
-				92C70D1C1A5E89A000080E45 /* messageUser.pdf */,
 				F5E06408038D6DEB01000102 /* joinRoom.png */,
 				F5E2537C038809A201000102 /* connect.png */,
-				92C70D1A1A5E898100080E45 /* console.pdf */,
 				F5E2537D038809A201000102 /* disconnect.png */,
 				1CE95885063F3BF90071C9C3 /* inspector.png */,
 				F5E98659018CB25601EE70DE /* emoticon.png */,
@@ -1909,6 +1873,7 @@
 				1CBECD660508C61B000001C8 /* showdrawer.png */,
 				1CF627CA07558F79005DFCFA /* fileSend.png */,
 				1CF4D76507E6AD4400DB421A /* smartTranscriptSettings.png */,
+				55F42AC11AEC3A930085CA56 /* Shared Toolbar.xcassets */,
 			);
 			path = "Toolbar Icons";
 			sourceTree = "<group>";
@@ -2145,9 +2110,9 @@
 				1CB2CD1C052DDC560094AAA4 /* error.png in Resources */,
 				1CB2CD1D052DDC560094AAA4 /* pending.png in Resources */,
 				1CB2CD1E052DDC560094AAA4 /* done.png in Resources */,
+				55F42AC21AEC3A930085CA56 /* Shared Toolbar.xcassets in Resources */,
 				1CB2CD20052DDC560094AAA4 /* clear.png in Resources */,
 				1CB2CD21052DDC560094AAA4 /* reveal.png in Resources */,
-				92C70D171A5E88CE00080E45 /* founder.pdf in Resources */,
 				1CB2CD22052DDC560094AAA4 /* stopped.png in Resources */,
 				1CB2CD24052DDC560094AAA4 /* verbs.plist in Resources */,
 				1CB2CD2A052DDC560094AAA4 /* Colloquy.nib in Resources */,
@@ -2179,13 +2144,10 @@
 				1CB2CD58052DDC560094AAA4 /* chooseStyle.png in Resources */,
 				1CB2CD59052DDC560094AAA4 /* Emoticons in Resources */,
 				1CB2CD5A052DDC560094AAA4 /* emoticons.plist in Resources */,
-				92C70D091A5E87CF00080E45 /* room.pdf in Resources */,
 				1CB2CD5B052DDC560094AAA4 /* colloquy-alpha.png in Resources */,
 				1CB2CD5C052DDC560094AAA4 /* newMessage.png in Resources */,
 				1CB2CD5D052DDC560094AAA4 /* newHighlightMessage.png in Resources */,
 				1CB2CD5E052DDC560094AAA4 /* JVChatTranscript.nib in Resources */,
-				92C70D121A5E88CE00080E45 /* half-op.pdf in Resources */,
-				92C70D191A5E88CE00080E45 /* super-op.pdf in Resources */,
 				1CB2CD60052DDC560094AAA4 /* JVChatConsole.nib in Resources */,
 				1C1AD00B053487ED00F71D4E /* JVConnectionInspector.nib in Resources */,
 				1CB4DCAB053627C00080D36F /* JVRoomInspector.nib in Resources */,
@@ -2193,20 +2155,14 @@
 				1CBC634905489BEE009E59E1 /* JVGeneralPreferences.nib in Resources */,
 				1CC6FC67054A003C0075807C /* JVAppearancePreferences.nib in Resources */,
 				1CC6FC68054A003C0075807C /* JVFileTransferPreferences.nib in Resources */,
-				92C70D1B1A5E898100080E45 /* console.pdf in Resources */,
 				1CC6FC70054A02F70075807C /* BehaviorPreferences.png in Resources */,
 				1CC6FCD3054A25050075807C /* FileTransferPreferences.png in Resources */,
 				1CC6FCD5054A2BF80075807C /* AppearancePreferences.png in Resources */,
 				1CC6FD39054AF1940075807C /* preview.colloquyTranscript in Resources */,
-				92C70D141A5E88CE00080E45 /* admin.pdf in Resources */,
-				92C70D131A5E88CE00080E45 /* person.pdf in Resources */,
 				1CD02008057588CD000F93B4 /* buddyMessageBlue.png in Resources */,
-				92C70D1D1A5E89A000080E45 /* messageUser.pdf in Resources */,
 				1CD02009057588CE000F93B4 /* buddyMessage.png in Resources */,
 				1CD0200A057588CF000F93B4 /* buddyInfo.png in Resources */,
 				1CD0200B057588D0000F93B4 /* buddyInfoBlue.png in Resources */,
-				1CD0200C057588D1000F93B4 /* buddyNew.png in Resources */,
-				1CD0200D057588D1000F93B4 /* buddyNewBlue.png in Resources */,
 				1CD0200E057588D2000F93B4 /* buddyOptions.png in Resources */,
 				1CD0200F057588D3000F93B4 /* buddyOptionsBlue.png in Resources */,
 				1CD0201005758A33000F93B4 /* MVBuddyList.nib in Resources */,
@@ -2232,7 +2188,6 @@
 				1C238F050677B5E5000E89A7 /* JVTabbedChatWindow.nib in Resources */,
 				1C2391BC0677E8F1000E89A7 /* aquaTabBackground.png in Resources */,
 				1C2391BE0677E8F1000E89A7 /* aquaTabDivider.png in Resources */,
-				92C70D151A5E88CE00080E45 /* op.pdf in Resources */,
 				1C2391BF0677E8F1000E89A7 /* aquaTabLeft.png in Resources */,
 				1C2391C00677E8F1000E89A7 /* aquaTabMiddle.png in Resources */,
 				1C2391C10677E8F1000E89A7 /* aquaTabRight.png in Resources */,
@@ -2243,7 +2198,6 @@
 				1C7EF54106B341890037F173 /* roomTabNewHighlightMessage.png in Resources */,
 				1C7EF54206B341890037F173 /* roomTabNewMessage.png in Resources */,
 				1C7EF5C206B346E50037F173 /* privateChatTab.png in Resources */,
-				92C70D181A5E88CE00080E45 /* voice.pdf in Resources */,
 				1C7EF5C306B346E50037F173 /* privateChatTabNewMessage.png in Resources */,
 				1CF627CB07558F79005DFCFA /* fileSend.png in Resources */,
 				1C0A4C9C0799BDB00093B702 /* JVFind.nib in Resources */,
@@ -2257,8 +2211,6 @@
 				0AA8117B0826E08000A3BF2D /* default.js in Resources */,
 				1C05F4560828727D006FCB72 /* markDisplay.png in Resources */,
 				1C39736A082D3ED000DCF3CF /* JVChatTranscriptBrowserPanel.nib in Resources */,
-				1CF16CDF083ADE590037F222 /* deleteWidget.png in Resources */,
-				1CF16CE0083ADE590037F222 /* deleteWidgetPressed.png in Resources */,
 				1CF16CE1083ADE590037F222 /* editWidget.png in Resources */,
 				1CF16CE2083ADE590037F222 /* editWidgetPressed.png in Resources */,
 				1CF16D11083ADECF0037F222 /* JVInterfacePreferences.nib in Resources */,
@@ -2288,11 +2240,13 @@
 				1C710AC109F23D9D007B4515 /* sidebarStatusAreaBackground.png in Resources */,
 				1C710B4C09F247AC007B4515 /* sidebarFavoritesWidget.png in Resources */,
 				1C710B4D09F247AC007B4515 /* sidebarFavoritesWidgetPressed.png in Resources */,
+				558EF2371AEC356800619BDE /* Room Member Icons.xcassets in Resources */,
 				1C710C4F09F323F8007B4515 /* splitviewDimple.png in Resources */,
 				1C710C5009F323F8007B4515 /* splitviewDividerBackground.png in Resources */,
 				1CEC004F0A20EF99004C2B86 /* transcriptSchema.sql in Resources */,
 				1C6268E5103E6D3400A6B346 /* SparkleUpdatePublicDSAKey.pem in Resources */,
 				9200338D13D92515005B69BA /* MVFileTransfer.nib in Resources */,
+				55F42AC01AEC39A00085CA56 /* AppIcon.xcassets in Resources */,
 				1C043B4B13DC8B7200B8FD9E /* Credits.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

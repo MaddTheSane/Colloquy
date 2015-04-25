@@ -238,14 +238,14 @@
 
 - (NSImage *) icon {
 	NSUInteger modes = [[_room target] modesForMemberUser:_user];
-	NSString *iconName = @"person";
+	NSString *iconName = @"userNormal";
 
-	if( [_user isServerOperator] ) iconName = @"admin";
-	else if( modes & MVChatRoomMemberFounderMode ) iconName = @"founder";
-	else if( modes & MVChatRoomMemberAdministratorMode ) iconName = @"super-op";
-	else if( modes & MVChatRoomMemberOperatorMode ) iconName = @"op";
-	else if( modes & MVChatRoomMemberHalfOperatorMode ) iconName = @"half-op";
-	else if( modes & MVChatRoomMemberVoicedMode ) iconName = @"voice";
+	if( [_user isServerOperator] ) iconName = @"userAdmin";
+	else if( modes & MVChatRoomMemberFounderMode ) iconName = @"userFounder";
+	else if( modes & MVChatRoomMemberAdministratorMode ) iconName = @"userSuperOperator";
+	else if( modes & MVChatRoomMemberOperatorMode ) iconName = @"userOperator";
+	else if( modes & MVChatRoomMemberHalfOperatorMode ) iconName = @"userHalfOperator";
+	else if( modes & MVChatRoomMemberVoicedMode ) iconName = @"userVoice";
 
 	return [NSImage imageNamed:iconName];
 }

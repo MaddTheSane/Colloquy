@@ -2,6 +2,10 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "topicToggleDown.pdf"
+    },
+    {
+      "idiom" : "universal",
       "scale" : "1x",
       "filename" : "topicToggleDown.png"
     },

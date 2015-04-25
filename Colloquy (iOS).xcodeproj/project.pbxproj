@@ -126,6 +126,8 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		55F42ABD1AEC36E00085CA56 /* Room Member Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55F42ABC1AEC36E00085CA56 /* Room Member Icons.xcassets */; };
+		55F42AC41AEC3AD30085CA56 /* Shared Toolbar.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55F42AC31AEC3AD30085CA56 /* Shared Toolbar.xcassets */; };
 		8900D7340FBFB2D900DE3E3B /* Servers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8900D7330FBFB2D900DE3E3B /* Servers.plist */; };
 		891E84D4123F0C8C00EC3C0F /* NSCharacterSetAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 891E84D3123F0C8C00EC3C0F /* NSCharacterSetAdditions.m */; };
 		896E84610F15AB6C00D810FE /* notes.css in Resources */ = {isa = PBXBuildFile; fileRef = 896E84600F15AB6C00D810FE /* notes.css */; };
@@ -401,6 +403,9 @@
 		1D6058910D05DD3D006BFB54 /* Colloquy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Colloquy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Mobile/main.m; sourceTree = "<group>"; };
+		55F42ABC1AEC36E00085CA56 /* Room Member Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Room Member Icons.xcassets"; path = "Resources/Room Member Icons.xcassets"; sourceTree = SOURCE_ROOT; };
+		55F42AC31AEC3AD30085CA56 /* Shared Toolbar.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Shared Toolbar.xcassets"; path = "Resources/Toolbar Icons/Shared Toolbar.xcassets"; sourceTree = SOURCE_ROOT; };
+		55F42AC51AEC3D4A0085CA56 /* RunOnMainThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RunOnMainThread.h; path = Additions/RunOnMainThread.h; sourceTree = "<group>"; };
 		8900D7330FBFB2D900DE3E3B /* Servers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Servers.plist; sourceTree = "<group>"; };
 		891E84D2123F0C8C00EC3C0F /* NSCharacterSetAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSCharacterSetAdditions.h; path = Additions/NSCharacterSetAdditions.h; sourceTree = "<group>"; };
 		891E84D3123F0C8C00EC3C0F /* NSCharacterSetAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSCharacterSetAdditions.m; path = Additions/NSCharacterSetAdditions.m; sourceTree = "<group>"; };
@@ -961,6 +966,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources & Additions */ = {
 			isa = PBXGroup;
 			children = (
+				55F42AC51AEC3D4A0085CA56 /* RunOnMainThread.h */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				92F1C9E2161D936D0035A9AF /* UIActionSheetAdditions.m */,
 				92F1C9E1161D936D0035A9AF /* UIActionSheetAdditions.h */,
@@ -1021,6 +1027,8 @@
 			isa = PBXGroup;
 			children = (
 				926678F519BFE22900CCE5BE /* Images.xcassets */,
+				55F42AC31AEC3AD30085CA56 /* Shared Toolbar.xcassets */,
+				55F42ABC1AEC36E00085CA56 /* Room Member Icons.xcassets */,
 				92B6661217ED7C5000BA3DD9 /* Fonts */,
 				1C4CE6240FA03D7800215521 /* Sounds */,
 				1CA2653811C3600F00AB4E44 /* Transcript Styles */,
@@ -1197,6 +1205,7 @@
 				1CAE8C8C0EE61AD000CE1AF8 /* transcript.js in Resources */,
 				1C09313B0D80C8F600A2705D /* Defaults.plist in Resources */,
 				921857D919D13AE70076F87E /* CQWKChatView.xib in Resources */,
+				55F42AC41AEC3AD30085CA56 /* Shared Toolbar.xcassets in Resources */,
 				1CAE8BF50EE612DA00CE1AF8 /* base.html in Resources */,
 				1CAE8BF60EE612DA00CE1AF8 /* standard.css in Resources */,
 				1CA718AA0EF5F136006225CD /* Settings.bundle in Resources */,
@@ -1220,6 +1229,7 @@
 				1C4CE63F0FA03D7800215521 /* Kick.aiff in Resources */,
 				1C4CE6400FA03D7800215521 /* Laser.aiff in Resources */,
 				1C4CE6410FA03D7800215521 /* Pop.aiff in Resources */,
+				55F42ABD1AEC36E00085CA56 /* Room Member Icons.xcassets in Resources */,
 				1C4CE6420FA03D7800215521 /* Rattle.aiff in Resources */,
 				1C4CE6430FA03D7800215521 /* Sonar Beep.aiff in Resources */,
 				1C4CE6440FA03D7800215521 /* Stoof.aiff in Resources */,
@@ -1484,8 +1494,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"$(SDK_DIR)/usr/lib/system",
 					"$(inherited)",
-					"$(SDKROOT)/usr/lib/system",
 				);
 				PRODUCT_NAME = Colloquy;
 				PROVISIONING_PROFILE = "df6f6b91-55c0-4c60-b88a-229137d57125";
@@ -1532,8 +1542,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"$(SDK_DIR)/usr/lib/system",
 					"$(inherited)",
-					"$(SDKROOT)/usr/lib/system",
 				);
 				PRODUCT_NAME = Colloquy;
 			};
@@ -1579,8 +1589,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					"$(SDK_DIR)/usr/lib/system",
 					"$(inherited)",
-					"$(SDKROOT)/usr/lib/system",
 				);
 				PRODUCT_NAME = Colloquy;
 			};

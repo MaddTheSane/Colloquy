@@ -86,7 +86,7 @@ static NSMenu *favoritesMenu = nil;
 		[favoritesMenu addItem:menuItem];
 	}
 
-	NSImage *icon = [[NSImage imageNamed:@"room"] copy];
+	NSImage *icon = [[NSImage imageNamed:@"roomIcon"] copy];
 	[icon setSize:NSMakeSize( 16., 16. )];
 
 	for( NSDictionary *item in favorites ) {
@@ -1441,7 +1441,7 @@ static NSMenu *favoritesMenu = nil;
 		[toolbarItem setPaletteLabel:NSLocalizedString( @"Message User", "toolbar message user button name" )];
 
 		[toolbarItem setToolTip:NSLocalizedString( @"Message a user", "message user button tooltip" )];
-		[toolbarItem setImage:[NSImage imageNamed:@"messageUser"]];
+		[toolbarItem setImage:[NSImage imageNamed:@"directChatIcon"]];
 
 		[toolbarItem setTarget:self];
 		[toolbarItem setAction:NULL];

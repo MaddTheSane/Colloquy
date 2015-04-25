@@ -480,7 +480,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 	BOOL smallIcons = [[[self windowController] preferenceForKey:@"small drawer icons"] boolValue];
 	if( smallIcons || [_windowController isMemberOfClass:[JVTabbedChatWindowController class]] )
 		return [NSImage imageNamed:@"privateChatTab"];
-	return [NSImage imageNamed:@"messageUser"];
+	return [NSImage imageNamed:@"directChatIcon"];
 }
 
 - (NSImage *) statusImage {
@@ -896,7 +896,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 			NSMutableDictionary *context = [NSMutableDictionary dictionary];
 			context[@"title"] = NSLocalizedString( @"New Private Message", "first message bubble title" );
 			context[@"description"] = [NSString stringWithFormat:NSLocalizedString( @"%@ wrote you a private message.", "first message bubble text" ), [self title]];
-			context[@"image"] = [NSImage imageNamed:@"messageUser"];
+			context[@"image"] = [NSImage imageNamed:@"directChatIcon"];
 			context[@"coalesceKey"] = [[self windowTitle] stringByAppendingString:@"JVChatPrivateMessage"];
 			context[@"target"] = self;
 			context[@"action"] = NSStringFromSelector( @selector( activate: ) );
@@ -907,7 +907,7 @@ NSString *JVChatEventMessageWasProcessedNotification = @"JVChatEventMessageWasPr
 			context[@"title"] = NSLocalizedString( @"Private Message", "new message bubble title" );
 			if( [self newMessagesWaiting] == 1 ) context[@"description"] = [NSString stringWithFormat:NSLocalizedString( @"You have 1 message waiting from %@.", "new single message bubble text" ), [self title]];
 			context[@"description"] = [NSString stringWithFormat:NSLocalizedString( @"You have %d messages waiting from %@.", "new messages bubble text" ), [self newMessagesWaiting], [self title]];
-			context[@"image"] = [NSImage imageNamed:@"messageUser"];
+			context[@"image"] = [NSImage imageNamed:@"directChatIcon"];
 			context[@"coalesceKey"] = [[self windowTitle] stringByAppendingString:@"JVChatPrivateMessage"];
 			context[@"target"] = self;
 			context[@"action"] = NSStringFromSelector( @selector( activate: ) );

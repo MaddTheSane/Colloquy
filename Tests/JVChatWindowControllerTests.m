@@ -51,7 +51,7 @@
 }
 
 - (NSImage *) icon {
-	return [NSImage imageNamed:@"room"];
+	return [NSImage imageNamed:@"roomIcon"];
 }
 
 - (NSString *) title {

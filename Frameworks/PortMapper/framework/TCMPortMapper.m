@@ -6,21 +6,21 @@
 #import "NSNotificationCenterThreadingAdditions.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <SystemConfiguration/SCSchemaDefinitions.h>
-#import <sys/sysctl.h> 
-#import <netinet/in.h>
-#import <arpa/inet.h>
-#import <net/route.h>
-#import <netinet/if_ether.h>
-#import <net/if_dl.h>
+#include <sys/sysctl.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <net/route.h>
+#include <netinet/if_ether.h>
+#include <net/if_dl.h>
 
 // openssl is deprecated on OS X 10.7+
 #ifdef USE_OPENSSL
-#import <openssl/md5.h>
+#include <openssl/md5.h>
 #else
-#import <CommonCrypto/CommonDigest.h>
+#include <CommonCrypto/CommonDigest.h>
 #endif
 
-#import <err.h>
+#include <err.h>
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wcast-align"
