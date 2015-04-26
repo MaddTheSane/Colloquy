@@ -25,11 +25,12 @@
 #import "acid.h"
 #import "GCDAsyncSocket.h"
 
-@interface JabberSocket (PRIVATE)
+@interface JabberSocket ()
 -(void) onKeepAliveTick:(NSTimer*)t;
 @end
 
 @implementation JabberSocket
+@synthesize useSSL = _useSSL;
 
 -(id) initWithJabberSession:(JabberSession*)session
 {

@@ -30,10 +30,10 @@
     NSString* _uri;
 }
 
--(id) initWithName:(NSString*)name inURI:(NSString*)uri;
+-(instancetype) initWithName:(NSString*)name inURI:(NSString*)uri;
 
--(NSString*)name;
--(NSString*)uri;
+@property (readonly, copy) NSString *name;
+@property (readonly, copy) NSString *uri;
 
 -(BOOL) isEqual:(XMLQName*)other;
 -(NSComparisonResult) compare:(id)other;
@@ -49,8 +49,8 @@
 
 @protocol XMLNode <NSObject>
 -(XMLQName*) qname;
--(NSString*) name;
--(NSString*) uri;
+@property (nonatomic, readonly, copy) NSString *name;
+@property (nonatomic, readonly, copy) NSString *uri;
 -(void)      description:(XMLAccumulator*)acc;
 @end
 
@@ -62,37 +62,37 @@
 }
 
 // Basic initializers
--(id)   init;
+-(instancetype)   init;
 
 // Custom initializers
--(id) initWithString:(NSString*)s; // Assumes unescaped data
--(id) initWithCharPtr:(const char*)cptr ofLength:(unsigned)clen; // Assumes unescaped data
--(id) initWithEscapedCharPtr:(const char*)cptr ofLength:(unsigned)clen;
+-(instancetype) initWithString:(NSString*)s; // Assumes unescaped data
+-(instancetype) initWithCharPtr:(const char*)cptr ofLength:(NSUInteger)clen; // Assumes unescaped data
+-(instancetype) initWithEscapedCharPtr:(const char*)cptr ofLength:(NSUInteger)clen;
 
 // Modify text using data that is _not_ escaped
--(void) setText:(const char*)text ofLength:(unsigned)textlen;
+-(void) setText:(const char*)text ofLength:(NSUInteger)textlen;
 -(void) setText:(NSString*)text;
--(void) appendText:(const char*)text ofLength:(unsigned)textlen;
+-(void) appendText:(const char*)text ofLength:(NSUInteger)textlen;
 -(void) appendText:(NSString*)text;
 
 // Modify text using data that is escaped
--(void) setEscapedText:(const char*)text ofLength:(unsigned)textlen;
--(void) appendEscapedText:(const char*)text ofLength:(unsigned)textlen;
+-(void) setEscapedText:(const char*)text ofLength:(NSUInteger)textlen;
+-(void) appendEscapedText:(const char*)text ofLength:(NSUInteger)textlen;
 
--(NSString*) text; // Unescaped text
+@property (readonly, copy) NSString *text; // Unescaped text
 
--(NSString*) description; // Escaped text
+@property (readonly, copy) NSString *description; // Escaped text
 
 // Implementation of XMLNode protocol
--(XMLQName*) qname;
--(NSString*) name;
--(NSString*) uri;
+@property (readonly, retain) XMLQName *qname;
+@property (nonatomic, readonly, copy) NSString *name;
+@property (nonatomic, readonly, copy) NSString *uri;
 -(void)      description:(XMLAccumulator*)acc;
 
 // Escaping routines
-+(NSString*) escape:(const char*)data ofLength:(int)datasz;
++(NSString*) escape:(const char*)data ofLength:(NSInteger)datasz;
 +(NSString*) escape:(NSString*)data;
-+(NSMutableString*) unescape:(const char*)data ofLength:(int)datasz;
++(NSMutableString*) unescape:(const char*)data ofLength:(NSInteger)datasz;
 
 @end
 
@@ -108,16 +108,16 @@
 }
 
 // Basic initializers
--(id)   init;
+-(instancetype)   init;
 
 // Extended initializers
--(id) initWithQName:(XMLQName*)qname
+-(instancetype) initWithQName:(XMLQName*)qname
      withAttributes:(NSMutableDictionary*)atts
      withDefaultURI:(NSString*)uri;
 
--(id) initWithQName:(XMLQName*)qname;
+-(instancetype) initWithQName:(XMLQName*)qname;
 
--(id) initWithQName:(XMLQName*)qname withDefaultURI:(NSString*)uri;
+-(instancetype) initWithQName:(XMLQName*)qname withDefaultURI:(NSString*)uri;
 
 // High-level child initializers
 -(XMLElement*) addElement:(XMLElement*)element;
@@ -126,20 +126,20 @@
 -(XMLElement*) addElementWithName:(NSString*)name withDefaultURI:(NSString*)uri;
 -(XMLElement*) addElementWithQName:(XMLQName*)name withDefaultURI:(NSString*)uri;
 
--(XMLCData*)   addCData:(const char*)cdata ofLength:(unsigned)cdatasz;
+-(XMLCData*)   addCData:(const char*)cdata ofLength:(NSUInteger)cdatasz;
 -(XMLCData*)   addCData:(NSString*)cdata;
 
 // Enumerators
 -(NSEnumerator*) childElementsEnumerator;
 
 // Raw child management
--(id<XMLNode>) firstChild;
+@property (readonly, assign) id<XMLNode> firstChild;
 -(void) appendChildNode:(id <XMLNode>)node;
 -(void) detachChildNode:(id <XMLNode>)node;
 
 // Child node info
--(BOOL)     hasChildren;
--(unsigned) childCount;
+@property (readonly) BOOL hasChildren;
+@property (readonly) NSUInteger childCount;
 
 // Namespace declaration management
 -(void) addNamespaceURI:(NSString*)uri withPrefix:(NSString*)prefix;
@@ -161,9 +161,9 @@
 -(NSString*) description;
 
 // Implementation of XMLNode protocol
--(XMLQName*) qname;
--(NSString*) name;
--(NSString*) uri;
+@property (readonly, retain) XMLQName *qname;
+@property (nonatomic, readonly, copy) NSString *name;
+@property (nonatomic, readonly, copy) NSString *uri;
 -(void)      description:(XMLAccumulator*)acc;
 
 // Extract first child CDATA from this Element
@@ -173,9 +173,8 @@
 -(XMLQName*) getQName:(NSString*)name ofURI:(NSString*)uri;
 -(XMLQName*) getQName:(const char*)expatname;
 
--(XMLElement*) parent;
--(void)        setParent:(XMLElement*)elem;
--(NSString*)   defaultURI;
+@property (assign) XMLElement *parent;
+@property (readonly, copy) NSString*   defaultURI;
 
 -(NSString*) addUniqueIDAttribute;
 
@@ -192,7 +191,7 @@
     unsigned             _prefix_counter;
 }
 
--(id) init:(NSMutableString*)data;
+-(instancetype) init:(NSMutableString*)data;
 
 -(void) addOverridePrefix:(NSString*)prefix forURI:(NSString*)uri;
 -(NSString*) generatePrefix:(NSString*)uri;
@@ -230,11 +229,11 @@
 
 +(void) registerElementFactory:(Class)factory;
 
--(id)   init;
+-(instancetype) init;
 
--(id) initWithListener: (id<XMLElementStreamListener>)listener;
+-(instancetype) initWithListener: (id<XMLElementStreamListener>)listener;
 
--(void) pushData: (const char*)data ofSize:(unsigned int)datasz;
+-(void) pushData: (const char*)data ofSize:(NSUInteger)datasz;
 -(void) pushData: (const char*)data;
 -(void) reset;
 
@@ -242,7 +241,7 @@
 
 -(void) openElement: (const char*)name withAttributes:(const char**) atts;
 -(void) closeElement: (const char*) name;
--(void) storeCData: (char*) cdata ofLength:(int) len;
+-(void) storeCData: (char*) cdata ofLength:(NSInteger) len;
 -(void) enterNamespace: (const char*)prefix withURI:(const char*)uri;
 -(void) exitNamespace: (const char*)prefix;
 

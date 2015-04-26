@@ -49,9 +49,10 @@
     AsyncSocket*      _socket;
     XMLElementStream* _parser;
     JabberSession*    _session;
-    bool              _useSSL;
+    BOOL              _useSSL;
     NSTimer*          _timer;
 }
+@property (nonatomic) BOOL useSSL;
 
 /*!
   @method initWithJabberSession
@@ -82,8 +83,6 @@
 */
 -(void) sendString:(NSString*)data;
 
--(void) setUseSSL:(BOOL)useSSL;
-
 @end
 
 /*!
@@ -91,7 +90,7 @@
   @abstract authentication delegate
   @discussion delegate used to signal authentication should begin
  */
-@protocol JabberAuthManager
+@protocol JabberAuthManager <NSObject>
 
 /*!
   @method authenticateJID:forSession
@@ -122,8 +121,8 @@ typedef enum
   @abstract return the name chosen for display within the roster
   @result string holding display name
 */
--(NSString*)  displayName;
--(NSString*)  displayNameWithJID;
+@property (readonly, copy) NSString *displayName;
+@property (readonly, copy) NSString *displayNameWithJID;
 /*!
   @method JID
   @abstract return the JID of this roster item
@@ -183,7 +182,7 @@ typedef enum
 @interface JabberRoster : NSObject <NSCopying>
 {
     id _session;
-    id _delegate;
+    id<JabberRosterDelegate> _delegate;
     NSMutableDictionary* _items;
     XPathQuery* _groups_query;
     BOOL _viewOnlineOnly;
@@ -249,13 +248,13 @@ typedef enum
   @abstract return a JabberID object representing where the presence
   chunk was from
 */
--(JabberID*) from;
+@property (readonly, retain) JabberID *from;
 /*!
   @method to
   @abstract return a JabberID object representing where the presence
   chunk was addressed to
 */
--(JabberID*) to;
+@property (readonly, retain) JabberID *to;
 /*!
   @method priority
   @abstract return the priority of the presence chunk
@@ -366,13 +365,13 @@ typedef NS_ENUM(NSInteger, JMEvent)
   @abstract create an empty message around a recipient Jabber
   Identifier
 */
--(id) initWithRecipient:(JabberID*)jid;
+-(instancetype) initWithRecipient:(JabberID*)jid;
 /*!
   @method initWithRecipient:andBody
   @abstract create a message around a recipient Jabber Identifier and
   a body
 */
--(id) initWithRecipient:(JabberID*)jid andBody:(NSString*)body;
+-(instancetype) initWithRecipient:(JabberID*)jid andBody:(NSString*)body;
 
 /*!
   @method to
@@ -645,13 +644,13 @@ typedef NS_ENUM(NSInteger, JMEvent)
   @abstract return a temporary object with type set to "get" and
   containing a "query" element within the specified namespace
 */
-+(id) constructIQGet:(NSString*)namespace withSession:(JabberSession*)s NS_RETURNS_RETAINED;
++(id) constructIQGet:(NSString*)namespace withSession:(JabberSession*)s;
 /*!
   @method constructIQSet:withSession
   @abstract return a temporary object with type set to "set" and
   containing a "query" element within the specified namespace
 */
-+(id) constructIQSet:(NSString*)namespace withSession:(JabberSession*)s NS_RETURNS_RETAINED;
++(id) constructIQSet:(NSString*)namespace withSession:(JabberSession*)s;
 /*!
   @method initWithSession
   @abstract initialize around a JabberSession object

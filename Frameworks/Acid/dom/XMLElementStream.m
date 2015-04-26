@@ -285,7 +285,7 @@ static NSMutableArray* G_FACTORY;
     }
 }
 
--(void) storeCData: (char*) cdata ofLength:(int) len
+-(void) storeCData: (char*) cdata ofLength:(NSInteger) len
 {
     if (_current_element)
         [_current_element addCData:cdata ofLength:len];
@@ -297,7 +297,7 @@ static NSMutableArray* G_FACTORY;
     }
 }
 
--(void) pushData: (const char*)data ofSize:(unsigned int)datasz
+-(void) pushData: (const char*)data ofSize:(NSUInteger)datasz
 {
     assert(_document_ended != TRUE);
     if (!XML_Parse(_parser, data, datasz, 0))

@@ -164,7 +164,7 @@
     return result;
 }
 
--(XMLCData*) addCData:(const char*)cdata ofLength:(unsigned)cdatasz
+-(XMLCData*) addCData:(const char*)cdata ofLength:(NSUInteger)cdatasz
 {
     // If the last child is a CData object, just append this data to it
     if ([[_children lastObject] isKindOfClass:[XMLCData class]])
@@ -216,7 +216,7 @@
     return ([_children count] > 0);
 }
 
--(unsigned) childCount
+-(NSUInteger) childCount
 {
     return [_children count];
 }
@@ -343,16 +343,6 @@
 -(XMLQName*) getQName:(const char*)expatname
 {
     return [XMLQName construct:expatname];
-}
-
--(XMLElement*) parent
-{
-    return _parent;
-}
-
--(void) setParent:(XMLElement*)elem
-{
-    _parent = elem;
 }
 
 -(NSString*) defaultURI
