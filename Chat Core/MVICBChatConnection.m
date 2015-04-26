@@ -127,24 +127,14 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 
 #pragma mark Accessors
 
-- (NSString *) nickname {
-	return _nickname;
-}
-
-- (NSString *) password {
-	return _password;
-}
+@synthesize nickname = _nickname;
+@synthesize password = _password;
+@synthesize server = _server;
+@synthesize serverPort = _serverPort;
+@synthesize username = _username;
 
 - (NSString *) preferredNickname {
 	return _nickname;
-}
-
-- (NSString *) server {
-	return _server;
-}
-
-- (unsigned short) serverPort {
-	return _serverPort;
 }
 
 - (MVChatConnectionType) type {
@@ -153,10 +143,6 @@ static BOOL hasSubstring( NSString *str, NSString *substr, NSRange *r ) {
 
 - (NSString *) urlScheme {
 	return @"icb";
-}
-
-- (NSString *) username {
-	return _username;
 }
 
 #pragma mark Modifiers
