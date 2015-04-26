@@ -1,5 +1,12 @@
 #import "MVTableView.h"
 
+@interface NSTableView (PrivHiddenWhut)
+
++ (NSImage *)_defaultTableHeaderSortImage;
++ (NSImage *)_defaultTableHeaderReverseSortImage;
+
+@end
+
 @implementation MVTableView
 + (NSImage *) ascendingSortIndicator {
 	NSImage *result = [NSImage imageNamed:@"NSAscendingSortIndicator"];

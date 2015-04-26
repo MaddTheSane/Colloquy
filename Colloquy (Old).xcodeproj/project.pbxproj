@@ -1457,13 +1457,6 @@
 			name = "F-Script Support";
 			sourceTree = "<group>";
 		};
-		1CEE3A4C0577E14500AD6DE2 /* Buddy List Icons */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Buddy List Icons";
-			sourceTree = "<group>";
-		};
 		1CEEAB12095BD23100166A54 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1711,7 +1704,6 @@
 				1C258E55050B9656000001C8 /* Emoticons */,
 				F520458E01B1D37701EBB4B5 /* Sounds */,
 				F51F91D7037967CB01A35792 /* Chat.clr */,
-				1CEE3A4C0577E14500AD6DE2 /* Buddy List Icons */,
 				558EF2361AEC356800619BDE /* Room Member Icons.xcassets */,
 				F5ED0F46017CD77701EE70DE /* Toolbar Icons */,
 				1CBC6317054896CB009E59E1 /* Preference Icons */,
