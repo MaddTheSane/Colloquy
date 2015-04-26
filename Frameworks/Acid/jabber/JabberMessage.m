@@ -29,6 +29,10 @@
 @end
 
 @implementation JabberMessage
+@synthesize to;
+@synthesize from;
+@synthesize body;
+@synthesize action = isAction;
 
 XPathQuery* QRY_BODY;
 XPathQuery* QRY_ENCRYPT;
@@ -121,21 +125,11 @@ XPathQuery* QRY_DELAY;
         eventType = JMEVENT_COMPOSING_CANCEL;    
 }
 
--(JabberID*) to
-{
-    return to;
-}
-
 -(void) setTo:(JabberID*)jid
 {
     [to release];
     to = [jid retain];
     [self putAttribute:@"to" withValue:[jid completeID]];
-}
-
--(JabberID*) from
-{
-    return from;
 }
 
 -(void)setFrom:(JabberID*)jid
@@ -153,11 +147,6 @@ XPathQuery* QRY_DELAY;
 -(void) setType:(NSString*)value
 {
     [self putAttribute:@"type" withValue:value];
-}
-
--(NSString*) body
-{
-    return body;
 }
 
 -(void) setBody:(NSString*)s
@@ -192,11 +181,6 @@ XPathQuery* QRY_DELAY;
     subject = [s retain];
     // XXX: need to replace if existing already!
     [[self addElementWithName:@"subject"] addCData:s];
-}
-
--(BOOL) isAction
-{
-    return isAction;
 }
 
 -(BOOL) wasDelayed

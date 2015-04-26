@@ -36,7 +36,6 @@ NSString* XP_ROSTERPUSH = @"/iq[@type='set']/query[%jabber:iq:roster]";
     id        _defaultPresence;
 }
 +(id) itemWithJID:(JabberID*)jid;
--(void) dealloc;
 
 -(NSString*) displayName;
 -(JabberID*) JID;
@@ -164,6 +163,7 @@ NSString* XP_ROSTERPUSH = @"/iq[@type='set']/query[%jabber:iq:roster]";
 @end
 
 @implementation JabberRoster
+@synthesize delegate = _delegate;
 
 -(void) parseItems:(NSArray*)items
 {
@@ -301,16 +301,6 @@ NSString* XP_ROSTERPUSH = @"/iq[@type='set']/query[%jabber:iq:roster]";
 {
     [_items release];
     _items = nil;
-}
-
--(id) delegate
-{
-    return _delegate;
-}
-
--(void) setDelegate:(id)delegate
-{
-    _delegate = delegate;
 }
 
 -(NSEnumerator*) itemEnumerator

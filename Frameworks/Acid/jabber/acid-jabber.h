@@ -59,7 +59,6 @@
   @param session  information and state related to a client session
 */
 -(id) initWithJabberSession:(JabberSession*)session;
--(void) dealloc;
 
 /*!
   @method conectToHost:onport
@@ -148,7 +147,7 @@ typedef enum
   @protocol JabberRosterDelegate
   @abstract interface for receiving roster change events.
 */
-@protocol JabberRosterDelegate
+@protocol JabberRosterDelegate <NSObject>
 /*!
   @method onBeginUpdate
   @abstract signal the beginning of an update. This can be used to
@@ -194,7 +193,6 @@ typedef enum
   @abstract create a roster instance around a JabberSession
 */
 -(id)   initWithSession:(id)session;
--(void) dealloc;
 
 /*!
   @method itemEnumerator
@@ -203,15 +201,14 @@ typedef enum
 -(NSEnumerator*) itemEnumerator;
 
 /*!
-  @method delegate
-  @abstract get the current delegate protocol handler
-*/
--(id)   delegate;
+ @method delegate
+ @abstract get the current delegate protocol handler
+ */
 /*!
-  @method setDelegate
-  @abstract set a delegate protocol handler
-*/
--(void) setDelegate:(id)delegate;
+ @method setDelegate
+ @abstract set a delegate protocol handler
+ */
+@property (assign) id<JabberRosterDelegate> delegate;
 /*!
   @method itemForJID
   @abstract return an item for a particular Jabber Identifier
@@ -299,7 +296,6 @@ typedef enum
   @abstract create a new instance around an existing Jabber Session
 */
 -(id) initWithSession:(id)session;
--(void)dealloc;
 
 /*!
   @method defaultPresenceForJID
@@ -340,13 +336,13 @@ typedef enum
   response is no longer being composed in response to an earlier
   request.
 */
-typedef enum
+typedef NS_ENUM(NSInteger, JMEvent)
 {
     JMEVENT_NONE,
     JMEVENT_COMPOSING,
     JMEVENT_COMPOSING_REQUEST,
     JMEVENT_COMPOSING_CANCEL
-} JMEvent;
+};
 
 /*!
   @class JabberMessage
@@ -356,7 +352,7 @@ typedef enum
 {
     JabberID* to;
     JabberID* from;
-    bool      isAction;
+    BOOL      isAction;
     JMEvent   eventType;
     NSString* body;
     NSString* subject;
@@ -383,30 +379,26 @@ typedef enum
   @abstract return the Jabber Identifier for where this message was
   addressed to
 */
--(JabberID*) to;
--(void) setTo:(JabberID*)jid;
+@property (nonatomic, retain) JabberID *to;
 /*!
   @method from
   @abstract return the Jabber Identifier for where this message was
   from
 */
--(JabberID*) from;
--(void) setFrom:(JabberID*)jid;
+@property (nonatomic, retain) JabberID *from;
 /*!
   @method type
   @abstract return the type of this message, used for GUI display
 */
--(NSString*) type;
+@property (readwrite, copy) NSString* type;
 /*!
   @method body
   @abstract return the message body for this message
 */
--(NSString*) body;
--(void) setBody:(NSString*)body;
+@property (nonatomic, copy) NSString *body;
 
 //Methods for encryption
--(void) setEncrypted:(NSString*)s;
--(NSString*) encrypted;
+@property (copy) NSString *encrypted;
 
 /*!
   @method subject
@@ -435,12 +427,12 @@ typedef enum
   @abstract indicate if the message should be displayed as an
   action. This is indicated by a message beginning with "/me "
 */
--(BOOL) isAction;
+@property (readonly, getter=isAction) BOOL action;
 /*!
   @method wasDelayed
   @abstract return if this message was delayed by offline delivery
 */
--(BOOL) wasDelayed;
+@property (readonly) BOOL wasDelayed;
 /*!
   @method delayedOnDate
   @abstract return the UTC time of the original message (if the
@@ -496,7 +488,6 @@ typedef enum
   @abstract create a new JabberSession instance
 */
 -(id)   init;
--(void) dealloc;
 
 /*!
   @method addObserver:selector:xpath
@@ -590,7 +581,7 @@ typedef enum
   @method isConnected
   @abstract indicate if this session is established
 */
--(BOOL) isConnected;
+@property (readonly, getter=isConnected) BOOL connected;
 /*!
   @method jid
   @abstract return the Jabber Identifier associated with this session
@@ -611,8 +602,7 @@ typedef enum
   @method roster
   @abstract return the roster cache for the session
 */
--(JabberRoster*) roster;
--(void) setRoster:(JabberRoster*)r;
+@property (retain) JabberRoster *roster;
 
 /*!
   @method presenceTracker
@@ -655,19 +645,19 @@ typedef enum
   @abstract return a temporary object with type set to "get" and
   containing a "query" element within the specified namespace
 */
-+(id) constructIQGet:(NSString*)namespace withSession:(JabberSession*)s;
++(id) constructIQGet:(NSString*)namespace withSession:(JabberSession*)s NS_RETURNS_RETAINED;
 /*!
   @method constructIQSet:withSession
   @abstract return a temporary object with type set to "set" and
   containing a "query" element within the specified namespace
 */
-+(id) constructIQSet:(NSString*)namespace withSession:(JabberSession*)s;
++(id) constructIQSet:(NSString*)namespace withSession:(JabberSession*)s NS_RETURNS_RETAINED;
 /*!
   @method initWithSession
   @abstract initialize around a JabberSession object
 */
 -(id) initWithSession:(JabberSession*)s;
--(void) dealloc;
+
 /*!
   @method setObserver:withSelector
   @abstract set an object and a message to be signalled when the
@@ -782,7 +772,7 @@ typedef enum
 -(void) authenticateWithPassword: (NSString *) password;
 @end
 
-@protocol JabberGroup
+@protocol JabberGroup <NSObject>
 - (NSString *) displayName;
 - (id <JabberRosterItem>) itemAtIndex: (unsigned) index;
 - (unsigned) count;
@@ -796,7 +786,6 @@ typedef enum
 - (id) init;
 - (id) initFromRoster: (JabberRoster*) roster;
 - (id) initFromRoster: (JabberRoster*) roster withFilter: (id) object selector: (SEL) selector;
-- (void) dealloc;
 
 - (unsigned) count;
 - (NSEnumerator *) groupEnumerator;
@@ -808,10 +797,10 @@ typedef enum
 - (BOOL) onRemovedItem: (id) item;
 @end
 
-typedef enum
+typedef NS_ENUM(NSInteger, JabberSubscriptionType)
 {
     JSUBSCRIBE, JSUBSCRIBED, JUNSUBSCRIBE, JUNSUBSCRIBED
-} JabberSubscriptionType;
+};
 
 @interface JabberSubscriptionRequest : XMLElement
 {
@@ -825,7 +814,7 @@ typedef enum
 
 -(void) resync;
 
--(JabberSubscriptionType) type;
+@property (readonly) JabberSubscriptionType type;
 -(NSString *) message;
 -(JabberID*)  to;
 -(JabberID *) from;
