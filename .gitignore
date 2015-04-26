@@ -27,7 +27,5 @@ DerivedData
 
 
 # Colloquy specific
-Frameworks/
-
 .DS_Store
 project.xcworkspace/
