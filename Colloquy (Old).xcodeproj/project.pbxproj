@@ -877,7 +877,6 @@
 		928FB03513EE64C700A0DF4B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		9295C84E1675E10A009F9014 /* Colloquy.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; name = Colloquy.exp; path = ../Colloquy.exp; sourceTree = "<group>"; };
 		92A711941A4A5166009E80F0 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
-		92C70D0E1A5E88CE00080E45 /* room.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = room.pdf; sourceTree = "<group>"; };
 		A1429C720901F57A00A7BEEE /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Languages/Italian.lproj/Colloquy.nib; sourceTree = "<group>"; };
 		A1429C730901F57A00A7BEEE /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Languages/Italian.lproj/JVAppearancePreferences.nib; sourceTree = "<group>"; };
 		A1429C740901F57A00A7BEEE /* Italian */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Italian; path = Languages/Italian.lproj/JVBehaviorPreferences.nib; sourceTree = "<group>"; };
@@ -1714,7 +1713,6 @@
 				F51F91D7037967CB01A35792 /* Chat.clr */,
 				1CEE3A4C0577E14500AD6DE2 /* Buddy List Icons */,
 				558EF2361AEC356800619BDE /* Room Member Icons.xcassets */,
-				F544999D018E46A501EE70DE /* Room Member Icons */,
 				F5ED0F46017CD77701EE70DE /* Toolbar Icons */,
 				1CBC6317054896CB009E59E1 /* Preference Icons */,
 				1C2391B30677E8D2000E89A7 /* Tabs Interface Images */,
@@ -1827,14 +1825,6 @@
 				1C7B83C50668D732004F1EFE /* NSNotificationAdditions.h */,
 			);
 			name = "Chat Core";
-			sourceTree = "<group>";
-		};
-		F544999D018E46A501EE70DE /* Room Member Icons */ = {
-			isa = PBXGroup;
-			children = (
-				92C70D0E1A5E88CE00080E45 /* room.pdf */,
-			);
-			name = "Room Member Icons";
 			sourceTree = "<group>";
 		};
 		F5C3D42203973E7B01000102 /* Widget Images */ = {
