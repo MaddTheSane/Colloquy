@@ -26,6 +26,11 @@
 
 NSString* QUERY_PATH = @"/iq[@id='%@']";
 
+@interface JabberIQ ()
++(instancetype) constructIQGet:(NSString*)namespace withSession:(JabberSession*)s NS_RETURNS_RETAINED;
++(instancetype) constructIQSet:(NSString*)namespace withSession:(JabberSession*)s NS_RETURNS_RETAINED;
+@end
+
 @implementation JabberIQ
 
 +(id) constructIQGet:(NSString*)namespace withSession:(JabberSession*)s

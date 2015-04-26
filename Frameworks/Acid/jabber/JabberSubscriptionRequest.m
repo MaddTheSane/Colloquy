@@ -30,9 +30,13 @@ NSString* JXML_SUB_GRANTED = @"/presence[@type='subscribed']";        // subscri
 NSString* JXML_SUB_CANCELED = @"/presence[@type='unsubscribed']";       // unsubscribed
 NSString* JXML_SUB_CANCEL_REQUEST = @"/presence[@type='unsubscribe']"; // unsubscribe
 
+@interface JabberSubscriptionRequest ()
++(instancetype) constructElement:(XMLQName*)qname withAttributes:(NSMutableDictionary*)atts withDefaultURI:(NSString*)default_uri NS_RETURNS_RETAINED;
+@end
+
 @implementation JabberSubscriptionRequest
 
-+(id) constructElement:(XMLQName*)qname withAttributes:(NSMutableDictionary*)atts withDefaultURI:(NSString*)default_uri
++(instancetype) constructElement:(XMLQName*)qname withAttributes:(NSMutableDictionary*)atts withDefaultURI:(NSString*)default_uri
 {
     if ([qname isEqual:JABBER_PRESENCE_QN])
     {
@@ -48,7 +52,7 @@ NSString* JXML_SUB_CANCEL_REQUEST = @"/presence[@type='unsubscribe']"; // unsubs
         return nil;
 }
 
--(id) initWithRecipient:(JabberID*)jid
+-(instancetype) initWithRecipient:(JabberID*)jid
 {
     if (!(self = [super initWithQName:JABBER_PRESENCE_QN])) return nil;
 

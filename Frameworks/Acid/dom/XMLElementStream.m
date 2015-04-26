@@ -27,7 +27,7 @@
 #import <expat.h>
 
 @interface NSObject (private)
-+(id) constructElement:(XMLQName*)qname withAttributes:(NSMutableDictionary*)atts withDefaultURI:(NSString*)default_uri;
++(instancetype) constructElement:(XMLQName*)qname withAttributes:(NSMutableDictionary*)atts withDefaultURI:(NSString*)default_uri NS_RETURNS_RETAINED;
 @end
 
 @interface BufferParser : NSObject <XMLElementStreamListener>
@@ -126,6 +126,12 @@ static void _handleExitNamespace(void* data, const XML_Char* prefix)
     [parser exitNamespace:prefix];
 }
 
+@interface XMLElementStream ()
++(XMLElement*) factoryCreateElement:(XMLQName*)qname withAttributes:(NSMutableDictionary*)atts
+					 withDefaultURI:(NSString*)defaultURI NS_RETURNS_RETAINED;
+
+@end
+
 @implementation XMLElementStream
 
 static NSMutableArray* G_FACTORY;
@@ -193,10 +199,7 @@ static NSMutableArray* G_FACTORY;
 {
     // Walk all registered element handlers asking each one to take a peek and see if they want
     // to instantiate this element; only one gets the opportunity
-    Class cur;
-    NSEnumerator* e = [G_FACTORY objectEnumerator];
-    while ((cur = [e nextObject]))
-    {
+	for (Class cur in G_FACTORY) {
 		XMLElement* result = [cur constructElement:qname withAttributes:atts withDefaultURI:defaultURI];
         if (result != nil)
             return result;
@@ -335,7 +338,7 @@ static NSMutableArray* G_FACTORY;
     BufferParser* p = [[BufferParser alloc] init];
     e = [[p process:buffer] retain];
     [p release];
-    return e;
+    return [e autorelease];
 }
 
 -(NSString*) currentNamespaceURI

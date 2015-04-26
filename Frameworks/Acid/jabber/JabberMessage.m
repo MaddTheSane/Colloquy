@@ -24,6 +24,10 @@
 
 #import "acid.h"
 
+@interface JabberMessage ()
++(instancetype) constructElement:(XMLQName*)qname withAttributes:(NSMutableDictionary*)atts withDefaultURI:(NSString*)default_uri NS_RETURNS_RETAINED;
+@end
+
 @implementation JabberMessage
 
 XPathQuery* QRY_BODY;
@@ -35,7 +39,7 @@ XPathQuery* QRY_CHATSTATE_ACTIVE;
 XPathQuery* QRY_MEVENT_ID;
 XPathQuery* QRY_DELAY;
 
-+(id) constructElement:(XMLQName*)qname withAttributes:(NSMutableDictionary*)atts withDefaultURI:(NSString*)default_uri
++(instancetype) constructElement:(XMLQName*)qname withAttributes:(NSMutableDictionary*)atts withDefaultURI:(NSString*)default_uri
 {
     if ([qname isEqual:JABBER_MESSAGE_QN])
         return [[JabberMessage alloc] initWithQName:qname withAttributes:atts withDefaultURI:default_uri];

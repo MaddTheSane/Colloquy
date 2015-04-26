@@ -31,14 +31,9 @@
 }
 
 -(id) initWithName:(NSString*)name inURI:(NSString*)uri;
--(void) dealloc;
 
 -(NSString*)name;
 -(NSString*)uri;
-
--(NSString*)description;
-
--(id) copyWithZone:(NSZone*)zone;
 
 -(BOOL) isEqual:(XMLQName*)other;
 -(NSComparisonResult) compare:(id)other;
@@ -52,7 +47,7 @@
 
 @class XMLAccumulator;
 
-@protocol XMLNode
+@protocol XMLNode <NSObject>
 -(XMLQName*) qname;
 -(NSString*) name;
 -(NSString*) uri;
@@ -68,7 +63,6 @@
 
 // Basic initializers
 -(id)   init;
--(void) dealloc;
 
 // Custom initializers
 -(id) initWithString:(NSString*)s; // Assumes unescaped data
@@ -115,7 +109,6 @@
 
 // Basic initializers
 -(id)   init;
--(void) dealloc;
 
 // Extended initializers
 -(id) initWithQName:(XMLQName*)qname
@@ -200,7 +193,6 @@
 }
 
 -(id) init:(NSMutableString*)data;
--(void) dealloc;
 
 -(void) addOverridePrefix:(NSString*)prefix forURI:(NSString*)uri;
 -(NSString*) generatePrefix:(NSString*)uri;
@@ -216,7 +208,7 @@
 
 @end
 
-@protocol XMLElementStreamListener
+@protocol XMLElementStreamListener <NSObject>
 -(void) onDocumentStart:(XMLElement*)element;
 -(void) onElement:(XMLElement*)element;
 -(void) onCData:(XMLCData*)cdata;
@@ -239,7 +231,6 @@
 +(void) registerElementFactory:(Class)factory;
 
 -(id)   init;
--(void) dealloc;
 
 -(id) initWithListener: (id<XMLElementStreamListener>)listener;
 
