@@ -48,7 +48,7 @@
 @class XMLAccumulator;
 
 @protocol XMLNode <NSObject>
--(XMLQName*) qname;
+@property (nonatomic, readonly, retain) XMLQName *qname;
 @property (nonatomic, readonly, copy) NSString *name;
 @property (nonatomic, readonly, copy) NSString *uri;
 -(void)      description:(XMLAccumulator*)acc;
@@ -83,12 +83,6 @@
 
 @property (readonly, copy) NSString *description; // Escaped text
 
-// Implementation of XMLNode protocol
-@property (readonly, retain) XMLQName *qname;
-@property (nonatomic, readonly, copy) NSString *name;
-@property (nonatomic, readonly, copy) NSString *uri;
--(void)      description:(XMLAccumulator*)acc;
-
 // Escaping routines
 +(NSString*) escape:(const char*)data ofLength:(NSInteger)datasz;
 +(NSString*) escape:(NSString*)data;
@@ -97,7 +91,7 @@
 @end
 
 
-@interface XMLElement : NSObject <XMLNode>
+@interface XMLElement : NSObject <XMLNode, NSFastEnumeration>
 {
     NSMutableDictionary* _attribs;  // XMLQName->NSString
     NSMutableArray*      _children;
@@ -158,16 +152,10 @@
 
 
 // Convert this node to string representation
--(NSString*) description;
-
-// Implementation of XMLNode protocol
-@property (readonly, retain) XMLQName *qname;
-@property (nonatomic, readonly, copy) NSString *name;
-@property (nonatomic, readonly, copy) NSString *uri;
--(void)      description:(XMLAccumulator*)acc;
+@property (readonly, copy) NSString *description;
 
 // Extract first child CDATA from this Element
--(NSString*) cdata;
+@property (readonly, copy) NSString *cdata;
 
 // Convert a name and uri into a XMLQName structure
 -(XMLQName*) getQName:(NSString*)name ofURI:(NSString*)uri;

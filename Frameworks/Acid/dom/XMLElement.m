@@ -28,10 +28,9 @@
 @interface _ElementEnumerator : NSEnumerator
 {
     NSArray*        _elements;
-    unsigned int    _index;
+    NSUInteger    _index;
 }
 -(id) initWithArray:(NSArray*)elems;
--(void) dealloc;
 -(NSArray*) allObjects;
 -(id) nextObject;
 @end
@@ -274,10 +273,7 @@
 }
 
 // Implementation of XMLNode protocol
--(XMLQName*) qname
-{
-    return _name;
-}
+@synthesize qname = _name;
 
 -(NSString*) name
 {
@@ -366,6 +362,11 @@
 
 -(void) delNamespaceURI:(NSString*)uri
 {}
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
+{
+    return [[self childElementsEnumerator] countByEnumeratingWithState:state objects:buffer count:len];
+}
 
 @end
 

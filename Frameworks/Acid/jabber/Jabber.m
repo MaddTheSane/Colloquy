@@ -36,7 +36,7 @@ XMLQName* JABBER_IQ_LAST_QN;
 XMLQName* JABBER_CLIENTCAP_QN;
 
 @interface Jabber : NSObject
-{}
+
 @end
 
 @implementation Jabber

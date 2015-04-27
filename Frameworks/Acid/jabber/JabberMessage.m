@@ -33,6 +33,11 @@
 @synthesize from;
 @synthesize body;
 @synthesize action = isAction;
+@synthesize subject;
+@synthesize encrypted;
+@synthesize wasDelayed;
+@synthesize delayedOnDate;
+@synthesize eventType;
 
 XPathQuery* QRY_BODY;
 XPathQuery* QRY_ENCRYPT;
@@ -151,6 +156,7 @@ XPathQuery* QRY_DELAY;
 
 -(void) setBody:(NSString*)s
 {
+    [body release];
     body = [s retain];
     // XXX: need to replace if existing already
     [[self addElementWithName:@"body"] addCData:s];
@@ -158,6 +164,7 @@ XPathQuery* QRY_DELAY;
 
 -(void) setEncrypted:(NSString*)s
 {
+    [encrypted release];
     XMLElement* elem;
     encrypted = [s retain];
     elem = [self addElementWithName:@"x"];
@@ -166,37 +173,12 @@ XPathQuery* QRY_DELAY;
     [elem addCData:s];
 }
 
--(NSString*) encrypted
-{
-    return encrypted;
-}
-
--(NSString*) subject
-{
-    return subject;
-}
-
 -(void) setSubject:(NSString*)s
 {
+    [subject release];
     subject = [s retain];
     // XXX: need to replace if existing already!
     [[self addElementWithName:@"subject"] addCData:s];
-}
-
--(BOOL) wasDelayed
-{
-    return wasDelayed;
-}
-
-
--(NSDate*) delayedOnDate
-{
-    return delayedOnDate;
-}
-
--(JMEvent) eventType
-{
-    return eventType;
 }
 
 -(void) addComposingRequest

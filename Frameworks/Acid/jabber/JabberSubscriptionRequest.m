@@ -93,26 +93,6 @@ NSString* JXML_SUB_CANCEL_REQUEST = @"/presence[@type='unsubscribe']"; // unsubs
 }
 
 
--(JabberSubscriptionType) type
-{
-    return _type;
-}
-
--(NSString*) message
-{
-    return _message;
-}
-
--(JabberID*) to
-{
-    return _to;
-}
-
--(JabberID*) from
-{
-    return _from;
-}
-
 -(JabberSubscriptionRequest*) grant
 {
     JabberSubscriptionRequest* r;

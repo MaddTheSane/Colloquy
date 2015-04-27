@@ -348,45 +348,17 @@ NSString* STREAM_ROOT = @"<stream:stream xmlns='jabber:client' xmlns:stream='htt
 // Accessors
 //
 // ------------------------
--(JabberID*) jid
-{
-    return _jid;
-}
-
--(NSString*) sessionID
-{
-    return _sid;
-}
-
+@synthesize jid = _jid;
+@synthesize sessionID = _sid;
+@synthesize roster = _roster;
 -(id) authManager
 {
     return _authMgr;
 }
 
--(JabberRoster*) roster
-{
-    return _roster;
-}
-
--(void) setRoster:(JabberRoster*)r
-{
-    [_roster release];
-    _roster = [r retain];
-}
-
 -(JabberPresenceTracker*) presenceTracker
 {
     return _pres;
-}
-
--(void) setUseSSL:(BOOL)useSSL
-{
-    _useSSL = useSSL;
-}
-
--(void) setAuthOnConnected:(BOOL)doauth
-{
-    _do_auth = doauth;
 }
 
 @end

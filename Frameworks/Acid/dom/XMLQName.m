@@ -30,8 +30,7 @@
 }
 
 // Basic initializers
--(id)   init;
--(void) dealloc;
+-(instancetype)   init;
 
     // QName accessors
 -(XMLQName*) lookup:(NSString*)name withURI:(NSString*)uri;
@@ -43,7 +42,7 @@ XMLQNameManager* QNManager;
 
 @implementation XMLQName
 
--(id) initWithName:(NSString*)name inURI:(NSString*)uri
+-(instancetype) initWithName:(NSString*)name inURI:(NSString*)uri
 {
     if (!(self = [super init])) return nil;
     _name = [name retain];
@@ -56,16 +55,6 @@ XMLQNameManager* QNManager;
     [_name release];
     [_uri release];
     [super dealloc];
-}
-
--(NSString*) name
-{
-    return _name;
-}
-
--(NSString*) uri
-{
-    return _uri;
 }
 
 -(NSString*) description

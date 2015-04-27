@@ -30,6 +30,11 @@
 static NSMutableDictionary* G_cache;
 
 @implementation JabberID
+@synthesize hash = _hash_value;
+@synthesize hostname = _hostname;
+@synthesize username = _username;
+@synthesize resource = _resource;
+@synthesize completeID = _complete;
 
 -(id) copyWithZone:(NSZone*)zone
 {
@@ -150,7 +155,10 @@ static NSMutableDictionary* G_cache;
 
 +(void) initialize
 {
-    G_cache = [[NSMutableDictionary alloc] initWithCapacity:111];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        G_cache = [[NSMutableDictionary alloc] initWithCapacity:111];
+    });
 }
 
 -(id) initWithFormat:(NSString*)fmt, ...
@@ -326,37 +334,12 @@ static NSMutableDictionary* G_cache;
     [super dealloc];
 }
 
--(unsigned) hash
-{
-    return _hash_value;
-}
-
--(NSString*) hostname
-{
-    return _hostname;
-}
-
--(NSString*) username
-{
-    return _username;
-}
-
 -(NSString*) userhost
 {
     if (_userhost_jid != nil)
         return _userhost_jid->_complete;
     else
         return _complete;
-}
-
--(NSString*) resource
-{
-    return _resource;
-}
-
--(NSString*) completeID
-{
-    return _complete;
 }
 
 -(NSString*) escapedCompleteID
@@ -415,7 +398,7 @@ static NSMutableDictionary* G_cache;
     return [self compareUserhost:other] == NSOrderedSame;
 }
 
--(id) initWithCoder:(NSCoder*) coder
+-(instancetype) initWithCoder:(NSCoder*) coder
 {
     return [self initWithString:[coder decodeObject]];
 }

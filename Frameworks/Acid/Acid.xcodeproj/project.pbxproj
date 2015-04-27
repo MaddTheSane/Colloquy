@@ -155,7 +155,6 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				55D85B1E1AED9ECD000492A9 /* libexpat.dylib */,
 				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
 			);
 			name = Frameworks;
@@ -188,6 +187,7 @@
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55D85B1E1AED9ECD000492A9 /* libexpat.dylib */,
 				DDBE55B90BD187D5004ED228 /* libcrypto.dylib */,
 				DDBE55900BD1845D004ED228 /* libssl.dylib */,
 				DDE46AAC0BD7246C0064D202 /* CoreServices.framework */,

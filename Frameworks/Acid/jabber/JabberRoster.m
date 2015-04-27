@@ -369,4 +369,9 @@ NSString* XP_ROSTERPUSH = @"/iq[@type='set']/query[%jabber:iq:roster]";
     // XXX: There should probably be some code for handling errors here.
 }
 
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
+{
+    return [_items countByEnumeratingWithState:state objects:buffer count:len];
+}
+
 @end

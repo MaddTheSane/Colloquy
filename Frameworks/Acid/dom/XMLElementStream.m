@@ -300,7 +300,7 @@ static NSMutableArray* G_FACTORY;
 -(void) pushData: (const char*)data ofSize:(NSUInteger)datasz
 {
     assert(_document_ended != TRUE);
-    if (!XML_Parse(_parser, data, datasz, 0))
+    if (!XML_Parse(_parser, data, (int)datasz, 0))
     {
         NSLog(@"Parser Error: %s", XML_ErrorString(XML_GetErrorCode(_parser)));
     }

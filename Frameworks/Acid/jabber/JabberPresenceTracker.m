@@ -43,7 +43,6 @@ the same [node@]domain, but differing by resource.
  @abstract initialize around a userhost JID
  */
 -(id) initWithJID:(JabberID*)jid;
--(void) dealloc;
 
     /*!
     @method presenceForJID
@@ -84,14 +83,14 @@ the same [node@]domain, but differing by resource.
     @method isEmpty
      @abstract return if the group contains no presence information
      */
--(BOOL) isEmpty;
+@property (readonly, getter=isEmpty) BOOL empty;
     /*!
     @method objectEnumerator
      @abstract return an enumerator for all contained presences
      */
 -(NSEnumerator*)objectEnumerator;
 
--(int) count;
+@property (readonly) NSInteger count;
 
 @end
 
@@ -120,8 +119,8 @@ the same [node@]domain, but differing by resource.
 
 -(JabberPresence*) presenceForJID:(JabberID*)j
 {
-    int i;
-    int count = [_packets count];
+    NSInteger i;
+    NSInteger count = [_packets count];
     for (i = 0; i < count; i++)
     {
         JabberPresence* cur = _packets[i];
@@ -135,8 +134,8 @@ the same [node@]domain, but differing by resource.
 
 -(BOOL) updatePresence:(JabberPresence*)p
 {
-    int i = 0;
-    int count;
+    NSInteger i = 0;
+    NSInteger count;
     int priority = [p priority];
     // Check for an existing presence that matches this one
     [_packets removeObject:p];
@@ -180,7 +179,7 @@ the same [node@]domain, but differing by resource.
     return [_packets count] == 0;
 }
 
--(int) count
+-(NSInteger) count
 {
     return [_packets count];
 }
@@ -332,7 +331,7 @@ the same [node@]domain, but differing by resource.
     return [pgroup objectEnumerator];
 }
 
--(int) presenceCountForJID:(JabberID*)jid
+-(NSInteger) presenceCountForJID:(JabberID*)jid
 {
     PGroup* pgroup = _items[[jid userhostJID]];
     return [pgroup count];
